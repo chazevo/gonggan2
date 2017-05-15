@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Sample Spring Project</h1>
+<h2>aaaa</h2>
 <!-- <a href="start.do">start</a> -->
 <jsp:forward page="start.do"></jsp:forward>
 </body>

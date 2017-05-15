@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="postmapper">
+
+	<resultMap type="post" id="postResult">
+		<id property="postId" column="post_id" />
+		<result property="writerId" column="writer_id" />
+		<result property="category" column="category" />
+		<result property="sharYn" column="shar_yn" />
+		<result property="openYn" column="open_yn" />
+		<result property="goodCnt" column="good_cnt" />
+		<result property="photoPath" column="photo_path" />
+		<result property="postDate" column="post_date" />
+	</resultMap>
+
+	<select id="plist" parameterType="post" resultMap="postResult">
+	select *
+	from post left join movie using (post_id)
+	left join diary using(post_id)
+	left join music using(post_id)
+	left join news using(post_id)
+	left join review using(post_id)
+	</select>
+
+</mapper>

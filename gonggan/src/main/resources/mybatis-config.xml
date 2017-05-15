@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--  Alias 설정  -->
+	 <typeAliases>
+		<typeAlias type="com.kh.gonggan.post.model.vo.Post" alias="post" />
+		<typeAlias type="com.kh.gonggan.comment.model.vo.Comment" alias="comment" />
+		<typeAlias type="com.kh.gonggan.member.model.vo.Member" alias="member" />
+	</typeAliases>
+
+ <!-- Sql Mapper 설정 -->
+	 <mappers>
+	 	<mapper resource="mappers/post-mapper.xml" />
+	 	<mapper resource="mappers/comment-mapper.xml" />
+	 	<mapper resource="mappers/member-mapper.xml" />
+	 </mappers>
+	 
+</configuration>

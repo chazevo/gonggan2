@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head> 
@@ -28,9 +29,21 @@
 	<p>GONGAN_JJ</p><a href=""><img class="right" src="images/massage_x_icon.png" ></a>
 	<hr>
 	<div id="chatArea">
-		<div id="confirm" class="sender">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div>
+		
+		<c:if test="${!empty msgList} ">
+			<c:forEach items="${ msgList}" var="i" begin ="0" >
+				<c:if test="${i.msg_sender eq sessionScope.loginUser}">
+					<div class="sender">${i.msg_text }</div>
+				</c:if>
+				<c:if test="${i.msg_receiver eq sessionScope.loginUser}">
+					<div class="receiver">${i.msg_text }</div>
+				</c:if>
+			</c:forEach>
+		</c:if>
+		
+		<!-- <div class="sender">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div>
 		<div class="receiver">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div>
-		<div class="sender">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div>
+		<div class="sender">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div> -->
 	</div>
 	<hr>
 	<div class="div4">

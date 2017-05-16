@@ -38,12 +38,11 @@
         </beans:property>
        
     </beans:bean>
-    <beans:bean id="email" class="com.kh.gonggan.email.Email">
+    		<beans:bean id="email" class="com.kh.gonggan.email.Email">
     </beans:bean>
-    <beans:bean id="emailSender" class="com.kh.gonggan.email.EmailSender">
+    	<beans:bean id="emailSender" class="com.kh.gonggan.email.EmailSender">
     </beans:bean>
-    <beans:bean id="socketController" class="com.kh.gonggan.handler.socket.web.SocketController">
-    </beans:bean>
+  
 	
 	<!-- <context:component-scan base-package="com.kh.sample.**.controller" /> -->
 	<context:component-scan base-package="com.kh.gonggan" />
@@ -52,11 +51,13 @@
 	<bean id="homeController" name="homeController"
 		class="com.kh.sample.HomeController">
 	</bean> -->
- <resources location="/WEB-INF/resources/js/" mapping="/js/**"/> 
- <beans:bean id="echoHandler" class="com.kh.gonggan.handler.EchoHandler" />
- <websocket:handlers>
-    <websocket:mapping handler="echoHandler" path="/chat.do"/>
-    <websocket:sockjs />
-</websocket:handlers>
+	
+	 <websocket:handlers>
+	    <websocket:mapping handler="echoHandler" path="/websocket/echo.do"/>
+	    <!-- <websocket:sockjs /> -->
+	</websocket:handlers>
+ 
+ 	<beans:bean id="echoHandler" class="com.kh.gonggan.SocketHandler" />
+	
 
 </beans:beans>

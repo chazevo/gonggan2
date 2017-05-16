@@ -524,21 +524,31 @@ textarea {
 	/*background-color:red;*/
 }
 
-.massage .receiver {
-	width:40%;
-	display:block;
+.massage>div>div {
 	position:relative;
-	right:0;
+}
+
+.massage div#chatArea {
+	height:200px;
+	overflow:auto;
+	}
+
+.massage .sender {
+	float:right;
+	clear: both;
+	width:40%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	padding:5px;
 	background:linear-gradient(to right, #DEACC6, #91B2DF);
 	border-radius:10px;
 }
 
-.massage .sender {
+.massage .receiver {
+	clear: both;
 	width:40%;
-	display:block;
-	position:absolute;
-	right:0;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	padding:5px;
 	border: 1px solid #DEDFDF;
 	border-radius:10px;
@@ -830,6 +840,10 @@ img {
 
 .myDiv a:hover {
 	text-decoration: none;
+}
+
+hr {
+	clear:both;	
 }
 
 .whiteHr {

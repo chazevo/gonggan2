@@ -80,9 +80,10 @@ public class HomeController {
 		logger.info("Welcome test! ");
 		return "test";
 	}
-	@RequestMapping(value = "chat.do", method = RequestMethod.GET)
-	public String chat(Locale locale, Model model) {
-		logger.info("Welcome chat! ");
-		return "chat";
+	@RequestMapping(value = "massage.do", method = RequestMethod.GET)
+	public String massage(Locale locale, Model model) {
+		logger.info("Welcome massage! ");
+		return "massage";
 	}
+
 }

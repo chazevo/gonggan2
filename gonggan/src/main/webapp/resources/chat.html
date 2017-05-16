@@ -1,18 +1,20 @@
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
         <title>Your First WebSocket!</title>
 </head>
 <body>
         <script type="text/javascript">
            
-            var wsUri = "ws://localhost:8080/echo.do";
+            //var wsUri = "ws://localhost:8999/gonggan/echo.do";
            
             function init() {
                 output = document.getElementById("output");
             }
             function send_message() {
-                websocket = new WebSocket(wsUri);
+            	console.log('Websocket supported');
+                websocket = new WebSocket('ws://localhost:8080/gonggan/websocket/echo.do');
                 websocket.onopen = function(evt) {
                     onOpen(evt)
                 };

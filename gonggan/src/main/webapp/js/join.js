@@ -23,7 +23,7 @@ function confirmInput() {
 }
 
 function goSubmit() {
- 
+	  $("#join").submit();
 	 if ($("input[name='id']").val() == "") {
 	  $("#idSpan > em").text("아이디를 입력해주세요.");
 	  $("input[name='id']").addClass("error");

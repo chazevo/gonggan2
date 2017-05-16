@@ -19,6 +19,7 @@
 <script src="js/magnific-popup.min.js"></script>
 <script type="text/javascript" src="js/scrollreveal.min.js"></script>
 <script type="text/javascript" src="js/creative.min.js"></script>
+<script type="text/javascript" src="js/home.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
 		document.getElementById("id").focus();
@@ -79,13 +80,16 @@
 				<p>당신만의 공간에서 당신의 글을 만들어보세요. </p>
 				</td></tr>
 				<tr><td>
-				<input class="divisionMargin login" type="text" id="id" placeholder="ID"  >
+				<form action="login.do" method="post" id="login">
+				<input class="divisionMargin login" type="text" id="id" placeholder="ID" name="member_id">
 				</td></tr>
 				<tr><td>
-				<input type="text" class=" login" placeholder="PASS">
+				<input type="text" class=" login" placeholder="PASS" name="member_pw" id="pass">
 				</td></tr>
 				<tr><td>
-				<a href="#"><div id="startBtn" class="divisionMargin">S T A R T</div></a>
+				<a href="javascript:goSubmit();"><div id="startBtn" class="divisionMargin2">S T A R T</div></a>
+				<!-- <input type="submit" value="S T A R T" id="startBtn" class="divisionMargin2"> -->
+				</form>
 				</td></tr>
 				<tr><td>
 				<a href="findIdPwd.do">아이디 찾기</a> | 
@@ -97,7 +101,7 @@
 						<a href="#about" class="page-scroll">
 							<img  class="divisionMargin" 
 							src="images/KakaoTalk_Photo_2017-04-24-10-24-18_51.png"
-							width="20%">
+							width="50%">
 						</a>
 					</td>
 				</tr>

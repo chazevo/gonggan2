@@ -2,7 +2,9 @@ package com.kh.gonggan.member.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,8 +24,8 @@ public class MemberDao {
 		return (Member) sqlSession.selectOne("membermapper.loginSelect", loginVo);
 	}
 	
-	public int insertMember(Member mem){
-		return sqlSession.insert("membermapper.minsert", mem);
+	public int insertMember(Member member){
+		return sqlSession.insert("minsert", member);
 	}//회원 등록
 	
 	public List<Member> memberList(){
@@ -40,20 +42,22 @@ public class MemberDao {
 	}//회원 정보 삭제
 	
 	public int updateMember(Member mem){
+		System.out.println("asdf");
+		System.out.println(mem);
 		return sqlSession.update("membermapper.mupdate", mem);
 	}//회원 정보 수정
 	
 	public Member selectId(String email){
 		return (Member) sqlSession.selectOne("membermapper.selectId", email);
 	}//아이디 찾기
-	
+/*	
 	public Member selectPw(String memberId, String email){
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("memberId", memberId);
 		map.put("email", email);
-		return (Member) sqlSession.selectOne("membermapper.selectPw", map);
+	//	return (Member) sqlSession.selectOne("membermapper.selectPw", map);
 	}//비밀번호 찾기
-
+*/
 	public int requestNeig(String memberId) {
 		// TODO Auto-generated method stub
 		return  sqlSession.insert("membermapper.requestNeig", memberId);
@@ -67,6 +71,11 @@ public class MemberDao {
 	public List<Member> neigList() {
 		// TODO Auto-generated method stub
 		return (List<Member>) sqlSession.selectList("membermapper.neigList");
+	}
+
+	public String getPw(Map<String, Object> paramMap) {
+		// TODO Auto-generated method stub
+		return ((Member)(sqlSession.selectOne("membermapper.selectPw", paramMap))).getMember_pw();
 	}
 
 

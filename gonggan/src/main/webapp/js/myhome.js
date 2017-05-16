@@ -1,7 +1,22 @@
 var postId;
 var Ca = /\+/g;
 var str = "";
+var blogOwner = "jieun";
 
+function visit() {
+	if (loginUser != "")
+		$.ajax({
+		      url: "/gonggan/blogvisit.do",
+		      data: {blogOwner : blogOwner,
+		    	  visitor_id : loginUser},
+		      success: function(data) {
+		    	  
+		      },
+		      error: function(data,status,error){
+		         console.log("error : " + error);
+		      }
+		   });
+}
 
 function requestList() {
 	
@@ -71,7 +86,7 @@ function callbackList(data) {
 				postId = jsonArr.list[j].postId;
 				
 				str += "<td>"
-					+ "<a data-fancybox data-src='postDetail.do?postId=" + postId + "'>"
+					+ "<a data-fancybox data-src='postDetail.do?postId=" + postId + "&writerId=" + jsonArr.list[j].writerId + "'>"
 					+ "<img width='40px' class='" + (jsonArr.list[j].date == today ? "today" : "")
 					+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>"
 					+ "</a></td>";
@@ -183,7 +198,7 @@ function callbackCommentList(data){
 	td.innerHTML = "<label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
 	+ "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
 	+ "<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
-	+ "<a href=''><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
+	+ "<a href='javascript:dotdotdot();'><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
 	td.colspan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
@@ -279,4 +294,12 @@ function checkboxControl(type, object) {
 		document.getElementById("list").check = true;
 		
 		*/
+}
+
+function dotdotdot(){
+	
+	if (document.getElementById("dotdotdotDiv").style.display == "block")
+		$('#dotdotdotDiv').css("display","none");
+	else
+		$('#dotdotdotDiv').css("display","block");
 }

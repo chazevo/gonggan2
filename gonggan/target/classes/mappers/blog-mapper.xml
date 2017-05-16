@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="blogmapper">
+
+	<resultMap type="blog" id="blogResult">
+		<result property="title" column="title" />
+		<result property="writer_id" column="writer_id" />
+		<result property="contents" column="contents" />
+		<result property="background" column="background" />
+		<result property="color" column="color" />
+		<result property="languages" column="languages" />
+		<result property="blog_open_yn" column="blog_open_yn" />
+		<result property="blog_id" column="blog_id" />
+	</resultMap>
+
+
+	<insert id="binsert" parameterType="blog">
+		insert into blog values(#{post_id}, #{member_id},'N')
+	</insert>
+
+	<delete id="bdelete" parameterType="blog">
+		delete from blog
+		where post_id = #{post_id} and member_id = #{member_id}
+	</delete>
+
+
+</mapper>

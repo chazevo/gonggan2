@@ -10,6 +10,6 @@ public interface GoodService {
 
 	int goodDelete(int postId, String memberId);
 
-	int goodCheck(int postId, String memberId);
+	Object goodCheck(int postId, String memberId);
 
 }

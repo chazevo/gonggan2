@@ -18,7 +18,6 @@ public class GoodServiceImpl implements GoodService{
 	
 	@Override
 	public int goodInsert(int postId, String memberId){
-		
 		return goodDao.goodInsert(postId,memberId);
 	}//good 카운트 증가
 	@Override
@@ -27,7 +26,7 @@ public class GoodServiceImpl implements GoodService{
 		return goodDao.goodDelete(postId,memberId);
 	}//good 카운트 감소
 	@Override
-	public int goodCheck(int postId, String memberId){
+	public Object goodCheck(int postId, String memberId){
 		return goodDao.goodCheck(postId,memberId);
 	}//good 체크 확인 여부
 

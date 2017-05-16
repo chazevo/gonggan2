@@ -404,10 +404,10 @@
 								}
 							},
 							series: [{
-								name: 'Jane',
+								name: '여자',
 								data: [1, 0, 4]
 							}, {
-								name: 'John',
+								name: '남자',
 								data: [5, 7, 3]
 							}]
 						});

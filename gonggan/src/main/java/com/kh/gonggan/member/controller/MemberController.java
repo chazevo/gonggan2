@@ -82,8 +82,8 @@ public class MemberController {
 	}//회원가입
 	
 	@RequestMapping("/update.do")
-	public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpSession session){
-		/*System.out.println(member);
+	public int memberUpdate(Member member, ModelAndView mv, HttpSession session){
+		System.out.println(member);
 		Member loginUser  = memberService.loginCheck(member);
 		int updateResult = memberService.updateMember(member);
 		session.setAttribute("loginUser", loginUser);
@@ -92,20 +92,8 @@ public class MemberController {
 			session.setAttribute("error", "실패");
 		}
 		mv.setViewName("mypage");
-		return mv;*/
-		System.out.println(member);
-		int updateResult = memberService.updateMember(member);
-		//ModelAndView mv = new ModelAndView();
-		if(updateResult<0){
-			session.setAttribute("error", "실패");
-			System.out.println("정보수정 실패");
-		}
+		return;
 		
-		/*mv.setViewName("index2");
-		mv.addObject("loginUser", loginUser);
-		*/
-		/*return "home";*/
-		return mv;
 	}
 	
 	@RequestMapping("delete.do")

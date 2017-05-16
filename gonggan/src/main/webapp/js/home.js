@@ -1,0 +1,4 @@
+
+function goSubmit() {
+	  $("#login").submit();
+}

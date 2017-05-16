@@ -176,7 +176,7 @@ var imgVal = <%= imgVal %>;
 				<a href="#" style="display:inline-block">
 					<img src="images/default.png" height="40px"class="img-circle">&nbsp;chazevo 님
 				</a> &nbsp;
-				<a data-fancybox data-src="/gonggan/massage.do"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
+				<a data-fancybox data-src="/gonggan/messageList.do"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<ul class="nav navbar-nav navbar-right">

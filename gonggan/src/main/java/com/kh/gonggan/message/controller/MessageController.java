@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.message.model.vo.Message;
 import com.kh.gonggan.message.model.service.MessageService;
+
 @Controller
 public class MessageController {
 

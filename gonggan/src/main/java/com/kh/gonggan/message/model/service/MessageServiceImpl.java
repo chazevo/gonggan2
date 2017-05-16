@@ -17,7 +17,11 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public List<Message> messageList(String memberId1, String memberId2){
 		return messageDao.messageList(memberId1, memberId2);
-	}//전체 회원 조회
+	}
+	@Override
+	public int insertMessage(String memberId1, String memberId2, String msg_text, String check_yn){
+		return messageDao.insertMessage(memberId1,  memberId2, msg_text, check_yn);
+	}
 	
 
 	

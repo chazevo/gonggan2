@@ -82,7 +82,7 @@ public class MemberController {
 	}//회원가입
 	
 	@RequestMapping("/update.do")
-	public int memberUpdate(Member member, ModelAndView mv, HttpSession session){
+	public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpSession session){
 		System.out.println(member);
 		Member loginUser  = memberService.loginCheck(member);
 		int updateResult = memberService.updateMember(member);
@@ -92,8 +92,7 @@ public class MemberController {
 			session.setAttribute("error", "실패");
 		}
 		mv.setViewName("mypage");
-		return;
-		
+		return mv;
 	}
 	
 	@RequestMapping("delete.do")

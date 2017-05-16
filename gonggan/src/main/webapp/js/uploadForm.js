@@ -64,7 +64,7 @@ function imageChange(){
 	
 }
 
-function dairyBg(){
+function diaryBg(){
 	je_doc = document.getElementById('editor').contentWindow.document;
 	if($(".imagess").val()==0){
 		je_doc.body.background="transparent";
@@ -111,39 +111,83 @@ function run(){
 
 function imagesInsertThis(){
 	je_doc = document.getElementById('editor').contentWindow.document;
-	je_doc.designMode="on";
-	var image= $("#filename").val();
-	alert( $("#filename").val());
+	je_doc.designMode = "on";
+	var image = $("#filename").val();
+	alert($("#filename").val());
 	je_doc.execCommand('InsertImage', 'false', image);
 	
 }
 
+function contenttextcolor(color) {
+	je_doc.execCommand("forecolor", false, color);	
+}
+
 function contenttextcolor2(){
 
-	var color= $("#contenttextcolor2").val();
-	//var s=prompt("글자색", color);
+	var color = $("#contenttextcolor2").val();
+	//var s = prompt("글자색", color);
 	if(color != "") je_doc.execCommand("forecolor", false, color);	
 
 }
 
-/*function contentalligncenter(){
-	clr=new Array('00','20','40','60','80','a0','c0','ff');
+function colorchart(){
+	var clr = new Array('00', '20', '40', '60', '80', 'a0', 'c0', 'ff');
+	
+	var table;
+	var tr;
+	var td;
+	
+	for (var i=0 ; i<8 ; i++) { 
+		
+		table = document.createElement("table");
+		//table.width = '100%';
+		table.border = '1';
+		table.cellpadding = '8';
+		//html($("#colorchart").html() + "<table width='100%' border='1' cellpadding='8'>");
 
-	for (i=0;i<8;i++) { 
-		$("#colorchart").html($("#colorchart").html()+'<table width=500px border=1 cellpadding=8>');
-		for (j=0;j<8;j++) {
-			$("#colorchart").html($("#colorchart").html()+'<tr>');
-			for (k=0;k<8;k++) {
-				$("#colorchart").html($("#colorchart").html()+"<td"+"style='background-color:#"+clr[i]+clr[j]+clr[k]+"'>");
-				alert($("#colorchart").html());
-				$("#colorchart").html($("#colorchart").html()+'<tt>#');
-				$("#colorchart").html($("#colorchart").html()+clr[i]+clr[j]+clr[k]+' </tt></td>');
+		for (var j=0 ; j<8 ; j++) {
+			tr = document.createElement("tr");
+			//$("#colorchart").html($("#colorchart").html() + '<tr>');
+			
+			for (var k=0 ; k<8 ; k++) {
+				td = document.createElement("td");
+				td.class = "colorchartTd";
+				td.width = "10px";
+				td.height = "10px";
+				td.bgColor = "#" + clr[i] + clr[j] + clr[k];
+				//td.innerHTML = '<tt>#' + clr[i] + clr[j] + clr[k] + '</tt>';
+				tr.appendChild(td);
+				/*
+				$("#colorchart").html($("#colorchart").html() + "<td bgcolor='#" + clr[i] + clr[j] + clr[k] + "'>");
+				$("#colorchart").html($("#colorchart").html() + '<tt>#');
+				$("#colorchart").html($("#colorchart").html() + clr[i] + clr[j] + clr[k] + '</tt></td>');
+				*/
 			}
-			$("#colorchart").html($("#colorchart").html()+"</tr>");
+			table.appendChild(tr);
+			//$("#colorchart").html($("#colorchart").html() + "</tr>");
 		}
-		$("#colorchart").html($("#colorchart").html()+"</table><br />");
+		
+		document.getElementById("colorchart").appendChild(table);
+		//$("#colorchart").html($("#colorchart").html() + "</table><br>");
 	}
-}*/
+	
+	/*
+	for (i=0 ; i<8 ; i++) { 
+		$("#colorchart").html($("#colorchart").html() + "<table width='100%' border='1' cellpadding='8'>");
+		for (j=0 ; j<8 ; j++) {
+			$("#colorchart").html($("#colorchart").html() + '<tr>');
+			for (k=0 ; k<8 ; k++) {
+				$("#colorchart").html($("#colorchart").html() + "<td bgColor='#" + clr[i] + clr[j] + clr[k] + "'>");
+				$("#colorchart").html($("#colorchart").html() + '<tt>#');
+				$("#colorchart").html($("#colorchart").html() + clr[i] + clr[j] + clr[k] + '</tt></td>');
+			}
+			$("#colorchart").html($("#colorchart").html() + "</tr>");
+		}
+		$("#colorchart").html($("#colorchart").html() + "</table><br>");
+	}
+	*/
+}
+
 /* */
 
 /*-------------------------------------------------------- */
@@ -209,4 +253,16 @@ function changeForm() {
 	}
 	*/
 	
+}
+
+function content_OK() {
+	if (confirm("포스트를 게시하시겠습니까? ") == true)
+		;
+	else return;
+}
+
+function cancel() {
+	if (confirm("포스팅을 취소하시겠습니까? ") == true)
+		;
+	else return;
 }

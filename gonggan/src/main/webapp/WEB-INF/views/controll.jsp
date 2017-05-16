@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.Calendar, com.kh.gonggan.member.model.vo.Member"  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%
+Calendar cal = Calendar.getInstance();
+int year = cal.get(Calendar.YEAR);
+int month = cal.get(Calendar.MONTH) + 1;
+int today = cal.get(Calendar.DATE);
+%>
 <!DOCTYPE html>
 <!--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">-->
 <!-- 이거 있으면 부트스트랩 안먹음 -->
@@ -21,10 +28,31 @@
 <script type="text/javascript" src="js/controll.js"></script>
 <title>다정 title here</title>
 <script>
+	var year = <%= year %>;
+	var month = <%= month %>;
+	var today = <%= today %>;
+
 	$(document).ready(function() {
+		
+		reqVisitor();
+		
+		$("#year").text(year);
+		$("#month").text(month);
+		$("#today").text(today);
+		
+		$("#todayCnt").text();
+		
+		$("input[name='blogTitle']").keyup(function() {
+			$("#blogTitle").val($(this).val());
+        });
+
+		$("textarea[name='blogComment']").keyup(function() {
+			$("#blogComment").val($(this).val());
+        });
+
 		var nav = $(".fixedDiv");
 		var navoffset = $(".fixedDiv").offset();
-		
+
 		$(window).scroll(function () {
 			if ($(this).scrollTop() >= navoffset.top) {
 				nav.css("position", "fixed").css("top", 0);
@@ -92,16 +120,41 @@
 		</div>
 	</nav>
 	<div id="loginUserDetail" class="hidden">
-		<img src="images/idclick_icon.png">
-		<table>
-			<tr><td colspan="2"><button>로그아웃</button></td></tr>
-			<tr><td colspan="2"><a href="mypage.jsp">마이 페이지 </a></td></tr>
-			<tr>
-				<td><a href="home.jsp">내 블로그</a></td>
-				<td><a href="#">이웃 블로그</a></td>
-			</tr>
-		</table>
-	</div>
+			<table id="idclick_table">
+				<tr id="center_align">
+					<td>
+						<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
+						<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="#">로그아웃</a> 
+						<div id="dansun_line"></div>
+					</td>
+				</tr> 
+				<tr>
+					<td>
+						알림&nbsp;
+						<c:if test="">
+							<img src="images/idclick_new_icon.png" id="idclick_new_icon">
+						</c:if>
+					</td>
+				</tr>
+				<!-- <tr>
+							<td class="hover">
+ 								<font><a href="#"> 이대장 님이</a></font> <a href="#">동갑내기 부부의 세계로 가는 자전거 여행| 게시글에 댓글을 남기셨습니다.</a>
+							</td>
+						</tr>
+				<tr>
+				      <td class="hover">
+				            <font><a href="#"> 긍정의아이콘|토리|</a></font> <a href="#">님이 토리와 함께 추억쌓기 놀이 | 게시글에 좋아요를 누르셨습니다.</a>
+				      </td>
+				</tr> -->
+         		<tr>
+					<td class="hover">
+						chazevo님의 알림이 없습니다.
+					</td>
+				</tr>
+			</table>
+		</div>
 	<div class="divCenter">
 		<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
 			<defs>
@@ -134,7 +187,7 @@
 				</a>
 			</div>
 			<img id="blogControllImg" src="images/블로그관리_설명_마우스오버시.png" width="60%" class="hidden">
-			<img id="blogStatisticsImg" src="images/statistics.png" width="50%" class="hidden">
+			<img id="blogStatisticsImg" src="images/statistics.png" width="60%" class="hidden">
 		</div>
 		<div id="blogControll" class="divisionMargin2">
 			<fieldset>
@@ -142,9 +195,10 @@
 				<div class="bannerEditOuter">
 					<div class="bannerEdit text-center">
 						<!-- <h2>당신만의 공간에서 당신의 글을 만들어보세요.</h2> -->
-						<input id="blogTitle" type="text" value="당신만의 공간에서 당신의 글을 만들어보세요.">
+						<input id="blogTitle" type="text" value="당신만의 공간에서 당신의 글을 만들어보세요." disabled>
 						<hr class="whiteHr">
-						당신만의 공간에서 당신의 글을 만들어보세요.
+						<!-- 당신만의 공간에서 당신의 글을 만들어보세요.-->
+						<textarea id="blogComment" rows="3" disabled>당신만의 공간에서 당신의 글을 만들어보세요.</textarea>
 					</div>
 				</div>
 				<table width='100%'  class="divisionMargin">
@@ -166,15 +220,13 @@
 				<tr>
 					<td>제목</td>
 					<td>
-						<input type="text" class="full" value="당신만의 공간에서 당신의 글을 만들어보세요."
-						onchange="">
+						<input type="text" name="blogTitle" class="full" value="당신만의 공간에서 당신의 글을 만들어보세요.">
 					</td>
 				</tr>
 				<tr>
 					<td>내용</td>
 					<td>
-						<input type="text" class="full" value="당신만의 공간에서 당신의 글을 만들어보세요."
-						onchange="">
+						<textarea name="blogComment" rows="3" class="full" >당신만의 공간에서 당신의 글을 만들어보세요.</textarea>
 					</td>
 				</tr>
 				</table>
@@ -197,56 +249,56 @@
 				<tr>
 					<td>일기</td><td><input type="checkbox" checked disabled></td>
 					<td>자신의 느낌과 일상을 기록하는 기본메뉴</td>
-					<td><input type="radio" name="" checked>&nbsp;공개</td>
-					<td><input type="radio" name="">&nbsp;비공개</td>
+					<td><input type="radio" name="diaryOpenYn" value="" checked>&nbsp;공개</td>
+					<td><input type="radio" name="diaryOpenYn" value="" >&nbsp;비공개</td>
 				</tr>
 				<tr>
 					<td>장소</td>
 					<td><input type="checkbox"></td>
 					<td>위치정보가 첨부된 포스트를 작성할 수 있는 메뉴</td>
-					<td><input type="radio" name="" checked>&nbsp;공개</td>
-					<td><input type="radio" name="">&nbsp;비공개</td>
+					<td><input type="radio" name="placeOpenYn"  value="" checked>&nbsp;공개</td>
+					<td><input type="radio" name="placeOpenYn" value="" >&nbsp;비공개</td>
 				</tr>
 				<tr>
 					<td>리뷰</td>
 					<td><input type="checkbox"></td>
 					<td>사용후기, 방문후기 등 여러 후기들을 작성할 수 있는 메뉴</td>
-					<td><input type="radio" name="" checked>&nbsp;공개</td>
-					<td><input type="radio" name="">&nbsp;비공개</td>
+					<td><input type="radio" name="reviewOpenYn" value=""  checked>&nbsp;공개</td>
+					<td><input type="radio" name="reviewOpenYn" value="" >&nbsp;비공개</td>
 				</tr>
 				<tr>
 					<td>뮤직</td>
 					<td><input type="checkbox"></td>
 					<td>해당 음악을 유튜브로 연결이 가능하며 글을 작성할 수 있는 메뉴</td>
-					<td><input type="radio" name="" checked>&nbsp;공개</td>
-					<td><input type="radio" name="">&nbsp;비공개</td>
+					<td><input type="radio" name="musicOpenYn" value=""  checked>&nbsp;공개</td>
+					<td><input type="radio" name="musicOpenYn" value="" >&nbsp;비공개</td>
 				</tr>
 				<tr>
 					<td>영화</td>
 					<td><input type="checkbox"></td>
 					<td>영화를 첨부할 수 있고 글을 작성할 수 있는 메뉴</td>
-					<td><input type="radio" name="" checked>&nbsp;공개</td>
-					<td><input type="radio" name="">&nbsp;비공개</td>
+					<td><input type="radio" name="movieOpenYn" value=""  checked>&nbsp;공개</td>
+					<td><input type="radio" name="movieOpenYn" value="" >&nbsp;비공개</td>
 				</tr>
 				<tr>
 					<td>뉴스</td>
 					<td><input type="checkbox"></td>
 					<td>뉴스기사를 첨부할 수 있고 글을 작성할 수 있는 메뉴</td>
-					<td><input type="radio" name="" checked>공개</td>
-					<td><input type="radio" name="">&nbsp;비공개</td>
+					<td><input type="radio" name="newsOpenYn" value=""  checked>공개</td>
+					<td><input type="radio" name="newsOpenYn" value="" >&nbsp;비공개</td>
 				</tr>
 				</table>
 				<table width='100%' class="divisionMargin">
 				<tr><th colspan="3">메뉴 언어 설정 </th></tr>
 				<tr>
 					<td>
-						<input type="radio" name="" value="" checked>&nbsp;한국어
+						<input type="radio" name="language" value="ko" checked>&nbsp;한국어
 					</td>
 					<td>
-						<input type="radio" name="" value="">&nbsp;영어 
+						<input type="radio" name="language" value="eng">&nbsp;영어 
 					</td>
 					<td>
-						<input type="radio" name="" value="">&nbsp;일본어 
+						<input type="radio" name="language" value="jp">&nbsp;일본어 
 					</td>
 				</tr>
 			</table>
@@ -375,10 +427,10 @@
 		<div id="blogStatistics" class="divisionMargin2" style="display:none;">
 			<fieldset>
 				<legend>오늘 지표</legend>
-				2017. 4. 30<br>
+				<span id="year"></span>.<span id="month"></span>.<span id="today"></span><br>
 				조회수 | <span>16</span>건<br>
 				재방문율 | <span>13.5</span>%<br>
-				방문횟수 | <span>6</span>건<br>
+				방문횟수 | <span id="todayCnt">6</span>건<br>
 				이웃방문현황 | <span>2</span>명의 이웃이 방문 
 			</fieldset>
 			<hr class="grayHr">
@@ -390,23 +442,43 @@
 					$(function() {
 						$("#chart").highcharts({
 							chart: {
-								type: 'bar'
+								type: 'column'
 							},
 							title: {
 								text: ''
 							},
+							credits:{
+								enabled:false
+							},
+							legend: {
+					            symbolHeight:24,
+			                    layout: 'horizontal',
+			                    //backgroundColor: '#FFFFFF',
+			                    align: 'left',
+			                    verticalAlign: 'top',
+			                    floating: true,
+			                    shadow: false,
+			                    padding:20,
+			                    itemStyle: {
+			                        fontWeight: 'normal',
+			                        fontSize: '150%'
+			                    }
+			                },
 							xAxis: {
-								categories: ['0-10', '10-20', '20-30', '30-50', '50-60']
+								categories: ['0-10', '10-20', '20-30', '30-50', '50-60'],
 							},
 							yAxis: {
 								title: {
-									text: '??????'
+									text: ''
 								}
 							},
 							series: [{
+								color:'#BE6C95',
 								name: '여자',
 								data: [1, 0, 4]
-							}, {
+							}, 
+							{
+								color:'#307BB8',
 								name: '남자',
 								data: [5, 7, 3]
 							}]
@@ -415,7 +487,7 @@
 				</script>
 				<div class="divisionMargin">
 					<b>이웃 방문현황</b>
-					<span>12</span>명의 이웃이 방문<br>
+					<a href="">12</a>명의 이웃이 방문<br>
 					<a href="">aekek_jj</a>님,
 					<a href="">dazz:)</a>님,
 					<a href="">아이우@</a>님,

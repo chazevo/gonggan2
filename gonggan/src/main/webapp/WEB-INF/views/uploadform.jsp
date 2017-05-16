@@ -22,6 +22,11 @@
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
+		colorchart();
+
+		$("#colorchart td").click(function() {
+			contenttextcolor($(this).attr('bgColor'));
+		});
 		
 		$("#imo_icon").click(function() {
 			if ($("#imo_icon_area").hasClass("hidden")) {
@@ -79,8 +84,8 @@
 					<table id="idclick_table">
 						<tr id="center_align">
 							<td>
-								<a href="mypage.jsp">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-								<a href="#">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+								<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
+								<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="#">로그아웃</a> 
 								<div id="dansun_line"></div>
@@ -112,10 +117,10 @@
    
 			<div class="header-content">
 				<div class="header-content-inner">
-					<h2><a href="home.jsp">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
+					<h2><a href="myhome.do">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
 				</div>
 				<div class="header-content-inner2">
-					<a href="controll.jsp">
+					<a href="controll.do">
 					<img class="smallIcon"
 					src="images/KakaoTalk_Photo_2017-04-24-10-28-40_21.png"></a>
 				</div>
@@ -188,18 +193,15 @@
 					<!--<input type="hidden" id="title">-->
 					<tr>
 						<td>
-							<button type="button" data-toggle="collapse" data-target="#tag" id="tagadddbtn">태그 추가하기</button><button onclick="seeHTML();">소스보기</button><br>
-							<textarea id="dhtmlText"></textarea>
+							<button type="button" data-toggle="collapse" data-target="#tag" id="tagadddbtn">태그 추가하기</button>
 							<div id="tag" class="collapse">					
 								<input id="tagaddtext" type="text"  size="15" 
-									onkeydown="if(event.keyCode ==13) tagaddfunc();"><button id="tagaddOkBtn"  onclick="tagaddfunc();">확인</button>
+									onkeydown="if(event.keyCode ==13) tagaddfunc();">
+								<button id="tagaddOkBtn"  onclick="tagaddfunc();">확인</button>
 							</div>
 						</td>
 						<td colspan="3" id="tagview"></td>
 					</tr>
-					
-					
-					
 					<tr>
 						<td  id="">		
 							<!-- <select onchange="imageChange();">
@@ -213,7 +215,7 @@
 						</td>
 										
 						<td>
-							<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled=true>
+							<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
 							<div class="fileInputDiv">
 								<input type="button" value="첨 부 파 일" class="fileInputBtn" >
 								<input type="file" onchange="javascript:$('#filename').val($(this).val());">
@@ -228,10 +230,11 @@
 
 						<td id="imageOp_selected" >
 							<!-- <div id="content_backgound" ></div>  -->
-							<select class="imagess"  onchange="dairyBg();">
-							<option value="0" >선택 </option>
-							<option value="1" >하트 </option>
-							<option value="2">별</option></select>
+							<select class="imagess"  onchange="diaryBg();">
+								<option value="0" >선택 </option>
+								<option value="1" >하트 </option>
+								<option value="2">별</option>
+							</select>
 							
 							<input type="radio" name="imgBB" value="auto" onchange="imgBB(this);" checked>기본&nbsp;
 							<label class='radio-wrap'>
@@ -243,8 +246,6 @@
 								<i class='contain-icon'></i>
 							</label>
 						</td>
-						
-						
 					</tr>
 					<tbody id="bookTbody" style="display:none">
 						<tr>
@@ -254,9 +255,8 @@
 										<!-- <h4>도서 검색 </h4> --><br>
 										제목&nbsp;<input type="text">&nbsp;&nbsp;&nbsp;
 										저자&nbsp;<input type="text">&nbsp;&nbsp;&nbsp;
-										<button type="button" id="booksearchBtn">도 서 검 색</button><br><br>
-										
-										
+										<button type="button" id="booksearchBtn">도 서 검 색</button>
+										<br><br>
 										검색도서 표시 <br>
 										검색도서 표시 <br><br>
 										<button type="button" id="booksearchBtn">추 가 하 기</button>
@@ -357,50 +357,48 @@
 										onclick="je_doc.execCommand('removeformat', 'false', 'null')"> &nbsp;	
 											
 							<input type="image"  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
-	<!-- 이모티콘 -->
-      <div id="imo_icon_area" class="hidden">
-      <div id="box_icon">
-           <table id="idclick_table">
-              <tr id="center_align">
-                    <td>
-						<input type="image"  src="images/emoticon/1.png" width="20px" id="imo_icon"
-							onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
-						<input type="image"  src="images/emoticon/2.png" width="20px" id="imo_icon"
-							onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
-						<input type="image"  src="images/emoticon/3.png" width="20px" id="imo_icon"
-							onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
-						<input type="image"  src="images/emoticon/4.png" width="20px" id="imo_icon"
-							onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
-						<input type="image"  src="images/emoticon/5.png" width="20px" id="imo_icon"
-							onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
-						<input type="image"  src="images/emoticon/6.png" width="20px" id="imo_icon"
-							onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
-                    </td>
-              </tr> 
-	    	</table>
-         </div>
-   </div>
-   
-   
-   
-   
-   
+							
+							<!-- 이모티콘 -->
+							<div id="imo_icon_area" class="hidden">
+								<div id="box_icon">
+									<table id="idclick_table">
+										<tr id="center_align">
+											<td>
+												<input type="image"  src="images/emoticon/1.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/2.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/3.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/4.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/5.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
+												<input type="image"  src="images/emoticon/6.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
+											 </td>
+										</tr> 
+									</table>
+								</div>
+							</div>
+							
    <!-- END다정다정 -->		
 							<!-- <input type="image"  src="images/efErase_icon.png" id="content_allign_center" width="42px"
 										onclick="contentalligncenter();">ㄴㄹㄴㅇ색&nbsp; &nbsp;	&nbsp; 
-							<div id="colorchart"></div> -->
+							 -->
+							<div id="colorchart"></div>
 							
 							<select id=contenttextcolor2 onchange='contenttextcolor2()'>
-												<option class='imageOp'  selected  >글자색상 선택</option>
-												<option class='imageOp'  value='black'  style="background-color:black; color:white">검정색</option>
-												<option class='imageOp'  value='red'  style="background-color:red; color:white">빨강색 </option>
-												<option class='imageOp'  value='white'  style="background-color:white; color:black">흰색 </option>
-												<option class='imageOp'  value='yellow'  style="background-color:yellow; color:black">노란색 </option>
-												<option class='imageOp'  value='blue'  style="background-color:blue; color:white">파란색 </option>
-												<option class='imageOp'  value='pink' style="background-color:pink; color:white">분홍색 </option>
-												<option class='imageOp'  value='green' style="background-color:green; color:white"> 초록색 </option>
-												<option class='imageOp'  value='orange' style="background-color:orange; color:white">주황색</option>
-								</select>		
+								<option class='imageOp'  selected  >글자색상 선택</option>
+								<option class='imageOp'  value='black'  style="background-color:black; color:white">검정색</option>
+								<option class='imageOp'  value='red'  style="background-color:red; color:white">빨강색 </option>
+								<option class='imageOp'  value='white'  style="background-color:white; color:black">흰색 </option>
+								<option class='imageOp'  value='yellow'  style="background-color:yellow; color:black">노란색 </option>
+								<option class='imageOp'  value='blue'  style="background-color:blue; color:white">파란색 </option>
+								<option class='imageOp'  value='pink' style="background-color:pink; color:white">분홍색 </option>
+								<option class='imageOp'  value='green' style="background-color:green; color:white"> 초록색 </option>
+								<option class='imageOp'  value='orange' style="background-color:orange; color:white">주황색</option>
+							</select>
 						</td>
 								
 						<td>
@@ -422,21 +420,20 @@
 						<td class="uploadContent" colspan="4">
 							 <!-- <textarea id="textarea" rows="20" id="content" ></textarea> --> 
 							 <iframe id='editor' src="uploadHtml.do" style='width:100%;height:400px;' ></iframe>
-							 
-
-							
 						</td>
 					</tr>
 					<tr><td colspan="4"><input type="checkbox">&nbsp;나만보기</td></tr>
 					<tr>
 						<td colspan="4" class="footerDiv">
 							<div>
-								<a href=""><div class="grad"  onclick="content_OK()">등 록</div></a>&nbsp;
-								<a href=""><div class="grad">취 소</div></a>
+								<div class="grad"  onclick="content_OK()">등 록</div>&nbsp;
+								<div class="grad" onclick="cancel();">취 소</div>
 							</div>
 						</td>
 					</tr>
 				</table>
+				<button onclick="seeHTML();">소스보기</button><br>
+				<textarea id="dhtmlText"></textarea>
 				<br><br><br><br><br><br><br><br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br>

@@ -6,13 +6,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel='stylesheet' href='css/css.css'/> 
 <script type="text/javascript">
 	var postId = '<%= request.getParameter("postId") %>';
 	window.onload = function() {
-		alert(postId);
+		//alert(postId);
+	}
+	
+	function like(){
+		alert("좋아요");
 	}
 </script>
 </head>
 <body>
+<table align="center" class="postDetail">
+	<tr><td id="userId">${param.postId} </td></tr> 
+	<tr><td id="good"><label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;</td></tr>
+	<tr><td id="comm">댓글</td></tr>
+ 
+</table>
 </body>
 </html>

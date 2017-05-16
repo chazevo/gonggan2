@@ -86,4 +86,9 @@ public class HomeController {
 		return "massage";
 	}
 
+	@RequestMapping(value = "postDetail.do", method = RequestMethod.GET)
+	public String postDetail(Locale locale, Model model) {
+		logger.info("Welcome postDetail! ");
+		return "postDetail";
+	}
 }

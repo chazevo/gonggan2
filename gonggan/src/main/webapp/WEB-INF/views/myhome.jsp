@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.Calendar" %>
+    pageEncoding="UTF-8" import="java.util.Calendar, com.kh.gonggan.member.model.vo.Member"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <%
@@ -176,7 +176,7 @@ var imgVal = <%= imgVal %>;
 				<a href="#" style="display:inline-block">
 					<img src="images/default.png" height="40px"class="img-circle">&nbsp;chazevo 님
 				</a> &nbsp;
-				<a data-fancybox data-src="/gonggan/messageList.do"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
+				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=jis"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<ul class="nav navbar-nav navbar-right">

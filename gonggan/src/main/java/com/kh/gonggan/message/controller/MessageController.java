@@ -26,10 +26,10 @@ public class MessageController {
 		public ModelAndView memberList(@RequestParam String memberId1,
 				@RequestParam String memberId2, ModelAndView mv){
 			
-			List<Message> msglist = messageService.messageList(memberId1, memberId2);
+			List<Message> msgList = messageService.messageList(memberId1, memberId2);
 
 			mv.setViewName("massage");
-			mv.addObject("msglist", msglist);
+			mv.addObject("msgList", msgList);
 			
 			return mv;
 		

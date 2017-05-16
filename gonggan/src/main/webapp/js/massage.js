@@ -1,9 +1,8 @@
-var memberId1 = "jdj";
 var memberId2 = "jis";	
 
 function send_message() {
 		websocket = new WebSocket(
-				"ws://localhost:8080/gonggan/websocket/echo.do");
+				"ws://localhost:8577/gonggan/websocket/echo.do");
 		websocket.onopen = function(evt) {
 			onOpen(evt)
 		};
@@ -16,9 +15,8 @@ function send_message() {
 	function send() {
 		
 		var msg = $("#msg").val();
-		websocket.send("memberId1:" + memberId1 + " "
+		websocket.send("memberId1:" + loginUser + " "
 				+ "memberId2:" + memberId2 + " : " + msg);
-		$("#msg").val("");
 	}
 	
 	function onOpen(evt) {
@@ -40,7 +38,7 @@ function send_message() {
 	
 	function appendMessage(msg) {
 
-		if (msg.split(":")[1].split(" ")[0] == memberId1)
+		if (msg.split(":")[1].split(" ")[0] == loginUser)
 			$("#chatArea").append("<div class='sender'>"
 					+ msg.split(" : ")[1] + "</div>");
 		else if (msg.split(":")[2].split(" ")[0] == memberId2)
@@ -51,4 +49,8 @@ function send_message() {
 		var maxScroll = $(".massage").height() - chatAreaHeight;
 		$("#chatArea").scrollTop(maxScroll);
 		
+	}
+	
+	function popupClose() {
+		parent.$.fancybox.close();
 	}

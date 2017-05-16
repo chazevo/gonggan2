@@ -14,7 +14,9 @@
 	</resultMap>
 
 	<select id="msglist" parameterType="Map" resultMap="messageResult">
-	select * from message where sender = #{memberId1} and receiver = #{memberId2}
+	select * from message
+	where (sender = #{memberId1} and receiver = #{memberId2})
+	or (sender = #{memberId2} and receiver = #{memberId1})
 	order by msg_id
 	</select>
 	

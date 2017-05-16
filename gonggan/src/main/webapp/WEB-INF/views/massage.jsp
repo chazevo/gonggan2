@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.kh.gonggan.member.model.vo.Member" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,9 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/massage.js"></script> 
 <script type="text/javascript">
+	
+	var loginUser =  "${sessionScope.loginUser.getMember_id()}";
+	
 	window.onload = function() {
 		document.getElementById("msg").focus();
 		
@@ -26,18 +29,19 @@
 </head>
 <body class="massage">
 <div class="searchPost">
-	<p>GONGAN_JJ</p><a href=""><img class="right" src="images/massage_x_icon.png" ></a>
+	<p>GONGAN_JJ</p><a href="javascript:popupClose();"><img class="right" src="images/massage_x_icon.png" ></a>
 	<hr>
 	<div id="chatArea">
-		
-		<c:if test="${!empty msgList} ">
+	
+		<c:if test="${ !empty (msgList)}">
 			<c:forEach items="${ msgList}" var="i" begin ="0" >
-				<c:if test="${i.msg_sender eq sessionScope.loginUser}">
+				<c:if test="${i.sender eq sessionScope.loginUser.getMember_id()}">
 					<div class="sender">${i.msg_text }</div>
 				</c:if>
-				<c:if test="${i.msg_receiver eq sessionScope.loginUser}">
+				<c:if test="${i.receiver eq sessionScope.loginUser.getMember_id()}">
 					<div class="receiver">${i.msg_text }</div>
 				</c:if>
+			
 			</c:forEach>
 		</c:if>
 		

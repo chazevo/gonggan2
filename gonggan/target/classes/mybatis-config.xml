@@ -9,6 +9,7 @@
 		<typeAlias type="com.kh.gonggan.post.model.vo.Post" alias="post" />
 		<typeAlias type="com.kh.gonggan.comment.model.vo.Comment" alias="comment" />
 		<typeAlias type="com.kh.gonggan.member.model.vo.Member" alias="member" />
+		<typeAlias type="com.kh.gonggan.message.model.vo.Message" alias="message" />
 	</typeAliases>
 
  <!-- Sql Mapper 설정 -->
@@ -16,6 +17,7 @@
 	 	<mapper resource="mappers/post-mapper.xml" />
 	 	<mapper resource="mappers/comment-mapper.xml" />
 	 	<mapper resource="mappers/member-mapper.xml" />
+	 	<mapper resource="mappers/message-mapper.xml" />
 	 </mappers>
 	 
 </configuration>

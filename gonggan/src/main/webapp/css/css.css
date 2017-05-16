@@ -1132,6 +1132,23 @@ hr {
 	z-index: 1000;
 }
 
+.postDetail td {
+	width:500px;
+	border: 1px solid gray;
+	/* text-align:center; */
+}
+.postDetail td#userId {
+	height:50px;
+}
+
+.postDetail td#good {
+	height:30px;
+}
+.postDetail td#comm{
+	height:50px;
+}
+
+
 .fileInputTextbox {
 	width:60%;
 	float:left;

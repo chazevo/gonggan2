@@ -1,5 +1,6 @@
 var postId;
 var Ca = /\+/g;
+var str = "";
 
 
 function requestList() {
@@ -115,10 +116,10 @@ function callbackList2(data) {
 		postId = jsonArr.list[j].postId;
 		document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
 			+ "<img "
-			+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>" + "</td><tr>";
-		commentList(postId);
+			+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>" + "</td></tr>";
+		reqCommentList(postId);
 	}
-	  
+	
 	/*
 	$.ajax({
 	      url: "/gonggan/postlist.do",
@@ -134,7 +135,7 @@ function callbackList2(data) {
 
 }
 
-function commentList(postId) {
+function reqCommentList(postId) {
 
 	var jsonObj;
 	var jsonArr;
@@ -143,31 +144,74 @@ function commentList(postId) {
 	      url: "/gonggan/colist.do",
 	      data: {postId : postId},
 	      success: function(data) {
-	    	  
-	    	  jsonObj = JSON.stringify(data);
-	    	  jsonArr = JSON.parse(jsonObj);	
-	    	  
-	    	  document.getElementById("listbody").innerHTML +=
-	    		  "<tr><td class='moreComment' colspan='7'><a href='javascript:moreComment();'>더보기</a></td></tr>"
-	    		  + "<tbody id='commentTbody'>";
-	    	  for (var j in jsonArr.list){
-	    		  document.getElementById("listbody").innerHTML +=
-	    			  "<tr><td>" +jsonArr.list[j].writerId  +"</td>"
-	    			  + "<td colspan='6'>" + decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "));
-	    			  + "</td></tr>";
-	    	  }
-	    	  
-	    	  document.getElementById("listbody").innerHTML += "</tbody>"
-	    		  + "<tr><td colspan='7'>"
-	    		  + "<label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
-	    		  + "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
-	    		  +"<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
-	    		  +"<a href=''><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
+	    	  callbackCommentList(data);
 	      },
 	      error: function(data,status,error){
 	         console.log("error : " + error);
 	      }
 	   });
+}
+
+function callbackCommentList(data){
+
+	jsonObj = JSON.stringify(data);
+	jsonArr = JSON.parse(jsonObj);
+
+	var tr = document.createElement("tr");
+	var td = document.createElement("td");
+	
+	td.innerHTML = "<a href='javascript:moreComment();'>더보기</a>";
+	td.class = "moreComment";
+	td.colspan = "7";
+    tr.appendChild(td);
+    document.getElementById("listbody").appendChild(tr);
+
+	for (var j in jsonArr.list){
+	    tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.innerHTML = "<a href=''>" + jsonArr.list[j].writerId +"</a>";
+	    tr.appendChild(td);
+	    td = document.createElement("td");
+		td.innerHTML = decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "));
+		td.colspan = "6";
+	    tr.appendChild(td);
+	    document.getElementById("listbody").appendChild(tr);
+	}
+
+    tr = document.createElement("tr");
+	td = document.createElement("td");
+	td.innerHTML = "<label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
+	+ "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
+	+ "<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
+	+ "<a href=''><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
+	td.colspan = "7";
+    tr.appendChild(td);
+    document.getElementById("listbody").appendChild(tr);
+	
+    /*
+	//document.getElementById("listbody").innerHTML +=
+	str =
+		"<tr><td class='moreComment' colspan='7'><a href='javascript:moreComment();'>더보기</a></td></tr>"
+		+ "<tbody id='commentTbody'>";
+
+	for (var j in jsonArr.list){
+		//document.getElementById("listbody").innerHTML +=
+		str +=
+			"<tr><td><a href=''>" +jsonArr.list[j].writerId  +"</a></td>"
+			+ "<td colspan='6'>" + decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "))
+			+ "</td></tr>";
+	}
+	*/
+
+	/*
+	//document.getElementById("listbody").innerHTML += 
+	str += "</tbody>"
+		+ "<tr><td colspan='7'>"
+		+ "<label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
+		+ "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
+		+"<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
+		+"<a href=''><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
+	*/
 
 }
 

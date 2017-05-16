@@ -46,13 +46,13 @@ private MessageService messageService;
 	
 	 String sender = message.getPayload().split(":")[1].split(" ")[0];
 	 String receiver = message.getPayload().split(":")[2].split(" ")[0];
-	 String msg_text = message.getPayload().split(":")[2].split(" ")[1];
-	 
+	 String msg_text = message.getPayload().split(" : ")[1];
+
 	 String memberId2sSessionId;
 	 WebSocketSession memberId2sSession;
 	 
 	 int result = 0;
-	 
+
 	 if (!users2.containsKey(sender))
 		 users2.put(sender, session.getId());
 	 

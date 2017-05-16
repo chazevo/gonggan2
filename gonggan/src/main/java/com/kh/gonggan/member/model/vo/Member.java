@@ -10,13 +10,14 @@ public class Member {
 	private String profile;
 	private String member_gender;
 	private Date member_birth;
+	private int member_phone;
 	
 	public Member() {
 		super();
 	}
 
 	public Member(String member_id, String member_pw, String member_name, String email, String profile,
-			String member_gender, Date member_birth) {
+			String member_gender, Date member_birth, int member_phone) {
 		super();
 		this.member_id = member_id;
 		this.member_pw = member_pw;
@@ -25,6 +26,13 @@ public class Member {
 		this.profile = profile;
 		this.member_gender = member_gender;
 		this.member_birth = member_birth;
+		this.member_phone = member_phone;
+	}
+	public int getMember_phone(){
+		return member_phone;
+	}
+	public void setMember_phone(int member_phone){
+		this.member_phone = member_phone;
 	}
 
 	public String getMember_id() {
@@ -87,6 +95,6 @@ public class Member {
 	public String toString() {
 		return "Member [member_id=" + member_id + ", member_pw=" + member_pw + ", member_name=" + member_name
 				+ ", email=" + email + ", profile=" + profile + ", member_gender=" + member_gender + ", member_birth="
-				+ member_birth + "]";
+				+ member_birth + ", member_phone=" + member_phone + "]";
 	}
 }

@@ -146,7 +146,7 @@
                      </tr>
                      <tr>
                         <td>아이디 </td>
-                        <td><input type="text" id="memberId" name="member_id" value="<%=	loginUser.getMember_id()  %>" readonly></td>
+                        <td><input type="text" id="memberId" name="member_id" value="<%=loginUser.getMember_id()  %>" readonly></td>
                      </tr>
                      <tr>
                         <td>비밀번호</td>

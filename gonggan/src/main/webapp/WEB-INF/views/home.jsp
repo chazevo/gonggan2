@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,10 +82,10 @@
 				</td></tr>
 				<tr><td>
 				<form action="login.do" method="post" id="login">
-				<input class="divisionMargin login" type="text" id="id" placeholder="ID" name="member_id">
+				<input class="divisionMargin login" type="text" id="id" placeholder="ID" name="member_id" >
 				</td></tr>
 				<tr><td>
-				<input type="text" class=" login" placeholder="PASS" name="member_pw" id="pass">
+				<input type="text" class=" login" placeholder="PASS" name="member_pw" id="pass" onkeypress="if( event.keyCode==13 ){javascript:goSubmit();}">
 				</td></tr>
 				<tr><td>
 				<a href="javascript:goSubmit();"><div id="startBtn" class="divisionMargin2">S T A R T</div></a>

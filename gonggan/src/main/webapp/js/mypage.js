@@ -82,7 +82,6 @@ function profileImgDelete() {
 
 function deleteMem(){
    if(confirm("탈퇴하시겠습니까?") == true){
-      
    }else
       return;
 }

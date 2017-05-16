@@ -52,7 +52,7 @@ public class MemberController {
 		return mv;
 	}//로그인하기
 	
-	@RequestMapping("logOut.do")
+	@RequestMapping("/logOut.do")
 	public String logOut(HttpSession session){
 		if(session != null)
 			session.invalidate();
@@ -84,20 +84,22 @@ public class MemberController {
 	@RequestMapping("/update.do")
 	public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpSession session){
 		System.out.println(member);
-		Member loginUser  = memberService.loginCheck(member);
 		int updateResult = memberService.updateMember(member);
+		Member loginUser  = memberService.loginCheck(member);
 		session.setAttribute("loginUser", loginUser);
 		
 		if(updateResult<0){
 			session.setAttribute("error", "실패");
 		}
 		mv.setViewName("mypage");
+		
 		return mv;
-	}
+	}//회원 정보 수정
 	
-	@RequestMapping("delete.do")
+	@RequestMapping("/delete.do")
 	public String memberDelete(@RequestParam String member_id, Model model){
 		int deleteMem = memberService.deleteMember(member_id);
+		
 		return null;
 	}//회원 삭제
 

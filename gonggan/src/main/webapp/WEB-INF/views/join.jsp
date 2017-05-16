@@ -58,7 +58,7 @@
          onblur="blurEvent(this);"/>
           </span>님과 연락할 수 있는 <br>
          <span id="phoneSpan">
-            <input type="text" name="phone" value="" placeholder=" 휴대전화 번호" title="휴대전화 번호 입력(숫자만 입력가능)" class="phone join" maxlength="11" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style="ime-mode:disabled;"
+            <input type="text" name="member_phone" value="" placeholder=" 휴대전화 번호" title="휴대전화 번호 입력(숫자만 입력가능)" class="phone join" maxlength="11" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style="ime-mode:disabled;"
             onblur="blurEvent(this);"/>
             <em>숫자만 입력해 주세요.</em>
          </span>와 

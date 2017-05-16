@@ -35,11 +35,11 @@
    </insert>
 	
 	<update id="mupdate" parameterType="member">
-	UPDATE MEMBER SET EMAIL=#{email} WHERE MEMBER_ID = #{member_id} AND MEMBER_PW=#{member_pw}
+	UPDATE MEMBER SET EMAIL=#{email} WHERE MEMBER_ID = #{member_id} AND MEMBER_PW = #{member_pw}
 	</update>
 	
 	<delete id="mdelete">
-	delete from member
+	delete from member where member_id = #{member_id}
 	</delete>
 	
 	<select id="neigList">

@@ -25,7 +25,7 @@ public class MemberDao {
 	}
 	
 	public int insertMember(Member member){
-		return sqlSession.insert("minsert", member);
+		return sqlSession.insert("membermapper.minsert", member);
 	}//회원 등록
 	
 	public List<Member> memberList(){
@@ -42,8 +42,6 @@ public class MemberDao {
 	}//회원 정보 삭제
 	
 	public int updateMember(Member mem){
-		System.out.println("asdf");
-		System.out.println(mem);
 		return sqlSession.update("membermapper.mupdate", mem);
 	}//회원 정보 수정
 	

@@ -1,6 +1,7 @@
 package com.kh.gonggan.member.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.gonggan.member.model.vo.Member;
 
@@ -10,7 +11,7 @@ public interface MemberService {
 
 	List<Member> memberList();
 
-	int insertMember(Member mem);
+	int insertMember(Member member);
 
 	Member selectMember(String memberId);
 
@@ -19,7 +20,15 @@ public interface MemberService {
 	int updateMember(Member mem);
 
 	Member selectId(String email);
+/*
+	Member selectPw(String memberId, String email);*/
 
-	Member selectPw(String memberId, String email);
+	String getPw(Map<String, Object> paramMap);
+
+	int requestNeig(String memberId);
+
+	int checkNeig(String memberId);
+
+	List<Member> neigList();
 
 }

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.kh.gonggan.member.model.vo.Member"%>
+
+<%
+	Member loginUser = (Member) session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -158,13 +163,26 @@
 				</tr>
 			</table>
 			<div class="myDiv">
-				GONGGAN_JJ 님 <hr class="whiteHr">
-				<b><a href="">내 블로그 소식</a></b>
+			
+				<%
+					if(loginUser == null){
+				%>
+				<%
+					}else{
+				%>
+				<%=	loginUser.getMember_name()  %>님
+				<a href="/gonggan/logOut.do">로그아웃</a>
+				<!-- <a href="/gonggan/update.do">정보수정</a> -->
+				<hr class="whiteHr">
+				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
 				<a href="">나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.jsp">포스트 쓰기</a>
 				<a href="home.jsp"><div class="goToMyBlog">내 블로그 </div></a>
 				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
+				<%
+					}
+				%>
 			</div>
 		</div>
 		<section>

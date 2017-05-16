@@ -1,52 +1,53 @@
 package com.kh.gonggan.good.model.vo;
 
 public class Good {
-	private int POST_ID;
-	private String MEMBER_ID;
-	private String GOOD_CHECK;
+	private int post_id;
+	private String member_id;
+	private String good_check;
 	
 	public Good(){}
 
-	public Good(int pOST_ID, String mEMBER_ID, String gOOD_CHECK) {
+	public Good(int post_id, String member_id, String good_check) {
 		super();
-		POST_ID = pOST_ID;
-		MEMBER_ID = mEMBER_ID;
-		GOOD_CHECK = gOOD_CHECK;
+		this.post_id = post_id;
+		this.member_id = member_id;
+		this.good_check = good_check;
 	}
 
-	public Good(int pOST_ID, String mEMBER_ID) {
+	public Good(int post_id, String member_id) {
 		super();
-		POST_ID = pOST_ID;
-		MEMBER_ID = mEMBER_ID;
+		this.post_id = post_id;
+		this.member_id = member_id;
 	}
 
-	public int getPOST_ID() {
-		return POST_ID;
+	public int getPost_id() {
+		return post_id;
 	}
 
-	public void setPOST_ID(int pOST_ID) {
-		POST_ID = pOST_ID;
+	public void setPost_id(int post_id) {
+		this.post_id = post_id;
 	}
 
-	public String getMEMBER_ID() {
-		return MEMBER_ID;
+	public String getMember_id() {
+		return member_id;
 	}
 
-	public void setMEMBER_ID(String mEMBER_ID) {
-		MEMBER_ID = mEMBER_ID;
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
 
-	public String getGOOD_CHECK() {
-		return GOOD_CHECK;
+	public String getGood_check() {
+		return good_check;
 	}
 
-	public void setGOOD_CHECK(String gOOD_CHECK) {
-		GOOD_CHECK = gOOD_CHECK;
+	public void setGood_check(String good_check) {
+		this.good_check = good_check;
 	}
 
 	@Override
 	public String toString() {
-		return "Good [POST_ID=" + POST_ID + ", MEMBER_ID=" + MEMBER_ID + ", GOOD_CHECK=" + GOOD_CHECK + "]";
+		return "Good [post_id=" + post_id + ", member_id=" + member_id + ", good_check=" + good_check + "]";
 	}
+
 	
 }

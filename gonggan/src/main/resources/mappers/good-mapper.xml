@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodmapper">
+
+	<resultMap type="good" id="goodResult">
+		<result property="post_id" column="post_id" />
+		<result property="member_id" column="member_id" />
+		<result property="good_check" column="good_check" />
+	</resultMap>
+
+	
+	<insert id="ginsert" parameterType="good">
+	insert into good values(#{post_id}, #{member_id},'N')
+	</insert>
+	
+	<select id="gcheck" parameterType="good" resultMap="goodResult">
+	select * from good where post_id = #{post_id} and member_id = #{member_id}
+	</select>
+	
+	<delete id="gdelete" parameterType="good">
+	delete from good 
+	where post_id = #{post_id} and member_id = #{member_id}
+	</delete>
+
+
+</mapper>

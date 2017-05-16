@@ -477,7 +477,11 @@ textarea {
 	width:85%;
 }
 
-.dotdotdotDiv {
+#dotdotdotDiv {
+	position:absolute;
+	background-color:white;
+	right:0;
+	bottom:0;
 	display:none;
 	width:15%;
 	text-align:center;
@@ -1133,8 +1137,11 @@ hr {
 }
 
 .postDetail td {
-	width:500px;
+	position:relative;
+	border-collapse: collapse;
 	border: 1px solid gray;
+	vertical-align:middle;
+	padding:15px;
 	/* text-align:center; */
 }
 .postDetail td#userId {
@@ -1147,6 +1154,21 @@ hr {
 .postDetail td#comm{
 	height:50px;
 }
+.postDetail .hour{
+	right:0;
+	margin-right:15px;
+	font-size:140%;
+	color:#b5b5b5;
+}
+.postDetail a{
+	color:black;
+}
+.postDetail #userId img{
+	margin-right:10px;
+	border: 1px solid gray;
+}
+
+
 
 
 .fileInputTextbox {

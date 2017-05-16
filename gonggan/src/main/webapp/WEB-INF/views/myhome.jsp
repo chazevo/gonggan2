@@ -59,6 +59,7 @@ System.out.println(str);
 <script src="js/jquery.fancybox.js"></script>
 <script src="js/myhome.js"></script>
 <script type="text/javascript">
+var loginUser = '${sessionScope.loginUser.getMember_id()}';
 var year = <%= year %>;
 var month = <%= month %>;
 var today = <%= today %>;
@@ -67,6 +68,7 @@ var lastdate = <%= lastdate %>;
 var imgVal = <%= imgVal %>;
 
 	window.onload = function() {
+		visit();
 		requestList();
 		
 		$("#year").text(year);
@@ -253,7 +255,7 @@ var imgVal = <%= imgVal %>;
 							</table>
 						</td></tr>
 						</table>
-						<div class=dotdotdotDiv>
+						<div id="dotdotdotDiv">
 							<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
 							<a class="hover dotdotdot" href="" >공유</a>
 							<a class="hover dotdotdot" href="">쪽지 보내기</a>

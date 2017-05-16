@@ -64,6 +64,7 @@ public class PostController {
 				job.put("postId", p.getPostId() + "");
 				job.put("sharYn", p.getSharYn());
 				job.put("openYn", p.getOpenYn());
+				job.put("writerId", p.getWriterId());
 				job.put("goodCnt", p.getGoodCnt() + "");
 				job.put("photoPath", (p.getPhotoPath()==null ? "0" : p.getPhotoPath()));
 				job.put("year", cal.get(Calendar.YEAR) + "");

@@ -10,6 +10,8 @@
 		<typeAlias type="com.kh.gonggan.comment.model.vo.Comment" alias="comment" />
 		<typeAlias type="com.kh.gonggan.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.kh.gonggan.message.model.vo.Message" alias="message" />
+		<typeAlias type="com.kh.gonggan.good.model.vo.Good" alias="good" />
+		<typeAlias type="com.kh.gonggan.blog.model.vo.Blog" alias="blog" />
 	</typeAliases>
 
  <!-- Sql Mapper 설정 -->
@@ -18,6 +20,8 @@
 	 	<mapper resource="mappers/comment-mapper.xml" />
 	 	<mapper resource="mappers/member-mapper.xml" />
 	 	<mapper resource="mappers/message-mapper.xml" />
+	 	<mapper resource="mappers/good-mapper.xml" />
+	 	<mapper resource="mappers/blog-mapper.xml" />
 	 </mappers>
 	 
 </configuration>

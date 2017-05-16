@@ -1,5 +1,7 @@
 package com.kh.gonggan.good.model.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,9 +39,9 @@ public class GoodDao {
 	}//good 카운트 감소
 
 
-	public int goodCheck(int postId, String memberId) {
+	public Object goodCheck(int postId, String memberId) {
 		Good gmember = new Good(postId, memberId);
-		return sqlSession.update("goodMapper.gcheck", gmember);
+		return sqlSession.selectOne("goodmapper.gcheck", gmember);
 	}//good 알람 체크 여부
 
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="messagemapper">
+
+	<resultMap type="message" id="messageResult">
+		<id property="msg_id" column="msg_id" />
+		<result property="sender" column="sender" />
+		<result property="receiver" column="receiver" />
+		<result property="msg_text" column="msg_text" />
+		<result property="msg_date" column="msg_date" />
+		<result property="check_yn" column="check_yn" />
+	</resultMap>
+
+	<select id="msglist" parameterType="Map" resultMap="messageResult">
+	select * from message where sender = #{memberId1} and receiver = #{memberId2}
+	order by msg_id
+	</select>
+	
+	<insert id="msginsert" parameterType="Map" >
+	insert into message values(sequence_msg.nextval, #{memberId1}, #{memberId2}, #{msg_text},sysdate, #{check_yn})
+	</insert>
+	
+</mapper>

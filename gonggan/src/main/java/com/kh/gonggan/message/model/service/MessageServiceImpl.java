@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.gonggan.message.model.dao.MessageDao;
 import com.kh.gonggan.message.model.service.MessageService;
 import com.kh.gonggan.message.model.vo.Message;
+
 @Service("messageService")
 public class MessageServiceImpl implements MessageService{
 	//현재 클래스를 스프링에서 관리하는 service bean으로 등록

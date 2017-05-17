@@ -13,7 +13,19 @@
 		<result property="member_birth" column="member_birth"/>
 		<result property="member_phone"	column="member_phone"/>
 	</resultMap>
-
+	
+	<!-- 
+	<resultMap type="visitor" id="blogResult">
+		<result property="title" column="title" />
+		<result property="writer_id" column="writer_id" />
+		<result property="contents" column="contents" />
+		<result property="background" column="background" />
+		<result property="color" column="color" />
+		<result property="languages" column="languages" />
+		<result property="blog_open_yn" column="blog_open_yn" />
+		<result property="blog_id" column="blog_id" />
+	</resultMap>
+ -->
 	<select id="loginSelect" parameterType="member"  resultMap="memberResult">
 		SELECT * FROM MEMBER
 		WHERE MEMBER_ID = #{member_id} AND MEMBER_PW = #{member_pw}
@@ -53,5 +65,10 @@
 	<update id="checkNeig">
 	update 
 	</update>
+	
+	<select id="selectVisitorList" parameterType="String" resultMap="memberResult">
+		select * from member
+		where member_id in (select visitor_id from visitor where blog_id = #{blog_id});
+	</select>
 	
 </mapper>

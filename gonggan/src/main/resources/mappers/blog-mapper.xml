@@ -15,15 +15,16 @@
 		<result property="blog_id" column="blog_id" />
 	</resultMap>
 
-
 	<insert id="binsert" parameterType="blog">
-		insert into blog values(#{post_id}, #{member_id},'N')
+		insert into blog values(
+		#{title}, #{writer_id}, #{contents}, #{background}, #{color},
+		#{languages}, #{blog_open_yn}, #{blog_id})
 	</insert>
+	<select id="bselect" resultMap="blogResult" parameterType="String">
+		select * from blog where writer_id = #{writer_id}
+	</select>
 
-	<delete id="bdelete" parameterType="blog">
-		delete from blog
-		where post_id = #{post_id} and member_id = #{member_id}
-	</delete>
+
 
 
 </mapper>

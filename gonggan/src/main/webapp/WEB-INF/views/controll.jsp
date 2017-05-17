@@ -31,7 +31,8 @@ int today = cal.get(Calendar.DATE);
 	var year = <%= year %>;
 	var month = <%= month %>;
 	var today = <%= today %>;
-
+	var writer_id = "jdj";
+	
 	$(document).ready(function() {
 		
 		reqVisitor();
@@ -113,10 +114,16 @@ int today = cal.get(Calendar.DATE);
 				<img class="" src="images/KakaoTalk_Photo_2017-04-22-23-02-45.png" width="70px">
 				<img class="" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
 		</div>
+	
 		<div class="navbar-right">
-			<a id="loginUser" class="navbar-brand" href="#" >
-				<img src="images/default.png" height="40px"
-							class="img-circle">&nbsp;chazevo 님 </a>
+			<c:if test="${!empty sessionScope.loginUser }">
+				<a id="loginUser" class="navbar-brand" href="#" >
+					<img src="images/default.png" height="40px"
+								class="img-circle"> &nbsp; ${sessionScope.loginUser.getMember_id() } 님 </a>
+			</c:if>
+			<c:if test="${empty sessionScope.loginUser }">
+				<a class="navbar-brand"  href="" >	로그인or회갑부분</a>
+			</c:if>
 		</div>
 	</nav>
 	<div id="loginUserDetail" class="hidden">
@@ -150,7 +157,7 @@ int today = cal.get(Calendar.DATE);
 				</tr> -->
          		<tr>
 					<td class="hover">
-						chazevo님의 알림이 없습니다.
+						${sessionScope.loginUser.getMember_id() }님의 알림이 없습니다.
 					</td>
 				</tr>
 			</table>
@@ -429,9 +436,9 @@ int today = cal.get(Calendar.DATE);
 				<legend>오늘 지표</legend>
 				<span id="year"></span>.<span id="month"></span>.<span id="today"></span><br>
 				조회수 | <span>16</span>건<br>
-				재방문율 | <span>13.5</span>%<br>
+				재방문율 | <span>13.5</span>%<br> <!-- 어제(한달전) 방문했던 오늘(이번달) 방문자수 / (한달전)어제 방문자수 -->
 				방문횟수 | <span id="todayCnt">6</span>건<br>
-				이웃방문현황 | <span>2</span>명의 이웃이 방문 
+				이웃방문현황 | <span id="todayNeigborCnt">2</span>명의 이웃이 방문 
 			</fieldset>
 			<hr class="grayHr">
 			<fieldset>
@@ -488,24 +495,24 @@ int today = cal.get(Calendar.DATE);
 				<div class="divisionMargin">
 					<b>이웃 방문현황</b>
 					<a href="">12</a>명의 이웃이 방문<br>
-					<a href="">aekek_jj</a>님,
-					<a href="">dazz:)</a>님,
-					<a href="">아이우@</a>님,
-					<a href="">bacde</a>님,
-					<a href="">gkgkzoo</a>님,
-					<a href="">다랭이</a>님,
-					<a href="">skyVV</a>님,
-					<a href="">aekek_jj</a>님,
-					<a href="">dazz:)</a>님,<br>
-					<a href="">아이우@</a>님,
-					<a href="">bacde</a>님,
-					<a href="">gkgkzoo</a>님 <br>
+					<a href="myhome.do?userId=">aekek_jj</a>님,
+					<a href="myhome.do?userId=">dazz:)</a>님,
+					<a href="myhome.do?userId=">아이우@</a>님,
+					<a href="myhome.do?userId=">bacde</a>님,
+					<a href="myhome.do?userId=">gkgkzoo</a>님,
+					<a href="myhome.do?userId=">다랭이</a>님,
+					<a href="myhome.do?userId=">skyVV</a>님,
+					<a href="myhome.do?userId=">aekek_jj</a>님,
+					<a href="myhome.do?userId=">dazz:)</a>님,<br>
+					<a href="myhome.do?userId=">아이우@</a>님,
+					<a href="myhome.do?userId=">bacde</a>님,
+					<a href="myhome.do?userId=">gkgkzoo</a>님 <br>
 				</div>
 				<div class="divisionMargin">
 					<b>이웃 증감수</b>
 					<span>2</span>명의 이웃이 증가 <br>
-					<a href="">bacde</a>님,
-					<a href="">gkgkzoo</a>님
+					<a href="myhome.do?userId=">bacde</a>님,
+					<a href="myhome.do?userId=">gkgkzoo</a>님
 				</div>
 			</fieldset>
 			<hr class="grayHr">

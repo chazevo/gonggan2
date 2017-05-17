@@ -1,5 +1,14 @@
 function reqVisitor() {
-	
+	$.ajax({
+	      url: "/gonggan/selectVisitorList.do",
+	      data: {writer_id : writer_id},
+	      success: function(data) {
+	    	  alert(data);
+	      },
+	      error: function(data,status,error){
+	         console.log("error : " + error);
+	      }
+	   });
 }
 
 function tab(val) {

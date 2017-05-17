@@ -153,6 +153,15 @@ overflow-x: hidden; } */
 
 }
 
+#colorchart {
+	width:25%;
+}
+
+#colorchart table {
+	display:inline-block;
+	width:25%;
+}
+
 #colorchart td:hover {
 	cursor:pointer;
 }

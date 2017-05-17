@@ -112,8 +112,17 @@ var imgVal = <%= imgVal %>;
 					<img class="" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
 			</div>
 			<div class="navbar-right">
-				<a id="loginUser" class="navbar-brand"  href="#" >
-				<img src="images/default.png" height="40px" class="img-circle">&nbsp;chazevo 님 </a>
+					<c:if test="${empty sessionScope.loginUser }">
+						<a class="navbar-brand"  href="" >
+							로그인or회갑부분
+						</a>
+					</c:if>
+					<c:if test="${!empty sessionScope.loginUser }">
+						<a id="loginUser" class="navbar-brand"  href="" >
+							<img src="images/default.png" height="40px" class="img-circle">&nbsp;
+							${sessionScope.loginUser.getMember_id() } 님
+						</a>
+					</c:if>
 				
 			</div>
 		</nav>
@@ -221,7 +230,9 @@ var imgVal = <%= imgVal %>;
 						<table width="100%">
 						<tr>
 							<th class="th">
-								<a href="uploadform.do">포스트 쓰기 </a>
+								<c:if test="${sessionScope.loginUser.getMember_id() eq param.userId}}">
+									<a href="uploadform.do">포스트 쓰기 </a>
+								</c:if>
 								<label class='radio-wrap'>
 									<input type='radio' name='listType' id='calendar'  onclick='requestList();' checked>
 									<i class='calendar-icon'></i>

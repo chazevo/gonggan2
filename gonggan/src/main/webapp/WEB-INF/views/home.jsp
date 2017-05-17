@@ -1,10 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+ <%@page import="com.kh.gonggan.member.model.vo.Member"%>
+
+<%
+	Member loginUser = (Member) session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%
+	if (loginUser.getMember_id() != null) {
+%>
+   	<meta http-equiv="Refresh" content="0; URL=index2.jsp"/>  	
+<%
+    }
+%> --%>
 <title>Insert title here</title>
 <link rel='stylesheet' href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css'/> 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">

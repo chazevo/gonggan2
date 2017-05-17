@@ -47,7 +47,7 @@
       <div class="navbar-right">
          <a id="loginUser" class="navbar-brand" href="#" >
             <img src="images/default.png" height="40px"
-                     class="img-circle">&nbsp;chazevo 님 </a>
+                     class="img-circle">&nbsp;<%=	loginUser.getMember_id()  %> 님 </a>
       </div>
    </nav>
          <div id="loginUserDetail" class="hidden">
@@ -79,7 +79,7 @@
                </tr> -->
                   <tr>
                   <td class="hover">
-                     chazevo님의 알림이 없습니다.
+                     <%=	loginUser.getMember_id()  %>님의 알림이 없습니다.
                   </td>
                </tr>
             </table>
@@ -173,7 +173,7 @@
                      <tr>
                         <td colspan="2" class="footerDiv">
                            <div>
-                              <a href="javascript:editInfo();" style="display:inline-block;"><div class="grayBorder" id="editInfo">수정</div></a> &nbsp;
+                              <a href="javascript:editInfo();" style="display:inline-block;"><div class="grayBorder" id="editInfo" >수정</div></a> &nbsp;
                               <!-- c취소하기안나옴!! 수정필요 -->
                               <a href="javascript:editInfo2();" style="display:inline-block;"><div class="grayBorder" id="editcancel" style="display:none;">취소</div></a>
                            </div>
@@ -182,6 +182,10 @@
                   </table>
                   </form>
                </td>
+               <form action="/gonggan/delete.do" method="post" id="update">
+               	<input type="hidden" value="<%=loginUser.getMember_id() %>" name="member_id">
+               	<input type="submit" value="회원탈퇴">
+               </form>
                
                
                <!-- 마이페이지의 쪽지부분 -->

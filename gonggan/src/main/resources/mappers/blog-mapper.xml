@@ -24,7 +24,9 @@
 		select * from blog where writer_id = #{writer_id}
 	</select>
 
-
-
-
+	<select id="selectBlogId" resultMap="blogResult" parameterType="String">
+		select blog_id from blog
+		where writer_id = #{writer_id}
+	</select>
+	
 </mapper>

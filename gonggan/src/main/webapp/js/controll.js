@@ -3,12 +3,57 @@ function reqVisitor() {
 	      url: "/gonggan/selectVisitorList.do",
 	      data: {writer_id : writer_id},
 	      success: function(data) {
-	    	  alert(data);
+	    	  callbackVisitorList(data);
 	      },
 	      error: function(data,status,error){
 	         console.log("error : " + error);
 	      }
 	   });
+}
+
+function reqNeighborVisitor() {
+	$.ajax({
+	      url: "/gonggan/selectNeigborVisitorList.do",
+	      data: {writer_id : writer_id},
+	      success: function(data) {
+	    	  callbackNeighborVisitorList(data);
+	      },
+	      error: function(data,status,error){
+	         console.log("error : " + error);
+	      }
+	   });
+}
+
+function callbackVisitorList(data) {
+
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+
+	$("#todayCnt").text(jsonArr.list.length);
+
+	/*
+	for (var j in jsonArr.list){
+		jsonArr.list[j].gender
+		jsonArr.list[j].birth
+		jsonArr.list[j].member_id
+	}
+	*/
+}
+
+function callbackNeighborVisitorList(data) {
+
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+
+	$("#todayNeighborCnt").text(jsonArr.list.length);
+	
+	
+	for (var j in jsonArr.list){
+		$("#visitedNeighbor").html(jsonArr.list[j].member_id);
+
+	}
+	
+
 }
 
 function tab(val) {

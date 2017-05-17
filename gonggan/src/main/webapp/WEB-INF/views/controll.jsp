@@ -31,17 +31,16 @@ int today = cal.get(Calendar.DATE);
 	var year = <%= year %>;
 	var month = <%= month %>;
 	var today = <%= today %>;
-	var writer_id = "jdj";
+	var writer_id = "jieun";
 	
 	$(document).ready(function() {
 		
 		reqVisitor();
+		reqNeighborVisitor();
 		
 		$("#year").text(year);
 		$("#month").text(month);
 		$("#today").text(today);
-		
-		$("#todayCnt").text();
 		
 		$("input[name='blogTitle']").keyup(function() {
 			$("#blogTitle").val($(this).val());
@@ -80,6 +79,19 @@ int today = cal.get(Calendar.DATE);
 				$("#loginUserDetail").hide();
 			}
 		});
+		
+		$("#todayNeighborCnt").click(function() {
+			if ($("#visitedNeighbor").hasClass("hidden")) {
+				$("#visitedNeighbor").removeClass("hidden");
+				$("#visitedNeighbor").show();
+				}
+			else {
+				$("#visitedNeighbor").addClass("hidden");
+				$("#visitedNeighbor").hide();
+			}
+		});
+		
+		
 		
 		//$("#blogStatisticsImg").offset({left: $("#blogStatisticsImg").offset().left});
 		
@@ -435,10 +447,11 @@ int today = cal.get(Calendar.DATE);
 			<fieldset>
 				<legend>오늘 지표</legend>
 				<span id="year"></span>.<span id="month"></span>.<span id="today"></span><br>
-				조회수 | <span>16</span>건<br>
+				조회수 | <span></span>건<br>
 				재방문율 | <span>13.5</span>%<br> <!-- 어제(한달전) 방문했던 오늘(이번달) 방문자수 / (한달전)어제 방문자수 -->
-				방문횟수 | <span id="todayCnt">6</span>건<br>
-				이웃방문현황 | <span id="todayNeigborCnt">2</span>명의 이웃이 방문 
+				방문횟수 | <span id="todayCnt"></span>건<br>
+				이웃방문현황 | <a href="" id="todayNeighborCnt"></a>명의 이웃이 방문 
+				<div id="visitedNeighbor" class="hidden"></div>
 			</fieldset>
 			<hr class="grayHr">
 			<fieldset>

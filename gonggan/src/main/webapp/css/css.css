@@ -1090,7 +1090,7 @@ hr {
 	margin: auto;
 }
 
-#editProfile, #editInfo, #editcancel {
+#editProfile, #editInfo, #editProfileCancel, #editInfoCancel {
 	color:#E6E6E6;
 }
 

@@ -120,6 +120,9 @@ function callbackList2(data) {
 	var jsonObj = JSON.stringify(data);
 	var jsonArr = JSON.parse(jsonObj);	
 
+	var tr;
+	var td;
+	
 	$("#todayHeader").hide();
 	$('.CalendarHeader').hide();
 	$('#listbody').removeClass("cal");
@@ -128,123 +131,99 @@ function callbackList2(data) {
 		document.getElementById("listbody").deleteRow(0);
 	
 	for (var j in jsonArr.list){
+		
 		postId = jsonArr.list[j].postId;
-		document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
-			+ "<img "
+		
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		//document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
+		
+		td.innerHTML = "<img "
 			+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>" + "</td></tr>";
+		tr.appendChild(td);
+		document.getElementById("listbody").appendChild(tr);
+		
 		reqCommentList(postId);
+		
 	}
-	
-	/*
-	$.ajax({
-	      url: "/gonggan/postlist.do",
-	      data: {},
-	      success: function(data) {
-	    	  commentList(data);
-	      },
-	      error: function(data,status,error){
-	         console.log("error : " + error);
-	      }
-	   });
-	  */
-
 }
 
 function reqCommentList(postId) {
 
-	var jsonObj;
-	var jsonArr;
-	
 	$.ajax({
-	      url: "/gonggan/colist.do",
-	      data: {postId : postId},
-	      success: function(data) {
-	    	  callbackCommentList(data);
-	      },
-	      error: function(data,status,error){
-	         console.log("error : " + error);
+		async: false,
+		//Ajax를 통해 서버측에 데이터를 요청하고, 이 데이터의 결과를 모두 수신 받은 다음 단계로 진행하도록
+		url: "/gonggan/colist.do",
+		data: {postId : postId},
+		success: function(data) {
+			callbackCommentList(data, postId);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
 	      }
-	   });
+	});
 }
 
-function callbackCommentList(data){
+function callbackCommentList(data, postId){
 
-	jsonObj = JSON.stringify(data);
-	jsonArr = JSON.parse(jsonObj);
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
 
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
+	var tbody = document.createElement("tbody");
 	
-	td.innerHTML = "<a href='javascript:moreComment();'>더보기</a>";
+	td.innerHTML = "<a href='javascript:moreComment(" + postId + ");'>더보기</a>";
 	td.class = "moreComment";
 	td.colspan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
 
-	for (var j in jsonArr.list){
+	for (var j ; j<3 ; j++){
+		if (j > jsonArr.list.length - 1) break;
 	    tr = document.createElement("tr");
 		td = document.createElement("td");
 		td.innerHTML = "<a href=''>" + jsonArr.list[j].writerId +"</a>";
+		td.width = "30%";
 	    tr.appendChild(td);
 	    td = document.createElement("td");
 		td.innerHTML = decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "));
 		td.colspan = "6";
 	    tr.appendChild(td);
-	    document.getElementById("listbody").appendChild(tr);
+	    tbody.appendChild(tr);
+	    //document.getElementById("listbody").appendChild(tr);
 	}
+	document.getElementById("listbody").appendChild(tbody);
 
     tr = document.createElement("tr");
 	td = document.createElement("td");
-	td.innerHTML = "<label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
+	td.innerHTML = "<label class='checkbox-wrap'>"
+	+ "<input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
 	+ "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
-	+ "<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
-	+ "<a href='javascript:dotdotdot();'><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
+	+ "<a href='javascript:sendComment();'>"
+	+ "<img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
+	+ "<a href='javascript:dotdotdot();'>"
+	+ "<img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
 	td.colspan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
-	
-    /*
-	//document.getElementById("listbody").innerHTML +=
-	str =
-		"<tr><td class='moreComment' colspan='7'><a href='javascript:moreComment();'>더보기</a></td></tr>"
-		+ "<tbody id='commentTbody'>";
-
-	for (var j in jsonArr.list){
-		//document.getElementById("listbody").innerHTML +=
-		str +=
-			"<tr><td><a href=''>" +jsonArr.list[j].writerId  +"</a></td>"
-			+ "<td colspan='6'>" + decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "))
-			+ "</td></tr>";
-	}
-	*/
-
-	/*
-	//document.getElementById("listbody").innerHTML += 
-	str += "</tbody>"
-		+ "<tr><td colspan='7'>"
-		+ "<label class='checkbox-wrap'><input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
-		+ "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
-		+"<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
-		+"<a href=''><img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
-	*/
-
+    
 }
 
 function sendComment() {
 	alert("코멘트");
 }
 
-function moreComment() {
-	
-	alert("더");
+function moreComment(postId) {
 	
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
 	
-	td.innerHTML = "안녕";
+	td.innerHTML = postId + "의 댓글 더 보기 ";
+	td.colspan = "7";
 
     tr.appendChild(td);
-    document.getElementById("commentTbody").appendChild(tr);
+    $(this).next().append(postId + "의 댓글 더 보기 ");
 	
 }
 

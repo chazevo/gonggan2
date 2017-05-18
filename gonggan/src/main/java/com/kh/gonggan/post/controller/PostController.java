@@ -17,9 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.gonggan.comment.model.service.CommentService;
+import com.kh.gonggan.comment.model.vo.Comment;
+import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
 
@@ -30,6 +34,26 @@ public class PostController {
 	//공통으로 사용하는 것은 common에 넣어놓으면 됨
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private GoodService goodService;
+	
+	@RequestMapping("pdetail.do")
+		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
+		
+			List<Comment> commentList = commentService.selectPostComments(postId);
+			int goodCnt = goodService.goodCount(Integer.parseInt(postId));
+			
+			System.out.println("goodCnt : " + goodCnt);
+			
+			mv.addObject("postId", postId);
+			mv.addObject("writerId", writerId);
+			mv.addObject("commentList", commentList);
+			mv.addObject("goodCnt", goodCnt);
+			mv.setViewName("postDetail");
+			return mv;
+	}
 	
 	@RequestMapping(value="/postlist.do", produces={"application/json"}, method=RequestMethod.GET)
 		@ResponseBody

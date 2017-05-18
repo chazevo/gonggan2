@@ -86,7 +86,7 @@ function callbackList(data) {
 				postId = jsonArr.list[j].postId;
 				
 				str += "<td>"
-					+ "<a data-fancybox data-src='postDetail.do?postId=" + postId + "&writerId=" + jsonArr.list[j].writerId + "'>"
+					+ "<a data-fancybox data-src='pdetail.do?postId=" + postId + "&writerId=" + jsonArr.list[j].writerId + "'>"
 					+ "<img width='40px' class='" + (jsonArr.list[j].date == today ? "today" : "")
 					+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>"
 					+ "</a></td>";

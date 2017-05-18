@@ -1,6 +1,7 @@
 package com.kh.gonggan.good.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class GoodDao {
 	public GoodDao(){}
 	
 	
-	public Good goodCount(int postId){
-		return (Good) sqlSession.selectOne("goodmapper.gcount", postId);
+	public int goodCount(int postId){
+		return (int) sqlSession.selectOne("goodmapper.gcount", postId);
 	}//good 카운트 세기
 	
 
@@ -43,5 +44,10 @@ public class GoodDao {
 		Good gmember = new Good(postId, memberId);
 		return sqlSession.selectOne("goodmapper.gcheck", gmember);
 	}//good 알람 체크 여부
+
+
+	public List<Good> goodList(int postId) {
+		return (List<Good>) sqlSession.selectList("goodmapper.glist", postId);
+	}
 
 }

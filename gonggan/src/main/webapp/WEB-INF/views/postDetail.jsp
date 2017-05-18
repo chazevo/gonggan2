@@ -13,8 +13,6 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/postDetail.js"></script> 
 <script type="text/javascript">
-	var postId = '<%= request.getParameter("postId") %>';
-	var writerId = '<%= request.getParameter("writerId") %>';
 	var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	
 	window.onload = function() {
@@ -38,7 +36,7 @@
 	<tr>
 		<td id="userId">
 			<a id="loginUser" href="#" >
-			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${param.writerId} 님 </b></a>
+			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${writerId} 님 </b></a>
 			
 			<div class="navbar-right hour">
 				2시간
@@ -52,7 +50,7 @@
 	</tr> 
 	<tr>
 		<td id="good">
-			<b><a href="#">좋아요 19개</a></b>
+			<b><a href="goodList.do?postId=${postId }">좋아요 ${goodCnt }개</a></b>
 			<div id=dotdotdotDiv>
 				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
 				<a class="hover dotdotdot" href="" >공유</a>
@@ -63,7 +61,7 @@
 	<tr>
 		<td id="comm">
 			<label class='checkbox-wrap'>
-				<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${param.postId });'>
+				<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 				<i class='like-icon'></i>
 			</label>&nbsp;
 			<input id='' type='text' placeholder='댓글 달기'>&nbsp;

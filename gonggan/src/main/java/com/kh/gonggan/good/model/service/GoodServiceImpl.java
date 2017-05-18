@@ -1,5 +1,7 @@
 package com.kh.gonggan.good.model.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class GoodServiceImpl implements GoodService{
 	GoodDao goodDao;
 	
 	@Override
-	public Good goodCount(int postId){
+	public int goodCount(int postId){
 		return goodDao.goodCount(postId);
 	}//good 카운트 세기
 	
@@ -29,5 +31,9 @@ public class GoodServiceImpl implements GoodService{
 	public Object goodCheck(int postId, String memberId){
 		return goodDao.goodCheck(postId,memberId);
 	}//good 체크 확인 여부
+	@Override
+	public List<Good> goodList(int postId){
+		return goodDao.goodList(postId);
+	}
 
 }

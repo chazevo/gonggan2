@@ -112,18 +112,17 @@ var imgVal = <%= imgVal %>;
 					<img class="" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
 			</div>
 			<div class="navbar-right">
-					<c:if test="${empty sessionScope.loginUser }">
-						<a class="navbar-brand"  href="" >
-							로그인or회갑부분
-						</a>
-					</c:if>
-					<c:if test="${!empty sessionScope.loginUser }">
-						<a id="loginUser" class="navbar-brand"  href="" >
-							<img src="images/default.png" height="40px" class="img-circle">&nbsp;
-							${sessionScope.loginUser.getMember_id() } 님
-						</a>
-					</c:if>
-				
+				<c:if test="${empty sessionScope.loginUser }">
+					<a class="navbar-brand"  href="" >
+						로그인or회갑부분
+					</a>
+				</c:if>
+				<c:if test="${!empty sessionScope.loginUser }">
+					<a id="loginUser" class="navbar-brand"  href="" >
+						<img src="images/default.png" height="40px" class="img-circle">&nbsp;
+						${sessionScope.loginUser.getMember_id() } 님
+					</a>
+				</c:if>
 			</div>
 		</nav>
 	

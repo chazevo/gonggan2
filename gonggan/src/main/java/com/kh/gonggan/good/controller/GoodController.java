@@ -22,12 +22,12 @@ public class GoodController {
 	@Autowired
 	private GoodService goodService;
 	
-	@RequestMapping(value="/good.do", method=RequestMethod.POST)
+/*	@RequestMapping(value="/good.do", method=RequestMethod.POST)
 	public ModelAndView goodCount(@RequestParam int postId){
 		Good good = goodService.goodCount(postId);
 		return null;
 	}
-	
+	*/
 	@RequestMapping("insertGood.do")
 		@ResponseBody
 		public String goodInsert(@RequestParam int postId, @RequestParam String loginUser){
@@ -51,6 +51,14 @@ public class GoodController {
 				return "good";
 			else
 				return "nogood";
+		}
+	
+	@RequestMapping("goodList.do")
+		public ModelAndView goodList(@RequestParam int postId, ModelAndView mv){
+			List<Good> goodList = goodService.goodList(postId);
+			mv.addObject("goodList",goodList);
+			mv.setViewName("likepage");
+			return mv;
 		}
 
 	

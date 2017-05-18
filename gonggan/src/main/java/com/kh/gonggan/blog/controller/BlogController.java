@@ -47,9 +47,12 @@ public class BlogController {
 				for (Member m : VisitorList) {
 		
 					JSONObject job = new JSONObject();
-					
-					job.put("member_id", m.getMember_id());
-					
+		
+	
+					job.put("writer_id", m.getMember_id());
+					job.put("gender", m.getMember_gender());
+					job.put("birth", m.getMember_birth());
+		
 					jarr.add(job);
 				}
 				json.put("list", jarr);
@@ -57,51 +60,5 @@ public class BlogController {
 				return json.toJSONString();
 
 			}
-	
-	@RequestMapping(value = "/selectNeigborVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
-	 	@ResponseBody
-		public String selectNeigborVisitorList(@RequestParam String writer_id) {
-			
-			List<Member> VisitorList = blogService.selectNeigborVisitorList(writer_id);
-	
-			JSONObject json = new JSONObject();
-			JSONArray jarr = new JSONArray();
-	
-			for (Member m : VisitorList) {
-	
-				JSONObject job = new JSONObject();
-	
-				job.put("member_id", m.getMember_id());
-	
-				jarr.add(job);
-			}
-			json.put("list", jarr);
-	
-			return json.toJSONString();
-		}
-	
-	@RequestMapping(value = "/selectGraphVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
-	 	@ResponseBody
-		public String selectGraphVisitorList(String wirter_id){
-			List<Member> VisitorList = blogService.selectGraphVisitorList(wirter_id);
-	
-			JSONObject json = new JSONObject();
-			JSONArray jarr = new JSONArray();
-	
-			for (Member m : VisitorList) {
-	
-				JSONObject job = new JSONObject();
-	
-	
-				job.put("member_id", m.getMember_id());
-				job.put("gender", m.getMember_gender());
-				job.put("birth", m.getMember_birth()+"");
-	
-				jarr.add(job);
-			}
-			json.put("list", jarr);
-	
-			return json.toJSONString();
-		}
 
 }

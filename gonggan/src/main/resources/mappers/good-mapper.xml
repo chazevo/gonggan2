@@ -23,6 +23,16 @@
 	delete from good 
 	where post_id = #{post_id} and member_id = #{member_id}
 	</delete>
+	
+	<select id="gcount" parameterType="int" resultType="int">
+	select count(*) from good where post_id=#{postId}
 
+	</select>
+	
+	
+	<select id="glist" parameterType="int" resultMap="goodResult">
+	select * from good where post_id=#{postId}
+
+	</select>
 
 </mapper>

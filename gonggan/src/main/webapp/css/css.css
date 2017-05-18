@@ -12,6 +12,79 @@ svg {
 body {
 	font-family: 'Nanum Barun Gothic', sans-serif;
 }
+
+.likepage {
+	color:white;
+	background:linear-gradient(to bottom, rgb(145, 156, 178), rgb(207,167 ,168 ));
+}
+.likepage input {
+	background-color:transparent;
+	border-width:0px;
+	color:white;
+	text-align:center;
+}
+
+.likepage input::-webkit-input-placeholder {
+	color:white;
+}
+
+.likepage .div2 {
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 1px solid #E6E6E6;
+	border-radius:20px;
+	width: 80%;
+}
+
+.likepage>div {
+	width:600px;
+	height:500px;
+	overflow:auto;
+}
+
+.likepage td {
+	
+	padding-left:50px;
+	padding-right:50px;
+}
+
+.likepage tbody td {
+	height:50px;
+}
+
+.likepage .neighborN {
+	border:1px solid rgb(148, 148, 148);
+	border-radius:5px;
+	width:45%;
+	float:right;
+	background-color:transparent;
+	padding:5px;
+}
+
+.likepage .neighborY {
+	border-width:0px;
+	border-radius:5px;
+	width:45%;
+	float:right;
+	background-color:'rgba(124,114,120,0.5);
+	padding:5px;
+}
+
+.likepage a {
+	color:white;
+}
+.likepage a:hover{
+	text-decoration:none;
+}
+.likepage hr{
+	border-color:rgb(172,174,184);
+}
+
+.back {
+	float:left;
+}
+
 a>div:hover {
 	text-decoration: none;
 }

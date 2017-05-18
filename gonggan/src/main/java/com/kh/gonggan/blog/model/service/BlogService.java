@@ -9,7 +9,5 @@ public interface BlogService {
 
 	Blog selectBlog(String writer_id);
 	List<Member> selectVisitorList(String writer_id);
-	List<Member> selectNeigborVisitorList(String wirter_id);
-	List<Member> selectGraphVisitorList(String writer_id);
 
 }

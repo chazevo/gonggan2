@@ -29,35 +29,35 @@ public class CommentController {
 	private CommentService commentService;
 	
 	@RequestMapping(value="/colist.do", produces={"application/json"}, method=RequestMethod.GET)
-		@ResponseBody
-		public String selectList(@RequestParam String postId){
-			List<Comment> clist = commentService.selectPostComments(postId);
-			String content;
+	@ResponseBody
+	public String selectList(@RequestParam String postId){
+		List<Comment> clist = commentService.selectPostComments(postId);
+		String content;
+		
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		for(Comment c : clist) {
 			
-			JSONObject json = new JSONObject();
-			JSONArray jarr = new JSONArray();
+			JSONObject job = new JSONObject();
 			
-			for(Comment c : clist) {
-				
-				JSONObject job = new JSONObject();
-				
-				job.put("postId", c.getPost_id() + "");
-				job.put("writerId", c.getWriter_id());
-				try {
-					job.put("commentContent", URLEncoder.encode(
-							(content = c.getComment_content())==null ? " " : content, "UTF-8") + "");
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				job.put("commentDate", c.getComment_date() + "");
-	
-				jarr.add(job);
+			job.put("postId", c.getPost_id() + "");
+			job.put("writerId", c.getWriter_id());
+			try {
+				job.put("commentContent", URLEncoder.encode(
+						(content = c.getComment_content())==null ? " " : content, "UTF-8") + "");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			json.put("list", jarr);
+			job.put("commentDate", c.getComment_date() + "");
 
-			return json.toJSONString();
+			jarr.add(job);
 		}
+		json.put("list", jarr);
+
+		return json.toJSONString();
+	}
 	
 	@RequestMapping("coinsert.do")
 	public ModelAndView memberInsert(@ModelAttribute Comment comment, Model model){

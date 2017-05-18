@@ -91,4 +91,10 @@ public class HomeController {
 		logger.info("Welcome postDetail! ");
 		return "postDetail";
 	}
+
+	@RequestMapping(value = "likepage.do", method = RequestMethod.GET)
+	public String likepage(Locale locale, Model model) {
+		logger.info("Welcome likepage! ");
+		return "likepage";
+	}
 }

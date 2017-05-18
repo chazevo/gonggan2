@@ -58,7 +58,6 @@ public class MemberController {
 			session.invalidate();
 		return "index2";
 	}
-	
 	@RequestMapping("updateform.do")
 	public String updateform(HttpSession session){
 		return "updateform";
@@ -83,19 +82,18 @@ public class MemberController {
 	}//회원가입
 	
 	@RequestMapping("/update.do")
-	   public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpSession session){
-	      System.out.println(member);
-	      Member loginUser  = memberService.loginCheck(member);
-	      int updateResult = memberService.updateMember(member);
-	      session.setAttribute("loginUser", loginUser);
-	      
-	      if(updateResult<0){
-	         session.setAttribute("error", "실패");
-	      }
-	      mv.addObject("loginUser",loginUser);
-	      mv.setViewName("mypage");
-	      return mv;
-	   }
+	public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpSession session){
+		System.out.println(member);
+		Member loginUser  = memberService.loginCheck(member);
+		int updateResult = memberService.updateMember(member);
+		session.setAttribute("loginUser", loginUser);
+		
+		if(updateResult<0){
+			session.setAttribute("error", "실패");
+		}
+		mv.setViewName("mypage");
+		return mv;
+	}
 	
 	@RequestMapping("delete.do")
 	public String memberDelete(@RequestParam String member_id, Model model){

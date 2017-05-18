@@ -22,5 +22,17 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.selectVisitorList(writer_id);
 		
 	}
-
+	public List<Member> selectNeigborVisitorList(String wirter_id){
+		return blogDao.selectNeigborVisitorList(wirter_id);
+	}
+	public List<Member> selectMonNeigborVisitorList(String writer_id){
+		return blogDao.selectMonNeigborVisitorList(writer_id);
+	}
+	public List<Member> selectMonNeiList(String writer_id){
+		return blogDao.selectMonNeiList(writer_id);
+	}
+	
+	public void blogvisit(String writer_id, String visitor_id) {
+		blogDao.blogvisit(writer_id, visitor_id);
+	}
 }

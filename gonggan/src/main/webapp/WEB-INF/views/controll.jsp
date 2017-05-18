@@ -14,7 +14,7 @@ int today = cal.get(Calendar.DATE);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel='stylesheet' href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css'/> 
+<link rel='stylesheet' href='http:/"src/main/webapp/WEB-INF/views/controll.jsp"/code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css'/> 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -37,6 +37,8 @@ int today = cal.get(Calendar.DATE);
 		
 		reqVisitor();
 		reqNeighborVisitor();
+		reqMonNeiVisitor();
+		reqMonNeiList();
 		
 		$("#year").text(year);
 		$("#month").text(month);
@@ -450,7 +452,7 @@ int today = cal.get(Calendar.DATE);
 				조회수 | <span></span>건<br>
 				재방문율 | <span>13.5</span>%<br> <!-- 어제(한달전) 방문했던 오늘(이번달) 방문자수 / (한달전)어제 방문자수 -->
 				방문횟수 | <span id="todayCnt"></span>건<br>
-				이웃방문현황 | <a href="" id="todayNeighborCnt"></a>명의 이웃이 방문 
+				이웃방문현황 | <a id="todayNeighborCnt"></a>명의 이웃이 방문 
 				<div id="visitedNeighbor" class="hidden"></div>
 			</fieldset>
 			<hr class="grayHr">
@@ -458,56 +460,10 @@ int today = cal.get(Calendar.DATE);
 				<legend>사용자 분석_월단위 </legend>
 				<b>성별,연령별 분포</b>
 				<div id="chart" style="height:400px"></div>
-				<script>
-					$(function() {
-						$("#chart").highcharts({
-							chart: {
-								type: 'column'
-							},
-							title: {
-								text: ''
-							},
-							credits:{
-								enabled:false
-							},
-							legend: {
-					            symbolHeight:24,
-			                    layout: 'horizontal',
-			                    //backgroundColor: '#FFFFFF',
-			                    align: 'left',
-			                    verticalAlign: 'top',
-			                    floating: true,
-			                    shadow: false,
-			                    padding:20,
-			                    itemStyle: {
-			                        fontWeight: 'normal',
-			                        fontSize: '150%'
-			                    }
-			                },
-							xAxis: {
-								categories: ['0-10', '10-20', '20-30', '30-50', '50-60'],
-							},
-							yAxis: {
-								title: {
-									text: ''
-								}
-							},
-							series: [{
-								color:'#BE6C95',
-								name: '여자',
-								data: [1, 0, 4]
-							}, 
-							{
-								color:'#307BB8',
-								name: '남자',
-								data: [5, 7, 3]
-							}]
-						});
-					});
-				</script>
-				<div class="divisionMargin">
+				<div id="monNeiVisitor" class="divisionMargin">
 					<b>이웃 방문현황</b>
-					<a href="">12</a>명의 이웃이 방문<br>
+					<span id="monthNeiVisitorCnt">12</span>명의 이웃이 방문<br>
+					<!--
 					<a href="myhome.do?userId=">aekek_jj</a>님,
 					<a href="myhome.do?userId=">dazz:)</a>님,
 					<a href="myhome.do?userId=">아이우@</a>님,
@@ -520,12 +476,13 @@ int today = cal.get(Calendar.DATE);
 					<a href="myhome.do?userId=">아이우@</a>님,
 					<a href="myhome.do?userId=">bacde</a>님,
 					<a href="myhome.do?userId=">gkgkzoo</a>님 <br>
+					-->
 				</div>
-				<div class="divisionMargin">
+				<div class="divisionMargin" id="monNei">
 					<b>이웃 증감수</b>
-					<span>2</span>명의 이웃이 증가 <br>
-					<a href="myhome.do?userId=">bacde</a>님,
-					<a href="myhome.do?userId=">gkgkzoo</a>님
+					<span id="monNeiCnt">2</span>명의 이웃이 증가 <br>
+					<!-- <a href="myhome.do?userId=">bacde</a>님,
+					<a href="myhome.do?userId=">gkgkzoo</a>님 -->
 				</div>
 			</fieldset>
 			<hr class="grayHr">

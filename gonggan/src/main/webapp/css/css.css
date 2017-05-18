@@ -405,6 +405,12 @@ opacity:0.3;
 
 /* -------------------------------------------------------------------------------- */
 
+a#todayNeighborCnt:hover{
+	cursor:pointer;
+}
+#visitedNeighbor a:hover{
+	cursor:pointer;
+}
 
 #blogStatisticsImg {
 	position:absolute;

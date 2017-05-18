@@ -156,7 +156,7 @@ var imgVal = <%= imgVal %>;
 				</tr> -->
          		<tr>
 					<td class="hover">
-						chazevo님의 알림이 없습니다.
+						${param.writer_id }님의 알림이 없습니다.
 					</td>
 				</tr>
 			</table>
@@ -184,7 +184,8 @@ var imgVal = <%= imgVal %>;
 					<!-- sr-only : 숨김 -->
 				</button>
 				<a href="#" style="display:inline-block">
-					<img src="images/default.png" height="40px"class="img-circle">&nbsp;chazevo 님
+					<img src="images/default.png" height="40px"class="img-circle">
+					&nbsp;${param.writer_id } 님
 				</a> &nbsp;
 				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=jis"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
 			</div>
@@ -249,21 +250,24 @@ var imgVal = <%= imgVal %>;
 								</h3>
 							</td>
 						</tr>
-						<tr><td>
-							<table width="100%">
-								<tr class="CalendarHeader text-center">
-									<td><font color="#C90000">일</font></td>
-									<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td>
-									<td><font color="#003399">토</font></td></tr>
-								<tbody id="listbody" class='cal'>
-									<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
-									<tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
-									<tr><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td></tr>
-									<tr><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td></tr>
-									<tr><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td><td></td></tr>
-								</tbody>
-							</table>
-						</td></tr>
+						<tr>
+							<td>
+								<table id="" width="100%" border="1">
+									<tr class="CalendarHeader text-center">
+										<td><font color="#C90000">일</font></td>
+										<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td>
+										<td><font color="#003399">토</font></td>
+									</tr>
+									<tbody id="listbody" class='cal'>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+										<tr><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td></tr>
+										<tr><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td></tr>
+										<tr><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td></tr>
+										<tr><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td><td></td></tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
 						</table>
 						<div id="dotdotdotDiv">
 							<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>

@@ -17,7 +17,7 @@
 	<table width="100%" >
 		<tr>
 			<td colspan="2" class="text-center">
-				<h3><a href="" class="back">&lt;</a> like</h3>
+				<h3><a href="javascript:history.back();" class="back">&lt;</a> like</h3>
 			</td>
 		</tr>
 		<tr>

@@ -1,13 +1,13 @@
 var postId;
 var Ca = /\+/g;
 var str = "";
-var blogOwner = "jieun";
+var writer_id = "jieun";
 
 function visit() {
 	if (loginUser != "")
 		$.ajax({
-		      url: "/gonggan/blogvisit.do",
-		      data: {blogOwner : blogOwner,
+		      url: "/gonggan/bvisit.do",
+		      data: {writer_id : writer_id,
 		    	  visitor_id : loginUser},
 		      success: function(data) {
 		    	  
@@ -46,6 +46,7 @@ function callbackList(data) {
 
 	$('.CalendarHeader').show();
 	$("#todayHeader").show();
+	$('#listbody').addClass("cal");
 	
 	switch (firstday) {
 	case 1: 
@@ -140,6 +141,7 @@ function callbackList2(data) {
 		
 		td.innerHTML = "<img "
 			+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>" + "</td></tr>";
+		td.colspan="7";
 		tr.appendChild(td);
 		document.getElementById("listbody").appendChild(tr);
 		
@@ -171,7 +173,7 @@ function callbackCommentList(data, postId){
 
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
-	var tbody = document.createElement("tbody");
+	//var tbody = document.createElement("tbody");
 	
 	td.innerHTML = "<a href='javascript:moreComment(" + postId + ");'>더보기</a>";
 	td.class = "moreComment";
@@ -179,28 +181,31 @@ function callbackCommentList(data, postId){
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
 
-	for (var j ; j<3 ; j++){
+	for (j=0 ; j<3 ; j++){
 		if (j > jsonArr.list.length - 1) break;
 	    tr = document.createElement("tr");
 		td = document.createElement("td");
-		td.innerHTML = "<a href=''>" + jsonArr.list[j].writerId +"</a>";
-		td.width = "30%";
-	    tr.appendChild(td);
+		td.innerHTML = "<a href='myhome.do?writer_id=" + jsonArr.list[j].writerId + "'>"
+			+ jsonArr.list[j].writerId +"</a>";
+		td.colspan = "2";
+		tr.appendChild(td);
 	    td = document.createElement("td");
 		td.innerHTML = decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "));
-		td.colspan = "6";
-	    tr.appendChild(td);
-	    tbody.appendChild(tr);
-	    //document.getElementById("listbody").appendChild(tr);
+		td.colspan = "5";
+		tr.appendChild(td);
+		//tbody.appendChild(tr);
+		document.getElementById("listbody").appendChild(tr);
 	}
-	document.getElementById("listbody").appendChild(tbody);
+	//document.getElementById("listbody").appendChild(tbody);
 
     tr = document.createElement("tr");
 	td = document.createElement("td");
+	td.class = 'divisionPadding';
 	td.innerHTML = "<label class='checkbox-wrap'>"
 	+ "<input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
-	+ "<input id='commentTb' type='text' placeholder='댓글 달기'>&nbsp;"
-	+ "<a href='javascript:sendComment();'>"
+	+ "<input id='commentTb' type='text' placeholder='댓글 달기' "
+	+ "onkeyup='if( event.keyCode==13 ) sendComment(postId);'>&nbsp;"
+	+ "<a href='javascript:sendComment(postId);'>"
 	+ "<img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
 	+ "<a href='javascript:dotdotdot();'>"
 	+ "<img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
@@ -210,8 +215,8 @@ function callbackCommentList(data, postId){
     
 }
 
-function sendComment() {
-	alert("코멘트");
+function sendComment(postId) {
+	alert(postId + " 코멘트");
 }
 
 function moreComment(postId) {
@@ -223,7 +228,7 @@ function moreComment(postId) {
 	td.colspan = "7";
 
     tr.appendChild(td);
-    $(this).next().append(postId + "의 댓글 더 보기 ");
+    
 	
 }
 

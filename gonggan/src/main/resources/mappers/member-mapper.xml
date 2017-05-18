@@ -66,9 +66,60 @@
 	update 
 	</update>
 	
-	<select id="selectVisitorList" parameterType="String" resultMap="memberResult">
+	<select id="selectVisitorList" parameterType="int" resultMap="memberResult">
 		select * from member
-		where member_id in (select visitor_id from visitor where blog_id = #{blog_id});
-	</select>
+		where member_id in (select visitor_id from visitor
+		where blog_id = #{blog_id} AND TO_CHAR(VISITED_DATE,'yy/mm/dd') =
+		TO_CHAR(sysdate,'yy/mm/dd'))
+	</select><!-- 오늘 방문자 수 조회 -->
+
+	<select id="selectNeigborVisitorList" parameterType="Map"
+		resultMap="memberResult">
+		select * from member
+		where member_id in (select visitor_id
+		from visitor where blog_id = to_number(#{blog_id}) and
+		TO_CHAR(VISITED_DATE,'yy/mm/dd') = TO_CHAR(sysdate,'yy/mm/dd'))
+		and
+		(member_id in
+		(select receiver from NEIGHBOR
+		where sender = #{writer_id}
+		and CHECK_YN='Y')
+		or
+		member_id in(select sender from NEIGHBOR
+		where
+		receiver = #{writer_id} and CHECK_YN='Y'))
+	</select><!-- 이웃 방문자 -->
+
+	<select id="selectMonNeigborVisitorList" parameterType="Map"
+		resultMap="memberResult">
+		select * from member
+		where member_id in (select visitor_id
+		from visitor where blog_id = to_number(#{blog_id}) and
+		extract(month
+		from VISITED_DATE) = extract(month from sysdate))
+		and (member_id in
+		(select receiver from NEIGHBOR
+		where sender = #{writer_id} and
+		CHECK_YN='Y')
+		or
+		member_id in(select sender from NEIGHBOR
+		where receiver
+		= #{writer_id} and CHECK_YN='Y'))
+	</select><!-- 한달 방문 수 -->
+
+	<select id="selectMonNeiList" parameterType="String"
+		resultMap="memberResult">
+
+		select * from member
+		where member_id in
+		(select receiver from NEIGHBOR
+		where
+		sender = #{writer_id} and CHECK_YN='Y' and extract(month from accept_date
+		)= extract(month from sysdate))
+		or
+		member_id in(select sender from
+		NEIGHBOR
+		where receiver =#{writer_id} and CHECK_YN='Y' and extract(month	from accept_date )= extract(month from sysdate))
+	</select><!-- 이번달 추가 된 이웃 -->
 	
 </mapper>

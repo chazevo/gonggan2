@@ -24,7 +24,13 @@
 		select * from blog where writer_id = #{writer_id}
 	</select>
 
-
-
-
+	<select id="selectBlogId" resultMap="blogResult" parameterType="String">
+		select blog_id from blog
+		where writer_id = #{writer_id}
+	</select>
+	
+	<insert id="bvisit" parameterType="Map">
+		insert into visitor values(#{visitor_id}, to_number(#{blog_id}), default)
+	</insert>
+	
 </mapper>

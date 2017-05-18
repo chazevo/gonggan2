@@ -23,7 +23,12 @@ public class BlogController {
 	// 공통으로 사용하는 것은 common에 넣어놓으면 됨
 	@Autowired
 	private BlogService blogService;
-
+	
+	@RequestMapping("bvisit.do")
+	public void blogvisit(@RequestParam String writer_id, @RequestParam String visitor_id) {
+		//blogService.blogvisit(writer_id, visitor_id);
+	}
+	
 	@RequestMapping("selectBlog.do")
 	public ModelAndView selectBlog(@RequestParam String writer_id, ModelAndView mv) {
 
@@ -47,12 +52,11 @@ public class BlogController {
 				for (Member m : VisitorList) {
 		
 					JSONObject job = new JSONObject();
-		
-	
-					job.put("writer_id", m.getMember_id());
+					
+					job.put("member_id", m.getMember_id());
 					job.put("gender", m.getMember_gender());
-					job.put("birth", m.getMember_birth());
-		
+					job.put("birth", m.getMember_birth()+"");
+					
 					jarr.add(job);
 				}
 				json.put("list", jarr);
@@ -60,5 +64,70 @@ public class BlogController {
 				return json.toJSONString();
 
 			}
+	
+	@RequestMapping(value = "/selectNeigborVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
+	 	@ResponseBody
+		public String selectNeigborVisitorList(@RequestParam String writer_id) {
+			
+			List<Member> VisitorList = blogService.selectNeigborVisitorList(writer_id);
+	
+			JSONObject json = new JSONObject();
+			JSONArray jarr = new JSONArray();
+	
+			for (Member m : VisitorList) {
+	
+				JSONObject job = new JSONObject();
+	
+				job.put("member_id", m.getMember_id());
+	
+				jarr.add(job);
+			}
+			json.put("list", jarr);
+	
+			return json.toJSONString();
+		}
+	@RequestMapping(value = "/selectMonNeigborVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
+ 	@ResponseBody
+	public String selectMonNeigborVisitorList(@RequestParam String writer_id) {
+		
+		List<Member> VisitorList = blogService.selectMonNeigborVisitorList(writer_id);
+
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+
+		for (Member m : VisitorList) {
+
+			JSONObject job = new JSONObject();
+
+			job.put("member_id", m.getMember_id());
+
+			jarr.add(job);
+		}
+		json.put("list", jarr);
+
+		return json.toJSONString();
+	}
+	@RequestMapping(value = "/selectMonNeiList.do", produces = { "application/json" }, method = RequestMethod.GET)
+ 		@ResponseBody
+			public String selectMonNeiList(String writer_id) {
+				
+				List<Member> MonNeiList = blogService.selectMonNeiList(writer_id);
+		
+				JSONObject json = new JSONObject();
+				JSONArray jarr = new JSONArray();
+		
+				for (Member m : MonNeiList) {
+		
+					JSONObject job = new JSONObject();
+		
+					job.put("member_id", m.getMember_id());
+		
+					jarr.add(job);
+				}
+				json.put("list", jarr);
+		
+				return json.toJSONString();
+			}
+			
 
 }

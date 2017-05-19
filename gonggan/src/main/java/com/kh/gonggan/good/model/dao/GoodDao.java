@@ -50,4 +50,12 @@ public class GoodDao {
 		return (List<Good>) sqlSession.selectList("goodmapper.glist", postId);
 	}
 
+
+	public List<Good> goodSearch(String member_id, int post_id) {
+		HashMap<String, String> map =new  HashMap<String, String>();
+		map.put("member_id", member_id);
+		map.put("post_id", post_id+"");
+		 return (List<Good>)sqlSession.selectList("goodmapper.gsearch",map);
+	}
+
 }

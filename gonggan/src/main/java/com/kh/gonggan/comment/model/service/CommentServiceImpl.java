@@ -21,13 +21,13 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 	@Override
-	public int insertComment(Comment comment){
-		 return commentDao.insertComment(comment);
+	public int insertComment(String comment_content, String writer_id, int postId){
+		 return commentDao.insertComment(comment_content, writer_id, postId);
 	}//코멘트 등록
 	
 	@Override
-	public int deleteComment(int commentNum){
-		return commentDao.deleteComment(commentNum);
+	public int deleteComment(int comment_num, String writer_id, int postId){
+		return commentDao.deleteComment(comment_num,writer_id,postId);
 	}//코멘트 삭제
 	
 	@Override

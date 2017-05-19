@@ -4,6 +4,8 @@ package com.kh.gonggan.good.controller;
 import java.sql.Connection;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
+import com.kh.gonggan.member.model.vo.Member;
 
 
 @Controller
@@ -60,6 +63,27 @@ public class GoodController {
 			mv.setViewName("likepage");
 			return mv;
 		}
+	@RequestMapping(value = "/gsearch.do", produces = { "application/json" }, method = RequestMethod.GET)
+		@ResponseBody
+			public String goodSearch(@RequestParam String member_id, @RequestParam int post_id){
+				List<Good> gSearchList = goodService.goodSearch(member_id,post_id);
+
+				JSONObject json = new JSONObject();
+				JSONArray jarr = new JSONArray();
+		
+				for (Good g : gSearchList) {
+		
+					JSONObject job = new JSONObject();
+					
+					job.put("member_id", g.getMember_id());
+					
+					jarr.add(job);
+				}
+				json.put("list", jarr);
+		
+				return json.toJSONString();
+
+			}
 
 	
 

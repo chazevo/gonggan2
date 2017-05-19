@@ -22,6 +22,16 @@ public class Comment {
 		this.comment_date = comment_date;
 		this.comment_check = comment_check;
 	}
+	public Comment(String comment_content, String writer_id, int post_id) {
+		this.post_id = post_id;
+		this.writer_id = writer_id;
+		this.comment_content = comment_content;
+	}
+	public Comment(int comment_num, String writer_id, int post_id) {
+		this.post_id = post_id;
+		this.comment_num = comment_num;
+		this.writer_id = writer_id;
+	}
 	public int getPost_id() {
 		return post_id;
 	}

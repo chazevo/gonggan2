@@ -23,5 +23,10 @@
 	left join news using(post_id)
 	left join review using(post_id)
 	</select>
+	
+	<select id="pdetail" parameterType="int" resultMap="postResult">
+	select photo_path from post
+	where post_id = #{post_id}
+	</select>
 
 </mapper>

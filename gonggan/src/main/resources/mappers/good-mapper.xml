@@ -32,7 +32,12 @@
 	
 	<select id="glist" parameterType="int" resultMap="goodResult">
 	select * from good where post_id=#{postId}
-
+	</select>
+	
+	<select id="gsearch" parameterType="Map" resultMap="goodResult">
+	select * from good
+	where post_id = #{post_id}
+	and member_id like '%'||#{member_id}||'%'
 	</select>
 
 </mapper>

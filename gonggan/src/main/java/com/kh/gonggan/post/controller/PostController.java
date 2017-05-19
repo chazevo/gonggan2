@@ -44,9 +44,11 @@ public class PostController {
 		
 			List<Comment> commentList = commentService.selectPostComments(postId);
 			int goodCnt = goodService.goodCount(Integer.parseInt(postId));
+			Post postDetail = postService.postDetail(Integer.parseInt(postId));
 			
 			System.out.println("goodCnt : " + goodCnt);
 			
+			mv.addObject("postDetail",postDetail);
 			mv.addObject("postId", postId);
 			mv.addObject("writerId", writerId);
 			mv.addObject("commentList", commentList);
@@ -109,4 +111,6 @@ public class PostController {
 			//return mv;
 			return json.toJSONString();
 		}
+	
+	
 }

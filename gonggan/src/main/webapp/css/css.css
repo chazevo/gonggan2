@@ -37,6 +37,10 @@ body {
 	width: 80%;
 }
 
+.likepage .div2 input{
+	width:80%;
+}
+
 .likepage>div {
 	width:600px;
 	height:500px;
@@ -311,6 +315,17 @@ overflow-x: hidden; } */
 display:inline-block;
 opacity:0.3;
 }
+
+a#loginUser:hover {
+	cursor:pointer;
+}
+
+.loginbox {
+	display:block;
+	border: 1px solid black;
+	padding: 3px;
+}
+
 #loginUserDetail {
    /*
    background: url('/gonggan/images/idclick_icon.png') no-repeat ;
@@ -1241,6 +1256,16 @@ hr {
 .postDetail td#good {
 	height:30px;
 }
+
+.postDetail td b a:link {
+	color:rgb(111,111,111);
+}
+
+.postDetail td.commentDate {
+	text-align:right;
+	color:#c0c0c0;
+}
+
 .postDetail td#comm{
 	height:50px;
 }

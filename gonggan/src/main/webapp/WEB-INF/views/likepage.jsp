@@ -11,6 +11,10 @@
 <link rel='stylesheet' href='css/css.css' />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="js/likepage.js"></script>
+<script>
+	var loginUser ='${sessionScope.loginUser.getMember_id()}';
+	var post_id = '${param.postId }';
+</script>
 </head>
 <body class="likepage">
 <div>
@@ -22,11 +26,11 @@
 		</tr>
 		<tr>
 			<td colspan="2" class="text-center">
-				<div class="div2">
-				<input type="text" id="searchPost" placeholder="search" size="50" >
-				<a href="#">
-				<img src=images/search.png width="5%">
-				</a>
+				<div class="div2"  style="margin:auto;">
+					<input type="text" id="searchPost" onkeyup="searchGood();" placeholder="search" >
+					<a href="javascript:searchGood();">
+					<img src=images/search.png width="5%" >
+					</a>
 				</div>
 			</td>
 		</tr>
@@ -35,49 +39,17 @@
 				<hr>
 			</th>
 		</tr>
-		<tbody>
+		<tbody id="listbody">
 			<c:if test="${!empty goodList}">
 				<c:forEach items="${goodList}" var="i" begin="0">
 					<tr>
-						<td>${i.member_id}</td>
+						<td><a href="selectBlog.do?writer_id=${i.member_id}" target="_blank">${i.member_id}</a></td>
 						<td>
-							<button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button>
+							<button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
 						</td>
 					</tr>
 				</c:forEach>
 			</c:if>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
-			<tr>
-				<td>zzzz</td>
-				<td><button id="neighborBtn" class="neighborN" onclick="likeNeigh();">이웃친구</button></td>
-			</tr>
 		</tbody>
 	</table>
 </div>

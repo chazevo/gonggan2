@@ -43,6 +43,7 @@ public class CommentController {
 			
 			job.put("postId", c.getPost_id() + "");
 			job.put("writerId", c.getWriter_id());
+			System.out.println(c.getWriter_id());
 			try {
 				job.put("commentContent", URLEncoder.encode(
 						(content = c.getComment_content())==null ? " " : content, "UTF-8") + "");
@@ -60,21 +61,26 @@ public class CommentController {
 	}
 	
 	@RequestMapping("coinsert.do")
-	public ModelAndView memberInsert(@ModelAttribute Comment comment, Model model){
-		int insertComm = commentService.insertComment(comment);
-		return null;
-	}//회원가입
+		@ResponseBody
+		public String insertComment(@RequestParam String comment_content, @RequestParam String writer_id, @RequestParam int postId) {
+			
+			return commentService.insertComment(comment_content, writer_id, postId) + "";
+		}
 	
 	@RequestMapping("coupdate.do")
 	public ModelAndView commentUpdate(@RequestParam Comment comment) {
 		int updateComm = commentService.updateComment(comment);
 		return null;
-	}//회원 수정
+	}//코멘트 수정
 	
-	@RequestMapping("codelete.do")
-	public String commentDelete(@RequestParam int comment_num, Model model){
-		int deleteComm = commentService.deleteComment(comment_num);
-		return null;
-	}//회원 삭제
+	@RequestMapping(value="codelete.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String commentDelete(@RequestParam int comment_num,@RequestParam String writer_id,@RequestParam int postId){
+		String str = "삭제 실패";
+		
+		if (commentService.deleteComment(comment_num,writer_id,postId) > 0)
+			str = "삭제 성공";
+		return str;
+	}//코멘트 삭제
 
 }

@@ -35,5 +35,11 @@ public class GoodServiceImpl implements GoodService{
 	public List<Good> goodList(int postId){
 		return goodDao.goodList(postId);
 	}
+	
+	@Override
+	public List<Good> goodSearch(String member_id, int post_id){
+		return goodDao.goodSearch(member_id,post_id);
+		
+	}
 
 }

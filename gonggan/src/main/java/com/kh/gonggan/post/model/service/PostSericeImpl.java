@@ -21,5 +21,10 @@ public class PostSericeImpl implements PostService{
 		return  postDao.selectAll();
 		
 	}
+	@Override
+	public Post postDetail(int post_id) {
+		return  postDao.postDetail(post_id);
+		
+	}
 
 }

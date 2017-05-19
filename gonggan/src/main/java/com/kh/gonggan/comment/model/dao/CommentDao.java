@@ -21,17 +21,21 @@ public class CommentDao {
 		return (List<Comment>) sqlSession.selectList("commentmapper.clist", postId);
 	}
 	
-	public int insertComment(Comment comment){
-		return sqlSession.insert("commentmapper.cinsert", comment);
-	}//코멘트 등록
-	
-	public int deleteComment(int commentNum)
-	{
-		return sqlSession.delete("commentmapper.cdelete", commentNum);
-	}	//코멘트 삭제
-	
 	public int updateComment(Comment comment){
 		return sqlSession.update("commentmapper.cupdate",comment);
 	}//코멘트 수정
+
+	public int insertComment(String comment_content, String writer_id, int postId) {
+		Comment comment = new Comment(comment_content, writer_id, postId);
+		int comment_num = (int) sqlSession.selectOne("commentmapper.cnum", comment);
+		comment.setComment_num(comment_num);
+		sqlSession.insert("commentmapper.cinsert", comment);
+		return comment_num;
+	}
+
+	public int deleteComment(int comment_num, String writer_id, int postId) {
+		Comment comment = new Comment(comment_num, writer_id, postId);
+		return sqlSession.delete("commentmapper.cdelete", comment);
+	}
 	
 }

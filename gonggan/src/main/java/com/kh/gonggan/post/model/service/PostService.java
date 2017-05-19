@@ -7,4 +7,6 @@ import com.kh.gonggan.post.model.vo.Post;
 public interface PostService {
 	List<Post> selectAll();
 
+	Post postDetail(int post_id);
+
 }

@@ -24,10 +24,12 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 	
-	@RequestMapping("bvisit.do")
-	public void blogvisit(@RequestParam String writer_id, @RequestParam String visitor_id) {
-		//blogService.blogvisit(writer_id, visitor_id);
-	}
+	@RequestMapping(value = "/bvisit.do", method = RequestMethod.GET)
+ 		@ResponseBody
+		public String blogvisit(@RequestParam String writer_id, @RequestParam String visitor_id) {
+			//blogService.blogvisit(writer_id, visitor_id);
+			return "";
+		}
 	
 	@RequestMapping("selectBlog.do")
 	public ModelAndView selectBlog(@RequestParam String writer_id, ModelAndView mv) {

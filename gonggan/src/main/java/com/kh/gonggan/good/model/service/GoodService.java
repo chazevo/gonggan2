@@ -16,4 +16,6 @@ public interface GoodService {
 
 	List<Good> goodList(int postId);
 
+	List<Good> goodSearch(String member_id, int post_id);
+
 }

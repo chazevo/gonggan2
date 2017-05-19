@@ -1,10 +1,9 @@
 var postId;
 var Ca = /\+/g;
 var str = "";
-var writer_id = "jieun";
 
 function visit() {
-	if (loginUser != "")
+	if (loginUser != "" || loginUser != writer_id)
 		$.ajax({
 		      url: "/gonggan/bvisit.do",
 		      data: {writer_id : writer_id,

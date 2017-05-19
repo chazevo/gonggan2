@@ -17,6 +17,9 @@ public class PostDao {
 	public List<Post> selectAll() {
 		return (List<Post>) sqlSession.selectList("postmapper.plist");
 	}
+	public Post postDetail(int post_id) {
+		return (Post) sqlSession.selectOne("postmapper.pdetail",post_id);
+	}
 	
-
+	
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.Calendar, com.kh.gonggan.member.model.vo.Member"  %>
+    pageEncoding="UTF-8" import="java.util.Calendar, com.kh.gonggan.member.model.vo.Member, com.kh.gonggan.blog.model.vo.Blog"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <%
@@ -60,6 +60,7 @@ System.out.println(str);
 <script src="js/myhome.js"></script>
 <script type="text/javascript">
 var loginUser = '${sessionScope.loginUser.getMember_id()}';
+var writer_id = "${blog.getWriter_id()}";
 var year = <%= year %>;
 var month = <%= month %>;
 var today = <%= today %>;
@@ -113,12 +114,12 @@ var imgVal = <%= imgVal %>;
 			</div>
 			<div class="navbar-right">
 				<c:if test="${empty sessionScope.loginUser }">
-					<a class="navbar-brand"  href="" >
-						로그인or회갑부분
+					<a class="loginbox navbar-brand"  href="index.jsp" >
+						l o g i n
 					</a>
 				</c:if>
 				<c:if test="${!empty sessionScope.loginUser }">
-					<a id="loginUser" class="navbar-brand"  href="" >
+					<a id="loginUser" class="navbar-brand" >
 						<img src="images/default.png" height="40px" class="img-circle">&nbsp;
 						${sessionScope.loginUser.getMember_id() } 님
 					</a>
@@ -135,7 +136,7 @@ var imgVal = <%= imgVal %>;
 						<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
 						<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-						<a href="#">로그아웃</a> 
+						<a href="logOut.do">로그아웃</a> 
 						<div id="dansun_line"></div>
 					</td>
 				</tr> 

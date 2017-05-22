@@ -14,6 +14,10 @@
 		<result property="member_phone"	column="member_phone"/>
 	</resultMap>
 	
+	<resultMap id="memberNameResult" type="member">
+		<id property="member_id" column="sender" />
+	</resultMap>
+	
 	<!-- 
 	<resultMap type="visitor" id="blogResult">
 		<result property="title" column="title" />
@@ -54,17 +58,29 @@
 	delete from member
 	</delete>
 	
-	<select id="neigList">
-	select 
-	</select>
-	
 	<insert id="requestNeig">
 	insert 
 	</insert>
 	
-	<update id="checkNeig">
-	update 
+	<update id="naccept" parameterType="Map">
+	update neighbor set alram_yn = 'Y', check_yn = 'Y'
+	where receiver = #{memberId} and sender = #{memberId2}
 	</update>
+	
+	<update id="nreject" parameterType="Map">
+	delete from neighbor
+	where receiver = #{memberId} and sender = #{memberId2}
+	</update>
+	
+	<select id="ncheck" parameterType="String" resultMap="memberNameResult">
+	select sender from neighbor
+	where receiver = #{memberId}
+	and alram_yn = 'N'
+	</select>
+	
+	<select id="neigList">
+	select 
+	</select>
 	
 	<select id="selectVisitorList" parameterType="int" resultMap="memberResult">
 		select * from member

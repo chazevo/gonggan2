@@ -1,4 +1,6 @@
 
+var je_doc={};
+
 $(function() {
 	$( "#toDate" ).datepicker({
 		inline: true,
@@ -100,8 +102,6 @@ function seeHTML() {
 
 
 /* dhtml editor함수 */
-var je_doc={};
-
 function run(){
 	
 	je_doc = document.getElementById('editor').contentWindow.document;
@@ -131,25 +131,25 @@ function contenttextcolor2(){
 }
 
 function colorchart(){
-	var clr = new Array('00', '20', '40', '60', '80', 'a0', 'c0', 'ff');
+	var clr = new Array('00', '60', '80', '90', 'b0', 'a0', 'c0', 'ff');
 	
 	var table;
 	var tr;
 	var td;
 	
-	for (var i=0 ; i<8 ; i++) { 
+	for (var i=0 ; i<1 ; i++) { 
 		
 		table = document.createElement("table");
 		//table.width = '100%';
 		table.border = '1';
-		table.cellpadding = '8';
+		//table.cellpadding = '8';
 		//html($("#colorchart").html() + "<table width='100%' border='1' cellpadding='8'>");
 
-		for (var j=0 ; j<8 ; j++) {
+		for (var j=0 ; j<16 ; j++) {
 			tr = document.createElement("tr");
 			//$("#colorchart").html($("#colorchart").html() + '<tr>');
 			
-			for (var k=0 ; k<8 ; k++) {
+			for (var k=0 ; k<16 ; k++) {
 				td = document.createElement("td");
 				td.class = "colorchartTd";
 				td.width = "10px";

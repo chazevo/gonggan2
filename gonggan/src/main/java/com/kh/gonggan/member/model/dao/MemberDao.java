@@ -63,16 +63,29 @@ public class MemberDao {
 		return  sqlSession.insert("membermapper.requestNeig", memberId);
 	}
 
-	public int checkNeig(String memberId) {
-		// TODO Auto-generated method stub
-		return sqlSession.update("membermapper.checkNeig", memberId);
-	}//...?몰까여...이웃신청 수락 거절
-
-	public List<Member> neigList() {
-		// TODO Auto-generated method stub
-		return (List<Member>) sqlSession.selectList("membermapper.neigList");
+	public int acceptNeigh(String memberId, String memberId2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberId", memberId);
+		map.put("memberId2", memberId2);
+		return sqlSession.update("membermapper.naccept", map);
 	}
 
+	public int rejectNeigh(String memberId, String memberId2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberId", memberId);
+		map.put("memberId2", memberId2);
+		return sqlSession.update("membermapper.nreject", map);
+	}
+	
+	public List<Member> checkNeig(String memberId) {
+		// TODO Auto-generated method stub
+		return (List<Member>) sqlSession.selectList("membermapper.ncheck", memberId);
+	}
+	
+	public List<Member> neigList() {
+		return null;
+	}
+	
 	public String getPw(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
 		return ((Member)(sqlSession.selectOne("membermapper.selectPw", paramMap))).getMember_pw();

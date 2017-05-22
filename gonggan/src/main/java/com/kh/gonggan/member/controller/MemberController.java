@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.email.Email;
@@ -30,8 +31,22 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
+	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+		
+		mv.setViewName("index2");
+		mv.addObject("neighborReqList", neighborReqList);
+		mv.addObject("neighborReqListSize", neighborReqList.size());
+		mv.addObject("postAlarmList", 0);
+
+		return mv;
+	}
+	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public ModelAndView loginCheck(Member member, ModelAndView mv, HttpSession session){
+	public String loginCheck(Member member, ModelAndView mv, HttpSession session){
 		Member loginUser  = memberService.loginCheck(member);
 		
 		//ModelAndView mv = new ModelAndView();
@@ -44,12 +59,8 @@ public class MemberController {
 			session.setAttribute("error", "실패");
 			System.out.println("로그인 실패");
 		}
-		
-		mv.setViewName("index2");
-		mv.addObject("loginUser", loginUser);
-		
-		/*return "home";*/
-		return mv;
+
+		return "redirect:login2.do"; 
 	}//로그인하기
 	
 	@RequestMapping("logOut.do")
@@ -71,7 +82,7 @@ public class MemberController {
 		if(insertMem > 0){
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
 			mv.setViewName("index2");
-			mv.addObject("insertMem", insertMem);
+			//mv.addObject("insertMem", insertMem);
 		}else{
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
 			mv.setViewName("join");
@@ -165,12 +176,36 @@ public class MemberController {
 	public String requestNeig(@RequestParam String member_id, Model model){
 		return null;
 	}//이웃 신청
-	@RequestMapping("check.do")
-	public String checkNeig(@RequestParam String member_id, Model model){
-		return null;
-	}//이웃 신청 수락/거절
+	
+	@RequestMapping(value="naccept.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+		public String acceptNeig(@RequestParam String member_id, @RequestParam String member_id2, Model model){
+			
+			String msg = "실패";
+		
+			if (memberService.acceptNeigh(member_id, member_id2) > 0)
+				msg = "수락 성공";
+			return msg;
+		}//이웃 신청 수락/거절
+	
+	@RequestMapping(value="nreject.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+		public String rejectNeig(@RequestParam String member_id, @RequestParam String member_id2, Model model){
+		
+			String msg = "실패";
+	
+			if (memberService.acceptNeigh(member_id, member_id2) > 0)
+				msg = "거절 성공";
+			return msg;
+		}//이웃 신청 수락/거절
 
-	@RequestMapping("response.do")
+	@RequestMapping("ncheck.do")
+	public List<Member> checkNeig(@RequestParam String member_id, Model model){
+		
+		return null;
+	}
+
+	@RequestMapping("nlist.do")
 	public List<Member> neigList(@RequestParam String member_id, Model model){
 		return null;
 	}//이웃 목록 조회

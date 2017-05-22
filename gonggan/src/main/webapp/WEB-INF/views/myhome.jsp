@@ -104,7 +104,9 @@ var imgVal = <%= imgVal %>;
 </script>
 </head>
 <body>
-
+	<c:if test="${empty param }">
+		<jsp:forward page="error.jsp"></jsp:forward>
+	</c:if>
 	<div class="divCenter">
 		<nav class="navbarCustom navbar-default">
 			<div class="navbar-header">
@@ -112,9 +114,9 @@ var imgVal = <%= imgVal %>;
 					<img class="" src="images/KakaoTalk_Photo_2017-04-22-23-02-45.png" width="70px">
 					<img class="" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
 			</div>
-			<div class="navbar-right">
+			<div class="navbar-right navbar-brand" >
 				<c:if test="${empty sessionScope.loginUser }">
-					<a class="loginbox navbar-brand"  href="index.jsp" >
+					<a class="loginbox"  href="index.jsp" >
 						l o g i n
 					</a>
 				</c:if>
@@ -186,7 +188,7 @@ var imgVal = <%= imgVal %>;
 				</button>
 				<a href="#" style="display:inline-block">
 					<img src="images/default.png" height="40px"class="img-circle">
-					&nbsp;${param.writer_id } 님
+					&nbsp;${param.writer_id }
 				</a> &nbsp;
 				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=jis"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
 			</div>

@@ -1,5 +1,6 @@
 @import url(http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css);
 @import 'https://code.highcharts.com/css/highcharts.css';
+@import url('https://fonts.googleapis.com/css?family=Bitter:400,700');
 
 svg {
 	position:absolute;
@@ -183,9 +184,10 @@ input.error {
 
 #imo_icon_area{
    position: absolute;
-   right: 350px;
+   right:50px;
    z-index: 99;
    width:25%;
+   background-color:white;
 }
 
 
@@ -227,16 +229,17 @@ overflow-x: hidden; } */
 
 #uploadFormDiv{
 	padding:10px;
-
 }
 
 #colorchart {
-	width:25%;
+	border: 1px solid pink;
+	width:50%;
+	position:absolute;
 }
 
 #colorchart table {
 	display:inline-block;
-	width:25%;
+	width:100%;
 }
 
 #colorchart td:hover {
@@ -308,8 +311,8 @@ overflow-x: hidden; } */
 
 /* ++++++++++++++++++++++++++++ */
 #navbar-right{
-	vertical-align:middle;  
-	display:table-cell;
+	/* vertical-align:middle;  
+	display:table-cell; */
 }
 #chat_icon{
 display:inline-block;
@@ -320,10 +323,25 @@ a#loginUser:hover {
 	cursor:pointer;
 }
 
-.loginbox {
+
+a.loginbox {
+	font-family: 'Bitter', serif;
+	font-weight:bold;
+	font-size:12pt;
+	border: 1px solid gray;
+	color:gray;
 	display:block;
-	border: 1px solid black;
-	padding: 3px;
+	/*
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:5px;
+	padding-bottom:5px;
+	*/
+	padding: 3px 30px;
+}
+
+a.loginbox:hover {
+	text-decoration:none;
 }
 
 #loginUserDetail {
@@ -538,7 +556,11 @@ a#todayNeighborCnt:hover{
 	padding: 10px;
 }
 
-uploadFormDiv textarea {
+.uploadFormDiv {
+	position:relative;
+}
+
+.uploadFormDiv textarea {
 	border-width:0;
 	width: 100%;
 }

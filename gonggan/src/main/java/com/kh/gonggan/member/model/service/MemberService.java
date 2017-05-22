@@ -26,8 +26,12 @@ public interface MemberService {
 	String getPw(Map<String, Object> paramMap);
 
 	int requestNeig(String memberId);
+	
+	int acceptNeigh(String memberId, String memberId2);
 
-	int checkNeig(String memberId);
+	int rejectNeigh(String memberId, String memberId2);
+	
+	List<Member> checkNeig(String memberId);
 
 	List<Member> neigList();
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.kh.gonggan.member.model.vo.Member"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
@@ -22,6 +23,7 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/index2.js"></script>
 <script type="text/javascript">
 	window.onload = function() {
 		document.getElementById("searchPost").focus();
@@ -124,7 +126,12 @@
 								<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
 							</td></tr>
 							<tr>
-								<td>서로이웃 신청_<font color="#2D86C9"><b>6</b></font></td>
+								<td>
+									서로이웃 신청_
+									<font color="#2D86C9">
+										<b id="neighborReqListSize">${neighborReqListSize }</b>
+									</font>
+								</td>
 								<td><a href="">▶</a></td>
 							</tr>
 							<tbody id="listbody_newNeighbor">
@@ -132,6 +139,21 @@
 									<td>
 										<table>
 											<tr>
+												<c:if test="${!empty (neighborReqList) }">
+												<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
+												<td>
+													<a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+													<a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+														<div class="neighborYN">수락</div>
+													</a>
+													<a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+														<div class="neighborYN">거절</div>
+													</a>
+												</td>
+												</c:forEach>
+												</c:if>
+												<td></td>
+												<!-- 
 												<td>	
 													<a href="">백마탄 환자 </a>
 													<a href=""><div class="neighborYN">수락</div></a>
@@ -152,6 +174,7 @@
 													<a href=""><div class="neighborYN">수락</div></a>
 													<a href=""><div class="neighborYN">거절</div></a>
 												</td>
+												-->
 											</tr>
 										</table>
 									</td>

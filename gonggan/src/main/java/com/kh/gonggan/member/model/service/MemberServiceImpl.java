@@ -60,10 +60,22 @@ public class MemberServiceImpl implements MemberService{
 	public int requestNeig(String memberId){
 		return memberDao.requestNeig(memberId);
 	}//이웃신청
+	
 	@Override
-	public int checkNeig(String memberId){
+	public int acceptNeigh(String memberId, String memberId2) {
+		return memberDao.acceptNeigh(memberId, memberId2);
+	}
+	
+	@Override
+	public int rejectNeigh(String memberId, String memberId2) {
+		return memberDao.rejectNeigh(memberId, memberId2);
+	}
+	
+	@Override
+	public List<Member> checkNeig(String memberId){
 		return memberDao.checkNeig(memberId);
-	}//이웃 확인 여부 여기서 하는 것이 맞을까여,,,?
+	}
+	
 	@Override
 	public List<Member> neigList(){
 		return memberDao.neigList();

@@ -19,7 +19,7 @@
    <jsp:forward page="start.do"></jsp:forward>
 </c:if>
 <c:if test="${!empty sessionScope.loginUser }">
-   <jsp:forward page="index2.do"></jsp:forward>
+   <jsp:forward page="login2.do"></jsp:forward>
 </c:if>
 <%-- <jsp:forward page="start.do">
   <jsp:param name="member_id" value="<%= loginUser.getMember_id()%>" ></jsp:param>

@@ -182,14 +182,21 @@ input.error {
 
 /*uploadform -------------------------------------------------------- */
 
-#imo_icon_area{
-   position: absolute;
-   right:50px;
-   z-index: 99;
-   width:25%;
-   background-color:white;
+#imo_icon_area {
+	position: absolute;
+	right:0px;
+	z-index: 99;
+	width:25%;
+	background-color:#E6E6E6;
 }
 
+#imo_icon_area th {
+	padding:8px;
+	background-color:#6888be;
+	color:white;
+	font-size:70%;
+	font-weight:none;
+}
 
 .content_allign{
 	width:20px;
@@ -231,9 +238,18 @@ overflow-x: hidden; } */
 	padding:10px;
 }
 
+#imgUploadDiv {
+	border:1px solid pink;
+	position:absolute;
+}
+
+#colorChoice:hover {
+	cursor:pointer;
+}
+
 #colorchart {
 	border: 1px solid pink;
-	width:50%;
+	width:20%;
 	position:absolute;
 }
 

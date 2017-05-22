@@ -34,6 +34,23 @@
 			contenttextcolor($(this).attr('bgColor'));
 		});
 		
+		$("#tagadddbtn").click(function() {
+			$("#tag").toggle(function() {
+				document.getElementById("tagaddtext").focus();
+			});
+		});
+		
+		$("#imgUpload").click(function() {
+			if ($("#imgUploadDiv").hasClass("hidden")) {
+				$("#imgUploadDiv").removeClass("hidden");
+				$("#imgUploadDiv").show();
+			}
+			else {
+				$("#imgUploadDiv").addClass("hidden");
+				$("#imgUploadDiv").hide();
+			}
+		});
+		
 		$("#imo_icon").click(function() {
 			if ($("#imo_icon_area").hasClass("hidden")) {
 				$("#imo_icon_area").removeClass("hidden");
@@ -185,9 +202,9 @@
 					<colgroup>
 						<col width="20%" />
 						<col width="20%" />
+						<col width="10%" />
 						<col width="20%" />
-						<col width="20%" />
-						<col width="20%" />
+						<col width="30%" />
 					</colgroup>
 					<tr>
 						<td>분류 </td>
@@ -205,8 +222,12 @@
 						</td>
 					</tr>
 					<tr>
-						<td>나눔고딕</td> 
-						<td style="padding:5px;">
+						<td>
+							<select>
+								<option value="">나눔고딕 </option>
+							</select>
+						</td> 	
+						<td colspan="2" style="padding:5px;">
 							<input type="image"  src="images/bold_icon.png" width="12px"
 											onclick="je_doc.execCommand('bold', 'false', 'null')">&nbsp; &nbsp;
 								
@@ -218,9 +239,8 @@
 								
 							<input type="image"  src="images/cencleline_icon.png" width="15px"
 											onclick="je_doc.execCommand('strikethrough', 'false', 'null')">&nbsp; &nbsp;
-						</td>
-						<td>
-							<img alt="" src="images/text_color.png" width="12%"  id="colorChoice">
+							<img alt="" src="images/text_color.png" width="10%"  id="colorChoice">
+							<img alt="" src="images/highlighter.jpg" width="10%"  id="">
 							<div id="colorchart" class="hidden"></div>
 					<!-- 		<select id=contenttextcolor2 onchange='contenttextcolor2()'>
 								<option class='imageOp'  selected  >글자색상 선택</option>
@@ -255,48 +275,51 @@
 								<input type="image"  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
 								<!-- 이모티콘 -->
 								<div id="imo_icon_area" class="hidden">
-									<div id="box_icon">
-										<table id="idclick_table">
-											<tr id="center_align">
-												<td>
-													<input type="image"  src="images/emoticon/1.png" width="20px" id="imo_icon"
-														onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
-													<input type="image"  src="images/emoticon/2.png" width="20px" id="imo_icon"
-														onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
-													<input type="image"  src="images/emoticon/3.png" width="20px" id="imo_icon"
-														onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
-													<input type="image"  src="images/emoticon/4.png" width="20px" id="imo_icon"
-														onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
-													<input type="image"  src="images/emoticon/5.png" width="20px" id="imo_icon"
-														onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
-													<input type="image"  src="images/emoticon/6.png" width="20px" id="imo_icon"
-														onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
-												</td>
-											</tr> 
-										</table>
-									</div>
+									<table id="idclick_table">
+										<tr>
+											<th>이모티콘 선택</th>
+										</tr>
+										<tr id="center_align">
+											<td>
+												<input type="image"  src="images/emoticon/1.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/2.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/3.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/4.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
+												<input type="image"  src="images/emoticon/5.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
+												<input type="image"  src="images/emoticon/6.png" width="20px" id="imo_icon"
+													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
+											</td>
+										</tr> 
+									</table>
 								</div>
 							</td>
 						</tr>
 						<tr>
 							<td>
-							<!-- <select onchange="imageChange();">
-								<option class="imageOp"  value="diary" selected>배경이미지 </option>
-								<option class="imageOp"  value="news">이미지 삽입</option>
-								</select>
-								<div id="content_backgound" ></div> -->
-							
-							<input type="image"  src="images/pickture_icon.png" id="content_allign_center" width="18px"
-										onclick="je_doc.execCommand('removeformat', 'false', 'null')">&nbsp; &nbsp;이미지	
-								<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
-								<div class="fileInputDiv">
-									<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-									<input type="file" onchange="javascript:$('#filename').val($(this).val());">
+								<!-- <select onchange="imageChange();">
+									<option class="imageOp"  value="diary" selected>배경이미지 </option>
+									<option class="imageOp"  value="news">이미지 삽입</option>
+									</select>
+									<div id="content_backgound" ></div> -->
+								
+								<input type="image"  src="images/pickture_icon.png" id="imgUpload" width="18px"
+											onclick="je_doc.execCommand('removeformat', 'false', 'null')">&nbsp; &nbsp;이미지	
+								<div id="imgUploadDiv" class="hidden">	
+									<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
+									<div class="fileInputDiv">
+										<input type="button" value="첨 부 파 일" class="fileInputBtn" >
+										<input type="file" onchange="javascript:$('#filename').val($(this).val());">
+									</div>
+									<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;
 								</div>
-								<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;
 							</td>
-						<td> 장 소</td>
-						<td>구분선</td>
+						<td><img src="images/marker.png" width="12%"></td>
+						<td><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%"></td>
 						<td id="dateTd">날짜 </td>
 						<td id="dateTd2">
 							<input type="text" name="toDate" id="toDate" size="10" onchange="javascript:changeTitle()">
@@ -305,15 +328,16 @@
 						<td>				
 							<input type="image"  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
 										onclick="imageChange();">&nbsp; &nbsp;배경
-						<td id="imageOp_selected" >
+						</td>
+						<td colspan="4" id="imageOp_selected" >
 							<!-- <div id="content_backgound" ></div>  -->
 							<select class="imagess"  onchange="diaryBg();">
 								<option value="0" >선택 </option>
 								<option value="1" >하트 </option>
 								<option value="2">별</option>
 							</select>
-			
-							<input type="radio" name="imgBB" value="auto" onchange="imgBB(this);" checked>기본&nbsp;
+							&nbsp;
+							<input type="radio" name="imgBB" value="auto" onchange="imgBB(this);" checked>&nbsp;기본
 							<label class='radio-wrap'>
 								<input type='radio' name='imgBB'  value='cover'  onchange="imgBB(this);" >
 								<i class='cover-icon'></i>
@@ -323,8 +347,10 @@
 								<i class='contain-icon'></i>
 							</label>
 						</td>
+					</tr>
+					<tr>
 						<td>
-							<button type="button" data-toggle="collapse" data-target="#tag" id="tagadddbtn">태그</button>
+							<button type="button" data-toggle="collapse" id="tagadddbtn">태그</button>
 							<div id="tag" class="collapse">					
 								<input id="tagaddtext" type="text"  size="15" 
 									onkeydown="if(event.keyCode ==13) tagaddfunc();">
@@ -446,7 +472,12 @@
 						</td>
 					</tr>
 					
-					<tr><td colspan="5"><input type="checkbox">&nbsp;나만보기</td></tr>
+					<tr>
+						<td colspan="5">
+							<input type="radio" name="open" value="">&nbsp;나만보기&nbsp;
+							<input type="radio" name="open" value="">&nbsp;이웃공개 
+						</td>
+					</tr>
 					<tr>
 						<td colspan="5" class="footerDiv">
 							<div>

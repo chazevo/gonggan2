@@ -39,7 +39,7 @@ function tagaddfunc(){
 	
 	if($("#tagaddtext").val() != "" ) {
 		$("#tagview").html($("#tagview").html() + "<span>" + $("#tagaddtext").val()
-				+ " <a href='#' onclick='deleteTag(this);'><img src='images/x_icon.png' width='15px'></a>&nbsp;</span>");
+				+ " <a href='javascript:void(0);' onclick='deleteTag(this);'><img src='images/x_icon.png' width='15px'></a>&nbsp;</span>");
 	}
 	$("#tagaddtext").val("");
 	
@@ -51,6 +51,7 @@ function deleteTag(obj){
 	var td = span.parentNode;
 	
 	td.removeChild(span);
+	$("#tagaddtext").focus();
 }
 
 

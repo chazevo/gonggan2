@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="NewsSerchServlet" method="get">
+<form action="moviesearch.do" method="get">
 	<input type="text" placeholder="영화" name="keyword">
 	<input type="submit" value="검색">
 </form>
@@ -32,3 +32,8 @@ var map = new naver.maps.Map('map', mapOptions);
 </script>
 </body>
 </html>
+
+
+
+
+

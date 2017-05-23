@@ -35,6 +35,18 @@ $(function() {
 	});
 });
 /*-------------------------------------------------------- */
+
+function recieveContent(image, title, director , actor, pubDate) {
+	document.getElementById('editor').contentWindow.document.body.innerHTML += 
+		"<table align='center' border='1' width='80%'><tr><td rowspan='4' width='30%'>"
+		+ "<img src='" + image + "' width='100%'></td>"
+		+ "<td>" + title + "</td>"
+		+ "<tr><td>감독 "+ director + "</td></tr>" 
+		+ "<tr><td>출연  "+ actor + "</td></tr>"
+		+"<tr><td> 개봉 "+pubDate+" </td></tr>"
+		+ "</td></tr></table>";
+}
+
 function tagaddfunc(){
 	
 	if($("#tagaddtext").val() != "" ) {

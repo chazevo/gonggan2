@@ -14,22 +14,22 @@ body {
 	font-family: 'Nanum Barun Gothic', sans-serif;
 }
 
-.likepage {
+.gradBg {
 	color:white;
 	background:linear-gradient(to bottom, rgb(145, 156, 178), rgb(207,167 ,168 ));
 }
-.likepage input {
+.gradBg input {
 	background-color:transparent;
 	border-width:0px;
 	color:white;
 	text-align:center;
 }
 
-.likepage input::-webkit-input-placeholder {
+.gradBg input::-webkit-input-placeholder {
 	color:white;
 }
 
-.likepage .div2 {
+.gradBg .div2 {
 	padding-left: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -38,27 +38,27 @@ body {
 	width: 80%;
 }
 
-.likepage .div2 input{
+.gradBg .div2 input{
 	width:80%;
 }
 
-.likepage>div {
+.gradBg>div {
 	width:600px;
 	height:500px;
 	overflow:auto;
 }
 
-.likepage td {
+.gradBg td {
 	
 	padding-left:50px;
 	padding-right:50px;
 }
 
-.likepage tbody td {
+.gradBg tbody td {
 	height:50px;
 }
 
-.likepage .neighborN {
+.gradBg .neighborN {
 	border:1px solid rgb(148, 148, 148);
 	border-radius:5px;
 	width:45%;
@@ -67,7 +67,7 @@ body {
 	padding:5px;
 }
 
-.likepage .neighborY {
+.gradBg .neighborY {
 	border-width:0px;
 	border-radius:5px;
 	width:45%;
@@ -76,14 +76,27 @@ body {
 	padding:5px;
 }
 
-.likepage a {
+.gradBg a {
 	color:white;
 }
-.likepage a:hover{
+.gradBg a:hover{
 	text-decoration:none;
+	color:white;
 }
-.likepage hr{
+.gradBg a:visited{
+	text-decoration:none;
+	color:white;
+}
+
+.gradBg hr{
 	border-color:rgb(172,174,184);
+}
+.gradBg .searchAllTable {
+	margin:10px;
+}
+
+.gradBg .searchAllTable th{
+	margin:10px;
 }
 
 .back {

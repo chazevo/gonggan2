@@ -16,12 +16,14 @@
 <link rel='stylesheet' href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css'/> 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link href="css/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 <link rel='stylesheet' href='css/css.css'/> 
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/uploadForm.js"></script>
+<script src="js/jquery.fancybox.js"></script>
 <title>uploadform.jsp</title>
 <script>
 	$(document).ready(function() {
@@ -198,12 +200,12 @@
 		
 		<section>	
 			<div class="uploadFormDiv" > <!-- style="border:1px;"  -->
-				<table width="100%" border="1" id="uploadtable" > 
+				<table border="1" width="100%"  id="uploadtable" > 
 					<colgroup>
 						<col width="20%" />
 						<col width="20%" />
-						<col width="10%" />
-						<col width="20%" />
+						<col width="15%" />
+						<col width="15%" />
 						<col width="30%" />
 					</colgroup>
 					<tr>
@@ -329,7 +331,7 @@
 							<input type="image"  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
 										onclick="imageChange();">&nbsp; &nbsp;배경
 						</td>
-						<td colspan="4" id="imageOp_selected" >
+						<td colspan="2" id="imageOp_selected" >
 							<!-- <div id="content_backgound" ></div>  -->
 							<select class="imagess"  onchange="diaryBg();">
 								<option value="0" >선택 </option>
@@ -346,6 +348,9 @@
 								<input type='radio' name='imgBB'  value='contain'  onchange="imgBB(this);">
 								<i class='contain-icon'></i>
 							</label>
+						</td>
+						<td colspan="2" >
+							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="20px"></a>
 						</td>
 					</tr>
 					<tr>

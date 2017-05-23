@@ -16,7 +16,7 @@
 	var post_id = '${param.postId }';
 </script>
 </head>
-<body class="likepage">
+<body class="gradBg">
 <div>
 	<table width="100%" >
 		<tr>

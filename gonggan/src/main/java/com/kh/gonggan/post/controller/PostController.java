@@ -1,9 +1,16 @@
 package com.kh.gonggan.post.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONString;
 /*
@@ -19,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.comment.model.service.CommentService;
@@ -38,6 +47,8 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private GoodService goodService;
+	@Resource(name="uploadPath")
+	private String uploadPath;
 	
 	@RequestMapping("pdetail.do")
 		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
@@ -111,6 +122,35 @@ public class PostController {
 			//return mv;
 			return json.toJSONString();
 		}
+	
+	@RequestMapping(value="/imgupload.do", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String uploadImg(MultipartHttpServletRequest req, HttpSession session) throws Exception{
+		
+		OutputStream outputStream = null;
+		InputStream inputStream = null;
+		
+		MultipartFile file = req.getFile("file");
+		File originalFile = new File("/uploadImages/");
+		
+		if (file.getSize() > 0)
+			inputStream = file.getInputStream();
+		
+		if (!originalFile.exists()) {
+			originalFile.mkdirs();//폴더생성.
+        }
+		
+		outputStream = new FileOutputStream("/uploadImages/" + file.getOriginalFilename());
+		int readByte = 0;
+        byte[] buffer = new byte[8192];
+
+        while ((readByte = inputStream.read(buffer, 0, 8120)) != -1) {
+            outputStream.write(buffer, 0, readByte); //파일 생성 ! 
+			//file.transferTo(new File("/uploadImages/"));
+        }
+		return file.getOriginalFilename();
+		
+	}
 	
 	
 }

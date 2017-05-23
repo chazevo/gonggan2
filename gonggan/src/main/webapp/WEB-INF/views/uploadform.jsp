@@ -19,8 +19,9 @@
 <link href="css/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 <link rel='stylesheet' href='css/css.css'/> 
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="js/jquery.form.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/uploadForm.js"></script>
 <script src="js/jquery.fancybox.js"></script>
@@ -42,7 +43,7 @@
 			});
 		});
 		
-		$("#imgUpload").click(function() {
+		$("#imgUploadIcon").click(function() {
 			if ($("#imgUploadDiv").hasClass("hidden")) {
 				$("#imgUploadDiv").removeClass("hidden");
 				$("#imgUploadDiv").show();
@@ -92,9 +93,49 @@
 			else
 				$(this).addClass("grayTd");
 		});
-		
-		
-		
+		function getExtend(path) {
+	         var str = path.substring(path.lastIndexOf(".") + 1);
+	         return str;
+	      }
+		window
+        .addEventListener(
+              "load",
+              function() {
+                 var title_photo = document.getElementById("file");
+                 title_photo
+                       .addEventListener(
+                             "change",
+                             function() {
+                                var ext = getExtend(this.value);
+                                var result = (ext.toLowerCase() == "jpg"
+                                      || ext.toLowerCase() == "jpeg"
+                                      || ext.toLowerCase() == "gif" || ext
+                                      .toLowerCase() == "png")
+                                if (!result) {
+                                   alert("알림 : 지원하지 않는 미디어 형식입니다.\n\njpg, gif, png 확장자를 가진 이미지 파일만 올려주세요.");
+                                   title_photo.value = null;
+                                   //var output = document.getElementById('imgout');
+                                   //output.removeAttribute('src');
+                                   return;
+                                } else {
+                                   //readImg('file', 'imgout');
+                                   //$("#facecheck").val("1");
+                                	uploadImg();
+                                }
+                             });
+              });
+
+	      function readImg(inputId, outputId) {
+	         var file = document.getElementById(inputId).files[0];
+	         var reader = new FileReader();
+	         reader.readAsDataURL(file);
+	      reader.onload = function() {
+	            var output = document.getElementById(outputId);
+	            //output.src = reader.result;
+	            document.getElementById('editor').contentWindow.document.body.innerHTML += 
+	            	"<img src='" + reader.result + "'>";
+	         }
+	      }
 	});
 </script>
 </head>
@@ -308,17 +349,18 @@
 									<option class="imageOp"  value="news">이미지 삽입</option>
 									</select>
 									<div id="content_backgound" ></div> -->
-								
-								<input type="image"  src="images/pickture_icon.png" id="imgUpload" width="18px"
+								<input type="image"  src="images/pickture_icon.png" id="imgUploadIcon" width="18px"
 											onclick="je_doc.execCommand('removeformat', 'false', 'null')">&nbsp; &nbsp;이미지	
+							 <form action="imgupload.do" method="post" enctype="multipart/form-data" id="imgUpload"> 
 								<div id="imgUploadDiv" class="hidden">	
 									<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
 									<div class="fileInputDiv">
 										<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-										<input type="file" onchange="javascript:$('#filename').val($(this).val());">
+										<input type="file" name="file" id="file" onchange="javascript:$('#filename').val($(this).val());">
 									</div>
 									<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;
 								</div>
+							 </form> 
 							</td>
 						<td><img src="images/marker.png" width="12%"></td>
 						<td><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%"></td>

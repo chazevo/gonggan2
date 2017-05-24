@@ -12,6 +12,11 @@
 		<org.springframework-version>4.3.6.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+		<!-- 유튜브 시작 -->
+		<project.youtube.version>v3-rev8-1.12.0-beta</project.youtube.version>
+		<project.http.version>1.12.0-beta</project.http.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- 유튜브 끝 -->
 	</properties>
 
 	<repositories>
@@ -26,6 +31,11 @@
 			</snapshots>
 		</repository>
 
+		<!-- 유튜브 시작 -->
+		<repository>
+			<id>google-api-services</id>
+			<url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
+		</repository>
 		<repository>
 			<id>jackson</id>
 			<url>https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl</url>
@@ -34,8 +44,9 @@
 		<repository>
 			<id>json</id>
 			<url> https://mvnrepository.com/artifact/org.json/json</url>
-
 		</repository>
+		<!-- 유튜브 끝 -->
+		
 		<repository>
 			<id>egovframe</id>
 			<url>http://www.egovframe.go.kr/maven/</url>
@@ -63,6 +74,18 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-youtube</artifactId>
+			<version>${project.youtube.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.http-client</groupId>
+			<artifactId>google-http-client-jackson2</artifactId>
+			<version>${project.http.version}</version>
+		</dependency>	
+		
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -300,6 +323,15 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<!-- <mainClass>com.google.api.services.samples.youtube.cmdline.youtube_cmdline_search_sample.Search</mainClass> -->
+					<mainClass>com.kh.gonggan.post.controller.MusicController</mainClass>
+				</configuration>
+			</plugin>
+			<plugin> 
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>
 				<configuration>

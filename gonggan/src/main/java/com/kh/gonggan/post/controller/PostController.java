@@ -366,7 +366,7 @@ public class PostController {
 			
 			url = new URL("https://openapi.naver.com/v1/map/staticmap.bin?"
 					+ "clientId=JVmBHBSdqNcd5JKBkRhO"
-					+ "&url=http://localhost:8577/gonggan/&crs=EPSG:4326"
+					+ "&url=http://localhost:8577/gonggan/&crs=NHN:128"
 					+ "&center=" + mapx + "," + mapy
 					+ "&level=14&w=300&h=300&baselayer=default"
 					+ "&markers=" + mapx + "," + mapy);
@@ -390,7 +390,7 @@ public class PostController {
 			String marger="";
 			
 			for(int i=0 ; i<roots.length-3; i++)
-	         marger += roots[i] + "\\";
+				marger += roots[i] + "\\";
 	         
 			
 			System.out.println("marger : " + marger);
@@ -427,6 +427,6 @@ public class PostController {
 		
 		return "result.png";
 	}
-
+		
 	
 }

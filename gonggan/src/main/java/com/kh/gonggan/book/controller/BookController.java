@@ -71,7 +71,7 @@ public class BookController {
 				response_ = new StringBuffer();
 				while ((inputLine = br.readLine()) != null) {
 					response_.append(inputLine + "\n");
-					System.out.println(inputLine);
+					//System.out.println(inputLine);
 	            }
 	            br.close();
 	            
@@ -85,6 +85,7 @@ public class BookController {
 			mv.setViewName("searchAll");
 			mv.addObject("searchBookList", result);
 			mv.addObject("keyword", keyword);
+			mv.addObject("category", 0);
 			
 			return mv;
 		}

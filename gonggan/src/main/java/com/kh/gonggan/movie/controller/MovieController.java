@@ -46,7 +46,6 @@ public class MovieController {
 		Type type = new TypeToken<PostMovie>(){}.getType();          
 		                        
 		//List<Movie> searchMovieList  = movieService.searchMovie();
-		List<Movie> searchMovieList = new ArrayList<Movie>();
 		
 		String clientId = "wby5y_qdDk0ASqaBNnEt"; //애플리케이션 클라이언트 아이디값";
 		String clientSecret = "bmJftKj85P"; //애플리케이션 클라이언트 시크릿값";
@@ -97,6 +96,7 @@ public class MovieController {
 		mv.setViewName("searchAll");
 		mv.addObject("searchMovieList", result);
 		mv.addObject("keyword", keyword);
+		mv.addObject("category", 1);
 		
 		return mv;
 	}

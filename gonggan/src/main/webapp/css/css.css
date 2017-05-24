@@ -58,6 +58,22 @@ body {
 	height:50px;
 }
 
+.gradBg th div {
+	position:relative;
+	height:50px;
+}
+
+.gradBg th hr {
+	position:absolute;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	margin-left:auto;
+	margin-right:auto;
+	width:80%;
+	border-width:4px;
+}
+
 .gradBg .neighborN {
 	border:1px solid rgb(148, 148, 148);
 	border-radius:5px;
@@ -76,7 +92,7 @@ body {
 	padding:5px;
 }
 
-.gradBg a {
+.gradBg a:link {
 	color:white;
 }
 .gradBg a:hover{

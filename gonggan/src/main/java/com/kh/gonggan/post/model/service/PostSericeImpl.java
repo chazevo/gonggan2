@@ -26,5 +26,6 @@ public class PostSericeImpl implements PostService{
 		return  postDao.postDetail(post_id);
 		
 	}
+	
 
 }

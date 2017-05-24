@@ -12,7 +12,12 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/searchAll.js"></script>
 <script type="text/javascript">
+	var categoryval = ('${category}'=='' ? 0 : '${category}');
+
 	window.onload = function() {
+		
+		$("input[name=keyword]").focus();
+		
 		$("th a").click(function() {
 			if ($(this).next().hasClass('hidden')) {
 				$("th a").next().addClass('hidden');
@@ -21,6 +26,20 @@
 				$(this).next().show();
 			}
 		});
+		
+		$("th a").hover(function() {
+			if ($(this).next().hasClass('hidden')) {
+				$("th a").next().addClass('hidden');
+				$("th a").next().hide();
+				$(this).next().removeClass('hidden');
+				$(this).next().show();
+			}
+			else {
+				$(this).next().addClass('hidden');
+				$(this).next().hide();
+			}
+		});
+		
 	}
 </script>
 <title>Insert title here</title>
@@ -30,31 +49,42 @@
 	<table width="100%"  border="1" class="searchAllTable" >
 		<tr>
 			<th class="text-center">
-				<a href="javascript:categoryval=0;">책</a>
-				<hr class="hidden">
+				<div>
+					<a href="javascript:categoryval=0; changeCategory();">책</a>
+					<hr class="<c:if test="${category ne 0 && !empty param }">hidden</c:if>">
+				</div>
 			</th>
 			<th  class="text-center">
-				<a href="javascript:categoryval=1;">영화</a>
-				<hr class="hidden">
+				<div>
+					<a href="javascript:categoryval=1; changeCategory();">영화</a>
+					<hr class="<c:if test="${category ne 1 }">hidden</c:if>">
+				</div>
 			</th>
 			<th class="text-center">
-				<a href="javascript:categoryval=2;">음악</a>
-				<hr class="hidden">
+				<div>
+					<a href="javascript:categoryval=2; changeCategory();">음악</a>
+					<hr class="<c:if test="${category ne 2 }">hidden</c:if>">
+				</div>
 			</th>
 			<th  class="text-center">
-				<a href="javascript:categoryval=3;">리뷰</a>
-				<hr class="hidden">
+				<div>
+					<a href="javascript:categoryval=3; changeCategory();">리뷰</a>
+					<hr class="hidden">
+				</div>
 			</th>
 			<th class="text-center">
-				<a href="javascript:categoryval=4;">뉴스</a>
-				<hr class="hidden">
+				<div>
+					<a href="javascript:categoryval=4; changeCategory();">뉴스</a>
+					<hr class="<c:if test="${category ne 4 }">hidden</c:if>">
+				</div>
 			</th>
 		</tr>
 		<tr>
 			<td colspan="5" class="text-center">
 				<div class="div2"  style="margin:auto;">
 					<form method="get" id="submit">
-						<input type="text" id="" onkeydown="if(event.keyCode == 13) selectSubmit();" name="keyword" value="${keyword }" placeholder="search" >
+						<input type="text" id="" name="keyword" value="${keyword }" placeholder="search" 
+						onkeydown="if(event.keyCode == 13) selectSubmit();">
 						<a href="javascript:selectSubmit();">
 						<img src=images/search.png width="5%" >
 						</a>
@@ -65,10 +95,24 @@
 		</tr>
 		<tr>
 			<th colspan="5">
-				<hr>
+				<div><hr></div>
 			</th>
 		</tr>
 		<tbody id="listbody">
+			<c:if test="${!empty searchMusicList}">
+					<c:forEach items="${searchMusicList}" var="i" begin="0">
+					<tr>
+						<td>
+							<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
+							<img src="${i.thumbnail }"></a>
+						</td>
+						<td colspan="4">
+							<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
+								${i.title}</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</c:if>
 			<c:if test="${!empty searchMovieList}">
 				<c:forEach items="${searchMovieList}" var="i" begin="0">
 					<tr>

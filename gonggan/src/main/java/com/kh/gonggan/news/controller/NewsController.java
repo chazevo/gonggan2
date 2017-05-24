@@ -92,6 +92,7 @@ public ModelAndView searchNews(ModelAndView mv, @RequestParam String keyword, Ht
 		mv.setViewName("searchAll");
 		mv.addObject("searchNewsList", result);
 		mv.addObject("keyword", keyword);
+		mv.addObject("category", 4);
 		
 		
 		return mv;

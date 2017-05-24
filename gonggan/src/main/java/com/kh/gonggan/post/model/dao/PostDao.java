@@ -21,5 +21,4 @@ public class PostDao {
 		return (Post) sqlSession.selectOne("postmapper.pdetail",post_id);
 	}
 	
-	
 }

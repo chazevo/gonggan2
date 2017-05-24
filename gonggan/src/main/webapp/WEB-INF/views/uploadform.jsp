@@ -362,7 +362,9 @@
 								</div>
 							 </form> 
 							</td>
-						<td><img src="images/marker.png" width="12%"></td>
+						<td>
+							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="12%"></a>
+						</td>
 						<td>
 							<a href="javascript:line();"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
 						</td>
@@ -371,7 +373,7 @@
 							<input type="text" name="toDate" id="toDate" size="10" onchange="javascript:changeTitle()">
 						</td>
 					<tr>
-						<td>				
+						<td>
 							<input type="image"  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
 										onclick="imageChange();">&nbsp; &nbsp;배경
 						</td>

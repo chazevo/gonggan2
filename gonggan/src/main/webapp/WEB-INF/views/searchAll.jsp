@@ -131,6 +131,7 @@
 					</tr>
 				</c:forEach>
 			</c:if>
+
 		</tbody>
 	</table>
 </div>

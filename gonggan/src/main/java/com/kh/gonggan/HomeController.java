@@ -119,4 +119,9 @@ public class HomeController {
 	      return "facebookLogin";
 	   }
 
+	   @RequestMapping(value = "map.do", method = RequestMethod.GET)
+	   public String map(Locale locale, Model model) {
+	      logger.info("Welcome map! ");
+	      return "map";
+	   }
 }

@@ -67,10 +67,14 @@ var today = <%= today %>;
 var firstday = <%= firstday %>;
 var lastdate = <%= lastdate %>;
 var imgVal = <%= imgVal %>;
+var h2color = "${blog.getColor()}";
 
 	window.onload = function() {
+		
 		visit();
 		requestList();
+		
+		$("h2").css("color", h2color);
 		
 		$("#year").text(year);
 		$("#month").text(month<10 ? "0" + month : month);

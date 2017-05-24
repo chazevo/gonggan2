@@ -1,11 +1,14 @@
 package com.kh.gonggan.post.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.List;
@@ -183,5 +186,45 @@ public class PostController {
 		}
 		return originalFileName;
 	}
+	
+	@RequestMapping(value="/musicpost.do", produces="text/plain;charset=UTF-8", method=RequestMethod.GET)
+	@ResponseBody
+	public String musicpost(@RequestParam String title, @RequestParam String singer){
+		
+		String result = "";
+		String urlStr;
+		URL url; //URL 문자열을 처리하기 위해 URL클래스를 이용한다.
+		BufferedReader bf; //소스코드를 가져오기 위한 스트림을 선언한다.
+		String line;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+
+			urlStr = "https://www.youtube.com/results?search_query="
+					+ URLEncoder.encode(title, "UTF-8") + "+"
+					+ URLEncoder.encode(singer, "UTF-8");
+			
+			url = new URL(urlStr); //URL 문자열을 처리하기 위해 URL클래스를 이용한다.
+			
+			bf = new BufferedReader(new InputStreamReader(url.openStream()));
+			//URL클래스의 openStream()함수로 지정한 웹주소의 소스코드를 받아올 수 있다.
+	        
+			while((line=bf.readLine())!=null)
+				sb.append(line+"\n");
+	        
+			result = sb.toString();
+	        
+			bf.close();
+
+			//System.out.println("-------------------------------------------------------------------------------");
+			//System.out.println(result);
+			
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		
+		return result.split("yt-lockup-title \"><a href=\"/watch\\?v=")[1].split("\"")[0];
+	}
+		
 	
 }

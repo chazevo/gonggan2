@@ -87,14 +87,14 @@ function recieveNews(title, originallink, description, pubDate) {
 		+"</tr></table>";
 }
 
-function recieveBook(image, title, author, publisher, pubDate) {
+function recieveBook(image, title, author, publisher, pubdate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
 		"<table align='center' border='1' width='80%'><tr><td rowspan='4' width='30%'>"
 		+ "<img src='" + image + "' width='100%'></td>"
 		+ "<td>" + title + "</td>"
 		+ "<tr><td>저자 "+ author + "</td></tr>" 
 		+ "<tr><td>출판  "+ publisher + "</td></tr>"
-		+"<tr><td> 발매 "+pubDate+" </td></tr>"
+		+"<tr><td> 발매 "+pubdate+" </td></tr>"
 		+ "</td></tr></table>";
 }
 

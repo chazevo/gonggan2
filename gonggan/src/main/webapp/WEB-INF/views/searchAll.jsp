@@ -112,11 +112,11 @@
 				<c:forEach items="${searchBookList}" var="i" begin="0">
 					<tr>
 						<td rowspan="4">
-							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubDate }');">
+							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
 							<img src="${i.image}"></a>
 						</td>
 						<td colspan="4">
-							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubDate }');">
+							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
 								${i.title}</a>
 						</td>
 					</tr>

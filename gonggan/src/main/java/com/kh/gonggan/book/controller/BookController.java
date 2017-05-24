@@ -86,6 +86,6 @@ public class BookController {
 			mv.addObject("searchBookList", result);
 			mv.addObject("keyword", keyword);
 			
-			return null;
+			return mv;
 		}
 }

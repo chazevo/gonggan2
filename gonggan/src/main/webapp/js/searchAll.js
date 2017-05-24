@@ -13,9 +13,9 @@ function selectNews(title, originallink, description, pubDate) {
 	
 	parent.$.fancybox.close();
 }
-function selectBook(image, title, author, publisher, pubDate) {
+function selectBook(image, title, author, publisher, pubdate) {
 	
-	parent.recieveBook(image, title, author, publisher, pubDate);
+	parent.recieveBook(image, title, author, publisher, pubdate);
 	
 	parent.$.fancybox.close();
 }

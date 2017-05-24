@@ -90,6 +90,31 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return ((Member)(sqlSession.selectOne("membermapper.selectPw", paramMap))).getMember_pw();
 	}
+	public Member naverIdCheck(Member mem) {
+	      // TODO Auto-generated method stub
+	      System.out.println("memberdao");
+	      return (Member) sqlSession.selectOne("membermapper.naverIdCheck", mem);
+	   }
+	   
+	   public int naverConnect(Member mem) {
+	      return sqlSession.update("membermapper.naverConnect", mem);
+	   }
+
+	   public Member kakaoIdCheck(Member mem) {
+	      return (Member) sqlSession.selectOne("membermapper.kakaoIdCheck", mem);
+	   }
+
+	   public int kakaoConnect(Member mem) {
+	      return sqlSession.update("membermapper.kakaoConnect", mem);
+	   }
+
+	   public Member facebookIdCheck(Member mem) {
+	      return (Member) sqlSession.selectOne("membermapper.facebookIdCheck", mem);
+	   }
+
+	   public int facebookConnect(Member mem) {
+	      return   sqlSession.update("membermapper.facebookConnect", mem);
+	   }
 
 
 

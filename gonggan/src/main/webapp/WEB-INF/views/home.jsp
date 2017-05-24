@@ -96,6 +96,10 @@
 				<a href="findIdPwd.do">아이디 찾기</a> | 
 				<a href="findIdPwd.do">비밀번호 찾기</a>  | 
 				<a href="join.do">회원가입</a>  
+				<a href="nlogin.do">NaverLogin</a>  |
+				<a href="kakao.do">KakaoLogin</a>  |
+				<a href="facebook.do">FacebookLogin</a>  |
+				<a href="twitter.do">twitterLogin</a>  |
 				</td></tr>
 				<tr>
 					<td>

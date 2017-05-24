@@ -137,5 +137,30 @@
 		NEIGHBOR
 		where receiver =#{writer_id} and CHECK_YN='Y' and extract(month	from accept_date )= extract(month from sysdate))
 	</select><!-- 이번달 추가 된 이웃 -->
-	
+		
+	<select id="naverIdCheck" parameterType="member" resultMap="memberResult">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_NAVER_ID = #{member_naver_id}
+   </select>
+   
+   <select id="kakaoIdCheck" parameterType="member" resultMap="memberResult">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_KAKAO_ID = #{member_kakao_id}
+   </select>
+   
+   <select id="facebookIdCheck" parameterType="member" resultMap="memberResult">
+      SELECT * FROM MEMBER
+      WHERE MEMBER_FACEBOOK_ID = #{member_facebook_id}
+   </select>
+   
+   <select id="naverConnect" parameterType="member">
+      update member set member_naver_id = #{member_naver_id} where member_id = #{member_id} and member_pw = #{member_pw}
+   </select>
+   
+   <select id="kakaoConnect" parameterType="member">
+      update member set member_kakao_id = #{member_kakao_id} where member_id = #{member_id} and member_pw = #{member_pw}
+   </select>
+   <select id="facebookConnect" parameterType="member">
+      update member set member_facebook_id = #{member_facebook_id} where member_id = #{member_id} and member_pw = #{member_pw}
+   </select>
 </mapper>

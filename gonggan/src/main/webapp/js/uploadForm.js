@@ -39,6 +39,22 @@ function line(){
 	je_doc.execCommand('InsertHorizontalRule', 'null');
 	//document.getElementById('editor').contentWindow.document.body.innerHTML += "<hr>";
 }
+
+	 
+	 function callback(data){
+
+			var jsonObj = JSON.stringify(data);
+			var jsonArr = JSON.parse(jsonObj);
+			xVal = jsonArr.x;
+			yVal = jsonArr.y;
+			console.log(xVal);
+			var map = new naver.maps.Map('map',{
+				center: new naver.maps.LatLng(xVal,yVal),
+				zoom: 10
+				
+			});
+			console.log(xVal);
+}
 function uploadImg(){
 	/*$.ajax({
 		url:"imgupload.do",
@@ -96,6 +112,11 @@ function recieveBook(image, title, author, publisher, pubdate) {
 		+ "<tr><td>출판  "+ publisher + "</td></tr>"
 		+"<tr><td> 발매 "+pubdate+" </td></tr>"
 		+ "</td></tr></table>";
+}
+
+function recieveMap(image) {
+	je_doc.body.focus();
+	je_doc.execCommand('InsertImage', 'false', '/gonggan/uploadImages/' + image);
 }
 
 function tagaddfunc(){

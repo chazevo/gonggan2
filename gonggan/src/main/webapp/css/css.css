@@ -192,6 +192,16 @@ input.error {
 	color: white;
 }
 
+.map div {
+	width:40%;
+	margin:0;
+	display:inline-block;
+	border: 1px solid red;
+}
+
+.map td {
+	text-align:center;
+}
 
 /*uploadform -------------------------------------------------------- */
 

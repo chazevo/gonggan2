@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.kh.gonggan.movie.model.vo.Movie;
+import com.kh.gonggan.news.model.vo.News;
 
 public class Post {
 
@@ -15,7 +16,6 @@ public class Post {
 	private int goodCnt;
 	private String photoPath;
 	private Date postDate;
-	private List<Movie> items;
 	
 	
 	public int getPostId() {
@@ -66,10 +66,5 @@ public class Post {
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
-	public List<Movie> getItems() {
-		return items;
-	}
-	public void setItems(List<Movie> items) {
-		this.items = items;
-	}
+
 }

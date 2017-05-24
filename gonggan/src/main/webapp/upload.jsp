@@ -12,8 +12,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="moviesearch.do" method="get">
-	<input type="text" placeholder="영화" name="keyword">
+<form action="newssearch.do" method="get">
+	<input type="text" placeholder="뉴스" name="keyword">
 	<input type="submit" value="검색">
 </form>
 <form action="FindCoordinatesServlet" method="get">

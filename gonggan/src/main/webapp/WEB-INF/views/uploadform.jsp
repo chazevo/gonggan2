@@ -363,7 +363,9 @@
 							 </form> 
 							</td>
 						<td><img src="images/marker.png" width="12%"></td>
-						<td><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%"></td>
+						<td>
+							<a href="javascript:line();"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
+						</td>
 						<td id="dateTd">날짜 </td>
 						<td id="dateTd2">
 							<input type="text" name="toDate" id="toDate" size="10" onchange="javascript:changeTitle()">

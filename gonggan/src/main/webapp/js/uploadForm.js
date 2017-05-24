@@ -35,7 +35,10 @@ $(function() {
 	});
 });
 /*-------------------------------------------------------- */
-
+function line(){
+	je_doc.execCommand('InsertHorizontalRule', 'null');
+	//document.getElementById('editor').contentWindow.document.body.innerHTML += "<hr>";
+}
 function uploadImg(){
 	/*$.ajax({
 		url:"imgupload.do",
@@ -55,8 +58,8 @@ function uploadImg(){
 		enctype: "multipart/form-data", // 여기에 url과 enctype은 꼭 지적해주어야 하는 부분이며 multipart로 지적해주지 않으면 controller로 파일을 보낼 수 없음
 		success: function(result){
 			alert(result);
-            document.getElementById('editor').contentWindow.document.body.innerHTML += 
-            	"<img src='uploadImages/" + result + "'>";
+			je_doc.execCommand('InsertImage', 'false', '/gonggan/uploadImages/' + result);
+            //document.getElementById('editor').contentWindow.document.body.innerHTML += "<img src='uploadImages/" + result + "'>";
 		}
 		});
 		// 여기까지는 ajax와 같다. 하지만 아래의 submit명령을 추가하지 않으면 백날 실행해봤자 액션이 실행되지 않는다.
@@ -65,7 +68,7 @@ function uploadImg(){
 }
 
 
-function recieveContent(image, title, director , actor, pubDate) {
+function recieveMovie(image, title, director , actor, pubDate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
 		"<table align='center' border='1' width='80%'><tr><td rowspan='4' width='30%'>"
 		+ "<img src='" + image + "' width='100%'></td>"
@@ -73,6 +76,25 @@ function recieveContent(image, title, director , actor, pubDate) {
 		+ "<tr><td>감독 "+ director + "</td></tr>" 
 		+ "<tr><td>출연  "+ actor + "</td></tr>"
 		+"<tr><td> 개봉 "+pubDate+" </td></tr>"
+		+ "</td></tr></table>";
+}
+
+function recieveNews(title, originallink, description, pubDate) {
+	document.getElementById('editor').contentWindow.document.body.innerHTML += 
+		"<table align='center' border='1' width='80%'><tr>"
+		+ "<td>" + title+"</td></tr>"
+		+ "<tr><td>" + description + "</td>"
+		+"</tr></table>";
+}
+
+function recieveBook(image, title, author, publisher, pubDate) {
+	document.getElementById('editor').contentWindow.document.body.innerHTML += 
+		"<table align='center' border='1' width='80%'><tr><td rowspan='4' width='30%'>"
+		+ "<img src='" + image + "' width='100%'></td>"
+		+ "<td>" + title + "</td>"
+		+ "<tr><td>저자 "+ author + "</td></tr>" 
+		+ "<tr><td>출판  "+ publisher + "</td></tr>"
+		+"<tr><td> 발매 "+pubDate+" </td></tr>"
 		+ "</td></tr></table>";
 }
 

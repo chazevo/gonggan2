@@ -98,8 +98,7 @@
 				<a href="join.do">회원가입</a>  
 				<a href="nlogin.do">NaverLogin</a>  |
 				<a href="kakao.do">KakaoLogin</a>  |
-				<a href="facebook.do">FacebookLogin</a>  |
-				<a href="twitter.do">twitterLogin</a>  |
+				<a href="facebook.do">FacebookLogin</a>
 				</td></tr>
 				<tr>
 					<td>

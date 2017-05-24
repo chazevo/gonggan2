@@ -103,4 +103,20 @@ public class HomeController {
 		logger.info("Welcome searchAll! ");
 		return "searchAll";
 	}
+	@RequestMapping(value = "kakao.do", method = RequestMethod.GET)
+	   public String kakao(Locale locale, Model model) {
+	      logger.info("Welcome kakao! ");
+	      return "kakaoLogin";
+	   }
+	   @RequestMapping(value = "redirect.do", method = RequestMethod.GET)
+	   public String redirect(Locale locale, Model model) {
+	      logger.info("Welcome redirect! ");
+	      return "redirect";
+	   }
+	   @RequestMapping(value = "facebook.do", method = RequestMethod.GET)
+	   public String facebook(Locale locale, Model model) {
+	      logger.info("Welcome facebook! ");
+	      return "facebookLogin";
+	   }
+
 }

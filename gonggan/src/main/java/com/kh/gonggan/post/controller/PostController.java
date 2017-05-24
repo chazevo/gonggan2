@@ -50,8 +50,6 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private GoodService goodService;
-	@Resource(name="uploadPath")
-	private String uploadPath;
 	
 	@RequestMapping("pdetail.do")
 		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
@@ -134,7 +132,7 @@ public class PostController {
 		File originalFile = null;
 		File renameFile = null;
 		String originalFileName = null;
-
+		
 		req.setCharacterEncoding("utf-8");
 		
 		if(ServletFileUpload.isMultipartContent(req)) {
@@ -143,8 +141,18 @@ public class PostController {
 
 			String root = req.getSession().getServletContext().getRealPath("/");
 
+		      System.out.println("root : " + root);
+		      String[] roots = root.split("\\\\");
+		      String marger="";
+		      for(int i=0 ; i<roots.length-3; i++){
+		         marger += roots[i] + "\\";
+		      }
+		      System.out.println("marger : " + marger);
+		      String savePath = marger + "src/main/webapp/uploadImages/";
+		      System.out.println("savepath : " + savePath);
+
+
 			// 파일 저장 경로(ex : webapp/uploadImages/) 정함
-			String savePath = root + "gonggan/uploadImages/";
 			MultipartRequest multiRequest  = new MultipartRequest(req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 			originalFileName = multiRequest.getFilesystemName("file");
 		

@@ -4,18 +4,32 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.kh.gonggan.blog.model.service.BlogService;
+import com.kh.gonggan.blog.model.vo.Blog;
+import com.kh.gonggan.member.model.service.MemberService;
+import com.kh.gonggan.member.model.vo.Member;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
+	@Autowired
+	private BlogService blogService;
+	@Autowired
+	private MemberService memberService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -46,10 +60,14 @@ public class HomeController {
 		return "controll";
 	}
 	
-	@RequestMapping(value = "myhome.do", method = RequestMethod.GET)
-	public String myhome(Locale locale, Model model) {
-		logger.info("Welcome myhome! ");
-		return "myhome";
+	@RequestMapping("myhome.do")
+	public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
+		Member loginUser  = memberService.loginCheck(member);
+		String wr = loginUser.getMember_id();
+		System.out.println(wr);
+		mv.addObject("writer_id", wr);
+		mv.setViewName("myhome");
+		return mv;
 	}
 	
 	@RequestMapping(value = "mypage.do", method = RequestMethod.GET)

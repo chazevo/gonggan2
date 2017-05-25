@@ -145,7 +145,7 @@
 			<table id="idclick_table">
 				<tr id="center_align">
 					<td><a href="mypage.do">마이페이지</a>&nbsp;&nbsp; | &nbsp;&nbsp; <a
-						href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp; <a href="#">이웃
+						href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp; <a href="#">이웃
 							블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp; <a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div></td>
 				</tr>

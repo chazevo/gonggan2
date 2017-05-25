@@ -106,7 +106,7 @@
 			<div><span>${sessionScope.loginUser.getMember_id()}</span> 님</div>
 			<div class="right">
 				<a href="uploadform.do" class="transparentFont">포스트쓰기</a>
-				<a href="myhome.do">
+				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">
 					<div class="goToMyBlog">내 블로그</div>
 				</a>
 				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">

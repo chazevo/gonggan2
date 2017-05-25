@@ -2,9 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@page import="com.kh.gonggan.member.model.vo.Member"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
+
+	String currentView = "index2";
+	//세션저장 (플래그, 값)
+	session.setAttribute("currentView", currentView);
 %>
 <!DOCTYPE html>
 <html>

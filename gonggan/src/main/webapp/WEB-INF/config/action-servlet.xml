@@ -55,9 +55,6 @@
 	</websocket:handlers>
  
  	<beans:bean id="echoHandler" class="com.kh.gonggan.SocketHandler" />
- 	<beans:bean id="naverLoginBO"
-       class="com.kh.gonggan.naver.oauth.bo.NaverLoginBO">
-    </beans:bean>
 	
 
 </beans:beans>

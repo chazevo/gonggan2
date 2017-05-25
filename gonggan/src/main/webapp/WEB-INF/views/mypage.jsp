@@ -4,6 +4,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
+
+	String currentView = "mypage";
+	//세션저장 (플래그, 값)
+	session.setAttribute("currentView", currentView);
 %>
 <!DOCTYPE html>
 <html>
@@ -65,7 +69,7 @@
 					<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
 					<a href="#">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 					<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-					<a href="#">로그아웃</a> 
+					<a href="logOut.do">로그아웃</a> 
 					<div id="dansun_line"></div>
 				</td>
 			</tr>
@@ -184,7 +188,7 @@
 								<tr>
 									<td>핸드폰 번호</td>
 									<td>
-										<input type="text" id="phone" value="${sessionScope.loginUser.getPhone()}" readonly>
+										<input type="text" id="phone" value="${sessionScope.loginUser.getMember_phone()}" readonly>
 									</td>
 								</tr>
 								<tr>

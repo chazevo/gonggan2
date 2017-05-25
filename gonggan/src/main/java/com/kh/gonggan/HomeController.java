@@ -103,11 +103,7 @@ public class HomeController {
 		logger.info("Welcome searchAll! ");
 		return "searchAll";
 	}
-	@RequestMapping(value = "kakao.do", method = RequestMethod.GET)
-	   public String kakao(Locale locale, Model model) {
-	      logger.info("Welcome kakao! ");
-	      return "kakaoLogin";
-	   }
+	
 	   @RequestMapping(value = "redirect.do", method = RequestMethod.GET)
 	   public String redirect(Locale locale, Model model) {
 	      logger.info("Welcome redirect! ");
@@ -117,6 +113,16 @@ public class HomeController {
 	   public String facebook(Locale locale, Model model) {
 	      logger.info("Welcome facebook! ");
 	      return "facebookLogin";
+	   }
+	   @RequestMapping(value = "naver.do", method = RequestMethod.GET)
+	   public String naver(Locale locale, Model model) {
+	      logger.info("Welcome naver! ");
+	      return "naverLogin";
+	   }
+	   @RequestMapping(value = "kakao.do", method = RequestMethod.GET)
+	   public String kakao(Locale locale, Model model) {
+	      logger.info("Welcome kakao! ");
+	      return "kakaoLogin";
 	   }
 
 	   @RequestMapping(value = "map.do", method = RequestMethod.GET)

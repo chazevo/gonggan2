@@ -2,7 +2,6 @@ package com.kh.gonggan.member.controller;
 
 import javax.servlet.http.HttpSession;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.gonggan.blog.model.service.BlogService;
+import com.kh.gonggan.blog.model.vo.Blog;
 import com.kh.gonggan.email.Email;
 import com.kh.gonggan.email.EmailSender;
 import com.kh.gonggan.member.model.service.MemberService;
@@ -30,6 +31,8 @@ public class MemberController {
 	//공통으로 사용하는 것은 common에 넣어놓으면 됨
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private BlogService blogService;
 	
 	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
@@ -46,29 +49,41 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public String loginCheck(Member member, ModelAndView mv, HttpSession session){
+	public ModelAndView loginCheck(Member member, ModelAndView mv, HttpSession session){
 		Member loginUser  = memberService.loginCheck(member);
 		
-		//ModelAndView mv = new ModelAndView();
 		if(loginUser != null) {
 			session.setAttribute("loginUser", loginUser);
 			System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
+			mv.setViewName("redirect:login2.do");
+			mv.addObject("loginUser", loginUser);
+			return mv;
 		}
 		
 		else {
 			session.setAttribute("error", "실패");
 			System.out.println("로그인 실패");
+			mv.addObject("logmsg","failure");
+			mv.setViewName("home");
+			return mv;
 		}
-
-		return "redirect:login2.do"; 
 	}//로그인하기
 	
 	@RequestMapping("logOut.do")
-	public String logOut(HttpSession session){
+	public ModelAndView logOut(HttpSession session, ModelAndView mv){
+		
+		String vn = (String) session.getAttribute("currentView");
+		System.out.println("vn:"+vn);
+		String wr = (String)session.getAttribute("wr_id");
+		
+		mv.addObject("writer_id", wr);
+		mv.setViewName(vn);
+		
 		if(session != null)
 			session.invalidate();
-		return "index2";
+		return mv;
 	}
+	
 	@RequestMapping("updateform.do")
 	public String updateform(HttpSession session){
 		return "updateform";

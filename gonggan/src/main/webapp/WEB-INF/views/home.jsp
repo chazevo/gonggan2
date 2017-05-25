@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,14 +89,18 @@
 				</td></tr>
 				<tr><td>
 				<a href="javascript:goSubmit();"><div id="startBtn" class="divisionMargin2">S T A R T</div></a>
-				<!-- <input type="submit" value="S T A R T" id="startBtn" class="divisionMargin2"> -->
+				<c:if test="${logmsg == 'failure'}">
+                    <div style="color: white">
+                        	아이디 또는 비밀번호가 일치하지 않습니다.
+                    </div>
+                </c:if>
 				</form>
 				</td></tr>
 				<tr><td>
 				<a href="findIdPwd.do">아이디 찾기</a> | 
 				<a href="findIdPwd.do">비밀번호 찾기</a>  | 
 				<a href="join.do">회원가입</a>  
-				<a href="nlogin.do">NaverLogin</a>  |
+				<a href="naver.do">NaverLogin</a>  |
 				<a href="kakao.do">KakaoLogin</a>  |
 				<a href="facebook.do">FacebookLogin</a>
 				</td></tr>

@@ -34,5 +34,9 @@ public class CommentServiceImpl implements CommentService{
 	public int updateComment(Comment comment){
 		return commentDao.updateComment(comment);
 	}//코멘트 수정
+	@Override
+	public List<Comment> checkCommentAlram(String member_id){
+		return commentDao.checkCommentAlram(member_id);
+	}
 	
 }

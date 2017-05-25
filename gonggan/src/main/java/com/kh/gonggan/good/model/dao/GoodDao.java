@@ -43,7 +43,7 @@ public class GoodDao {
 	public Object goodCheck(int postId, String memberId) {
 		Good gmember = new Good(postId, memberId);
 		return sqlSession.selectOne("goodmapper.gcheck", gmember);
-	}//good 알람 체크 여부
+	}//로그인 유저가 포스팅 작성자의 게시글 좋아요 했는지 여부
 
 
 	public List<Good> goodList(int postId) {
@@ -56,6 +56,11 @@ public class GoodDao {
 		map.put("member_id", member_id);
 		map.put("post_id", post_id+"");
 		 return (List<Good>)sqlSession.selectList("goodmapper.gsearch",map);
+	}
+
+
+	public List<Good> checkGoodAlram(String member_id) {
+		return (List<Good>)sqlSession.selectList("goodmapper.gcheckalram",member_id);
 	}
 
 }

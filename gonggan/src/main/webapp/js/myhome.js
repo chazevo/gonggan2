@@ -20,9 +20,10 @@ function visit() {
 function requestList() {
 	
 	$.ajax({
-	      url: "/gonggan/postlist.do",
-	      data: {},
-	      success: function(data) {
+				url: "/gonggan/postlist.do",
+				//url: "/gonggan/userpostlist.do",
+				data: { writer_id : writer_id },
+				success: function(data) {
 	    	  if (document.getElementById("calendar").checked == true )
 	    		  callbackList(data);
 	    	  else if (document.getElementById("calendar").checked == false )

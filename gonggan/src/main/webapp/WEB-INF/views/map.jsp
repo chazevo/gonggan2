@@ -13,17 +13,22 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="js/map.js"></script>
 </head>
-<body class="map">
+<body class="map gradBg">
 
 <div>
 	<table width="100%">
 		<tr>
 			<td>
-				<form action="locationsearch.do">
-					<input type="text" name="keyword" value="${keyword }">
-					<input type="submit" value="건물명으로 주소 검색">
-				</form>
-			</td>
+				<div class="div2"  style="margin:auto;">
+					<form action="locationsearch.do">
+						<input type="text" name="keyword" value="${keyword }" placeholder="search"  onkeydown="if(event.keyCode == 13) selectSubmit();">
+						<!-- <input type="submit" value="건물명으로 주소 검색"> -->
+							<a href="javascript:selectSubmit();">
+								<img src=images/search.png width="5%" >
+							</a>
+						</form>
+					</div>
+				</td>
 		</tr>
 		<c:if test="${!empty searchLocationList}">
 		<c:forEach items="${searchLocationList}" var="i" begin="0">
@@ -45,9 +50,7 @@
 </div>
 
 
-<div id="map" style="width:400px;height:400px;"></div>
-
-
+<div id="map" ></div>
 <script type="text/javascript">
 	var myaddress = '불정로 6';
 	var map = new naver.maps.Map('map');
@@ -71,8 +74,8 @@
 		        position: myaddr,
 		        map: map,
 		        icon: {
-		            url: './images/heart_r.png',
-		            size: new naver.maps.Size(22, 35),
+		            url: './images/marker.png',
+		            size: new naver.maps.Size(70, 100),
 		            origin: new naver.maps.Point(0, 0),
 		            anchor: new naver.maps.Point(11, 35)
 		        }

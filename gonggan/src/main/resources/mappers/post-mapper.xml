@@ -5,17 +5,27 @@
 <mapper namespace="postmapper">
 
 	<resultMap type="post" id="postResult">
-		<id property="postId" column="post_id" />
-		<result property="writerId" column="writer_id" />
+		<id property="post_id" column="post_id" />
+		<result property="writer_id" column="writer_id" />
+		<result property="music_num" column="music_num" />
+		<result property="diary_num" column="diary_num" />
+		<result property="movie_num" column="movie_num" />
+		<result property="news_num" column="news_num" />
+		<result property="review_num" column="review_num" />
+		<result property="diary_content" column="diary_content" />
+		<result property="movie_content" column="movie_content" />
+		<result property="music_content" column="music_content" />
+		<result property="news_content" column="news_content" />
+		<result property="review_content" column="review_content" />
 		<result property="category" column="category" />
-		<result property="sharYn" column="shar_yn" />
-		<result property="openYn" column="open_yn" />
+		<result property="shar_yn" column="shar_yn" />
+		<result property="open_yn" column="open_yn" />
 		<result property="goodCnt" column="good_cnt" />
-		<result property="photoPath" column="photo_path" />
-		<result property="postDate" column="post_date" />
+		<result property="photo_path" column="photo_path" />
+		<result property="post_date" column="post_date" />
 	</resultMap>
 
-	<select id="plist" parameterType="post" resultMap="postResult">
+	<select id="plist" resultMap="postResult">
 	select *
 	from post left join movie using (post_id)
 	left join diary using(post_id)
@@ -24,8 +34,23 @@
 	left join review using(post_id)
 	</select>
 	
+	<select id="userplist" parameterType="String" resultMap="postResult">
+	select *
+	from post left join movie using (post_id)
+	left join diary using(post_id)
+	left join music using(post_id)
+	left join news using(post_id)
+	left join review using(post_id)
+	where writer_id = #{writer_id}
+	</select>
+	
 	<select id="pdetail" parameterType="int" resultMap="postResult">
-	select photo_path from post
+	select *
+	from post left join movie using (post_id)
+	left join diary using(post_id)
+	left join music using(post_id)
+	left join news using(post_id)
+	left join review using(post_id)
 	where post_id = #{post_id}
 	</select>
 

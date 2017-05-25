@@ -1,3 +1,23 @@
+function reqPostAlarm() {
+	
+	$.ajax({
+	      url: "/gonggan/palram.do",
+	      data: {member_id: member_id},
+	      success: function(data) {
+	    	  callbackPostAlram(data);
+	      },
+	      error: function(data,status,error){
+	         console.log("error : " + error);
+	      }
+	   });
+	
+}
+
+function callbackPostAlram(data) {
+	while($("#listbody_newPost").rows.length > 0)
+		$("#listbody_newPost").deleteRow(0);
+}
+
 function like() {
 	
 }

@@ -8,7 +8,9 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,16 +81,24 @@ public class PostController {
 			return mv;
 	}
 	
-	@RequestMapping(value="/postlist.do", produces={"application/json"}, method=RequestMethod.GET)
+	@RequestMapping(value="/postlist.do", produces={"application/json"})
 		@ResponseBody
-		public String selectList(){
+		public String selectList(@RequestParam String writer_id){
 			/*		String userId =request.getParameter("userid");
 			String userPwd =request.getParameter("userpwd");
 			Member member =new Member();
 			member.setUserid(userId);
 			member.setUserpwd(userPwd);*/
+		
+		System.out.println("writer_id : " + writer_id);
+		
+			List<Post> plist  = null;
 			
-			List<Post> plist  = postService.selectAll();
+			if(writer_id==""){
+				plist = postService.selectAll();
+			}else{
+				plist =postService.selectUserAll(writer_id);
+			}
 	
 			JSONObject json = new JSONObject();
 			JSONArray jarr = new JSONArray();
@@ -98,10 +108,10 @@ public class PostController {
 				JSONObject job = new JSONObject();
 				
 				Calendar cal = Calendar.getInstance();
-				cal.setTime(p.getPostDate());
+				cal.setTime(p.getPost_date());
 				
-				job.put("postId", p.getPostId() + "");
-				job.put("writerId", p.getWriterId());
+				job.put("postId", p.getPost_id() + "");
+				job.put("writerId", p.getWriter_id());
 				try {
 					job.put("category", URLEncoder.encode(
 							p.getCategory(), "UTF-8"));
@@ -109,12 +119,12 @@ public class PostController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				job.put("postId", p.getPostId() + "");
-				job.put("sharYn", p.getSharYn());
-				job.put("openYn", p.getOpenYn());
-				job.put("writerId", p.getWriterId());
+				job.put("postId", p.getPost_id() + "");
+				job.put("sharYn", p.getShar_yn());
+				job.put("openYn", p.getOpen_yn());
+				job.put("writerId", p.getWriter_id());
 				job.put("goodCnt", p.getGoodCnt() + "");
-				job.put("photoPath", (p.getPhotoPath()==null ? "0" : p.getPhotoPath()));
+				job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
 				job.put("year", cal.get(Calendar.YEAR) + "");
 				job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
 				job.put("date", cal.get(Calendar.DATE) + "");
@@ -131,6 +141,9 @@ public class PostController {
 			
 			/*return "home";*/
 			//return mv;
+			
+			System.out.println("json data" + json.toJSONString());
+			
 			return json.toJSONString();
 		}
 
@@ -355,6 +368,11 @@ public class PostController {
 
 		URL url;
 		StringBuffer sb = new StringBuffer();
+		File renameFile = null;
+		InputStream in = null;
+		FileOutputStream fos = null;
+		String originalFileName = null;
+		String  renameFileName;
 		
 		try {
 			/*url = new URL("https://openapi.naver.com/v1/map/staticmap.bin?"
@@ -396,19 +414,30 @@ public class PostController {
 			System.out.println("marger : " + marger);
 			String savePath = marger + "src/main/webapp/uploadImages/";
 			System.out.println("savepath : " + savePath);
-
 			
+			long current = System.currentTimeMillis();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            
+	        /*
+	        변경할 파일명 만들기
+	        renameFileName = sdf.format(new Date(current))+ "." + originalFileName.substring(
+	              originalFileName.lastIndexOf(".") + 1);
+	        */
+            
+            renameFileName = "map" + sdf.format(new Date(current))+ ".png";
+            
 			int input = 0;
 			int cnt = 0;
 			byte[] data = new byte[1024];
-			InputStream in = http.getInputStream();
-			FileOutputStream fos = new FileOutputStream(new File(savePath + "result.png"));
+			in = http.getInputStream();
+			fos = new FileOutputStream(renameFile = new File(savePath + renameFileName));
 			while((input = in.read(data)) != -1) {
 				fos.write(data, 0, input);
 				cnt += input;
+				fos.flush();
 			}
-			
-			
+		
+		
 			in.close();
 			fos.close();
 			http.disconnect();
@@ -425,7 +454,7 @@ public class PostController {
 		}
 		
 		
-		return "result.png";
+		return renameFile.getName();
 	}
 		
 	

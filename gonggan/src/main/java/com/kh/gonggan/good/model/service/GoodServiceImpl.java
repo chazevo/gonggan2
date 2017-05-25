@@ -41,5 +41,9 @@ public class GoodServiceImpl implements GoodService{
 		return goodDao.goodSearch(member_id,post_id);
 		
 	}
+	@Override
+	public List<Good> checkGoodAlram(String member_id){
+		return goodDao.checkGoodAlram(member_id);
+	}
 
 }

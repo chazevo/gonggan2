@@ -14,7 +14,16 @@ body {
 	font-family: 'Nanum Barun Gothic', sans-serif;
 }
 
+.map>div {
+	border: 1px solid red;
+	width:330px;
+	height:100%;
+	display: inline-block;
+}
+
 .gradBg {
+	width:100%;
+	height:500px;
 	color:white;
 	background:linear-gradient(to bottom, rgb(145, 156, 178), rgb(207,167 ,168 ));
 }
@@ -43,8 +52,6 @@ body {
 }
 
 .gradBg>div {
-	width:600px;
-	height:500px;
 	overflow:auto;
 }
 
@@ -208,17 +215,6 @@ input.error {
 	color: white;
 }
 
-.map div {
-	width:40%;
-	margin:0;
-	display:inline-block;
-	border: 1px solid red;
-}
-
-.map td {
-	text-align:center;
-}
-
 /*uploadform -------------------------------------------------------- */
 
 #imo_icon_area {
@@ -286,18 +282,18 @@ overflow-x: hidden; } */
 	cursor:pointer;
 }
 
-#colorchart {
+#colorchart, #colorchart2 {
 	border: 1px solid pink;
 	width:20%;
 	position:absolute;
 }
 
-#colorchart table {
+#colorchart table, #colorchart2 table {
 	display:inline-block;
 	width:100%;
 }
 
-#colorchart td:hover {
+#colorchart td:hover, #colorchart2 td:hover {
 	cursor:pointer;
 }
 

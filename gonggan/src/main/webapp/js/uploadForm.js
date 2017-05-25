@@ -273,6 +273,42 @@ function colorchart(){
 	*/
 }
 
+function colorchart2(){
+	var clr = new Array('00', '60', '80', '90', 'b0', 'a0', 'c0', 'ff');
+	
+	var table;
+	var tr;
+	var td;
+	
+	for (var i=0 ; i<1 ; i++) { 
+		
+		table = document.createElement("table");
+		table.border = '1';
+
+		for (var j=0 ; j<16 ; j++) {
+			tr = document.createElement("tr");
+			
+			for (var k=0 ; k<16 ; k++) {
+				td = document.createElement("td");
+				td.width = "10px";
+				td.height = "10px";
+				td.bgColor = "#" + clr[i] + clr[j] + clr[k];
+				tr.appendChild(td);
+			}
+			table.appendChild(tr);
+		}
+		
+		document.getElementById("colorchart2").appendChild(table);
+	}
+
+}
+
+function bgcolor(color) {
+	je_doc.body.focus();
+	je_doc.execCommand('BackColor', color);
+}
+
+
 /* */
 
 /*-------------------------------------------------------- */
@@ -341,13 +377,20 @@ function changeForm() {
 }
 
 function content_OK() {
-	if (confirm("포스트를 게시하시겠습니까? ") == true)
-		;
-	else return;
+	
+	console.log(je_doc.body.innerHTML == " ");
+	
+	if (je_doc.body.innerHTML != "") {
+		if (confirm("포스트를 게시하시겠습니까? ") == true)
+			;
+		else return;
+	}
+	else alert("본문 내용을 입력해주세요");
+		
 }
 
 function cancel() {
 	if (confirm("포스팅을 취소하시겠습니까? ") == true)
-		;
+		location.href = "myhome.do?writer_id=" + loginUser;
 	else return;
 }

@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.gonggan.comment.model.service.CommentService;
+import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.email.Email;
 import com.kh.gonggan.email.EmailSender;
+import com.kh.gonggan.good.model.service.GoodService;
+import com.kh.gonggan.good.model.vo.Good;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.post.model.vo.Post;
 
 @Controller
 //@RequestMapping("member")
@@ -30,17 +35,26 @@ public class MemberController {
 	//공통으로 사용하는 것은 common에 넣어놓으면 됨
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private GoodService goodService;
 	
 	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
 		
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+		List<Post>postAlarmList = null;
+		
+		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
+		List<Good> goodReqList = goodService.checkGoodAlram(loginUser.getMember_id());
 		
 		mv.setViewName("index2");
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());
-		mv.addObject("postAlarmList", 0);
+		mv.addObject("postAlarmList", postAlarmList);
+		mv.addObject("postAlarmListSize", (commentReqList.size() + goodReqList.size()));
 
 		return mv;
 	}
@@ -209,4 +223,18 @@ public class MemberController {
 	public List<Member> neigList(@RequestParam String member_id, Model model){
 		return null;
 	}//이웃 목록 조회
+	
+	@RequestMapping(value="/palram.do", produces={"application/json"})
+	@ResponseBody
+	public String postAlarmList(@RequestParam String member_id){
+		
+		List<Comment> commentReqList = commentService.checkCommentAlram(member_id);
+		List<Good> goodReqList = goodService.checkGoodAlram(member_id);
+		
+		
+		return null;
+	}
+	
+	
+	
 }

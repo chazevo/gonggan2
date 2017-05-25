@@ -18,6 +18,11 @@
 	order by comment_num
 	</select>
 	
+	<select id="ccheckalram" parameterType="String" resultMap="commentResult">
+	select * from comments where post_id in (select post_id from post where writer_id = #{member_id})
+	and COMMENT_CHECK = 'N'
+	</select>
+	
 	<select id="cnum" parameterType="comment" resultType="int">
 	select nvl(max(comment_num), 0) from comments where post_id = #{post_id} + 1
 	</select>

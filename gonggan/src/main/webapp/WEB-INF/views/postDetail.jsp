@@ -53,11 +53,26 @@
 	</tr> 
 	<tr>
 		<td id="photo" colspan="2">
-			<img alt="" src="uploadImages/${postDetail.getPhotoPath()}" width="100%">
+			<img alt="" src="uploadImages/${postDetail.getPhoto_path()}" width="100%">
 			<div>
+				<c:if test='${postDetail.getCategory() eq "diary"}'>
+					${postDetail.getDiary_content()}
+				</c:if>
+				<c:if test='${postDetail.getCategory() eq "music"}'>
+					${postDetail.getMusic_content()}
+				</c:if>
+				<c:if test='${postDetail.getCategory() eq "movie"}'>
+					${postDetail.getMovie_content()}
+				</c:if>
+				<c:if test='${postDetail.getCategory() eq "news"}'>
+					${postDetail.getNews_content()}
+				</c:if>
+				<c:if test='${postDetail.getCategory() eq "review"}'>
+					${postDetail.getReview_content()}
+				</c:if>
 			</div>
 		</td>
-	</tr> 
+
 	<tr>
 		<td id="good" colspan="2">
 			<c:if test="${ goodCnt ne '0' }">

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.member.model.dao.MemberDao;
 import com.kh.gonggan.member.model.vo.Member;
 

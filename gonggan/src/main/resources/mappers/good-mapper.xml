@@ -18,6 +18,10 @@
 	<select id="gcheck" parameterType="good" resultMap="goodResult">
 	select * from good where post_id = #{post_id} and member_id = #{member_id}
 	</select>
+	<select id="gcheckalram" parameterType="String" resultMap="goodResult">
+	select * from good where post_id in (select post_id from post where writer_id = #{member_id})
+	and good_check = 'N'
+	</select>
 	
 	<delete id="gdelete" parameterType="good">
 	delete from good 

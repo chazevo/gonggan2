@@ -10,7 +10,5 @@
 <script type="text/javascript" src="js/uploadForm.js"></script>
 <title>uploadHtml</title>
 </head>
-<body id="uploadHtml_body" >
-<!-- style="background-image:url(images/x_icon.png');" -->
-</body>
+<body id="uploadHtml_body" ></body>
 </html>

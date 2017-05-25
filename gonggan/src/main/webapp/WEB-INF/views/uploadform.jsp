@@ -27,14 +27,22 @@
 <script src="js/jquery.fancybox.js"></script>
 <title>uploadform.jsp</title>
 <script>
+
+	var loginUser = "${sessionScope.loginUser.getMember_id()}";
+
 	$(document).ready(function() {
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
 		colorchart();
+		colorchart2();
 
 		$("#colorchart td").click(function() {
 			contenttextcolor($(this).attr('bgColor'));
+		});
+
+		$("#colorchart2 td").click(function() {
+			bgcolor($(this).attr('bgColor'));
 		});
 		
 		$("#tagadddbtn").click(function() {
@@ -72,6 +80,16 @@
 			}else{
 				$("#colorchart").addClass("hidden");
 				$("#colorchart").hide();
+			}
+		});
+		
+		$('#colorChoice2').click(function(){
+			if($('#colorchart2').hasClass("hidden")){
+				$('#colorchart2').removeClass("hidden");
+				$('#colorchart2').show();
+			}else{
+				$("#colorchart2").addClass("hidden");
+				$("#colorchart2").hide();
 			}
 		});
 		
@@ -394,6 +412,8 @@
 								<input type='radio' name='imgBB'  value='contain'  onchange="imgBB(this);">
 								<i class='contain-icon'></i>
 							</label>
+							<a id="colorChoice2" href="javascript:void(0);"><img  src="images/fill_color-512.png" width="8%" ></a>
+							<div id="colorchart2" class="hidden"></div>
 						</td>
 						<td colspan="2" >
 							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="20px"></a>

@@ -18,4 +18,6 @@ public interface GoodService {
 
 	List<Good> goodSearch(String member_id, int post_id);
 
+	List<Good> checkGoodAlram(String member_id);
+
 }

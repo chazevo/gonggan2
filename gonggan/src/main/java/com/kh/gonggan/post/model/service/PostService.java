@@ -9,5 +9,7 @@ public interface PostService {
 
 	Post postDetail(int post_id);
 
+	List<Post> selectUserAll(String writer_id);
+
 
 }

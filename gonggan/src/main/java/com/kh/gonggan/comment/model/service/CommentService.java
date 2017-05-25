@@ -14,4 +14,6 @@ public interface CommentService {
 
 
 	int deleteComment(int comment_num, String writer_id, int postId);
+
+	List<Comment> checkCommentAlram(String member_id);
 }

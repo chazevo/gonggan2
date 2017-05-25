@@ -233,7 +233,7 @@ var imgVal = <%= imgVal %>;
 						<table width="100%">
 						<tr>
 							<th class="th">
-								<c:if test="${sessionScope.loginUser.getMember_id() eq param.userId}}">
+								<c:if test="${sessionScope.loginUser.getMember_id() eq param.writer_id}">
 									<a href="uploadform.do">포스트 쓰기 </a>
 								</c:if>
 								<label class='radio-wrap'>

@@ -37,5 +37,9 @@ public class CommentDao {
 		Comment comment = new Comment(comment_num, writer_id, postId);
 		return sqlSession.delete("commentmapper.cdelete", comment);
 	}
+
+	public List<Comment> checkCommentAlram(String member_id) {
+		return (List<Comment>) sqlSession.selectList("commentmapper.ccheckalram", member_id);
+	}
 	
 }

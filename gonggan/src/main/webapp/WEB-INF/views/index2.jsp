@@ -97,7 +97,7 @@
 							<col width="5%" />
 						</colgroup>
 							<tr>
-								<th>내 포스트 알람_<font color="#2D86C9"><b>6</b></font></th>
+								<th>내 포스트 알람_<font color="#2D86C9"><b>${postAlarmListSize }</b></font></th>
 								<td><a href="">▶</a></td>
 							</tr>
 							<tbody id="listbody_newPost">

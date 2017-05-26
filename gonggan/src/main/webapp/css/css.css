@@ -293,7 +293,7 @@ overflow-x: hidden; } */
 	width:100%;
 }
 
-#colorchart td:hover, #colorchart2 td:hover {
+#colorchart td:hover, #colorchart2 td:hover, #colorchart3 td:hover {
 	cursor:pointer;
 }
 

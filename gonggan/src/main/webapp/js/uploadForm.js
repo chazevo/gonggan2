@@ -302,10 +302,42 @@ function colorchart2(){
 	}
 
 }
+function colorchart3(){
+	var clr = new Array('00', '60', '80', '90', 'b0', 'a0', 'c0', 'ff');
+	
+	var table;
+	var tr;
+	var td;
+	
+	for (var i=0 ; i<1 ; i++) { 
+		
+		table = document.createElement("table");
+		table.border = '1';
+
+		for (var j=0 ; j<16 ; j++) {
+			tr = document.createElement("tr");
+			
+			for (var k=0 ; k<16 ; k++) {
+				td = document.createElement("td");
+				td.width = "10px";
+				td.height = "10px";
+				td.bgColor = "#" + clr[i] + clr[j] + clr[k];
+				tr.appendChild(td);
+			}
+			table.appendChild(tr);
+		}
+		
+		document.getElementById("colorchart3").appendChild(table);
+	}
+
+}
+function bgcolor3(color) {
+	if (navigator.appVersion.indexOf("MSIE")!=-1) je_doc.execCommand("backcolor",false, color);
+	else je_doc.execCommand("hilitecolor",false, color);		
+}
 
 function bgcolor(color) {
-	je_doc.body.focus();
-	je_doc.execCommand('BackColor', color);
+	//je_doc.execCommand('Backcolor', color);
 }
 
 

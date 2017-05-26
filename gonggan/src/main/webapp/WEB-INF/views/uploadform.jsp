@@ -36,6 +36,7 @@
 		
 		colorchart();
 		colorchart2();
+		colorchart3();
 
 		$("#colorchart td").click(function() {
 			contenttextcolor($(this).attr('bgColor'));
@@ -43,6 +44,10 @@
 
 		$("#colorchart2 td").click(function() {
 			bgcolor($(this).attr('bgColor'));
+		});
+		
+		$("#colorchart3 td").click(function() {
+			bgcolor3($(this).attr('bgColor'));
 		});
 		
 		$("#tagadddbtn").click(function() {
@@ -91,6 +96,16 @@
 				$("#colorchart2").addClass("hidden");
 				$("#colorchart2").hide();
 			}
+		});
+		$('#colorChoice3').click(function(){
+			if($('#colorchart3').hasClass("hidden")){
+				$('#colorchart3').removeClass("hidden");
+				$('#colorchart3').show();
+			}else{
+				$("#colorchart3").addClass("hidden");
+				$("#colorchart3").hide();
+			}
+			
 		});
 		
 		$("#loginUser").click(function() {
@@ -301,8 +316,11 @@
 							<input type="image"  src="images/cencleline_icon.png" width="15px"
 											onclick="je_doc.execCommand('strikethrough', 'false', 'null')">&nbsp; &nbsp;
 							<img alt="" src="images/text_color.png" width="10%"  id="colorChoice">
-							<img alt="" src="images/highlighter.jpg" width="10%"  id="">
 							<div id="colorchart" class="hidden"></div>
+							<img alt="" src="images/highlighter.jpg" width="10%"  id="colorChoice3">
+							<div id="colorchart3" class="hidden"></div>
+
+							
 					<!-- 		<select id=contenttextcolor2 onchange='contenttextcolor2()'>
 								<option class='imageOp'  selected  >글자색상 선택</option>
 								<option class='imageOp'  value='black'  style="background-color:black; color:white">검정색</option>
@@ -332,6 +350,7 @@
 								
 								<input type="image"  src="images/efErase_icon.png" width="42px"
 											onclick="je_doc.execCommand('removeformat', 'false', 'null')"> &nbsp;	
+
 												
 								<input type="image"  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
 								<!-- 이모티콘 -->

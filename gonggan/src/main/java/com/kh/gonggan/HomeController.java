@@ -2,6 +2,7 @@ package com.kh.gonggan;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,8 @@ import com.kh.gonggan.blog.model.service.BlogService;
 import com.kh.gonggan.blog.model.vo.Blog;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.post.model.service.PostService;
+import com.kh.gonggan.post.model.vo.*;
 
 /**
  * Handles requests for the application home page.
@@ -30,6 +33,8 @@ public class HomeController {
 	private BlogService blogService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private PostService postService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -45,7 +50,9 @@ public class HomeController {
 	@RequestMapping(value = "index2.do", method = RequestMethod.GET)
 	public String index2(Locale locale, Model model) {
 		logger.info("Welcome index2! ");
-		return "index2";
+		List<Post> pList = postService.selectAll();
+		
+		return "testpost";
 	}
 	
 	@RequestMapping(value = "findIdPwd.do", method = RequestMethod.GET)

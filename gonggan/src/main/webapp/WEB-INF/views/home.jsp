@@ -21,13 +21,16 @@
 <script type="text/javascript" src="js/scrollreveal.min.js"></script>
 <script type="text/javascript" src="js/creative.min.js"></script>
 <script type="text/javascript" src="js/home.js"></script>
+
 <script type="text/javascript">
 	window.onload = function() {
 		document.getElementById("id").focus();
-	}
+	}	
+	
 </script>
 </head>
 <body>
+<div id="fb-root"></div>
 <div id="indexBg">
 <nav class="navbar navbar-default" id="mainNav">
 		<!--<div class="container-fluid">--><div>
@@ -73,7 +76,7 @@
 	<header>
 		<div class="header-content" id="indexBg">
 			<div class="header-content-inner">
-				<table class="loginTable" align="center">
+				<table class="loginTable" align="center" >
 				<tr><td>
 				<img class="logoImg" src="images/KakaoTalk_Photo_2017-04-22-18-12-10_54.png">
 				</td></tr>
@@ -88,6 +91,7 @@
 				<input type="password" class=" login" placeholder="PASS" name="member_pw" id="pass" onkeypress="if( event.keyCode==13 ){javascript:goSubmit();}">
 				</td></tr>
 				<tr><td>
+
 				<a href="javascript:goSubmit();"><div id="startBtn" class="divisionMargin2">S T A R T</div></a>
 				<c:if test="${logmsg == 'failure'}">
                     <div style="color: white">
@@ -99,11 +103,15 @@
 				<tr><td>
 				<a href="findIdPwd.do">아이디 찾기</a> | 
 				<a href="findIdPwd.do">비밀번호 찾기</a>  | 
-				<a href="join.do">회원가입</a>  
-				<a href="naver.do">NaverLogin</a>  |
-				<a href="kakao.do">KakaoLogin</a>  |
-				<a href="facebook.do">FacebookLogin</a>
+				<a href="join.do">회원가입</a>  |  소셜 로그인 :
+				<a href="naver.do", id = "nl1"><img src="images/naver.png" alt="Naver Login" width="15" height="15"></a>  
+				<a href="kakao.do"><img src="images/kakaotalk.png" alt="Naver Login" width="15" height="15"></a>  
+				<a href="facebook.do"><img src="images/facebook.png" alt="Naver Login" width="15" height="15"></a>
 				</td></tr>
+				<tr>
+				<td>
+                </td>
+                </tr>
 				<tr>
 					<td>
 						<a href="#about" class="page-scroll">
@@ -113,7 +121,6 @@
 						</a>
 					</td>
 				</tr>
-				
 				</table>
 			</div>
 		</div>
@@ -139,6 +146,9 @@
 		</div>
 		-->
 	</section>
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/naverLogin.js"></script>
 </div>
 </body>
 </html>

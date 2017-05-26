@@ -8,6 +8,8 @@
 	String currentView = "index2";
 	//세션저장 (플래그, 값)
 	session.setAttribute("currentView", currentView);
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -84,12 +86,14 @@
 		<!--<div class="container-fluid">-->
 		<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
 		<div class="blogHomeHeader">
+			
+			<c:if test="${!empty (loginUser) }">
 			<table class="table1st">
-				<colgroup>
+					<colgroup>
 					<col width="60%" />
 					<col width="40%" />
-				</colgroup>
-				<tr>
+					</colgroup>
+					<tr>
 					<td class="disapear">
 						<img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
 					</td>
@@ -186,10 +190,21 @@
 							</tbody>
 						</table>
 					</td>
-				</tr>
+				</tr>				
+					
 			</table>
+			</c:if>
+			<c:if test="${empty (loginUser) }">
+			<table class="table1st">
+			<tr>	
+			<td class="disapear">
+				<img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="60%">
+			</td>
+			</tr>
+		
+			</table>
+			</c:if>
 			<div class="myDiv">
-			
 				<%
 					if(loginUser == null){
 				%>

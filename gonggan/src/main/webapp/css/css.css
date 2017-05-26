@@ -918,7 +918,6 @@ img {
 	background:linear-gradient(to right, #CE729B, #2D86C9);
 	font-size: 9px;
 	color: #8C8C8C;
-	height:225px;
 }
 
 .blogHomeHeader a {
@@ -1606,10 +1605,6 @@ legend {
 	.blogHomeHeader {
 		position:relative;
 		height: 350px;
-	}
-	
-	.blogHomeHeader .table1st {
-		width:99%;
 	}
 	
 	.blogHomeHeader .disapear  {

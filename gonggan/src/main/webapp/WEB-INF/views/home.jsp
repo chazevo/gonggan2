@@ -101,6 +101,7 @@
 				</form>
 				</td></tr>
 				<tr><td>
+				<a href="testpost.do">test</a>
 				<a href="findIdPwd.do">아이디 찾기</a> | 
 				<a href="findIdPwd.do">비밀번호 찾기</a>  | 
 				<a href="join.do">회원가입</a>  |  소셜 로그인 :

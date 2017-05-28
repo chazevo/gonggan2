@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="newsmapper">
+	<resultMap type="news" id="newsResult">
+		<id property="news_num" column="news_num"/>
+		<result property="post_id" column="post_id"/>
+		<result property="news_info" column="news_info"/>
+		<result property="news_link" column="news_link"/>
+		<result property="title" column="title"/>
+		<result property="news_content" column="news_content"/>
+	</resultMap>
+	<select id="newslist_index2" parameterType="List" resultMap="newsResult">
+		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, NEWS_NUM, TITLE FROM (SELECT * FROM NEWS ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+</mapper>

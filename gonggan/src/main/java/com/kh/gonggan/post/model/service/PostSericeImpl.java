@@ -26,6 +26,10 @@ public class PostSericeImpl implements PostService{
 		return  postDao.postDetail(post_id);
 		
 	}
+	@Override
+	public List<Post> selectAll_index2(){
+		return postDao.selectAll_index2();
+	}
 	
 
 }

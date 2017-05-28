@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reviewmapper">
+	<resultMap type="review" id="reviewResult">
+		<id property="review_num" column="review_id"/>
+		<result property="review_num" column="review_num"/>
+		<result property="review_content" column="reivew_content"/>
+	</resultMap>
+	<select id="reviewlist_index2" parameterType="List" resultMap="reviewResult">
+		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, REVIEW_NUM, REVIEW_CONTENT FROM (SELECT * FROM REVIEW ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
+	</select>
+</mapper>

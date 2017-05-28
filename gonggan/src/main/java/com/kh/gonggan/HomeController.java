@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -48,11 +49,12 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "index2.do", method = RequestMethod.GET)
-	public String index2(Locale locale, Model model) {
+	public ModelAndView index2(ModelAndView mv) {
 		logger.info("Welcome index2! ");
-		List<Post> pList = postService.selectAll();
-		
-		return "testpost";
+		List<Post> plist = postService.selectAll_index2();
+		mv.addObject("plist",plist);
+		mv.setViewName("index2");
+		return mv;
 	}
 	
 	@RequestMapping(value = "findIdPwd.do", method = RequestMethod.GET)
@@ -155,4 +157,14 @@ public class HomeController {
 	      logger.info("Welcome map! ");
 	      return "map";
 	   }
+	   @RequestMapping(value = "testpost.do", method = RequestMethod.GET)
+		public String testpost(Locale locale, Model model, HttpServletRequest request) {
+			logger.info("Welcome testpost! ");
+			List<Post> plist = postService.selectAll_index2();
+			System.out.println(plist);
+			request.setAttribute("plist", plist);
+			return "testpost";
+		}
+	   
+	
 }

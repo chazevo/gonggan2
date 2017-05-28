@@ -8,6 +8,8 @@ public interface PostService {
 	List<Post> selectAll();
 
 	Post postDetail(int post_id);
+	
+	List<Post> selectAll_index2();
 
 
 }

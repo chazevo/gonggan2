@@ -19,4 +19,9 @@ public class MovieServiceImpl implements MovieService{
 		return  movieDao.searchMovie();
 		
 	}
+	
+	@Override
+	public List<Movie> selectAll_index2(){
+		return movieDao.selectAll_index2();
+	}
 }

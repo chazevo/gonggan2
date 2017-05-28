@@ -18,10 +18,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
 import com.kh.gonggan.blog.model.vo.Blog;
+import com.kh.gonggan.diary.model.service.DiaryService;
+import com.kh.gonggan.diary.model.vo.Diary;
 import com.kh.gonggan.email.Email;
 import com.kh.gonggan.email.EmailSender;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.movie.model.service.MovieService;
+import com.kh.gonggan.movie.model.vo.Movie;
+import com.kh.gonggan.music.model.service.MusicService;
+import com.kh.gonggan.music.model.vo.Music;
+import com.kh.gonggan.news.model.service.NewsService;
+import com.kh.gonggan.news.model.vo.News;
+import com.kh.gonggan.post.model.service.PostService;
+import com.kh.gonggan.post.model.vo.Post;
+import com.kh.gonggan.review.model.service.ReviewService;
+import com.kh.gonggan.review.model.vo.Review;
 
 @Controller
 //@RequestMapping("member")
@@ -33,17 +45,40 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private PostService postService;
+	@Autowired
+	private MovieService movieService;
+	@Autowired
+	private DiaryService diaryService;
+	@Autowired
+	private MusicService musicService;
+	@Autowired
+	private NewsService newsService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
-		
 		Member loginUser = (Member) session.getAttribute("loginUser");
-		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());	
+		List<Post> plist = postService.selectAll_index2();			
+		List<Movie> movielist = movieService.selectAll_index2();
+		List<Diary> diarylist = diaryService.selectAll_index2();
+		List<Music> musiclist = musicService.selectAll_index2();
+		List<News> newslist = newsService.selectAll_index2();
+		List<Review> reviewlist = reviewService.selectAll_index2();
 		
-		mv.setViewName("index2");
+		mv.addObject("reviewlist", reviewlist);
+		mv.addObject("newslist", newslist);
+		mv.addObject("musiclist", musiclist);
+		mv.addObject("dlist", diarylist);
+		mv.addObject("plist",plist);
+		mv.addObject("movielist",movielist);
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());
 		mv.addObject("postAlarmList", 0);
+		mv.setViewName("index2");
 
 		return mv;
 	}
@@ -55,6 +90,8 @@ public class MemberController {
 		if(loginUser != null) {
 			session.setAttribute("loginUser", loginUser);
 			System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
+
+
 			mv.setViewName("redirect:login2.do");
 			mv.addObject("loginUser", loginUser);
 			return mv;

@@ -12,6 +12,11 @@
 		<typeAlias type="com.kh.gonggan.message.model.vo.Message" alias="message" />
 		<typeAlias type="com.kh.gonggan.good.model.vo.Good" alias="good" />
 		<typeAlias type="com.kh.gonggan.blog.model.vo.Blog" alias="blog" />
+		<typeAlias type="com.kh.gonggan.movie.model.vo.Movie" alias="movie" />
+		<typeAlias type="com.kh.gonggan.diary.model.vo.Diary" alias="diary"	/>
+		<typeAlias type="com.kh.gonggan.music.model.vo.Music" alias="music"/>
+		<typeAlias type="com.kh.gonggan.news.model.vo.News" alias="news"/>
+		<typeAlias type="com.kh.gonggan.review.model.vo.Review" alias="review"/>
 	</typeAliases>
 
  <!-- Sql Mapper 설정 -->
@@ -22,6 +27,11 @@
 	 	<mapper resource="mappers/message-mapper.xml" />
 	 	<mapper resource="mappers/good-mapper.xml" />
 	 	<mapper resource="mappers/blog-mapper.xml" />
+	 	<mapper resource="mappers/movie-mapper.xml"/>
+	 	<mapper resource="mappers/diary-mapper.xml"/>
+	 	<mapper resource="mappers/music-mapper.xml"/>
+	 	<mapper resource="mappers/news-mapper.xml"/>
+	 	<mapper resource="mappers/review-mapper.xml"/>
 	 </mappers>
 	 
 </configuration>

@@ -1,8 +1,67 @@
 package com.kh.gonggan.news.model.vo;
 
 public class News {
-	
+	private int post_id;
+	private int news_num;
+	private String news_info;
+	private String news_link;
 	private String title;
+	private String news_content;
+	public News(){}
+	public News(int post_id, int news_num, String news_info, String news_link, String title, String news_content) {
+		super();
+		this.post_id = post_id;
+		this.news_num = news_num;
+		this.news_info = news_info;
+		this.news_link = news_link;
+		this.title = title;
+		this.news_content = news_content;
+	}
+	public int getPost_id() {
+		return post_id;
+	}
+	public void setPost_id(int post_id) {
+		this.post_id = post_id;
+	}
+	public int getNews_num() {
+		return news_num;
+	}
+	public void setNews_num(int news_num) {
+		this.news_num = news_num;
+	}
+	public String getNews_info() {
+		return news_info;
+	}
+	public void setNews_info(String news_info) {
+		this.news_info = news_info;
+	}
+	public String getNews_link() {
+		return news_link;
+	}
+	public void setNews_link(String news_link) {
+		this.news_link = news_link;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getNews_content() {
+		return news_content;
+	}
+	public void setNews_content(String news_content) {
+		this.news_content = news_content;
+	}
+	@Override
+	public String toString() {
+		return "News [post_id=" + post_id + ", news_num=" + news_num + ", news_info=" + news_info + ", news_link="
+				+ news_link + ", title=" + title + ", news_content=" + news_content + "]";
+	}
+	
+	
+	
+	/*private String title;
 	private String originallink;
 	private String description;
 	private String pubDate;
@@ -53,7 +112,7 @@ public class News {
 	public String toString() {
 		return "News [title=" + title + ", originallink=" + originallink + ", description=" + description + ", pubDate="
 				+ pubDate + "]";
-	}
+	}*/
 	
 
 }

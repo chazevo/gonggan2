@@ -18,7 +18,7 @@
 		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, REVIEW_NUM, REVIEW_CONTENT FROM (SELECT * FROM REVIEW ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
 	</select>
 	
-	<select id="reviewdetail" resultMap="review" parameterType="int">
+	<select id="reviewdetail" resultMap="reviewResult" parameterType="int">
 	select * from review where post_id = #{postId}
 	</select>
 </mapper>

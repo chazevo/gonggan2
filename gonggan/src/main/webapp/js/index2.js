@@ -1,4 +1,105 @@
+var rownum = 1;
 var Ca = /\+/g;
+
+function requestList(val) {
+   
+   var rownum2;
+   
+   //if (maxRownum - val < 20)
+   if (maxRownum - val < 8)
+      var rownum2 = maxRownum;
+   //else rownum2 = rownum + 19;
+   else rownum2 = rownum + 7;
+   
+   //alert("rownum2 : " + rownum2);
+   
+   $.ajax({
+      url: "postlist.do",
+      data: { writer_id: "",
+    	  rownum: rownum,
+    	  rownum2: rownum2 },
+      success: function(data) {
+         rownum = rownum2 + 1;
+         callbackList(data);
+      },
+      error: function(data,status,error){
+         console.log("error : " + error);
+      }
+   });
+}
+
+
+function callbackList(data) {
+	
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+	
+	var div;
+	var table, tr, td;
+
+	var postId, content;
+	
+	document.getElementById("blogHomeContentDiv").innerHTML = "";
+	
+	for (var i in jsonArr.list) {
+		
+		div = document.createElement("div");
+		table = document.createElement("table");
+		
+		postId = jsonArr.list[i].postId;
+		var content = reqPostDetail(postId, jsonArr.list[i].category);
+		
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.colspan = "2";
+		td.class = "blogHomeContent";
+		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
+			+ "postId=" + postId
+			+ "&writerId=" + jsonArr.list[i].writerId + "'>"
+			+ decodeURIComponent(content.replace(Ca, " "))
+			+ "</a>"
+		tr.appendChild(td);
+		table.appendChild(tr);
+		
+		tr = document.createElement("tr");
+		tr.class = "trBottom";
+		td = document.createElement("td");
+		td.innerHTML = "<a href=''>" + jsonArr.list[i].writerId + "</a>";
+		tr.appendChild(td);
+		td = document.createElement("td");
+		td.class = "rightAlign";
+		td.innerHTML = "<label class='checkbox-wrap'>"
+			+ "<input type='checkbox' id='' onclick='like();'>"
+			+ "<i class='like-icon'></i>"
+			+ "</label>&nbsp;<a href=''>70</a>"
+		tr.appendChild(td);
+		table.appendChild(tr);
+		
+		div.appendChild(table);
+		
+		document.getElementById("blogHomeContentDiv").appendChild(div);
+	}
+}
+
+function reqPostDetail(postId, category) {
+	
+	var content;
+	
+	$.ajax({
+		async: false,
+		url: "plistDetail.do",
+		data: { postId: postId,
+			category : category},
+		success: function(data) {
+			content = data;
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	
+	return content;
+}
 
 function trace(loginUser) {
 	$.ajax({
@@ -85,7 +186,7 @@ function like(obj, loginUser, postId){
 		$.ajax({
 		      url: "/gonggan/insertGood.do",
 		  data: {loginUser:loginUser,
-			  	 postId:postId},
+			  	 postId:1},
 		  success: function(data) {
 			  alert("좋아요 함 ");
 		  },
@@ -98,7 +199,7 @@ function like(obj, loginUser, postId){
 		$.ajax({
 		      url: "/gonggan/deleteGood.do",
 		  data: {loginUser:loginUser,
-			  	 postId:postId},
+			  	 postId:1},
 		  success: function(data) {
 			  alert("좋아요 취소함 ");
 		  },

@@ -22,7 +22,7 @@ public class ReviewDao {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("rownum", rownum);
 		map.put("rownum2", rownum2);
-		return (List<Review>) sqlSession.selectList("Reviewmapper.Reviewlist");
+		return (List<Review>) sqlSession.selectList("reviewmapper.Reviewlist");
 	}
 	
 	public List<Review> selectAll_index2(){
@@ -30,6 +30,6 @@ public class ReviewDao {
 	}
 
 	public Review reviewDetail(int postId) {
-		return (Review) sqlSession.selectList("reviewmapper.reviewdetail", postId);
+		return (Review) sqlSession.selectOne("reviewmapper.reviewdetail", postId);
 	}
 }

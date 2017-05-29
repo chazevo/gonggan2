@@ -71,7 +71,7 @@ public class MemberController {
 
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
-		List<Post> plist = postService.selectAll_index2();         
+		List<Post> plist = postService.selectAll_index2();  
 		List<Movie> movielist = movieService.selectAll_index2();
 		List<Diary> diarylist = diaryService.selectAll_index2();
 		List<Music> musiclist = musicService.selectAll_index2();
@@ -86,12 +86,9 @@ public class MemberController {
 		mv.addObject("dlist", diarylist);
 		mv.addObject("plist",plist);
 		mv.addObject("movielist",movielist);
+		mv.addObject("plistSize", plist.size());
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());
-		
-		for(Post p : plist){
-			System.out.println(p.getGoodCnt());
-		}
 		
 		return mv;
 	}

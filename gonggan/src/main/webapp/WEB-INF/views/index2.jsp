@@ -29,9 +29,33 @@
 <script type="text/javascript" src="js/index2.js"></script>
 <script src="js/jquery.fancybox.js"></script>
 <script type="text/javascript">
-
 var loginUser = '${sessionScope.loginUser.getMember_id()}';
-	window.onload = function() {
+var maxRownum = ${plistSize};
+
+window.onload = function() {
+		//trace(loginUser);
+		
+		requestList(rownum);
+		
+		/* 
+		$("#div_Loading").click(function() {
+			//alert("rownum : " + rownum);
+			
+			if(maxRownum >= rownum)
+				requestList(rownum);
+		});
+		*/
+		
+		$(window).scroll(function(){
+			if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
+				// $(document).height() 현재 페이지 높이
+				// $(window).height() 윈도우 크기
+				
+				if(maxRownum >= rownum)
+					requestList(rownum);
+				}
+			});
+		
 		document.getElementById("searchPost").focus();
 	}
 </script>
@@ -182,7 +206,7 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
 				<a href="/gonggan/logOut.do">로그아웃</a>
 				<!-- <a href="/gonggan/update.do">정보수정</a> -->
 				<hr class="whiteHr">
-				<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">내 블로그 소식</a></b>
+				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
 				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do">포스트 쓰기</a>
@@ -215,173 +239,162 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
 					</tr>
 					</table>
 					<div class="div3">
-								<select>
-									<option>최신순</option>
-									<option>좋아요</option>
-								</select>
+						<select>
+							<option>최신순</option>
+							<option>좋아요</option>
+						</select>
 					</div>
 				</div>
-				<div class="text-center blogHomeContentDiv">
-					<c:set var="musiccount" value="0" />
-               <c:set var="diarycount" value="0" />
-               <c:set var="moviecount" value="0" />
-               <c:set var="newscount" value="0" />
-               <c:set var="reviewcount" value="0" />
-
-               <c:forEach items="${plist}" var="i" begin="0" varStatus="status">
-                  <c:if test="${i.category eq 'diary'}">
-                     <c:set var="diarycount" value="${diarycount + 1}" />
-                     <div>
-                        <table>
-                           <colgroup>
-                              <col width="40%" />
-                              <col width="60%" />
-                           </colgroup>
-                           <tr>
-                              <td colspan="2" class="blogHomeContent"><a data-fancybox data-src='pdetail.do?postId=${i.post_id} &writerId=${i.writer_id} '>
-                                    ${dlist[diarycount-1].diary_content}</a></td>
-                           </tr>
-                           <tr class="trBottom">
-                              <td><a href="">${i.writer_id}</a></td>
-                              <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'>
-                                    <i class='like-icon'></i>
-                              </label>&nbsp;
-                              	<c:if test="${ i.goodCnt ne '0' }">
-									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
-								</c:if>
-								<c:if test="${  i.goodCnt eq '0' }"> 
-									<b>${ i.goodCnt }</b>
-								</c:if>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  </c:if>
-
-                  <c:if test="${i.category eq 'movie'}">
-                     <c:set var="moviecount" value="${moviecount + 1}" />
-                     <div>
-                        <table>
-                           <colgroup>
-                              <col width="40%" />
-                              <col width="60%" />
-                           </colgroup>
-                           <tr>
-                              <td colspan="2" class="blogHomeContent"><a href="">
-                                    ${movielist[moviecount-1].title}</a></td>
-                           </tr>
-                           <tr class="trBottom">
-                              <td><a href="">${i.writer_id}</a></td>
-                              <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });' checked> 
-                                    <i class='like-icon'></i>
-                              </label>&nbsp;
-                              	<c:if test="${ i.goodCnt ne '0' }">
-									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
-								</c:if>
-								<c:if test="${ i.goodCnt eq '0' }"> 
-									<b>${ i.goodCnt }</b>
-								</c:if>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  </c:if>
-
-                  <c:if test="${i.category eq 'music'}">
-                     <c:set var="musiccount" value="${musiccount + 1}" />
-                     <div>
-                        <table>
-                           <colgroup>
-                              <col width="40%" />
-                              <col width="60%" />
-                           </colgroup>
-                           <tr>
-                              <td colspan="2" class="blogHomeContent"><a href="">
-                                    ${musiclist[musiccount-1].title}</a></td>
-
-                           </tr>
-                           <tr class="trBottom">
-                              <td><a href="">${i.writer_id}</a></td>
-                              <td class="rightAlign"><label class='checkbox-wrap'>
-                                   <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'> 
-                                   <i class='like-icon'></i>
-                              </label>&nbsp;
-                              	<c:if test="${  i.goodCnt ne '0' }">
-									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
-								</c:if>
-								<c:if test="${  i.goodCnt eq '0' }"> 
-									<b>${ i.goodCnt }</b>
-								</c:if>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  </c:if>
-
-                  <c:if test="${i.category eq 'news'}">
-                     <c:set var="newscount" value="${newscount + 1}" />
-                     <div>
-                        <table>
-                           <colgroup>
-                              <col width="40%" />
-                              <col width="60%" />
-                           </colgroup>
-                           <tr>
-                              <td colspan="2" class="blogHomeContent"><a href="">
-                                    ${newslist[newscount-1].title}</a></td>
-
-                           </tr>
-                           <tr class="trBottom">
-                              <td><a href="">${i.writer_id}</a></td>
-                              <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'>
-                                     <i class='like-icon'></i>
-                              </label>&nbsp;
-                              	<c:if test="${  i.goodCnt ne '0' }">
-									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
-								</c:if>
-								<c:if test="${  i.goodCnt eq '0' }"> 
-									<b>${ i.goodCnt }</b>
-								</c:if>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  </c:if>
-
-                  <c:if test="${i.category eq 'review'}">
-                     <c:set var="reviewcount" value="${reviewcount + 1}" />
-                     <div>
-                        <table>
-                           <colgroup>
-                              <col width="40%" />
-                              <col width="60%" />
-                           </colgroup>
-                           <tr>
-                              <td colspan="2" class="blogHomeContent"><a href="">
-                                    ${reviewlist[reviewcount-1].review_content}</a></td>
-
-                           </tr>
-                           <tr class="trBottom">
-                              <td><a href="">${i.writer_id}</a></td>
-                              <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'>
-                                    <i class='like-icon'></i>
-                              </label>&nbsp;
-                              <c:if test="${  i.goodCnt ne '0' }">
-                              <b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
-                              </c:if>
-                              <c:if test="${  i.goodCnt eq '0' }"> 
-                              <b>${ i.goodCnt }</b>
-                              </c:if>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  </c:if>
-               </c:forEach>
+				<div class="text-center blogHomeContentDiv" id="blogHomeContentDiv">
+				<%-- 
+				<c:set var="musiccount" value="0" />
+				<c:set var="diarycount" value="0" />
+				<c:set var="moviecount" value="0" />
+				<c:set var="newscount" value="0" />
+				<c:set var="reviewcount" value="0" />
+				
+				<c:forEach items="${plist}" var="i" begin="0" varStatus="status">
+					<c:if test="${i.category eq 'diary'}">
+						<c:set var="diarycount" value="${diarycount + 1}" />
+						<div>
+							<table>
+								<colgroup>
+									<col width="40%" />
+									<col width="60%" />
+								</colgroup>
+								<tr>
+									<td colspan="2" class="blogHomeContent">
+										<a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
+											${dlist[diarycount-1].diary_content}
+										</a>
+									</td>
+								</tr>
+								<tr class="trBottom">
+									<td><a href="">${i.writer_id}</a></td>
+									<td class="rightAlign">
+										<label class='checkbox-wrap'>
+											<input type='checkbox' id='' onclick='like();'>
+											<i class='like-icon'></i>
+										</label>&nbsp;<a href="">70</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</c:if>
+					
+					<c:if test="${i.category eq 'movie'}">
+						<c:set var="moviecount" value="${moviecount + 1}" />
+						<div>
+							<table>
+								<colgroup>
+									<col width="40%" />
+									<col width="60%" />
+								</colgroup>
+								<tr>
+									<td colspan="2" class="blogHomeContent">
+										<a href="">
+											${movielist[moviecount-1].title}
+										</a>
+									</td>
+								</tr>
+								<tr class="trBottom">
+									<td><a href="">${i.writer_id}</a></td>
+									<td class="rightAlign">
+										<label class='checkbox-wrap'>
+											<input type='checkbox' id='' onclick='like();'>
+											<i class='like-icon'></i>
+										</label>&nbsp;<a href="">70</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</c:if>
+					
+					<c:if test="${i.category eq 'music'}">
+						<c:set var="musiccount" value="${musiccount + 1}" />
+						<div>
+							<table>
+								<colgroup>
+									<col width="40%" />
+									<col width="60%" />
+								</colgroup>
+								<tr>
+									<td colspan="2" class="blogHomeContent">
+										<a href="">
+											${musiclist[musiccount-1].title}
+										</a>
+									</td>
+								</tr>
+								<tr class="trBottom">
+									<td><a href="">${i.writer_id}</a></td>
+									<td class="rightAlign">
+										<label class='checkbox-wrap'>
+											<input type='checkbox' id='' onclick='like();'>
+											<i class='like-icon'></i>
+										</label>&nbsp;<a href="">70</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</c:if>
+					
+					<c:if test="${i.category eq 'news'}">
+						<c:set var="newscount" value="${newscount + 1}" />
+						<div>
+							<table>
+								<colgroup>
+									<col width="40%" />
+									<col width="60%" />
+								</colgroup>
+								<tr>
+									<td colspan="2" class="blogHomeContent">
+										<a href="">
+											${newslist[newscount-1].title}
+										</a>
+									</td>
+								</tr>
+								<tr class="trBottom">
+									<td><a href="">${i.writer_id}</a></td>
+									<td class="rightAlign">
+										<label class='checkbox-wrap'>
+											<input type='checkbox' id='' onclick='like();'>
+											<i class='like-icon'></i>
+										</label>&nbsp;<a href="">70</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</c:if>
+					
+					<c:if test="${i.category eq 'review'}">
+						<c:set var="reviewcount" value="${reviewcount + 1}" />
+						<div>
+							<table>
+								<colgroup>
+									<col width="40%" />
+									<col width="60%" />
+								</colgroup>
+								<tr>
+									<td colspan="2" class="blogHomeContent">
+										<a href="">
+											${reviewlist[reviewcount-1].review_content}
+										</a>
+									</td>
+								</tr>
+								<tr class="trBottom">
+									<td><a href="">${i.writer_id}</a></td>
+									<td class="rightAlign">
+										<label class='checkbox-wrap'>
+											<input type='checkbox' id='' onclick='like();'>
+											<i class='like-icon'></i>
+										</label>&nbsp;<a href="">70</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</c:if>
+				</c:forEach>
+			--%>
 			<!-- <div>
 					<table>
 						<colgroup>

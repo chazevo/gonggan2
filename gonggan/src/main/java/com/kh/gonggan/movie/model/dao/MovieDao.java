@@ -37,6 +37,6 @@ public class MovieDao {
 	}
 
 	public Movie movieDetail(int postId) {
-		return (Movie) sqlSession.selectList("moviemapper.moviedetail", postId);
+		return (Movie) sqlSession.selectOne("moviemapper.moviedetail", postId);
 	}
 }

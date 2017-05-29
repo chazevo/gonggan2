@@ -29,9 +29,9 @@
 <script type="text/javascript" src="js/index2.js"></script>
 <script src="js/jquery.fancybox.js"></script>
 <script type="text/javascript">
+
 var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	window.onload = function() {
-		//trace(loginUser);
 		document.getElementById("searchPost").focus();
 	}
 </script>
@@ -182,7 +182,7 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
 				<a href="/gonggan/logOut.do">로그아웃</a>
 				<!-- <a href="/gonggan/update.do">정보수정</a> -->
 				<hr class="whiteHr">
-				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
+				<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">내 블로그 소식</a></b>
 				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do">포스트 쓰기</a>
@@ -238,15 +238,22 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
                               <col width="60%" />
                            </colgroup>
                            <tr>
-                              <td colspan="2" class="blogHomeContent"><a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
+                              <td colspan="2" class="blogHomeContent"><a data-fancybox data-src='pdetail.do?postId=${i.post_id} &writerId=${i.writer_id} '>
                                     ${dlist[diarycount-1].diary_content}</a></td>
                            </tr>
                            <tr class="trBottom">
                               <td><a href="">${i.writer_id}</a></td>
                               <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='' onclick='like();'> <i
-                                    class='like-icon'></i>
-                              </label>&nbsp;<a href="">70</a></td>
+                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'>
+                                    <i class='like-icon'></i>
+                              </label>&nbsp;
+                              	<c:if test="${ i.goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
+								</c:if>
+								<c:if test="${  i.goodCnt eq '0' }"> 
+									<b>${ i.goodCnt }</b>
+								</c:if>
+                              </td>
                            </tr>
                         </table>
                      </div>
@@ -267,9 +274,16 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
                            <tr class="trBottom">
                               <td><a href="">${i.writer_id}</a></td>
                               <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='' onclick='like();'> <i
-                                    class='like-icon'></i>
-                              </label>&nbsp;<a href="">70</a></td>
+                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });' checked> 
+                                    <i class='like-icon'></i>
+                              </label>&nbsp;
+                              	<c:if test="${ i.goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ i.goodCnt eq '0' }"> 
+									<b>${ i.goodCnt }</b>
+								</c:if>
+                              </td>
                            </tr>
                         </table>
                      </div>
@@ -291,9 +305,16 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
                            <tr class="trBottom">
                               <td><a href="">${i.writer_id}</a></td>
                               <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='' onclick='like();'> <i
-                                    class='like-icon'></i>
-                              </label>&nbsp;<a href="">70</a></td>
+                                   <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'> 
+                                   <i class='like-icon'></i>
+                              </label>&nbsp;
+                              	<c:if test="${  i.goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
+								</c:if>
+								<c:if test="${  i.goodCnt eq '0' }"> 
+									<b>${ i.goodCnt }</b>
+								</c:if>
+                              </td>
                            </tr>
                         </table>
                      </div>
@@ -315,15 +336,22 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
                            <tr class="trBottom">
                               <td><a href="">${i.writer_id}</a></td>
                               <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='' onclick='like();'> <i
-                                    class='like-icon'></i>
-                              </label>&nbsp;<a href="">70</a></td>
+                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'>
+                                     <i class='like-icon'></i>
+                              </label>&nbsp;
+                              	<c:if test="${  i.goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
+								</c:if>
+								<c:if test="${  i.goodCnt eq '0' }"> 
+									<b>${ i.goodCnt }</b>
+								</c:if>
+                              </td>
                            </tr>
                         </table>
                      </div>
                   </c:if>
 
-                  <c:if test="${i.category eq 'news'}">
+                  <c:if test="${i.category eq 'review'}">
                      <c:set var="reviewcount" value="${reviewcount + 1}" />
                      <div>
                         <table>
@@ -339,9 +367,16 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
                            <tr class="trBottom">
                               <td><a href="">${i.writer_id}</a></td>
                               <td class="rightAlign"><label class='checkbox-wrap'>
-                                    <input type='checkbox' id='' onclick='like();'> <i
-                                    class='like-icon'></i>
-                              </label>&nbsp;<a href="">70</a></td>
+                                    <input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${i.post_id });'>
+                                    <i class='like-icon'></i>
+                              </label>&nbsp;
+                              <c:if test="${  i.goodCnt ne '0' }">
+                              <b><a href="goodList.do?postId=${i.post_id }"> ${ i.goodCnt }</a></b>
+                              </c:if>
+                              <c:if test="${  i.goodCnt eq '0' }"> 
+                              <b>${ i.goodCnt }</b>
+                              </c:if>
+                              </td>
                            </tr>
                         </table>
                      </div>

@@ -81,6 +81,7 @@ public class PostController {
 			return mv;
 	}
 	
+	
 	@RequestMapping(value="/postlist.do", produces={"application/json"})
 		@ResponseBody
 		public String selectList(@RequestParam String writer_id){

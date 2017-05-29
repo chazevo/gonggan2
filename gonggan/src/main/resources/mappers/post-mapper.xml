@@ -20,7 +20,7 @@
 		<result property="category" column="category" />
 		<result property="shar_yn" column="shar_yn" />
 		<result property="open_yn" column="open_yn" />
-		<result property="goodCnt" column="good_cnt" />
+		<result property="goodCnt" column="good_count" />
 		<result property="photo_path" column="photo_path" />
 		<result property="post_date" column="post_date" />
 	</resultMap>
@@ -57,7 +57,7 @@
 	select writer_id from post where post_id =#{post_id}
 	</select>
 	<select id="plist_index2" resultMap="postResult">
-   SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, CATEGORY, WRITER_ID, POST_DATE
+   SELECT * FROM ( SELECT ROWNUM AS RNUM, GOOD_COUNT, POST_ID, CATEGORY, WRITER_ID, POST_DATE
    FROM (SELECT * FROM POST ORDER BY POST_DATE DESC) )<![CDATA[ WHERE RNUM<=8 ]]>
    </select>
 

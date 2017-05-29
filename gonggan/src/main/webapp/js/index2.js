@@ -85,7 +85,7 @@ function like(obj, loginUser, postId){
 		$.ajax({
 		      url: "/gonggan/insertGood.do",
 		  data: {loginUser:loginUser,
-			  	 postId:1},
+			  	 postId:postId},
 		  success: function(data) {
 			  alert("좋아요 함 ");
 		  },
@@ -98,7 +98,7 @@ function like(obj, loginUser, postId){
 		$.ajax({
 		      url: "/gonggan/deleteGood.do",
 		  data: {loginUser:loginUser,
-			  	 postId:1},
+			  	 postId:postId},
 		  success: function(data) {
 			  alert("좋아요 취소함 ");
 		  },

@@ -1,7 +1,49 @@
 var postId;
 var Ca = /\+/g;
 var str = "";
+/*function trace(loginUser) {
+	$.ajax({
+	      url: "/gonggan/trace.do",
+	      data: {loginUser:loginUser},
+	      success: function(data) {
+	    		  callbacktrace(data);
+	      },
+	      error: function(data,status,error){
+	         console.log("error : " + error);
+	      }
+	   });
+}
 
+function callbacktrace(data) {
+	
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);	
+
+	var tr;
+	var td;
+	
+	
+	while (document.getElementById("listbody").rows.length > 0 )
+		document.getElementById("listbody").deleteRow(0);
+	
+	for (var j=0 ; j<7 ; j++){
+		
+		loginUser = jsonArr.list[j].loginUser;
+		
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		//document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
+
+		td.innerHTML = " <a data-fancybox data-src='pdetail.do?postId="+jsonArr.list[j].postId+"&writerId=" + jsonArr.list[j].postWriter +"'>"
+		+ decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " ")) +"</a><b>댓글</b>을 남기셨습니다. " ;
+		tr.appendChild(td);
+		document.getElementById("listbody_mytrace").appendChild(tr);
+		
+		if (jsonArr.list.length-1 == j) break;
+		
+	}
+
+}*/
 function visit() {
 	if (loginUser != "" || loginUser != writer_id)
 		$.ajax({

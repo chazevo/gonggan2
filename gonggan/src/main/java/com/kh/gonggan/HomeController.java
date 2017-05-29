@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
+import com.kh.gonggan.comment.model.service.CommentService;
+import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
 import com.kh.gonggan.post.model.service.PostService;
@@ -33,6 +35,8 @@ public class HomeController {
 	   private MemberService memberService;
 	   @Autowired
 	   private PostService postService;
+		@Autowired
+		private CommentService commentService;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
@@ -68,6 +72,7 @@ public class HomeController {
 	@RequestMapping("myhome.do")
 	   public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
 	      Member loginUser  = memberService.loginCheck(member);
+	  		
 	      String wr = loginUser.getMember_id();
 	      System.out.println(wr);
 	      mv.addObject("writer_id", wr);
@@ -75,10 +80,18 @@ public class HomeController {
 	      return mv;
 	   }
 	
-	@RequestMapping(value = "mypage.do", method = RequestMethod.GET)
-	public String mypage(Locale locale, Model model) {
+	@RequestMapping("mypage.do")
+	public ModelAndView mypage(Locale locale, Model model,String writer_id ,  ModelAndView mv) {
+		
 		logger.info("Welcome mypage! ");
-		return "mypage";
+		List<Comment> mylist = commentService.myCommentList(writer_id);
+	
+		mv.addObject("mylist",mylist);
+		mv.addObject("writer_id", writer_id);
+		mv.setViewName("mypage");
+		
+
+		return mv;
 	}
 
 	@RequestMapping(value = "uploadform.do", method = RequestMethod.GET)

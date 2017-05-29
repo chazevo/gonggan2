@@ -23,6 +23,7 @@
 <script src="js/jquery.fancybox.js"></script>
 <script src="js/mypage.js"></script>
 <script type="text/javascript">
+
 	window.onload = function() {
 		$("#loginUser").click(function() {
 			if ($("#loginUserDetail").hasClass("hidden")) {
@@ -184,7 +185,7 @@
 								<tr>
 									<td>핸드폰 번호</td>
 									<td>
-										<input type="text" id="phone" value="${sessionScope.loginUser.getPhone()}" readonly>
+										<input type="text" id="phone" value="${sessionScope.loginUser.getMember_phone()}" readonly>
 									</td>
 								</tr>
 								<tr>
@@ -445,31 +446,21 @@
 								<tr>
 									<td>게시글을 작성하고 이웃을 만들어보세요!! </td>
 								</tr>
-								<tr>
-									<td>
-										<font><a href="">이대장</a> 님이</font>
-										<a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
-										게시글에 <b>댓글</b>을 남기셨습니다.
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<font><a href="">이대장</a> 님이</font>
-										너무 예뻐요!! 너무 마음에드네요!! 어디서 구매하셨나요??!! 알려주세요~!!!
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<font><a href="">이대장</a> 님이</font>
-										너무 예뻐요!! 너무 마음에드네요!! 어디서 구매하셨나요??!! 알려주세요~!!!
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<font><a href="">이대장</a> 님이</font>
-										너무 예뻐요!! 너무 마음에드네요!! 어디서 구매하셨나요??!! 알려주세요~!!!
-									</td>
-								</tr>
+								<tbody id="listbody">	
+								
+									<c:if test="${!empty mylist }">
+									<c:forEach items="${ mylist}" var="i"  begin ="0" >
+										<tr>
+											<td>
+												<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${i.writer_id} '>
+													${i.getComment_content()}
+												</a> 
+											</td>
+										</tr>
+									</c:forEach>
+									</c:if>
+									
+								</tbody>
 							</table>
 						</td>
 					</tr>

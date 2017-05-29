@@ -32,6 +32,7 @@
 	<select id="cnum" parameterType="comment" resultType="int">
 	select nvl(max(comment_num), 0) from comments where post_id = #{post_id} + 1
 	</select>
+	
 	<select id="tracelist" parameterType="String" resultMap="commentResult">
 	select * from comments where writer_id = #{member_id}
 	order by comment_num

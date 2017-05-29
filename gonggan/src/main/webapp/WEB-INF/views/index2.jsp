@@ -184,7 +184,7 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
 				<hr class="whiteHr">
 				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
 				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
-				<a href="neighborlist.do?loggedinUser=${sessionScope.loginUser.getMember_id() }">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
+				<a href="neighborlist.do?loginUser=${sessionScope.loginUser.getMember_id() }">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do">포스트 쓰기</a>
 				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
 				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">

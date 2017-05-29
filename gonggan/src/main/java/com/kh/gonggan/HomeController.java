@@ -155,13 +155,13 @@ public class HomeController {
 	   }
 	   
 	   @RequestMapping(value="neighborlist.do")
-	   public ModelAndView neighborlist(ModelAndView mv, @RequestParam String loggedinUser ){
+	   public ModelAndView neighborlist(ModelAndView mv ){
 		   logger.info("Neighbor List! ");
-		   System.out.println(loggedinUser);
-		   List<Neighbor> neighborlist = neighborService.selectNeighborList(loggedinUser);
-		   System.out.println(neighborlist);
+		   //List<Neighbor> neighborlist = neighborService.selectNeighborList(loggedinUser);
+		   List<Neighbor> nlist = neighborService.NeighborList();
+		   System.out.println(nlist);
 		   mv.setViewName("neighborList");
-		   mv.addObject("neighborlist", neighborlist);
+		   mv.addObject("neighborlist",nlist);
 		   return mv;
 	   }
 }

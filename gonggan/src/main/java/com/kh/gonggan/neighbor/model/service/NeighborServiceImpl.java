@@ -14,7 +14,13 @@ public class NeighborServiceImpl implements NeighborService{
 	NeighborDao neighborDao;
 
 	@Override
-	public List<Neighbor> selectNeighborList(String loggedinUser) {
-		return neighborDao.selectNeighborList(loggedinUser); 
+	public List<Neighbor> selectNeighborList(String loginUser) {
+		return neighborDao.selectNeighborList(loginUser); 
+	}
+
+	@Override
+	public List<Neighbor> NeighborList() {
+		
+		return neighborDao.selectNeighborAll();
 	}
 }

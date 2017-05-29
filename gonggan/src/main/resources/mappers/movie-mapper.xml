@@ -4,20 +4,30 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="moviemapper">
 	<resultMap type="movie" id="movieResult">
-	
-	<id property="movie_num" column="movie_num"/>
-	<result property="post_id" column="post_id"/>
-	<result property="movie_info" column="movie_info"/>
-	<result property="title" column="title"/>
-	<result property="link" column="link"/>
-	<result property="image" column="image"/>
-	<result property="subtitle" column="subtitle"/>
-	<result property="pubDate" column="pubDate"/>
-	<result property="director" column="director"/>
-	<result property="actor" column="actor"/>
-
+		<id property="movie_num" column="movie_num"/>
+		<result property="post_id" column="post_id"/>
+		<result property="movie_info" column="movie_info"/>
+		<result property="title" column="title"/>
+		<result property="link" column="link"/>
+		<result property="image" column="image"/>
+		<result property="subtitle" column="subtitle"/>
+		<result property="pubDate" column="pubDate"/>
+		<result property="director" column="director"/>
+		<result property="actor" column="actor"/>
 	</resultMap>
+	<select id="movielist" resultMap="movieResult" parameterType="Map">
+	
+	select rownum, subquery.* from (select * from movie
+				order by 5 desc) subquery "
+				where rownum between #{rownum} and #{rownum2}
+	</select>
 	<select id="movielist_index2" resultMap="movieResult">
-	SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, SUBTITLE FROM (SELECT * FROM MOVIE ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	SELECT * FROM
+	( SELECT ROWNUM AS RNUM, POST_ID, SUBTITLE
+	FROM (SELECT * FROM MOVIE ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+	
+	<select id="moviedetail" resultMap="movie" parameterType="int">
+	select * from movie where post_id = #{postId}
 	</select>
 </mapper>

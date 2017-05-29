@@ -10,12 +10,23 @@ import com.kh.gonggan.review.model.vo.Review;
 
 @Service("reviewService")
 public class ReviewServiceImpl implements ReviewService{
-   @Autowired
-   ReviewDao reviewDao;
-   
-   @Override
-   public List<Review> selectAll_index2(){
-      return reviewDao.selectAll_index2();
-   }
+	
+	@Autowired
+	ReviewDao reviewDao;
+	
+	@Override
+	public List<Review> selectAll(int rownum, int rownum2) {
+		return reviewDao.selectAll(rownum, rownum2);
+	}
+	
+	@Override
+	public List<Review> selectAll_index2(){
+		return reviewDao.selectAll_index2();
+	}
+	
+	@Override
+	public Review reviewDetail(int postId) {
+		return reviewDao.reviewDetail(postId);
+	}
 
 }

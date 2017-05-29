@@ -53,5 +53,12 @@
 	left join review using(post_id)
 	where post_id = #{post_id}
 	</select>
+		<select id="selectpostwriter" parameterType="int" resultType="String">
+	select writer_id from post where post_id =#{post_id}
+	</select>
+	<select id="plist_index2" resultMap="postResult">
+   SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, CATEGORY, WRITER_ID, POST_DATE
+   FROM (SELECT * FROM POST ORDER BY POST_DATE DESC) )<![CDATA[ WHERE RNUM<=8 ]]>
+   </select>
 
 </mapper>

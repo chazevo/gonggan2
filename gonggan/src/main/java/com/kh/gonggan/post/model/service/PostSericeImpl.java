@@ -31,6 +31,14 @@ public class PostSericeImpl implements PostService{
 	public List<Post> selectUserAll(String writer_id){
 		return  postDao.selectUserAll(writer_id);
 	}
+	@Override
+	public String selectPostWriter(int post_id){
+		return postDao.selectPostWriter(post_id);
+	}
+	@Override
+	   public List<Post> selectAll_index2(){
+	      return postDao.selectAll_index2();
+	   }
 	
 
 }

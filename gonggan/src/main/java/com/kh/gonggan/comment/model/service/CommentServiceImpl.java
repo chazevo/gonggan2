@@ -38,5 +38,18 @@ public class CommentServiceImpl implements CommentService{
 	public List<Comment> checkCommentAlram(String member_id){
 		return commentDao.checkCommentAlram(member_id);
 	}
+	@Override
+	public List<Comment> commentCheckAlram(String member_id){
+		return commentDao.commentCheckAlram(member_id);
+	}
+	
+	
+	
+	@Override
+	public List<Comment> myCommentList(String loginUser){
+		return  commentDao.myCommentList(loginUser);
+	}
+	
+
 	
 }

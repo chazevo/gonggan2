@@ -943,7 +943,7 @@ img {
 	width:95%;
 }
 
-.blogHomeHeader .table2nd>table #listbody_newPost td {
+.blogHomeHeader .table2nd>table #listbody_newPost td, #listbody_mytrace td {
 	vertical-align: middle;
 	max-width:0px;
 	text-overflow: ellipsis;

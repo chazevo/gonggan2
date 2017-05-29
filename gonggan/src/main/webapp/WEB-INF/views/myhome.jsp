@@ -3,6 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <%
+String currentView = "myhome";
+String writer = session.getId();
+//세션저장 (플래그, 값)
+session.setAttribute("currentView", currentView);
+session.setAttribute("wr_id", writer);
 int year, month, today, firstday, lastdate;
 String str = "";
 int imgVal = 0;
@@ -138,7 +143,7 @@ var imgVal = <%= imgVal %>;
 						<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
 						<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-						<a href="logOut.do">로그아웃</a> 
+						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
 					</td>
 				</tr> 
@@ -234,7 +239,7 @@ var imgVal = <%= imgVal %>;
 						<tr>
 							<th class="th">
 								<c:if test="${sessionScope.loginUser.getMember_id() eq param.writer_id}">
-									<a href="uploadform.do">포스트 쓰기 </a>
+									<a href="uploadform.do?writer_id=${param.writer_id}">포스트 쓰기 </a>
 								</c:if>
 								<label class='radio-wrap'>
 									<input type='radio' name='listType' id='calendar'  onclick='requestList();' checked>

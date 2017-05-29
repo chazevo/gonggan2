@@ -17,15 +17,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.gonggan.blog.model.service.BlogService;
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
+import com.kh.gonggan.diary.model.service.DiaryService;
+import com.kh.gonggan.diary.model.vo.Diary;
 import com.kh.gonggan.email.Email;
 import com.kh.gonggan.email.EmailSender;
 import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.movie.model.service.MovieService;
+import com.kh.gonggan.movie.model.vo.Movie;
+import com.kh.gonggan.music.model.service.MusicService;
+import com.kh.gonggan.music.model.vo.Music;
+import com.kh.gonggan.news.model.service.NewsService;
+import com.kh.gonggan.news.model.vo.News;
+import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
+import com.kh.gonggan.review.model.service.ReviewService;
+import com.kh.gonggan.review.model.vo.Review;
 
 @Controller
 //@RequestMapping("member")
@@ -39,6 +51,20 @@ public class MemberController {
 	private CommentService commentService;
 	@Autowired
 	private GoodService goodService;
+	@Autowired
+	private BlogService blogService;
+	@Autowired
+	private PostService postService;
+	@Autowired
+	private MovieService movieService;
+	@Autowired
+	private DiaryService diaryService;
+	@Autowired
+	private MusicService musicService;
+	@Autowired
+	private NewsService newsService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
@@ -46,11 +72,25 @@ public class MemberController {
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
 		List<Post>postAlarmList = null;
+		List<Post> plist = postService.selectAll_index2();         
+		List<Movie> movielist = movieService.selectAll_index2();
+		List<Diary> diarylist = diaryService.selectAll_index2();
+		List<Music> musiclist = musicService.selectAll_index2();
+		List<News> newslist = newsService.selectAll_index2();
+		List<Review> reviewlist = reviewService.selectAll_index2();
+
 		
 		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
 		List<Good> goodReqList = goodService.checkGoodAlram(loginUser.getMember_id());
 		
+
 		mv.setViewName("index2");
+		mv.addObject("reviewlist", reviewlist);
+		mv.addObject("newslist", newslist);
+		mv.addObject("musiclist", musiclist);
+		mv.addObject("dlist", diarylist);
+		mv.addObject("plist",plist);
+		mv.addObject("movielist",movielist);
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());
 		mv.addObject("postAlarmList", postAlarmList);
@@ -60,29 +100,42 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public String loginCheck(Member member, ModelAndView mv, HttpSession session){
-		Member loginUser  = memberService.loginCheck(member);
-		
-		//ModelAndView mv = new ModelAndView();
-		if(loginUser != null) {
-			session.setAttribute("loginUser", loginUser);
-			System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
-		}
-		
-		else {
-			session.setAttribute("error", "실패");
-			System.out.println("로그인 실패");
-		}
+	   public ModelAndView loginCheck(Member member, ModelAndView mv, HttpSession session){
+	      Member loginUser  = memberService.loginCheck(member);
+	      
+	      if(loginUser != null) {
+	         session.setAttribute("loginUser", loginUser);
+	         System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
 
-		return "redirect:login2.do"; 
-	}//로그인하기
+
+	         mv.setViewName("redirect:login2.do");
+	         mv.addObject("loginUser", loginUser);
+	         return mv;
+	      }
+	      
+	      else {
+	         session.setAttribute("error", "실패");
+	         System.out.println("로그인 실패");
+	         mv.addObject("logmsg","failure");
+	         mv.setViewName("home");
+	         return mv;
+	      }
+	   }//로그인하기
 	
 	@RequestMapping("logOut.do")
-	public String logOut(HttpSession session){
-		if(session != null)
-			session.invalidate();
-		return "index2";
-	}
+	   public ModelAndView logOut(HttpSession session, ModelAndView mv){
+	      
+	      String vn = (String) session.getAttribute("currentView");
+	      System.out.println("vn:"+vn);
+	      //String wr = (String)session.getAttribute("wr_id");
+	      
+	      //mv.addObject("writer_id", wr);
+	      mv.setViewName(vn);
+	      
+	      if(session != null)
+	         session.invalidate();
+	      return mv;
+	   }
 	@RequestMapping("updateform.do")
 	public String updateform(HttpSession session){
 		return "updateform";

@@ -41,5 +41,12 @@ public class CommentDao {
 	public List<Comment> checkCommentAlram(String member_id) {
 		return (List<Comment>) sqlSession.selectList("commentmapper.ccheckalram", member_id);
 	}
+	public List<Comment> commentCheckAlram(String member_id) {
+		return (List<Comment>) sqlSession.selectList("commentmapper.commentcheckalram", member_id);
+	}
+	public List<Comment> myCommentList(String member_id) {
+		return (List<Comment>) sqlSession.selectList("commentmapper.tracelist", member_id);
+	}
+
 	
 }

@@ -24,5 +24,12 @@ public class PostDao {
 	public List<Post> selectUserAll(String writer_id) {
 		return (List<Post>) sqlSession.selectList("postmapper.userplist",writer_id);
 	}
-	
+
+	public String selectPostWriter(int post_id) {
+		
+		return (String) sqlSession.selectOne("postmapper.selectpostwriter", post_id);
+	}
+	public List<Post> selectAll_index2() {
+	      return (List<Post>) sqlSession.selectList("postmapper.plist_index2");
+	   }
 }

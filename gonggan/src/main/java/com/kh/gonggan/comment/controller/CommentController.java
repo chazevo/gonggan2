@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
+import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
 
 @Controller
@@ -27,6 +28,8 @@ public class CommentController {
 	//공통으로 사용하는 것은 common에 넣어놓으면 됨
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private PostService postService;
 	
 	@RequestMapping(value="/colist.do", produces={"application/json"}, method=RequestMethod.GET)
 	@ResponseBody
@@ -43,7 +46,6 @@ public class CommentController {
 			
 			job.put("postId", c.getPost_id() + "");
 			job.put("writerId", c.getWriter_id());
-			System.out.println(c.getWriter_id());
 			try {
 				job.put("commentContent", URLEncoder.encode(
 						(content = c.getComment_content())==null ? " " : content, "UTF-8") + "");
@@ -82,5 +84,41 @@ public class CommentController {
 			str = "삭제 성공";
 		return str;
 	}//코멘트 삭제
+	@RequestMapping(value="/trace.do", produces={"application/json"}, method=RequestMethod.GET)
+	@ResponseBody
+	public String myCommentList(@RequestParam String loginUser){
+		
+		List<Comment> mylist = commentService.myCommentList(loginUser);
+		String postWriter = "";
+		String content;
+		
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		for(Comment m : mylist) {
+			
+			postWriter = postService.selectPostWriter(m.getPost_id());
+			
+			JSONObject job = new JSONObject();
+			
+			job.put("loginUser",m.getWriter_id());
+			job.put("postId", m.getPost_id());
+			job.put("postWriter", postWriter);
+			
+			try {
+				job.put("commentContent", URLEncoder.encode(
+						(content = m.getComment_content())==null ? " " : content, "UTF-8") + "");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//job.put("commentDate", c.getComment_date() + "");
+
+			jarr.add(job);
+		}
+		json.put("list", jarr);
+
+		return json.toJSONString();
+	}
 
 }

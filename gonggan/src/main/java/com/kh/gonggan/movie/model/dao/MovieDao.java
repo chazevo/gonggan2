@@ -20,5 +20,8 @@ public class MovieDao {
 		//return (List<Movie>) sqlSession.selectOne("moviemapper.loginSelect");
 		return null;
 	}
+	   public List<Movie> selectAll_index2(){
+		      return (List<Movie>) sqlSession.selectList("moviemapper.movielist_index2");
+	}
 
 }

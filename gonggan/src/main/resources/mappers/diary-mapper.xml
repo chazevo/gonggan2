@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="diarymapper">
+	<resultMap type="diary" id="diaryResult">
+		<id property="diary_num" column="diary_num"/>
+		<result property="post_id" column="post_id"/>
+		<result property="diary_content" column="diary_content"/>
+	</resultMap>
+	<select id="diarylist_index2" resultMap="diaryResult">
+		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, DIARY_NUM, DIARY_CONTENT FROM (SELECT * FROM DIARY ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+</mapper>

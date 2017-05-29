@@ -10,6 +10,8 @@ public interface PostService {
 	Post postDetail(int post_id);
 
 	List<Post> selectUserAll(String writer_id);
+	String selectPostWriter(int post_id);
+	List<Post> selectAll_index2();
 
 
 }

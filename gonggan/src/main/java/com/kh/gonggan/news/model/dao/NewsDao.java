@@ -20,5 +20,8 @@ public class NewsDao {
 		//return (List<Movie>) sqlSession.selectOne("moviemapper.loginSelect");
 		return null;
 	}
+	public List<News> selectAll_index2(){
+	      return (List<News>) sqlSession.selectList("newsmapper.newslist_index2");
+	   }
 
 }

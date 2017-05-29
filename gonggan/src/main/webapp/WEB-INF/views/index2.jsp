@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.kh.gonggan.member.model.vo.Member"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
+	String currentView = "index2"; //세션저장 (플래그, 값)
+	session.setAttribute("currentView", currentView);
 %>
 <!DOCTYPE html>
 <html>
@@ -19,13 +21,17 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" media="(max-width: 900px)" href="css/css.css" />
 <link rel='stylesheet' href='css/css.css'/> 
+<link href="css/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/index2.js"></script>
+<script src="js/jquery.fancybox.js"></script>
 <script type="text/javascript">
+var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	window.onload = function() {
+		//trace(loginUser);
 		document.getElementById("searchPost").focus();
 	}
 </script>
@@ -97,9 +103,10 @@
 							<col width="5%" />
 						</colgroup>
 							<tr>
-								<th>내 포스트 알람_<font color="#2D86C9"><b>${postAlarmListSize }</b></font></th>
+								<th id="postAlarm">내 포스트 알람_<font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
 								<td><a href="">▶</a></td>
 							</tr>
+							<tbody id="listbody_mytrace"></tbody>
 							<tbody id="listbody_newPost">
 								<tr><td>
 									<a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
@@ -122,17 +129,17 @@
 									<a href=""><font color="#2D86C9">깐깐징어</font></a>
 								</td><td></td></tr>
 							</tbody>
-							<tr><td colspan="2" align="center">
+							<tr><td colspan="2" align="center"  class="title">
 								<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
 							</td></tr>
 							<tr>
-								<td>
+								<td class="title">
 									서로이웃 신청_
 									<font color="#2D86C9">
 										<b id="neighborReqListSize">${neighborReqListSize }</b>
 									</font>
 								</td>
-								<td><a href="">▶</a></td>
+								<td  class="title"><a href="">▶</a></td>
 							</tr>
 							<tbody id="listbody_newNeighbor">
 								<tr>
@@ -153,28 +160,6 @@
 												</c:forEach>
 												</c:if>
 												<td></td>
-												<!-- 
-												<td>	
-													<a href="">백마탄 환자 </a>
-													<a href=""><div class="neighborYN">수락</div></a>
-													<a href=""><div class="neighborYN">거절</div></a>
-												</td>
-												<td class="disapearNeighborYN">	
-													<a href="">백마탄 환자 </a>
-													<a href=""><div class="neighborYN">수락</div></a>
-													<a href=""><div class="neighborYN">거절</div></a>
-												</td>
-												<td class="disapearNeighborYN">	
-													<a href="">백마탄 환자 </a>
-													<a href=""><div class="neighborYN">수락</div></a>
-													<a href=""><div class="neighborYN">거절</div></a>
-												</td>
-												<td class="disapearNeighborYN">	
-													<a href="">백마탄 환자 </a>
-													<a href=""><div class="neighborYN">수락</div></a>
-													<a href=""><div class="neighborYN">거절</div></a>
-												</td>
-												-->
 											</tr>
 										</table>
 									</td>
@@ -198,7 +183,7 @@
 				<!-- <a href="/gonggan/update.do">정보수정</a> -->
 				<hr class="whiteHr">
 				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
-				<a href="">나의 흔적</a> <!-- 내가 쓴 댓글들  -->
+				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do">포스트 쓰기</a>
 				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
@@ -237,7 +222,132 @@
 					</div>
 				</div>
 				<div class="text-center blogHomeContentDiv">
-					<div>
+					<c:set var="musiccount" value="0" />
+               <c:set var="diarycount" value="0" />
+               <c:set var="moviecount" value="0" />
+               <c:set var="newscount" value="0" />
+               <c:set var="reviewcount" value="0" />
+
+               <c:forEach items="${plist}" var="i" begin="0" varStatus="status">
+                  <c:if test="${i.category eq 'diary'}">
+                     <c:set var="diarycount" value="${diarycount + 1}" />
+                     <div>
+                        <table>
+                           <colgroup>
+                              <col width="40%" />
+                              <col width="60%" />
+                           </colgroup>
+                           <tr>
+                              <td colspan="2" class="blogHomeContent"><a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
+                                    ${dlist[diarycount-1].diary_content}</a></td>
+                           </tr>
+                           <tr class="trBottom">
+                              <td><a href="">${i.writer_id}</a></td>
+                              <td class="rightAlign"><label class='checkbox-wrap'>
+                                    <input type='checkbox' id='' onclick='like();'> <i
+                                    class='like-icon'></i>
+                              </label>&nbsp;<a href="">70</a></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </c:if>
+
+                  <c:if test="${i.category eq 'movie'}">
+                     <c:set var="moviecount" value="${moviecount + 1}" />
+                     <div>
+                        <table>
+                           <colgroup>
+                              <col width="40%" />
+                              <col width="60%" />
+                           </colgroup>
+                           <tr>
+                              <td colspan="2" class="blogHomeContent"><a href="">
+                                    ${movielist[moviecount-1].title}</a></td>
+                           </tr>
+                           <tr class="trBottom">
+                              <td><a href="">${i.writer_id}</a></td>
+                              <td class="rightAlign"><label class='checkbox-wrap'>
+                                    <input type='checkbox' id='' onclick='like();'> <i
+                                    class='like-icon'></i>
+                              </label>&nbsp;<a href="">70</a></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </c:if>
+
+                  <c:if test="${i.category eq 'music'}">
+                     <c:set var="musiccount" value="${musiccount + 1}" />
+                     <div>
+                        <table>
+                           <colgroup>
+                              <col width="40%" />
+                              <col width="60%" />
+                           </colgroup>
+                           <tr>
+                              <td colspan="2" class="blogHomeContent"><a href="">
+                                    ${musiclist[musiccount-1].title}</a></td>
+
+                           </tr>
+                           <tr class="trBottom">
+                              <td><a href="">${i.writer_id}</a></td>
+                              <td class="rightAlign"><label class='checkbox-wrap'>
+                                    <input type='checkbox' id='' onclick='like();'> <i
+                                    class='like-icon'></i>
+                              </label>&nbsp;<a href="">70</a></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </c:if>
+
+                  <c:if test="${i.category eq 'news'}">
+                     <c:set var="newscount" value="${newscount + 1}" />
+                     <div>
+                        <table>
+                           <colgroup>
+                              <col width="40%" />
+                              <col width="60%" />
+                           </colgroup>
+                           <tr>
+                              <td colspan="2" class="blogHomeContent"><a href="">
+                                    ${newslist[newscount-1].title}</a></td>
+
+                           </tr>
+                           <tr class="trBottom">
+                              <td><a href="">${i.writer_id}</a></td>
+                              <td class="rightAlign"><label class='checkbox-wrap'>
+                                    <input type='checkbox' id='' onclick='like();'> <i
+                                    class='like-icon'></i>
+                              </label>&nbsp;<a href="">70</a></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </c:if>
+
+                  <c:if test="${i.category eq 'news'}">
+                     <c:set var="reviewcount" value="${reviewcount + 1}" />
+                     <div>
+                        <table>
+                           <colgroup>
+                              <col width="40%" />
+                              <col width="60%" />
+                           </colgroup>
+                           <tr>
+                              <td colspan="2" class="blogHomeContent"><a href="">
+                                    ${reviewlist[reviewcount-1].review_content}</a></td>
+
+                           </tr>
+                           <tr class="trBottom">
+                              <td><a href="">${i.writer_id}</a></td>
+                              <td class="rightAlign"><label class='checkbox-wrap'>
+                                    <input type='checkbox' id='' onclick='like();'> <i
+                                    class='like-icon'></i>
+                              </label>&nbsp;<a href="">70</a></td>
+                           </tr>
+                        </table>
+                     </div>
+                  </c:if>
+               </c:forEach>
+			<!-- <div>
 					<table>
 						<colgroup>
 							<col width="40%" />
@@ -250,9 +360,15 @@
 							<td><a href="">aekwdja</a></td>
 							<td class="rightAlign">
 								<label class='checkbox-wrap'>
-									<input type='checkbox' id='' onclick='like();'>
+									<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 									<i class='like-icon'></i>
-								</label>&nbsp;<a href="">70</a>
+								</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 							</td>
 						</tr>
 					</table>
@@ -270,9 +386,15 @@
 							<td><a href="">dani_jj</a></td>
 							<td class="rightAlign">
 								<label class='checkbox-wrap'>
-									<input type='checkbox' id='' onclick='like();'>
+									<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 									<i class='like-icon'></i>
-								</label>&nbsp;6
+								</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<a href="goodList.do?postId=${postId }"> ${goodCnt }</a>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									${goodCnt }
+								</c:if>
 							</td>
 						</tr>
 					</table>
@@ -290,9 +412,15 @@
 							<td><a href="">부릉부릉달</a></td>
 							<td class="rightAlign">
 								<label class='checkbox-wrap'>
-									<input type='checkbox' id='' onclick='like();'>
+									<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 									<i class='like-icon'></i>
-								</label>&nbsp;70
+								</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 							</td>
 						</tr>
 					</table>
@@ -310,9 +438,15 @@
 							<td><a href="">cocoBabi</a></td>
 							<td class="rightAlign">
 								<label class='checkbox-wrap'>
-									<input type='checkbox' id='' onclick='like();'>
+									<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 									<i class='like-icon'></i>
-								</label>&nbsp;6
+								</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 							</td>
 						</tr>
 					</table>
@@ -330,9 +464,15 @@
 						<td><a href="">hikari_s</a></td>
 						<td class="rightAlign">
 							<label class='checkbox-wrap'>
-								<input type='checkbox' id='' onclick='like();'>
+								<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 								<i class='like-icon'></i>
-							</label>&nbsp;346
+							</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 						</td>
 					</tr>
 					</table>
@@ -350,9 +490,15 @@
 							<td><a href="">guguru</a></td>
 							<td class="rightAlign">
 								<label class='checkbox-wrap'>
-									<input type='checkbox' id='' onclick='like();'>
+									<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 									<i class='like-icon'></i>
-								</label>&nbsp;8
+								</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 							</td>
 						</tr>
 						</table>
@@ -370,9 +516,15 @@
 							<td><a href="">Angelica</a></td>
 							<td class="rightAlign">
 								<label class='checkbox-wrap'>
-									<input type='checkbox' id='' onclick='like();'>
+									<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 									<i class='like-icon'></i>
-								</label>&nbsp;346
+								</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 							</td>
 						</tr>
 						</table>
@@ -390,192 +542,22 @@
 								<td><a href="">zoozo</a></td>
 								<td class="rightAlign">
 									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
+										<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 										<i class='like-icon'></i>
-									</label>&nbsp;8
+									</label>&nbsp;
+								<c:if test="${ goodCnt ne '0' }">
+									<b><a href="goodList.do?postId=${postId }"> ${goodCnt }</a></b>
+								</c:if>
+								<c:if test="${ goodCnt eq '0' }"> 
+									<b>${goodCnt }</b>
+								</c:if>
 								</td>
 							</tr>
 							</table>
 							</div>
-				<!--
-					<table width="100%">
-					<colgroup>
-					<col width="25%" />
-					<col width="25%" />
-					<col width="25%" />
-					<col width="25%" />
-					</colgroup>
-					<tbody id="listbody">
-					<tr>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">서울에서 독일 기자가 타본 기아 K7</a>
-							</td></tr>
-							<tr>
-								<td><a href="">자동차</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;70
-								</td>
-							</tr>
-							</table>
-						</td>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">'저질 체력' 어쩌다 이렇게 되었을까?</a>
-							</td></tr>
-							<tr>
-								<td><a href="">사회</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;6
-								</td>
-							</tr>
-							</table>
-						</td>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">서울에서 독일 기자가 타본 기아 K7</a>
-							</td></tr>
-							<tr>
-								<td><a href="">사회</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;70
-								</td>
-							</tr>
-							</table>
-						</td>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">'저질 체력' 어쩌다 이렇게 되었을까?</a>
-							</td></tr>
-							<tr>
-								<td><a href="">사회</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;6
-								</td>
-							</tr>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">유럽여행에서 유용했던 나만의 팁</a>
-							</td></tr>
-							<tr>
-								<td><a href="">해외여행</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;346
-								</td>
-							</tr>
-							</table>
-						</td>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">편견을 깨는 시도가 돋보이는 영화 '오두막'</a>
-							</td></tr>
-							<tr>
-								<td><a href="">영화</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;8
-								</td>
-							</tr>
-							</table>
-						</td>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">유럽여행에서 유용했던 나만의 팁</a>
-							</td></tr>
-							<tr>
-								<td><a href="">해외여행</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;346
-								</td>
-							</tr>
-							</table>
-						</td>
-						<td>
-							<table>
-							<colgroup>
-								<col width="30%" />
-								<col width="70%" />
-							</colgroup>
-							<tr><td colspan="2" class="blogHomeContent">
-								<a href="">편견을 깨는 시도가 돋보이는 영화 '오두막'</a>
-							</td></tr>
-							<tr>
-								<td><a href="">영화</a></td>
-								<td class="rightAlign">
-									<label class='checkbox-wrap'>
-										<input type='checkbox' id='' onclick='like();'>
-										<i class='like-icon'></i>
-									</label>&nbsp;8
-								</td>
-							</tr>
-							</table>
-						</td>
-					</tr>
-					</tbody>
-					</table>
-					-->
-				</div>
+				</div> -->
 			</div>
 		</section>
 	</div>
-</body>
+
 </html>

@@ -173,6 +173,9 @@
 </script>
 </head>
 <body onload='run();' id="aa">
+	<c:if test="${empty param || param.writer_id ne sessionScope.loginUser.getMember_id() }">
+		<jsp:forward page="error.jsp"></jsp:forward>
+	</c:if>
 	<div class="divCenter">
 		<!--<div class="container-fluid">--><div>
 		<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
@@ -243,7 +246,7 @@
 				</button>
 				<a href="#" >
 					<img src="images/default.png" height="40px"
-								class="img-circle">&nbsp;chazevo 님 </a>
+								class="img-circle">&nbsp;${param.writer_id } 님 </a>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<ul class="nav navbar-nav navbar-right">

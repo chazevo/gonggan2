@@ -19,9 +19,10 @@
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>\
 <script src="js/jquery.fancybox.js"></script>
 <script src="js/mypage.js"></script>
+<script type="text/javascript" src="js/index2.js"></script>
 <script type="text/javascript">
 
 	window.onload = function() {
@@ -64,7 +65,7 @@
 			<tr id="center_align">
 				<td>
 					<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-					<a href="#">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+					<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 					<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 					<a href="#">로그아웃</a> 
 					<div id="dansun_line"></div>
@@ -103,7 +104,7 @@
 			<div><span>${sessionScope.loginUser.getMember_id()}</span> 님</div>
 			<div class="right">
 				<a href="uploadform.do" class="transparentFont">포스트쓰기</a>
-				<a href="myhome.do">
+				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">
 					<div class="goToMyBlog">내 블로그</div>
 				</a>
 				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
@@ -370,40 +371,24 @@
 								</colgroup>
 								<tr><td colspan="3">서로이웃신청</td></tr>
 								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
+								<c:if test="${!empty (neighborReqList) }">
+								<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
+								
+								<td>
+									<a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+								</td>
+								<td>
+									<a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+										<div class="neighborYN">수락</div>
+									</a>
+								</td>
+								<td>
+									<a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+										<div class="neighborYN">거절</div>
+									</a>
+								</td>
+								</c:forEach>
+								</c:if>
 							</table>
 						</td>
 						<td class="td">

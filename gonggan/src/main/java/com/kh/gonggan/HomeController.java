@@ -84,10 +84,15 @@ public class HomeController {
 	public ModelAndView mypage(Locale locale, Model model,String writer_id ,  ModelAndView mv) {
 		
 		logger.info("Welcome mypage! ");
+		System.out.println(writer_id);
 		List<Comment> mylist = commentService.myCommentList(writer_id);
-	
+		List<Member> neighborReqList = memberService.checkNeig(writer_id);
+		for(Member m :neighborReqList){
+			System.out.println("member_id"+m.getMember_id());
+		}
 		mv.addObject("mylist",mylist);
 		mv.addObject("writer_id", writer_id);
+		mv.addObject("neighborReqList", neighborReqList);
 		mv.setViewName("mypage");
 		
 

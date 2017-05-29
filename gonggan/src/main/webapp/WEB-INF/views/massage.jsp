@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.kh.gonggan.member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="com.kh.gonggan.member.model.vo.Member, com.kh.gonggan.blog.model.vo.Blog" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
@@ -12,6 +12,7 @@
 <script type="text/javascript">
 	
 	var loginUser =  "${sessionScope.loginUser.getMember_id()}";
+	var writer_id = "${blog.getWriter_id()}";
 	
 	window.onload = function() {
 		document.getElementById("msg").focus();
@@ -29,7 +30,7 @@
 </head>
 <body class="massage">
 <div class="searchPost">
-	<p>GONGAN_JJ</p><a href="javascript:popupClose();"><img class="right" src="images/massage_x_icon.png" ></a>
+	<p>${param.memberId2}</p><a href="javascript:popupClose();"><img class="right" src="images/massage_x_icon.png" ></a>
 	<hr>
 	<div id="chatArea">
 	
@@ -44,10 +45,6 @@
 			
 			</c:forEach>
 		</c:if>
-		
-		<!-- <div class="sender">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div>
-		<div class="receiver">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div>
-		<div class="sender">안녕하니? 쪽지를 보낸당 뭐하고있닝? 쪽지좀 읽어주련?</div> -->
 	</div>
 	<hr>
 	<div class="div4">

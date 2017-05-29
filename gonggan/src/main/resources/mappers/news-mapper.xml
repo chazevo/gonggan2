@@ -11,7 +11,20 @@
 		<result property="title" column="title"/>
 		<result property="news_content" column="news_content"/>
 	</resultMap>
+	<select id="newslist" resultMap="newsResult" parameterType="Map">
+	
+	select rownum, subquery.* from (select * from news
+				order by 5 desc) subquery "
+				where rownum between #{rownum} and #{rownum2}
+	</select>
 	<select id="newslist_index2" resultMap="newsResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, NEWS_NUM, TITLE FROM (SELECT * FROM NEWS ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+		SELECT *
+		FROM ( SELECT ROWNUM AS RNUM, POST_ID, NEWS_NUM, TITLE
+		FROM (SELECT * FROM NEWS ORDER BY POST_ID DESC)  )
+		<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+	
+	<select id="newsdetail" resultMap="news" parameterType="int">
+	select * from news where post_id = #{postId}
 	</select>
 </mapper>

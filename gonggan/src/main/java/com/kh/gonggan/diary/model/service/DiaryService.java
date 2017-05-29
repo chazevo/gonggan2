@@ -6,4 +6,5 @@ import com.kh.gonggan.diary.model.vo.Diary;
 
 public interface DiaryService {
    List<Diary> selectAll_index2();
+   Diary diaryDetail(int postId);
 }

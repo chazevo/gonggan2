@@ -8,7 +8,17 @@
 		<result property="review_num" column="review_num"/>
 		<result property="review_content" column="reivew_content"/>
 	</resultMap>
+	<select id="reviewlist" resultMap="reviewResult" parameterType="Map">
+	
+	select rownum, subquery.* from (select * from review
+				order by 5 desc) subquery "
+				where rownum between #{rownum} and #{rownum2}
+	</select>
 	<select id="reviewlist_index2" resultMap="reviewResult">
 		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, REVIEW_NUM, REVIEW_CONTENT FROM (SELECT * FROM REVIEW ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
+	</select>
+	
+	<select id="reviewdetail" resultMap="review" parameterType="int">
+	select * from review where post_id = #{postId}
 	</select>
 </mapper>

@@ -58,7 +58,8 @@
 	</select>
 	<select id="plist_index2" resultMap="postResult">
    SELECT * FROM ( SELECT ROWNUM AS RNUM, GOOD_COUNT, POST_ID, CATEGORY, WRITER_ID, POST_DATE
-   FROM (SELECT * FROM POST ORDER BY POST_DATE DESC) )<![CDATA[ WHERE RNUM<=8 ]]>
+   FROM (SELECT * FROM POST ORDER BY POST_ID DESC) )
+   <!-- <![CDATA[ WHERE RNUM<=8 ]]> -->
    </select>
 
 </mapper>

@@ -36,6 +36,6 @@ public class NewsDao {
 	}
 
 	public News newsDetail(int postId) {
-		return (News) sqlSession.selectList("newsmapper.newsdetail", postId);
+		return (News) sqlSession.selectOne("newsmapper.newsdetail", postId);
 	}
 }

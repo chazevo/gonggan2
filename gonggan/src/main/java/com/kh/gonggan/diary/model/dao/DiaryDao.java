@@ -20,6 +20,6 @@ public class DiaryDao {
       return (List<Diary>) sqlSession.selectList("diarymapper.diarylist_index2");
    }
    public Diary diaryDetail(int postId) {
-	   return (Diary) sqlSession.selectList("diarymapper.diarydetail");
+	   return (Diary) sqlSession.selectOne("diarymapper.diarydetail", postId);
    }
 }

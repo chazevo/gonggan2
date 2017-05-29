@@ -32,7 +32,7 @@ public class MusicDao {
 	
 
 	public Music musicDetail(int postId) {
-		return (Music) sqlSession.selectList("musicmapper.musicdetail", postId);
+		return (Music) sqlSession.selectOne("musicmapper.musicdetail", postId);
 	}
 	
 }

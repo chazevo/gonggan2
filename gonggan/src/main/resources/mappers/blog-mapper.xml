@@ -33,4 +33,5 @@
 		insert into visitor values(#{visitor_id}, to_number(#{blog_id}), default)
 	</insert>
 	
+	
 </mapper>

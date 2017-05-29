@@ -184,7 +184,7 @@
 								<tr>
 									<td>핸드폰 번호</td>
 									<td>
-										<input type="text" id="phone" value="${sessionScope.loginUser.getPhone()}" readonly>
+										<input type="text" id="phone" value="${sessionScope.loginUser.getMember_phone()}" readonly>
 									</td>
 								</tr>
 								<tr>

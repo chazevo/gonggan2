@@ -105,7 +105,9 @@ public class HomeController {
       List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
       List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
       List<Message> lastMessage = messageService.lastMessage(writer_id);
-
+      for(int i = 0; i< lastMessage.size(); i++){
+    	  System.out.println(lastMessage.get(i));
+      }
 
       mv.addObject("mylist",mylist);
       mv.addObject("writer_id", writer_id);

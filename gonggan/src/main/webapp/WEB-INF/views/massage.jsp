@@ -29,7 +29,7 @@
 </head>
 <body class="massage">
 <div class="searchPost">
-	<p>GONGAN_JJ</p><a href="javascript:popupClose();"><img class="right" src="images/massage_x_icon.png" ></a>
+	<p>${param.memberId2 }</p><a href="javascript:popupClose();"><img class="right" src="images/massage_x_icon.png" ></a>
 	<hr>
 	<div id="chatArea">
 	

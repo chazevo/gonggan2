@@ -214,8 +214,7 @@
                   <table width="100%;">
                      <tr>
                         <td colspan="3">
-                           <a href="">
-                              받은쪽지함 <img style="display:inline-block" src="images/chat_icon.png"  class="smallIcon" >
+                           <a href=""> 쪽지함 <img style="display:inline-block" src="images/chat_icon.png"  class="smallIcon" >
                            </a>&nbsp; &nbsp;
                            
                         </td>
@@ -224,11 +223,11 @@
                            <c:forEach items="${ lastMessage}" var="i"  begin ="0">
                               <tr>
                                  <td width="15%"><font>
-                                    <c:if test="${i.sender eq sessionScope.loginUser.getMember_id()} ">
-                                    <a href="">${ i.receiver}</a>
+                                    <c:if test="${sessionScope.loginUser.getMember_id() eq i.sender}">
+                                    <a href="selectBlog.do?writer_id=${i.receiver}">${i.receiver}</a>
                                     </c:if>
-                                       <c:if test="${i.receiver eq sessionScope.loginUser.getMember_id()} ">
-                                    <a href="">${ i.sender}</a>
+                                       <c:if test="${sessionScope.loginUser.getMember_id() eq i.receiver}">
+                                    <a href="selectBlog.do?writer_id=${i.sender}">${i.sender}</a>
                                     </c:if>
                                  </font></td>
                                  <td width="70%">
@@ -328,7 +327,9 @@
                         <c:if test="${!empty neighborlist }">
                            <c:forEach items="${ neighborlist}" var="i"  begin ="0" >
                            <tr>
-                              <td>   ${i.member_id }</td><td><img src="images/chat_icon.png" width="15px" ></td><td><a href=""><div class="neighborYN">취소</div></a></td> <!-- class="smallIcon" -->
+                              <td> ${i.member_id }</td>
+                              <td><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2= ${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
+                              <td><a href=""><div class="neighborYN">취소</div></a></td>
                            </tr>
                            </c:forEach>
                         </c:if>

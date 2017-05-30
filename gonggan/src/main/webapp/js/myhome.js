@@ -64,7 +64,9 @@ function requestList() {
 	$.ajax({
 				url: "/gonggan/postlist.do",
 				//url: "/gonggan/userpostlist.do",
-				data: { writer_id : writer_id },
+				data: { writer_id : writer_id,
+					rownum: 1, rownum2: 1
+				},
 				success: function(data) {
 	    	  if (document.getElementById("calendar").checked == true )
 	    		  callbackList(data);

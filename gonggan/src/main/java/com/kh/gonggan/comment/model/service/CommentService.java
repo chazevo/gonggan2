@@ -20,6 +20,11 @@ public interface CommentService {
 	List<Comment> myCommentList(String loginUser);
 
 	List<Comment> commentCheckAlram(String member_id);
+	
+	List<Comment> CommentMyList(String writer_id);
+
+	List<Comment> commentNeigList(String writer_id);
+
 
 
 }

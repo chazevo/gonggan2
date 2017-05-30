@@ -9,7 +9,7 @@ import com.kh.gonggan.comment.model.dao.CommentDao;
 import com.kh.gonggan.comment.model.vo.Comment;
 
 @Service("commentService")
-public class CommentServiceImpl implements CommentService{
+public  class CommentServiceImpl implements CommentService{
 	//현재 클래스를 스프링에서 관리하는 service bean으로 등록
 	@Autowired
 	CommentDao commentDao; //객체를 스프링에서 생성하여 주입시킴
@@ -43,13 +43,19 @@ public class CommentServiceImpl implements CommentService{
 		return commentDao.commentCheckAlram(member_id);
 	}
 	
-	
-	
 	@Override
 	public List<Comment> myCommentList(String loginUser){
 		return  commentDao.myCommentList(loginUser);
 	}
 	
+	@Override
+	public List<Comment> commentNeigList(String writer_id){
+		return commentDao.commentNeigList(writer_id);
+	}
+	@Override
+	public List<Comment> CommentMyList(String writer_id){
+		return  commentDao.CommentMyList(writer_id);
+	}
 
 	
 }

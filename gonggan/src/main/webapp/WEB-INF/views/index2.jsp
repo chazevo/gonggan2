@@ -206,7 +206,7 @@ window.onload = function() {
 				<a href="/gonggan/logOut.do">로그아웃</a>
 				<!-- <a href="/gonggan/update.do">정보수정</a> -->
 				<hr class="whiteHr">
-				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
+				<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">내 블로그 소식</a></b>
 				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do">포스트 쓰기</a>

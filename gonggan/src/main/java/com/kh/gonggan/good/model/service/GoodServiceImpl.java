@@ -44,6 +44,10 @@ public class GoodServiceImpl implements GoodService{
 	@Override
 	public List<Good> checkGoodAlram(String member_id){
 		return goodDao.checkGoodAlram(member_id);
+	}	
+	@Override
+	public List<Good> goodMyList(String writer_id){
+		return goodDao.goodMyList(writer_id);
 	}
 
 }

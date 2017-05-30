@@ -68,4 +68,8 @@ public class GoodDao {
 		return (List<Good>)sqlSession.selectList("goodmapper.gcheckalram",member_id);
 	}
 
+	public List<Good> goodMyList(String writer_id) {
+		return (List<Good>)sqlSession.selectList("goodmapper.goodMyList",writer_id);
+	}
+
 }

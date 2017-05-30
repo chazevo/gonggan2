@@ -53,7 +53,9 @@
 	</tr> 
 	<tr>
 		<td id="photo" colspan="2">
+			<c:if test='${postDetail.getPhoto_path() ne null}'>
 			<img alt="" src="uploadImages/${postDetail.getPhoto_path()}" width="100%">
+			</c:if>
 			<div>
 				<c:if test='${postDetail.getCategory() eq "diary"}'>
 					${postDetail.getDiary_content()}

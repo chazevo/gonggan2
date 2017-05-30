@@ -69,7 +69,7 @@ function callbackList(data) {
 	var div;
 	var table, tr, td;
 
-	var postId, content;
+	var postId, content, writerId;
 	
 	for (var i in jsonArr.list) {
 		
@@ -78,6 +78,7 @@ function callbackList(data) {
 		
 		postId = jsonArr.list[i].postId;
 		content = reqPostDetail(postId, jsonArr.list[i].category);
+		writerId = jsonArr.list[i].writerId;
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
@@ -85,7 +86,7 @@ function callbackList(data) {
 		td.class = "blogHomeContent";
 		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
 			+ "postId=" + postId
-			+ "&writerId=" + jsonArr.list[i].writerId + "'>"
+			+ "&writerId=" + writerId + "'>"
 			+ decodeURIComponent(content.replace(Ca, " "))
 			+ "</a>"
 		tr.appendChild(td);
@@ -94,16 +95,17 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		tr.class = "trBottom";
 		td = document.createElement("td");
-		td.innerHTML = "<a href='selectBlog.do?" +  + "'>"
-			+ jsonArr.list[i].writerId + "</a>";
+		td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
+			+ writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");
 		td.class = "rightAlign";
 		td.innerHTML = "<label class='checkbox-wrap'>"
 			+ "<input type='checkbox' id='' "
 			+ "onclick='like(this, loginUser, " + postId + ");'>"
-			+ "<i class='like-icon'></i>"
-			+ "</label>&nbsp;<a href=''>" + jsonArr.list[i].goodCnt + "</a>"
+			+ "<i class='like-icon'></i></label>&nbsp;"
+			+ "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+			+ jsonArr.list[i].goodCnt + "</a>"
 		tr.appendChild(td);
 		table.appendChild(tr);
 		

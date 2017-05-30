@@ -30,7 +30,7 @@ session.setAttribute("currentView", currentView);
 <script src="js/jquery.fancybox.js"></script>
 <script type="text/javascript">
 var loginUser = '${sessionScope.loginUser.getMember_id()}';
-var maxRownum = ${plistSize};
+var maxRownum = '${plistSize}';
 var initPosition;
 var prevPosition;
 
@@ -246,7 +246,7 @@ window.onload = function() {
 				<a href="/gonggan/logOut.do">로그아웃</a>
 				<!-- <a href="/gonggan/update.do">정보수정</a> -->
 				<hr class="whiteHr">
-				<b><a href="/gonggan/mypage.do">내 블로그 소식</a></b>
+				<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">내 블로그 소식</a></b>
 				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="neighborlist.do?loginUser=${sessionScope.loginUser.getMember_id() }">이웃 블로그</a><!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do">포스트 쓰기</a>

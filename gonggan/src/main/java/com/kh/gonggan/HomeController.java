@@ -31,148 +31,159 @@ import com.kh.gonggan.post.model.vo.Post;
  */
 @Controller
 public class HomeController {
-	@Autowired
-	   private BlogService blogService;
-	   @Autowired
-	   private MemberService memberService;
-	   @Autowired
-	   private PostService postService;
-		@Autowired
-		private CommentService commentService;
-		@Autowired
-		private GoodService goodService;
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "start.do", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! ");
-		return "home";
-	}
-	
-	@RequestMapping(value = "index2.do", method = RequestMethod.GET)
-	   public ModelAndView index2(ModelAndView mv) {
-	      logger.info("Welcome index2! ");
-	      List<Post> plist = postService.selectAll_index2();
-	      mv.addObject("plist",plist);
-	      mv.setViewName("index2");
-	      return mv;
-	   }
-	
-	@RequestMapping(value = "findIdPwd.do", method = RequestMethod.GET)
-	public String findIdPwd(Locale locale, Model model) {
-		logger.info("Welcome findIdPwd! ");
-		return "findIdPwd";
-	}
-	
-	@RequestMapping(value = "controll.do", method = RequestMethod.GET)
-	public String controll(Locale locale, Model model) {
-		logger.info("Welcome controll! ");
-		return "controll";
-	}
-	
-	@RequestMapping("myhome.do")
-	   public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
-	      Member loginUser  = memberService.loginCheck(member);
-	  		
-	      String wr = loginUser.getMember_id();
-	      System.out.println(wr);
-	      mv.addObject("writer_id", wr);
-	      mv.setViewName("myhome");
-	      return mv;
-	   }
-	
-	@RequestMapping("mypage.do")
-	public ModelAndView mypage(Locale locale, Model model,String writer_id ,  ModelAndView mv) {
-		
-		logger.info("Welcome mypage! ");
-		System.out.println(writer_id);
-		List<Comment> mylist = commentService.myCommentList(writer_id);
-		List<Member> neighborReqList = memberService.checkNeig(writer_id);
-		List<Good> goodMyList = goodService.goodMyList(writer_id);
-		List<Comment> commentMyList = commentService.CommentMyList(writer_id);
-		List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
-		for(Member m :neighborReqList){
-			System.out.println("member_id"+m.getMember_id());
-		}
-		mv.addObject("mylist",mylist);
-		mv.addObject("writer_id", writer_id);
-		mv.addObject("neighborReqList", neighborReqList);
-		mv.addObject("goodMyList", goodMyList);
-		mv.addObject("commentMyList", commentMyList);
-		mv.addObject("commentNeigList", commentNeigList);
-		mv.setViewName("mypage");
-		
+   @Autowired
+      private BlogService blogService;
+      @Autowired
+      private MemberService memberService;
+      @Autowired
+      private PostService postService;
+      @Autowired
+      private CommentService commentService;
+      @Autowired
+      private GoodService goodService;
+   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+   
+   /**
+    * Simply selects the home view to render by returning its name.
+    */
+   @RequestMapping(value = "start.do", method = RequestMethod.GET)
+   public String home(Locale locale, Model model) {
+      logger.info("Welcome home! ");
+      return "home";
+   }
+   
+   @RequestMapping(value = "index2.do", method = RequestMethod.GET)
+      public ModelAndView index2(ModelAndView mv) {
+         logger.info("Welcome index2! ");
+         List<Post> plist = postService.selectAll_index2();
+         mv.addObject("plist",plist);
+         mv.setViewName("index2");
+         return mv;
+      }
+   
+   @RequestMapping(value = "findIdPwd.do", method = RequestMethod.GET)
+   public String findIdPwd(Locale locale, Model model) {
+      logger.info("Welcome findIdPwd! ");
+      return "findIdPwd";
+   }
+   
+   @RequestMapping(value = "controll.do", method = RequestMethod.GET)
+   public String controll(Locale locale, Model model) {
+      logger.info("Welcome controll! ");
+      return "controll";
+   }
+   
+   @RequestMapping("myhome.do")
+      public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
+         Member loginUser  = memberService.loginCheck(member);
+           
+         String wr = loginUser.getMember_id();
+         System.out.println(wr);
+         mv.addObject("writer_id", wr);
+         mv.setViewName("myhome");
+         return mv;
+      }
+   
+   @RequestMapping("mypage.do")
+   public ModelAndView mypage(Locale locale, Model model,String writer_id ,  ModelAndView mv) {
+      
+      logger.info("Welcome mypage! ");
+      System.out.println(writer_id);
+      List<Comment> mylist = commentService.myCommentList(writer_id);
+      List<Member> neighborReqList = memberService.checkNeig(writer_id);
+      List<Good> goodMyList = goodService.goodMyList(writer_id);
+      List<Comment> commentMyList = commentService.CommentMyList(writer_id);
+      List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
+      for(Member m :neighborReqList){
+         System.out.println("member_id"+m.getMember_id());
+      }
+      mv.addObject("mylist",mylist);
+      mv.addObject("writer_id", writer_id);
+      mv.addObject("neighborReqList", neighborReqList);
+      mv.addObject("goodMyList", goodMyList);
+      mv.addObject("commentMyList", commentMyList);
+      mv.addObject("commentNeigList", commentNeigList);
+      mv.setViewName("mypage");
+      
 
-		return mv;
-	}
+      return mv;
+   }
 
-	@RequestMapping(value = "uploadform.do", method = RequestMethod.GET)
-	public String uploadform(Locale locale, Model model) {
-		logger.info("Welcome uploadform! ");
-		return "uploadform";
-	}
+   @RequestMapping(value = "uploadform.do", method = RequestMethod.GET)
+   public String uploadform(Locale locale, Model model) {
+      logger.info("Welcome uploadform! ");
+      return "uploadform";
+   }
 
-	@RequestMapping(value = "uploadHtml.do", method = RequestMethod.GET)
-	public String uploadHtml(Locale locale, Model model) {
-		logger.info("Welcome uploadHtml! ");
-		return "uploadHtml";
-	}
-	
-	@RequestMapping(value = "join.do", method = RequestMethod.GET)
-	public String join(Locale locale, Model model) {
-		logger.info("Welcome join! ");
-		return "join";
-	}
-	@RequestMapping(value = "test.do", method = RequestMethod.GET)
-	public String test(Locale locale, Model model) {
-		logger.info("Welcome test! ");
-		return "test";
-	}
-	@RequestMapping(value = "massage.do", method = RequestMethod.GET)
-	public String massage(Locale locale, Model model) {
-		logger.info("Welcome massage! ");
-		return "massage";
-	}
+   @RequestMapping(value = "uploadHtml.do", method = RequestMethod.GET)
+   public String uploadHtml(Locale locale, Model model) {
+      logger.info("Welcome uploadHtml! ");
+      return "uploadHtml";
+   }
+   
+   @RequestMapping(value = "join.do", method = RequestMethod.GET)
+   public String join(Locale locale, Model model) {
+      logger.info("Welcome join! ");
+      return "join";
+   }
+   @RequestMapping(value = "test.do", method = RequestMethod.GET)
+   public String test(Locale locale, Model model) {
+      logger.info("Welcome test! ");
+      return "test";
+   }
+   @RequestMapping(value = "massage.do", method = RequestMethod.GET)
+   public String massage(Locale locale, Model model) {
+      logger.info("Welcome massage! ");
+      return "massage";
+   }
 
-	@RequestMapping(value = "postDetail.do", method = RequestMethod.GET)
-	public String postDetail(Locale locale, Model model) {
-		logger.info("Welcome postDetail! ");
-		return "postDetail";
-	}
+   @RequestMapping(value = "postDetail.do", method = RequestMethod.GET)
+   public String postDetail(Locale locale, Model model) {
+      logger.info("Welcome postDetail! ");
+      return "postDetail";
+   }
 
-	@RequestMapping(value = "likepage.do", method = RequestMethod.GET)
-	public String likepage(Locale locale, Model model) {
-		logger.info("Welcome likepage! ");
-		return "likepage";
-	}
-	
-	@RequestMapping(value = "searchAll.do", method = RequestMethod.GET)
-	public String searchAll(Locale locale, Model model) {
-		logger.info("Welcome searchAll! ");
-		return "searchAll";
-	}
-	@RequestMapping(value = "kakao.do", method = RequestMethod.GET)
-	   public String kakao(Locale locale, Model model) {
-	      logger.info("Welcome kakao! ");
-	      return "kakaoLogin";
-	   }
-	   @RequestMapping(value = "redirect.do", method = RequestMethod.GET)
-	   public String redirect(Locale locale, Model model) {
-	      logger.info("Welcome redirect! ");
-	      return "redirect";
-	   }
-	   @RequestMapping(value = "facebook.do", method = RequestMethod.GET)
-	   public String facebook(Locale locale, Model model) {
-	      logger.info("Welcome facebook! ");
-	      return "facebookLogin";
-	   }
+   @RequestMapping(value = "likepage.do", method = RequestMethod.GET)
+   public String likepage(Locale locale, Model model) {
+      logger.info("Welcome likepage! ");
+      return "likepage";
+   }
+   
+   @RequestMapping(value = "searchAll.do", method = RequestMethod.GET)
+   public String searchAll(Locale locale, Model model) {
+      logger.info("Welcome searchAll! ");
+      return "searchAll";
+   }
+   @RequestMapping(value = "kakao.do", method = RequestMethod.GET)
+      public String kakao(Locale locale, Model model) {
+         logger.info("Welcome kakao! ");
+         return "kakaoLogin";
+      }
+      @RequestMapping(value = "redirect.do", method = RequestMethod.GET)
+      public String redirect(Locale locale, Model model) {
+         logger.info("Welcome redirect! ");
+         return "redirect";
+      }
+      @RequestMapping(value = "facebook.do", method = RequestMethod.GET)
+      public String facebook(Locale locale, Model model) {
+         logger.info("Welcome facebook! ");
+         return "facebookLogin";
+      }
 
-	   @RequestMapping(value = "map.do", method = RequestMethod.GET)
-	   public String map(Locale locale, Model model) {
-	      logger.info("Welcome map! ");
-	      return "map";
-	   }
+      @RequestMapping(value = "map.do", method = RequestMethod.GET)
+      public String map(Locale locale, Model model) {
+         logger.info("Welcome map! ");
+         return "map";
+      }
+  
+      @RequestMapping(value="neighborlist.do")
+      public ModelAndView neighborlist(ModelAndView mv , @RequestParam String loginUser){
+         logger.info("Neighbor List! ");
+         List<Neighbor> neighborlist = neighborService.selectNeighborList(loginUser);
+        System.out.println(loginUser);
+         System.out.println(neighborlist);
+         mv.setViewName("neighborList");
+         mv.addObject("neighborlist",neighborlist);
+         return mv;
+      }
 }

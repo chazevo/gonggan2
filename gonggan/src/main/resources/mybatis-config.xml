@@ -17,6 +17,7 @@
       	<typeAlias type="com.kh.gonggan.music.model.vo.Music" alias="music"/>
       	<typeAlias type="com.kh.gonggan.news.model.vo.News" alias="news"/>
       	<typeAlias type="com.kh.gonggan.review.model.vo.Review" alias="review"/>
+      	<typeAlias type="com.kh.gonggan.neighbor.model.vo.Neighbor" alias="neighbor"/>
 	</typeAliases>
 
  <!-- Sql Mapper 설정 -->
@@ -32,6 +33,6 @@
        <mapper resource="mappers/music-mapper.xml"/>
        <mapper resource="mappers/news-mapper.xml"/>
        <mapper resource="mappers/review-mapper.xml"/>
-	 </mappers>
-	 
+       <mapper resource="mappers/neighbor-mapper.xml"/>
+	 </mappers>	 
 </configuration>

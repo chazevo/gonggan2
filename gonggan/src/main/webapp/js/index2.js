@@ -61,6 +61,42 @@ function sorting() {
 	}
 }
 
+function neighborList(loginUser){
+	$.ajax({
+		url: "neighborlist.do",
+		data: { 
+			loginUser: loginUser},
+		success: function(data){
+			callbackNeighborList(data);			
+		},
+			error: function(data,status,error){
+		         console.log("error : " + error);
+		} 
+	});
+}
+
+function callbackNeighborList(data){
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+	
+	var div;
+	var table, tr, td;
+	
+	for(var i in jsonArr.list){
+		var memberId = jsonArr.list[i].memberId;
+		tr=document.createElement( 'tr' );
+		td=document.createElement( 'td' );
+		var a = document.createElement( 'a' );
+		var aText = document.createTextNode(memberId);
+		
+		a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
+		tr.appendChild(td);
+		td.appendChild(a);
+		a.appendChild( aText );
+		document.getElementById("listbody_newPost").appendChild( tr );
+	}
+}
+
 function callbackList(data) {
 	
 	var jsonObj = JSON.stringify(data);

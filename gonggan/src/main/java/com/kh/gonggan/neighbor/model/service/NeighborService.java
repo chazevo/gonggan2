@@ -5,5 +5,7 @@ import java.util.List;
 import com.kh.gonggan.neighbor.model.vo.Neighbor;
 
 public interface NeighborService {
-	List<Neighbor> selectNeighborList(String loggedinUser);
+	List<Neighbor> selectNeighborList(String loginUser);
+
+	List<Neighbor> NeighborList();
 }

@@ -9,8 +9,9 @@
 </head>
 <body>
 	<table>
-	<c:forEach items="${neighborlist}" var="i" begin="0">
-	<tr><td>${i.sender}</td><td>asdf</td></tr>
+	<c:forEach items="${neighborlist}" var="i" begin="0" varStatus="status">
+	<tr><td></td><td>아이디</td><td>이웃 맺은 날짜</td></tr>
+	<tr><td>${status.count}</td><td><a href="selectBlog.do?writer_id=${i.sender}">${i.sender }</a></td><td>${i.accept_date}</td></tr>
 	</c:forEach>
 	</table>
 </body>

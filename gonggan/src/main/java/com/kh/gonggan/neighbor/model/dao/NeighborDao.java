@@ -15,9 +15,13 @@ public class NeighborDao {
 	
 	public NeighborDao(){}
 	
-	public List<Neighbor> selectNeighborList(String loggedinUser){
+	public List<Neighbor> selectNeighborList(String loginUser){
 		System.out.println("neighbordao");
-		return (List<Neighbor>) sqlSession.selectList("neighbormapper.neighborBlogList", loggedinUser);
+		return (List<Neighbor>) sqlSession.selectList("neighbormapper.neighborBlogList", loginUser);
+	}
+
+	public List<Neighbor> selectNeighborAll() {
+		return (List<Neighbor>) sqlSession.selectList("neighbormapper.neighborList");
 	}
 	
 }

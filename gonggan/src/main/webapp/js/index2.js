@@ -28,6 +28,38 @@ function requestList(val) {
    });
 }
 
+function requestLikeList(val) {
+	   
+	   var rownum2;
+	   
+	   if (maxRownum - val < 8)
+	      var rownum2 = maxRownum;
+	   else rownum2 = rownum + 7;
+	   
+	   $.ajax({
+	      url: "plikelist.do",
+	      data: { rownum: rownum,
+	    	  rownum2: rownum2 },
+	      success: function(data) {
+	         rownum = rownum2 + 1;
+	         callbackList(data);
+	      },
+	      error: function(data,status,error){
+	         console.log("error : " + error);
+	      }
+	   });
+}
+
+function sorting() {
+	if ($("#select").val() == "like") {
+		$("#blogHomeContentDiv").html("");
+		requestLikeList(rownum = 1);
+	}
+	else if ($("#select").val() == "date") {
+		$("#blogHomeContentDiv").html("");
+		requestList(rownum = 1);
+	}
+}
 
 function callbackList(data) {
 	
@@ -39,15 +71,13 @@ function callbackList(data) {
 
 	var postId, content;
 	
-	document.getElementById("blogHomeContentDiv").innerHTML = "";
-	
 	for (var i in jsonArr.list) {
 		
 		div = document.createElement("div");
 		table = document.createElement("table");
 		
 		postId = jsonArr.list[i].postId;
-		var content = reqPostDetail(postId, jsonArr.list[i].category);
+		content = reqPostDetail(postId, jsonArr.list[i].category);
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
@@ -64,14 +94,16 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		tr.class = "trBottom";
 		td = document.createElement("td");
-		td.innerHTML = "<a href=''>" + jsonArr.list[i].writerId + "</a>";
+		td.innerHTML = "<a href='selectBlog.do?" +  + "'>"
+			+ jsonArr.list[i].writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");
 		td.class = "rightAlign";
 		td.innerHTML = "<label class='checkbox-wrap'>"
-			+ "<input type='checkbox' id='' onclick='like();'>"
+			+ "<input type='checkbox' id='' "
+			+ "onclick='like(this, loginUser, " + postId + ");'>"
 			+ "<i class='like-icon'></i>"
-			+ "</label>&nbsp;<a href=''>70</a>"
+			+ "</label>&nbsp;<a href=''>" + jsonArr.list[i].goodCnt + "</a>"
 		tr.appendChild(td);
 		table.appendChild(tr);
 		
@@ -79,6 +111,13 @@ function callbackList(data) {
 		
 		document.getElementById("blogHomeContentDiv").appendChild(div);
 	}
+	
+	if (rownum >= maxRownum) {
+		$("#div_Loading").html("더이상 포스트가 존재하지 않습니다.");
+		$("#div_Loading").show();
+		return;
+	}
+	$("#div_Loading").fadeOut(100);
 }
 
 function reqPostDetail(postId, category) {

@@ -137,6 +137,18 @@
 		NEIGHBOR
 		where receiver =#{writer_id} and CHECK_YN='Y' and extract(month	from accept_date )= extract(month from sysdate))
 	</select><!-- 이번달 추가 된 이웃 -->
+	
+	<select id="msgmember" parameterType="member"  resultMap="memberResult">
+      select distinct member_id from member
+      where member_id in (select sender from message where receiver = #{writer_id})
+      or member_id in (select receiver from message where sender = #{writer_id})
+   </select>
+   
+   <select id="neighborBlogList" resultMap="memberResult" parameterType="String">
+      select * from member where member_id in(   SELECT sender FROM NEIGHBOR
+      WHERE CHECK_YN='Y' AND RECEIVER =#{member_id} ) or member_id  in(   SELECT receiver FROM NEIGHBOR
+      WHERE CHECK_YN='Y' AND SENDER = #{member_id})
+   </select>
 		
 	<select id="naverIdCheck" parameterType="member" resultMap="memberResult">
       SELECT * FROM MEMBER

@@ -16,5 +16,9 @@ public class DiaryServiceImpl implements DiaryService{
    public List<Diary> selectAll_index2(){
       return diaryDao.selectAll_index2();
    }
-
+   
+   @Override
+   public Diary diaryDetail(int postId) {
+	      return diaryDao.diaryDetail(postId);
+   }
 }

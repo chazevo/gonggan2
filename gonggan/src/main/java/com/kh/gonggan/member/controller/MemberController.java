@@ -68,21 +68,16 @@ public class MemberController {
 	
 	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
-		
+
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
-		List<Post>postAlarmList = null;
-		List<Post> plist = postService.selectAll_index2();         
+		List<Post> plist = postService.selectAll_index2();  
 		List<Movie> movielist = movieService.selectAll_index2();
 		List<Diary> diarylist = diaryService.selectAll_index2();
 		List<Music> musiclist = musicService.selectAll_index2();
 		List<News> newslist = newsService.selectAll_index2();
 		List<Review> reviewlist = reviewService.selectAll_index2();
-
-		
 		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
-		List<Good> goodReqList = goodService.checkGoodAlram(loginUser.getMember_id());
-		
 
 		mv.setViewName("index2");
 		mv.addObject("reviewlist", reviewlist);
@@ -91,11 +86,10 @@ public class MemberController {
 		mv.addObject("dlist", diarylist);
 		mv.addObject("plist",plist);
 		mv.addObject("movielist",movielist);
+		mv.addObject("plistSize", plist.size());
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());
-		mv.addObject("postAlarmList", postAlarmList);
-		mv.addObject("postAlarmListSize", (commentReqList.size() + goodReqList.size()));
-
+		
 		return mv;
 	}
 	
@@ -149,7 +143,6 @@ public class MemberController {
 		if(insertMem > 0){
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
 			mv.setViewName("index2");
-			//mv.addObject("insertMem", insertMem);
 		}else{
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
 			mv.setViewName("join");

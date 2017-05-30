@@ -44,9 +44,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
+import com.kh.gonggan.diary.model.service.DiaryService;
+import com.kh.gonggan.diary.model.vo.Diary;
 import com.kh.gonggan.good.model.service.GoodService;
+import com.kh.gonggan.movie.model.service.MovieService;
+import com.kh.gonggan.movie.model.vo.Movie;
+import com.kh.gonggan.music.model.service.MusicService;
+import com.kh.gonggan.music.model.vo.Music;
+import com.kh.gonggan.news.model.service.NewsService;
+import com.kh.gonggan.news.model.vo.News;
 import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
+import com.kh.gonggan.review.model.service.ReviewService;
+import com.kh.gonggan.review.model.vo.Review;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
@@ -62,6 +72,16 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private GoodService goodService;
+	@Autowired
+	private MovieService movieService;
+	@Autowired
+	private DiaryService diaryService;
+	@Autowired
+	private MusicService musicService;
+	@Autowired
+	private NewsService newsService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	@RequestMapping("pdetail.do")
 		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
@@ -83,21 +103,20 @@ public class PostController {
 	
 	@RequestMapping(value="/postlist.do", produces={"application/json"})
 		@ResponseBody
-		public String selectList(@RequestParam String writer_id){
+		public String selectList(@RequestParam String writer_id,
+				@RequestParam int rownum, @RequestParam int rownum2){
 			/*		String userId =request.getParameter("userid");
 			String userPwd =request.getParameter("userpwd");
 			Member member =new Member();
 			member.setUserid(userId);
 			member.setUserpwd(userPwd);*/
 		
-		System.out.println("writer_id : " + writer_id);
-		
 			List<Post> plist  = null;
 			
-			if(writer_id==""){
-				plist = postService.selectAll();
-			}else{
-				plist =postService.selectUserAll(writer_id);
+			if(writer_id == ""){
+				plist = postService.selectAll(rownum, rownum2);
+			} else {
+				plist = postService.selectUserAll(writer_id);
 			}
 	
 			JSONObject json = new JSONObject();
@@ -146,7 +165,45 @@ public class PostController {
 			
 			return json.toJSONString();
 		}
+	
+	@RequestMapping(value="/plistDetail.do", produces={"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String postListDetail(@RequestParam int postId, @RequestParam String category) {
 
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		String content = null;
+		
+		switch (category) {
+		case "music":
+			content = musicService.musicDetail(postId).getMusic_info();
+			break;
+		case "movie":
+			content = movieService.movieDetail(postId).getMovie_info();
+			break;
+		case "diary":
+			content = diaryService.diaryDetail(postId).getDiary_content();
+			break;
+		case "review":
+			content = reviewService.reviewDetail(postId).getReview_content();
+			break;
+		case "news":
+			content = newsService.newsDetail(postId).getNews_info();
+			break;
+		}
+		
+		if (content.length() > 100)
+			content = content.substring(0, 100);
+		
+		try {
+			content = URLEncoder.encode(content, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return content; 
+	}
 
 	@RequestMapping(value="/imgupload.do", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	@ResponseBody

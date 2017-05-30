@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.gonggan.diary.model.vo.Diary;
+import com.kh.gonggan.news.model.vo.News;
 
 @Repository("diaryDao")
 public class DiaryDao {
@@ -17,5 +18,8 @@ public class DiaryDao {
    
    public List<Diary> selectAll_index2(){
       return (List<Diary>) sqlSession.selectList("diarymapper.diarylist_index2");
+   }
+   public Diary diaryDetail(int postId) {
+	   return (Diary) sqlSession.selectOne("diarymapper.diarydetail", postId);
    }
 }

@@ -17,10 +17,20 @@ public class MovieServiceImpl implements MovieService{
 	public List<Movie> searchMovie() {
 		System.out.println("service : loginCheck run...");
 		return  movieDao.searchMovie();
-		
 	}
+	
 	@Override
-	   public List<Movie> selectAll_index2(){
-	      return movieDao.selectAll_index2();
-	   }
+	public List<Movie> selectAll(int rownum, int rownum2) {
+		return movieDao.selectAll(rownum, rownum2);
+	}
+	
+	@Override
+	public List<Movie> selectAll_index2(){
+		return movieDao.selectAll_index2();
+	}
+	
+	@Override
+	public Movie movieDetail(int postId) {
+		return movieDao.movieDetail(postId);
+	}
 }

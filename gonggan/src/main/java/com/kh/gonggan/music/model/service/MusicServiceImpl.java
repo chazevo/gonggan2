@@ -10,13 +10,23 @@ import com.kh.gonggan.music.model.vo.Music;
 
 @Service("musicService")
 public class MusicServiceImpl implements MusicService{
-   @Autowired
-   MusicDao musicDao;
-   
-   @Override
-   public List<Music> selectAll_index2(){
-      return musicDao.selectAll_index2();
-   }
-   
+	
+	@Autowired
+	MusicDao musicDao;
+	
+	@Override
+	public List<Music> selectAll(int rownum, int rownum2) {
+		return musicDao.selectAll(rownum, rownum2);
+	}
+	
+	@Override
+	public List<Music> selectAll_index2(){
+		return musicDao.selectAll_index2();
+	}
+	
+	@Override
+	public Music musicDetail(int postId) {
+		return musicDao.musicDetail(postId);
+	}
 
 }

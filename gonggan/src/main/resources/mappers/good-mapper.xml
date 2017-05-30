@@ -10,10 +10,19 @@
 		<result property="good_check" column="good_check" />
 	</resultMap>
 
-	
-	<insert id="ginsert" parameterType="good">
-	insert into good values(#{post_id}, #{member_id},'N')
+	<insert id="ginsert" parameterType="int">
+	insert into alarm values ((select max(alarm_num) from alarm) + 1, 'G',#{postId} , null)
 	</insert>
+	
+	<insert id="ginsert2" parameterType="good">
+	insert into good values(#{post_id}, #{member_id},'N',seq_alarm.nextval)
+	</insert>
+	
+	<update id="ginsert3" parameterType="int">
+		update post set good_count=(GOOD_COUNT+1) where post_id = #{postId}
+	</update>
+		
+
 	
 	<select id="gcheck" parameterType="good" resultMap="goodResult">
 	select * from good where post_id = #{post_id} and member_id = #{member_id}
@@ -21,6 +30,9 @@
 	<select id="gcheckalram" parameterType="String" resultMap="goodResult">
 	select * from good where post_id in (select post_id from post where writer_id = #{member_id})
 	and good_check = 'N'
+	</select>
+	<select id="goodMyList" parameterType="String" resultMap="goodResult">
+	select *  from good where  post_id in (select post_id from post where writer_id= #{writer_id} and good_count > 0) 
 	</select>
 	
 	<delete id="gdelete" parameterType="good">

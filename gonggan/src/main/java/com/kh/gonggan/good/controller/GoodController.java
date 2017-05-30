@@ -61,6 +61,7 @@ public class GoodController {
 			List<Good> goodList = goodService.goodList(postId);
 			mv.addObject("goodList",goodList);
 			mv.setViewName("likepage");
+			mv.setViewName("index2");
 			return mv;
 		}
 	@RequestMapping(value = "/gsearch.do", produces = { "application/json" }, method = RequestMethod.GET)

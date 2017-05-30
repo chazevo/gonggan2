@@ -12,6 +12,12 @@ public interface PostService {
 	List<Post> selectAll(int rownum, int rownum2);
 	List<Post> selectLikeAll(int rownum, int rownum2);
 	List<Post> selectAll_index2();
+	List<Post> selectMusic(int rownum, int rownum2);
+	List<Post> selectMovie(int rownum, int rownum2);
+	List<Post> selectDiary(int rownum, int rownum2);
+	List<Post> selectReview(int rownum, int rownum2);
+	List<Post> selectNews(int rownum, int rownum2);
+	List<Post> selectBook(int rownum, int rownum2);
 
 
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="neighbormapper">
+	<resultMap id="neighborResult" type="neighbor">
+		<id property="receiver" column="receiver"/>
+		<result property="sender" column="sender"/>
+		<result property="check_yn" column="check_yn"/>
+		<result property="alram_yn" column="alram_yn"/>
+		<result property="accept_date" column="accept_date"/>
+	</resultMap>
+	<delete id="ndelete" parameterType="neighbor" >
+	 delete from neighbor where (receiver=#{memberId} and sender=#{memberId2} ) or (receiver=#{memberId2} and sender=#{memberId})
+	</delete>
+</mapper>

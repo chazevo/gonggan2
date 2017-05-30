@@ -47,5 +47,8 @@ public interface MemberService {
 	Member facebookIdCheck(Member member);
 
 	int facebookConnect(Member member);
+	
+	int neigDelete(String memberId, String memberId2);
 
+	
 }

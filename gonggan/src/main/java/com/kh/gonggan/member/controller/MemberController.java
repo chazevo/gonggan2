@@ -281,6 +281,15 @@ public class MemberController {
 		return null;
 	}
 	
-	
+	@RequestMapping(value="neigdelete.do", produces="text/plain;charset=UTF-8")
+	   @ResponseBody
+	      public String neigDelete(@RequestParam String member_id, @RequestParam String member_id2, Model model){
+	      
+	         String msg = "실패";
+	   
+	         if (memberService.neigDelete(member_id, member_id2) > 0)
+	            msg = "삭제 성공";
+	         return msg;
+	      }//이웃 신청 수락/거절
 	
 }

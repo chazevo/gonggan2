@@ -102,6 +102,7 @@ public class PostController {
 	@RequestMapping(value="/postlist.do", produces={"application/json"})
 		@ResponseBody
 		public String selectList(@RequestParam String writer_id,
+				@RequestParam String category,
 				@RequestParam int rownum, @RequestParam int rownum2){
 			/*		String userId =request.getParameter("userid");
 			String userPwd =request.getParameter("userpwd");
@@ -114,7 +115,30 @@ public class PostController {
 			List<Post> plist  = null;
 			
 			if (writer_id == ""){
-				plist = postService.selectAll(rownum, rownum2);
+				switch (category) {
+				case "all":
+					plist = postService.selectAll(rownum, rownum2);
+					break;
+				case "music":
+					plist = postService.selectMusic(rownum, rownum2);
+					break;
+				case "movie":
+					plist = postService.selectMovie(rownum, rownum2);
+					break;
+				case "diary":
+					plist = postService.selectDiary(rownum, rownum2);
+					break;
+				case "review":
+					plist = postService.selectReview(rownum, rownum2);
+					break;
+				case "news":
+					plist = postService.selectNews(rownum, rownum2);
+					break;
+				case "book":
+					plist = postService.selectBook(rownum, rownum2);
+					break;
+				}
+				
 			} else {
 				plist = postService.selectUserAll(writer_id);
 			}

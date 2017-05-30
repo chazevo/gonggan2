@@ -115,7 +115,12 @@ public class MemberDao {
 	   public int facebookConnect(Member mem) {
 	      return   sqlSession.update("membermapper.facebookConnect", mem);
 	   }
-
-
+	   
+	   public int neigDelete(String memberId, String memberId2) {
+		      Map<String, String> map = new HashMap<String, String>();
+		      map.put("memberId", memberId);
+		      map.put("memberId2", memberId2);
+		      return sqlSession.delete("neighbormapper.ndelete", map);
+		   }
 
 }

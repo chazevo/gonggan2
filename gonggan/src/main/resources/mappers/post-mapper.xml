@@ -49,7 +49,7 @@
 						order by good_count desc) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
-	
+
 	<select id="userplist" parameterType="String" resultMap="postResult">
 	select *
 	from post left join movie using (post_id)
@@ -58,6 +58,60 @@
 	left join news using(post_id)
 	left join review using(post_id)
 	where writer_id = #{writer_id}
+	</select>
+	
+	<select id="musiclist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join music using(post_id)
+						) subquery)
+				where r between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="movielist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join movie using(post_id)
+						) subquery)
+				where r between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="diarylist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join diary using(post_id)
+						) subquery)
+				where r between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="newslist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join news using(post_id)
+						) subquery)
+				where r between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="reviewlist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join review using(post_id)
+						) subquery)
+				where r between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="booklist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join book using(post_id)
+						) subquery)
+				where r between #{rownum} and #{rownum2}
 	</select>
 	
 	<select id="pdetail" parameterType="int" resultMap="postResult">

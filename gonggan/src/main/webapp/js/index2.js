@@ -2,52 +2,53 @@ var rownum = 1;
 var Ca = /\+/g;
 
 function requestList(val) {
-   
-   var rownum2;
-   
-   //if (maxRownum - val < 20)
-   if (maxRownum - val < 8)
-      var rownum2 = maxRownum;
-   //else rownum2 = rownum + 19;
-   else rownum2 = rownum + 7;
-   
-   //alert("rownum2 : " + rownum2);
-   
-   $.ajax({
-      url: "postlist.do",
-      data: { writer_id: "",
-    	  rownum: rownum,
-    	  rownum2: rownum2 },
-      success: function(data) {
-         rownum = rownum2 + 1;
-         callbackList(data);
-      },
-      error: function(data,status,error){
-         console.log("error : " + error);
-      }
-   });
+	
+	var rownum2;
+	
+	//if (maxRownum - val < 20)
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	//else rownum2 = rownum + 19;
+	else rownum2 = rownum + 7;
+	
+	//alert("rownum2 : " + rownum2);
+	
+	$.ajax({
+		url: "postlist.do",
+		data: { writer_id: "",
+			rownum: rownum,
+			rownum2: rownum2,
+			category: "all" },
+		success: function(data) {
+			rownum = rownum2 + 1;
+			callbackList(data);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
 }
 
 function requestLikeList(val) {
-	   
-	   var rownum2;
-	   
-	   if (maxRownum - val < 8)
-	      var rownum2 = maxRownum;
-	   else rownum2 = rownum + 7;
-	   
-	   $.ajax({
-	      url: "plikelist.do",
-	      data: { rownum: rownum,
-	    	  rownum2: rownum2 },
-	      success: function(data) {
-	         rownum = rownum2 + 1;
-	         callbackList(data);
-	      },
-	      error: function(data,status,error){
-	         console.log("error : " + error);
-	      }
-	   });
+
+	var rownum2;
+
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
+	
+	$.ajax({
+		url: "plikelist.do",
+		data: { rownum: rownum,
+			rownum2: rownum2 },
+		success: function(data) {
+			rownum = rownum2 + 1;
+			callbackList(data);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
 }
 
 function sorting() {

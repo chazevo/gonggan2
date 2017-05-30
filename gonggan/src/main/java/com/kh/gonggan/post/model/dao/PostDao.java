@@ -46,4 +46,46 @@ public class PostDao {
 	public List<Post> selectAll_index2() {
 	      return (List<Post>) sqlSession.selectList("postmapper.plist_index2");
 	   }
+	
+	public List<Post> selectMusic(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.musiclist", map);
+	}
+
+	public List<Post> selectMovie(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.movielist", map);
+	}
+
+	public List<Post> selectReview(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.reviewlist", map);
+	}
+
+	public List<Post> selectDiary(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.diarylist", map);
+	}
+
+	public List<Post> selectNews(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.newslist", map);
+	}
+
+	public List<Post> selectBook(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.booklist", map);
+	}
 }

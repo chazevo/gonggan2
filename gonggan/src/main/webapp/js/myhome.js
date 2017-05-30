@@ -65,7 +65,8 @@ function requestList() {
 				url: "/gonggan/postlist.do",
 				//url: "/gonggan/userpostlist.do",
 				data: { writer_id : writer_id,
-					rownum: 1, rownum2: 1
+					rownum: 1, rownum2: 1,
+					category: "all"
 				},
 				success: function(data) {
 	    	  if (document.getElementById("calendar").checked == true )
@@ -76,6 +77,25 @@ function requestList() {
 	      error: function(data,status,error){
 	         console.log("error : " + error);
 	      }
+	   });
+}
+
+function requestCategoryList(category) {
+	
+	alert(category);
+	$.ajax({
+				url: "/gonggan/postlist.do",
+				//url: "/gonggan/userpostlist.do",
+				data: { writer_id : writer_id,
+					rownum: 1, rownum2: 1,
+					category: category
+				},
+				success: function(data) {
+					callbackList2(data);
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
 	   });
 }
 
@@ -279,8 +299,12 @@ function moreComment(postId) {
 function lastMonth() {
 	
 	var date = new Date();
-	date.setMonth(--month);
-	date.setDate(1);
+	var date2 = new Date();
+	
+	if (month-1 > 0) {
+		date.setMonth(--month);
+		date.setDate(1);
+	}
 	
 	firstday = date.getDay();
 	today = 99;
@@ -288,7 +312,7 @@ function lastMonth() {
 	
 	$("#year").text(year);
 	$("#month").text(month<10 ? "0" + month : month);
-	$("#today").text("");
+	$("#today").text((date2.getMonth() + 1) == month ? date2.getDate() : "");
 	
 	requestList();
 }
@@ -296,8 +320,12 @@ function lastMonth() {
 function nextMonth() {
 	
 	var date = new Date();
-	date.setMonth(++month);
-	date.setDate(1);
+	var date2 = new Date();
+
+	if (month+1 <= 12) {
+		date.setMonth(++month);
+		date.setDate(1);
+	}
 	
 	firstday = date.getDay();
 	today = 99;
@@ -305,7 +333,7 @@ function nextMonth() {
 
 	$("#year").text(year);
 	$("#month").text(month<10 ? "0" + month : month);
-	$("#today").text("");
+	$("#today").text((date2.getMonth() + 1) == month ? date2.getDate() : "");
 	
 	requestList();
 }

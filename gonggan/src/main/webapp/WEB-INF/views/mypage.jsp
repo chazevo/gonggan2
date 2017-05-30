@@ -39,6 +39,9 @@
 </script>
 </head>
 <body>
+   <c:if test="${(empty param) || (empty sessionScope.loginUser)}">
+      <jsp:forward page="error.jsp"></jsp:forward>
+   </c:if>
 <nav class="navbarCustom navbar-default">
    <div class="navbar-header">
       <a class="navbar-brand" href="index.jsp">
@@ -246,7 +249,7 @@
                   <b>내 포스트 알람 _ 댓글 </b><br>
                   <c:if test="${!empty commentMyList }">
                      <c:forEach items="${ commentMyList}" var="i"  begin ="0">
-                     <font><a href="">${i.writer_id }</a> 님이</font> |
+                     <font><a href="selectBlog.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이</font> |
                      <a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
                                  게시글에 <b>댓글</b>을 남기셨습니다.<br>
                      </c:forEach>
@@ -264,11 +267,11 @@
                            <td>
                               <table>
                                        <b>내 포스트 알람_좋아요</b><br>
-                                       게시글을 작성하고 이웃을 만들어보세요!!<br>
+                                          게시글을 작성하고 이웃을 만들어보세요!!<br>
                                        <c:if test="${!empty (goodMyList)}">
                                         <c:forEach items="${ goodMyList}" var="i"  begin ="0">
-                                           <font><a href="">${ i.member_id }</a> 님이</font> | 
-                                       게시글에 <b>좋아요</b>을 누르셨습니다.<br>
+                                           <font><a href="selectBlog.do?writer_id=${i.member_id} }">${ i.member_id }</a> 님이</font> | 
+                                             게시글에 <b>좋아요</b>을 누르셨습니다.<br>
                                         </c:forEach>
                                        </c:if>
                                  
@@ -328,8 +331,8 @@
                            <c:forEach items="${ neighborlist}" var="i"  begin ="0" >
                            <tr>
                               <td> ${i.member_id }</td>
-                              <td><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2= ${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
-                              <td><a href=""><div class="neighborYN">취소</div></a></td>
+                              <td><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
+                              <td><a href="javascript:cancel('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');"><div class="neighborYN">취소</div></a></td>
                            </tr>
                            </c:forEach>
                         </c:if>

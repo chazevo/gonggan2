@@ -82,18 +82,18 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.neigList();
 	}//이웃 신청 목록 조회 여기서 하는게 맞는건지 잘모르겟어여,,,ㅠㅠ
 	
-	  @Override
-	   public int naverConnect(Member mem){
-	      return memberDao.naverConnect(mem);
-	   }//네이버연동
-	   
-	   @Override
-	   public int kakaoConnect(Member mem){
-	      return memberDao.kakaoConnect(mem);
-	   }//카카오연동
-	   
-	   @Override
-	   public int facebookConnect(Member mem){
+	@Override
+	public int naverConnect(Member mem){
+		return memberDao.naverConnect(mem);
+	}//네이버연동
+	
+	@Override
+	public int kakaoConnect(Member mem){
+		return memberDao.kakaoConnect(mem);
+	}//카카오연동\
+	
+	@Override
+	public int facebookConnect(Member mem){
 	      return memberDao.facebookConnect(mem);
 	   }
 	   
@@ -112,6 +112,8 @@ public class MemberServiceImpl implements MemberService{
 	      System.out.println("service.facebookIdCheck");
 	      return memberDao.facebookIdCheck(mem);
 	   }
-	
-
+	   @Override
+	   public int neigDelete(String memberId, String memberId2){
+	      return memberDao.neigDelete(memberId, memberId2);
+	   }
 }

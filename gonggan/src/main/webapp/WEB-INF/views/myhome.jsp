@@ -140,8 +140,8 @@ var imgVal = <%= imgVal %>;
 			<table id="idclick_table">
 				<tr id="center_align">
 					<td>
-						<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-						<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
+						<a href="">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
@@ -200,25 +200,25 @@ var imgVal = <%= imgVal %>;
 			<div class="collapse navbar-collapse" id="menu">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="">일기</a>
+						<a href="javascript:rownum=1; requestCategoryList('diary');">일기</a>
 					</li>
 					<li>
-						<a href="">장소</a>
+						<a href="javascript:rownum=1; requestCategoryList('place');">장소</a>
 					</li>
 					<li>
-						<a href="#">리뷰</a>
+						<a href="javascript:rownum=1; requestCategoryList('review');">리뷰</a>
 					</li>
 					<li>
-						<a href="#">음악</a>
+						<a href="javascript:rownum=1; requestCategoryList('music');">음악</a>
 					</li>
 					<li>
-						<a href="">영화</a>
+						<a href="javascript:rownum=1; requestCategoryList('movie');">영화</a>
 					</li>
 					<li>
-						<a href="">뉴스</a>
+						<a href="javascript:rownum=1; requestCategoryList('news');">뉴스</a>
 					</li>
 					<li>
-						<a href="">책</a>
+						<a href="javascript:rownum=1; requestCategoryList('book');">책</a>
 					</li>
 				</ul>
 			</div>
@@ -254,7 +254,9 @@ var imgVal = <%= imgVal %>;
 						<tr id="todayHeader">
 							<td>
 								<h3 class="section-heading text-center" style="color:#E6E6E6;">
+									<a href="javascript:lastMonth();">◀</a>&nbsp;
 									<span id="year"></span>.<span id="month"></span>.<span id="today"></span>
+									<a href="javascript:nextMonth();">►</a>&nbsp;
 								</h3>
 							</td>
 						</tr>

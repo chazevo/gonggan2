@@ -35,6 +35,13 @@ public class PostDao {
 		map.put("rownum2", rownum2);
 		return (List<Post>) sqlSession.selectList("postmapper.plist", map);
 	}
+
+	public List<Post> selectLikeAll(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.plikelist", map);
+	}
 	
 	public List<Post> selectAll_index2() {
 	      return (List<Post>) sqlSession.selectList("postmapper.plist_index2");

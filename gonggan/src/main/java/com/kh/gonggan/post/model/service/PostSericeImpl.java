@@ -18,9 +18,14 @@ public class PostSericeImpl implements PostService{
 	@Override
 	public List<Post> selectAll(int rownum, int rownum2) {
 		System.out.println("service : selectList run...");
-		return  postDao.selectAll(rownum, rownum2);
-		
+		return  postDao.selectAll(rownum, rownum2);	
 	}
+	
+	@Override
+	public List<Post> selectLikeAll(int rownum, int rownum2) {
+		return  postDao.selectLikeAll(rownum, rownum2);	
+	}
+	
 	@Override
 	public Post postDetail(int post_id) {
 		return  postDao.postDetail(post_id);

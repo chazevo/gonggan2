@@ -24,6 +24,8 @@ import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.message.model.service.MessageService;
+import com.kh.gonggan.message.model.vo.Message;
 import com.kh.gonggan.neighbor.model.service.NeighborService;
 import com.kh.gonggan.neighbor.model.vo.Neighbor;
 import com.kh.gonggan.post.model.service.PostService;
@@ -46,6 +48,8 @@ public class HomeController {
 	private GoodService goodService;
 	@Autowired
 	private NeighborService neighborService;
+	@Autowired
+	private MessageService messageService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -90,7 +94,7 @@ public class HomeController {
       }
    
    @RequestMapping("mypage.do")
-   public ModelAndView mypage(Locale locale, Model model,String writer_id ,  ModelAndView mv) {
+   public ModelAndView mypage(Locale locale, Model model,String writer_id , ModelAndView mv) {
       
       logger.info("Welcome mypage! ");
       System.out.println(writer_id);
@@ -99,15 +103,18 @@ public class HomeController {
       List<Good> goodMyList = goodService.goodMyList(writer_id);
       List<Comment> commentMyList = commentService.CommentMyList(writer_id);
       List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
-      for(Member m :neighborReqList){
-         System.out.println("member_id"+m.getMember_id());
-      }
+      List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
+      List<Message> lastMessage = messageService.lastMessage(writer_id);
+
+
       mv.addObject("mylist",mylist);
       mv.addObject("writer_id", writer_id);
       mv.addObject("neighborReqList", neighborReqList);
       mv.addObject("goodMyList", goodMyList);
       mv.addObject("commentMyList", commentMyList);
       mv.addObject("commentNeigList", commentNeigList);
+      mv.addObject("neighborlist",neighborlist);
+      mv.addObject("lastMessage",lastMessage);
       mv.setViewName("mypage");
       
 
@@ -184,9 +191,7 @@ public class HomeController {
       @RequestMapping(value="neighborlist.do")
       public ModelAndView neighborlist(ModelAndView mv , @RequestParam String loginUser){
          logger.info("Neighbor List! ");
-         List<Neighbor> neighborlist = neighborService.selectNeighborList(loginUser);
-        System.out.println(loginUser);
-         System.out.println(neighborlist);
+         List<Member> neighborlist = neighborService.selectNeighborList(loginUser);
          mv.setViewName("neighborList");
          mv.addObject("neighborlist",neighborlist);
          return mv;

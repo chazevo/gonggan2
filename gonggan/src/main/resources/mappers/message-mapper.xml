@@ -24,4 +24,12 @@
 	insert into message values(sequence_msg.nextval, #{memberId1}, #{memberId2}, #{msg_text},sysdate, #{check_yn})
 	</insert>
 	
+	<select id="recentmsg" parameterType="Map" resultMap="messageResult">
+   select * from message
+   where ((SENDER = #{writer_id} and receiver =#{memberId}) or
+   (SENDER = #{memberId} and receiver = #{writer_id}))
+   and msg_id = (select max(msg_id) from message where ((SENDER = #{writer_id} and receiver = #{memberId}) or
+   (SENDER = #{memberId} and receiver = #{writer_id})))
+   </select>
+	
 </mapper>

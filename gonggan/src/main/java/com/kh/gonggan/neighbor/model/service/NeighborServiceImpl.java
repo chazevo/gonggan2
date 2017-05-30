@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.gonggan.member.model.vo.Member;
 import com.kh.gonggan.neighbor.model.dao.NeighborDao;
 import com.kh.gonggan.neighbor.model.vo.Neighbor;
 
@@ -14,7 +15,7 @@ public class NeighborServiceImpl implements NeighborService{
 	NeighborDao neighborDao;
 
 	@Override
-	public List<Neighbor> selectNeighborList(String loginUser) {
+	public List<Member> selectNeighborList(String loginUser) {
 		return neighborDao.selectNeighborList(loginUser); 
 	}
 

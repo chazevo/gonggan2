@@ -31,6 +31,9 @@
 	select * from good where post_id in (select post_id from post where writer_id = #{member_id})
 	and good_check = 'N'
 	</select>
+	<select id="goodMyList" parameterType="String" resultMap="goodResult">
+	select *  from good where  post_id in (select post_id from post where writer_id= #{writer_id} and good_count > 0) 
+	</select>
 	
 	<delete id="gdelete" parameterType="good">
 	delete from good 

@@ -13,9 +13,8 @@
 		<result property="comment_check" column="comment_check" />
 	</resultMap>
 
-	<select id="clist" parameterType="String" resultMap="commentResult">
-	select * from comments where post_id = #{postId}
-	order by comment_num
+		<select id="commentmylist" parameterType="String" resultMap="commentResult">
+	select *  from comments  where  post_id in (select post_id from post where writer_id=#{writer_id} )
 	</select>
 	
 	<select id="ccheckalram" parameterType="String" resultMap="commentResult">
@@ -26,6 +25,11 @@
 	<select id="commentcheckalram" parameterType="String" resultMap="commentResult">
 	 select * from comments where  writer_id = #{member_id}
 	and COMMENT_CHECK = 'N';
+	</select>
+		
+	<select id="commentneiglist" parameterType="String" resultMap="commentResult">
+	 select * from post where writer_id in (select sender   from neighbor where receiver=#{writer_id}  and check_yn='Y')
+	or writer_id in(select receiver from neighbor where sender=#{writer_id} and check_yn='Y')
 	</select>
 
 	 

@@ -19,9 +19,10 @@
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>\
 <script src="js/jquery.fancybox.js"></script>
 <script src="js/mypage.js"></script>
+<script type="text/javascript" src="js/index2.js"></script>
 <script type="text/javascript">
 
 	window.onload = function() {
@@ -64,7 +65,7 @@
 			<tr id="center_align">
 				<td>
 					<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-					<a href="#">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+					<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 					<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 					<a href="#">로그아웃</a> 
 					<div id="dansun_line"></div>
@@ -103,7 +104,7 @@
 			<div><span>${sessionScope.loginUser.getMember_id()}</span> 님</div>
 			<div class="right">
 				<a href="uploadform.do" class="transparentFont">포스트쓰기</a>
-				<a href="myhome.do">
+				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">
 					<div class="goToMyBlog">내 블로그</div>
 				</a>
 				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
@@ -262,63 +263,18 @@
 				<!-- 이웃새글부분 -->
 				<tr>
 					<td colspan="2" class="td notTableList">
-						<b>이웃새글_8</b><br>
-						<a href="">꼼지락이주부 감성 DIY.셀프 인테리어</a> |
-						<font><a href="">꼼지락이 주부</a></font><br>
-						<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> | 
-						<font><a href="">이대장</a></font><br>
-						<a href="">토리와 함께 추억쌓기 놀이</a> |
-						<font><a href="">긍정의아이콘 |토리|</a></font><br>
-						<a href="">행복가득한 그루터기 발자취!</a> |
-						<font><a href="">그루터기</a></font><br>
-						<a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아......</a> |
-						<font><a href="">깐깐징어</a></font><br>
-						<a href="">행복가득한 그루터기 발자취!</a> |
-						<font><a href="">그루터기</a></font><br>
-						<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> | 
-						<font><a href="">이대장</a></font><br>
-						<a href="">행복가득한 그루터기 발자취!</a> |
-						<font><a href="">그루터기</a></font><br>
-					</td>
+						<b>내 포스트 알람 _ 댓글 </b><br>
+						<c:if test="${!empty commentMyList }">
+							<c:forEach items="${ commentMyList}" var="i"  begin ="0">
+							<font><a href="">${i.writer_id }</a> 님이</font> |
+							<a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
+											게시글에 <b>댓글</b>을 남기셨습니다.<br>
+							</c:forEach>
+						</c:if>
+
 						<!-- 댓글 좋아요 알림부분 -->
 							<td class="td notTableList">
 								<table>
-									<colgroup>
-										<col style="width:*;" />
-										<col width="5%" />
-									</colgroup>
-									<tr><td><b>내 포스트 알람 _ 댓글 </b></td></tr>
-									<tr>
-										<td>내 포스트 알람이 없습니다.
-											게시글을 작성하고 이웃을 만들어보세요!!
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font><a href="">이대장</a> 님이</font>
-											<a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
-											게시글에 <b>댓글</b>을 남기셨습니다.
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font><a href="">이대장</a> 님이</font>
-											너무 예뻐요!! 너무 마음에드네요!! 어디서 구매하셨나요??!! 알려주세요~!!!
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font><a href="">이대장</a> 님이</font>
-											너무 예뻐요!! 너무 마음에드네요!! 어디서 구매하셨나요??!! 알려주세요~!!!
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<font><a href="">이대장</a> 님이</font>
-											너무 예뻐요!! 너무 마음에드네요!! 어디서 구매하셨나요??!! 알려주세요~!!!
-										</td>
-									</tr>
-								</tbody>
 								<tr>
 									<td colspan="2" align="center">
 										<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
@@ -327,25 +283,19 @@
 								<tr>
 									<td>
 										<table>
-											<tr>
-												<td>   
 													<b>내 포스트 알람_좋아요</b><br>
-													내 포스트 알람이 없습니다.
 													게시글을 작성하고 이웃을 만들어보세요!!<br>
-													<font><a href="">긍정의아이콘 |토리|</a> 님이</font>
-													<a href="">토리와 함께 추억쌓기 놀이</a> | 
+													<c:if test="${!empty (goodMyList)}">
+													 <c:forEach items="${ goodMyList}" var="i"  begin ="0">
+													 <tr>
+												<td> 
+													 	<font><a href="">${ i.member_id }</a> 님이</font> | 
 													게시글에 <b>좋아요</b>을 누르셨습니다.<br>
-													<font><a href="">긍정의아이콘 |토리|</a> 님이</font>
-													<a href="">토리와 함께 추억쌓기 놀이</a> | 
-													게시글에 <b>좋아요</b>을 누르셨습니다.<br>
-													<font><a href="">이대장</a> 님이</font>
-													<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> | 
-													게시글에 <b>좋아요</b>을 누르셨습니다.<br>
-													<font><a href="">긍정의아이콘 |토리|</a> 님이</font>
-													<a href="">토리와 함께 추억쌓기 놀이</a> | 
-													게시글에 <b>좋아요</b>을 누르셨습니다.<br>
-												</td>
+														</td>
 											</tr>
+													 </c:forEach>
+													</c:if>
+											
 										</table>
 									</td>
 									<td></td>
@@ -370,40 +320,24 @@
 								</colgroup>
 								<tr><td colspan="3">서로이웃신청</td></tr>
 								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
-								<tr>
-									<td>백마탄환자</td>
-									<td><a href=""><div class="neighborYN">수락</div></a></td>
-									<td><a href=""><div class="neighborYN">거절</div></a></td>
-								</tr>
+								<c:if test="${!empty (neighborReqList) }">
+								<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
+								
+								<td>
+									<a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+								</td>
+								<td>
+									<a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+										<div class="neighborYN">수락</div>
+									</a>
+								</td>
+								<td>
+									<a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+										<div class="neighborYN">거절</div>
+									</a>
+								</td>
+								</c:forEach>
+								</c:if>
 							</table>
 						</td>
 						<td class="td">

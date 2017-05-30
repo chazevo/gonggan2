@@ -47,6 +47,13 @@ public class CommentDao {
 	public List<Comment> myCommentList(String member_id) {
 		return (List<Comment>) sqlSession.selectList("commentmapper.tracelist", member_id);
 	}
+	public List<Comment> CommentMyList(String writer_id) {
+		return (List<Comment>) sqlSession.selectList("commentmapper.commentmylist", writer_id);
+	}
+
+	public List<Comment> commentNeigList(String writer_id) {
+		return (List<Comment>) sqlSession.selectList("commentmapper.commentneiglist", writer_id);
+	}
 
 	
 }

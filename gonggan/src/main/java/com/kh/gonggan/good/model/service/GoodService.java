@@ -20,4 +20,6 @@ public interface GoodService {
 
 	List<Good> checkGoodAlram(String member_id);
 
+	List<Good> goodMyList(String writer_id);
+
 }

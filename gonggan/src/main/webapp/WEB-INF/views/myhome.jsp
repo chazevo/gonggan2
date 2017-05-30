@@ -141,7 +141,7 @@ var imgVal = <%= imgVal %>;
 				<tr id="center_align">
 					<td>
 						<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-						<a href="">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
@@ -176,12 +176,14 @@ var imgVal = <%= imgVal %>;
 		<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
 			<div class="header-content">
 				<div class="header-content-inner">
-					<h2><a href="start.do">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
+					<h2><a href="selectBlog.do?writer_id=${param.writer_id} ">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
 				</div>
 				<div class="header-content-inner2">
-					<a href="controll.do">
+					<c:if test="${ param.writer_id eq sessionScope.loginUser.getMember_id()}">
+					<a href="controll.do?writer_id=${sessionScope.loginUser.getMember_id() }">
 					<img class="smallIcon"
 					src="images/KakaoTalk_Photo_2017-04-24-10-28-40_21.png"></a>
+					</c:if>
 				</div>
 			</div>
 			<div class="navbar-header idView">

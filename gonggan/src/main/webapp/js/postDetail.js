@@ -2,18 +2,18 @@ var Ca = /\+/g;
 
 function checkGood(loginUser, postId){
 	$.ajax({
-	      url: "/gonggan/checkGood.do",
-	  data: {loginUser:loginUser,
-		  	 postId:postId},
-	  success: function(data) {
-		  if (data == "good")
-			  document.getElementById("like").checked=true;
-		  else if (data == "nogood")
-			  document.getElementById("like").checked=false;
-	  },
-	  error: function(data,status,error){
-	     console.log("error : " + error);
-	  }
+		url: "/gonggan/checkGood.do",
+		data: {loginUser:loginUser,
+			postId:postId },
+		success: function(data) {
+			if (data == "good")
+				document.getElementById("like").checked=true;
+			else if (data == "nogood")
+				document.getElementById("like").checked=false;
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
 	});
 }
 
@@ -117,17 +117,17 @@ function callbackSendComment(data){
 
 function deleteComment(comment_num){
 	$.ajax({
-	      url: "/gonggan/codelete.do",
-	  data: {writer_id:loginUser,
-		  	 postId:postId,
-		  	comment_num:comment_num
-		  	},
-	  success: function(data) {
-		  callbackCommentDelete(data, comment_num);
-	  },
-	  error: function(data,status,error){
-	     console.log("error : " + error);
-	  }
+		url: "/gonggan/codelete.do",
+		data: {writer_id:loginUser,
+			postId:postId,
+			comment_num:comment_num
+		},
+		success: function(data) {
+			callbackCommentDelete(data, comment_num);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
 	});
 }
 

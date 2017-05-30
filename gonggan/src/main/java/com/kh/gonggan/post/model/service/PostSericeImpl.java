@@ -33,9 +33,45 @@ public class PostSericeImpl implements PostService{
 	}
 	
 	@Override
-	public List<Post> selectUserAll(String writer_id){
-		return  postDao.selectUserAll(writer_id);
+	public List<Post> selectUserAll(String writer_id, int rownum, int rownum2){
+		return  postDao.selectUserAll(writer_id, rownum, rownum2);
 	}
+	
+	@Override
+	public List<Post> selectUserDiary(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserDiary(writer_id, rownum, rownum2);
+	}
+
+	@Override
+	public List<Post> selectUserMovie(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserMovie(writer_id, rownum, rownum2);
+	}
+
+	@Override
+	public List<Post> selectUserMusic(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserMusic(writer_id, rownum, rownum2);
+	}
+
+	@Override
+	public List<Post> selectUserReview(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserReview(writer_id, rownum, rownum2);
+	}
+
+	@Override
+	public List<Post> selectUserPlace(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserPlace(writer_id, rownum, rownum2);
+	}
+
+	@Override
+	public List<Post> selectUserBook(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserBook(writer_id, rownum, rownum2);
+	}
+
+	@Override
+	public List<Post> selectUserNews(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserNews(writer_id, rownum, rownum2);
+	}
+	
 	@Override
 	public String selectPostWriter(int post_id){
 		return postDao.selectPostWriter(post_id);

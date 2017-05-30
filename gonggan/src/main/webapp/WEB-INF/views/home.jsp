@@ -11,6 +11,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link href="css/magnific-popup.css" rel="stylesheet">
+<link rel='stylesheet' href='css/jquery.fancybox.min.css'/> 
 <link rel='stylesheet' href='css/css.css'/> 
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
@@ -20,14 +21,107 @@
 <script src="js/magnific-popup.min.js"></script>
 <script type="text/javascript" src="js/scrollreveal.min.js"></script>
 <script type="text/javascript" src="js/creative.min.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox.js"></script>
 <script type="text/javascript" src="js/home.js"></script>
 <script type="text/javascript">
+
+	var initPosition;
+	var prevPosition;
+	var maxRownum = 50;
+	
 	window.onload = function() {
 		document.getElementById("id").focus();
+
+		$("#div").hide();
+		
+		$(window).scroll(function(){
+
+			initPosition = $(window).scrollTop()
+			
+			if (initPosition > prevPosition) {
+				if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
+					if(maxRownum >= rownum) {
+						$("#div_Loading").show();
+						alert(rownum);
+						setTimeout(function() { requestCategoryList(rownum, category);}, 1000);
+					}
+				}
+			}
+			prevPosition = initPosition
+		});
+		
+		(function($) {
+			"use strict"; // Start of use strict
+
+			// jQuery for page scrolling feature - requires jQuery Easing plugin
+			$(document).on('click', 'a.page-scroll', function(event) {
+				var $anchor = $(this);
+				$('html, body').stop().animate({
+					scrollTop: ($($anchor.attr('href')).offset().top - 50)
+				}, 1250, 'easeInOutExpo');
+				event.preventDefault();
+			});
+
+			// Highlight the top nav as scrolling occurs
+			$('body').scrollspy({
+				target: '.navbar-fixed-top',
+				offset: 51
+			});
+
+			// Closes the Responsive Menu on Menu Item Click
+			$('.navbar-collapse ul li a').click(function() {
+				$('.navbar-toggle:visible').click();
+			});
+
+			// Offset for Main Navigation
+			$('#mainNav').affix({
+				offset: {
+					top: 100
+				}
+			})
+
+			// Initialize and Configure Scroll Reveal Animation
+			window.sr = ScrollReveal();
+			sr.reveal('.sr-icons', {
+				duration: 600,
+				scale: 0.3,
+				distance: '0px'
+			}, 200);
+			sr.reveal('.sr-button', {
+				duration: 1000,
+				delay: 200
+			});
+			sr.reveal('.sr-contact', {
+				duration: 600,
+				scale: 0.3,
+				distance: '0px'
+			}, 300);
+
+			// Initialize and Configure Magnific Popup Lightbox Plugin
+			$('.popup-gallery').magnificPopup({
+				delegate: 'a',
+				type: 'image',
+				tLoading: 'Loading image #%curr%...',
+				mainClass: 'mfp-img-mobile',
+				gallery: {
+					enabled: true,
+					navigateByImgClick: true,
+					preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+				},
+				image: {
+					tError: '<a href="%url%">The image #%curr%</a> could not be loaded.'
+				}
+			});
+		})(jQuery); // End of use strict
+
 	}
+	
 </script>
 </head>
 <body>
+<c:if test="${!empty sessionScope.loginUser }">
+   <jsp:forward page="login2.do"></jsp:forward>
+</c:if>
 <div id="indexBg">
 <nav class="navbar navbar-default" id="mainNav">
 		<!--<div class="container-fluid">--><div>
@@ -46,25 +140,25 @@
 				<!-- navbar-collapse 제거-> 메뉴 사라짐  -->
 					<ul class="nav navbar-nav navbar-right ">
 						<li>
-							<a href="">일기</a>
+						<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'diary');">일기</a>
 						</li>
 						<li>
-							<a href="">장소</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'place');">장소</a>
 						</li>
 						<li>
-							<a href="#">리뷰</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'review');">리뷰</a>
 						</li>
 						<li>
-							<a href="#">음악</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'music');">음악</a>
 						</li>
 						<li>
-							<a href="">영화</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'movie');">영화</a>
 						</li>
 						<li>
-							<a href="">뉴스</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'news');">뉴스</a>
 						</li>
 						<li>
-							<a href="">책</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'book');">책</a>
 						</li>
 					</ul>
 				</div>
@@ -73,6 +167,9 @@
 	<header>
 		<div class="header-content" id="indexBg">
 			<div class="header-content-inner">
+				<div id="div">
+					<br><br><br><br><br><br><br><br><br><br><br><br><br>
+				</div>
 				<table class="loginTable" align="center">
 				<tr><td>
 				<img class="logoImg" src="images/KakaoTalk_Photo_2017-04-22-18-12-10_54.png">
@@ -138,6 +235,9 @@
 			</div>
 		</div>
 		-->
+	<div id="div_Loading" style="font-size:11pt; width:100%;text-align:center">
+		<img height='70px' src="images/InternetSlowdown_Day.gif">
+	</div>
 	</section>
 </div>
 </body>

@@ -94,26 +94,27 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Override
 	public int facebookConnect(Member mem){
-	      return memberDao.facebookConnect(mem);
-	   }
-	   
-	   @Override
-	   public Member naverIdCheck(Member mem){
-	      System.out.println("service.naverIdCheck");
-	      return memberDao.naverIdCheck(mem);
-	   }//네이버아이디중복체크
-	   
-	   public Member kakaoIdCheck(Member mem){
-	      System.out.println("service.kakaoIdCheck");
-	      return memberDao.kakaoIdCheck(mem);
-	   }//카카오아이디중복체크
-	   
-	   public Member facebookIdCheck(Member mem){
-	      System.out.println("service.facebookIdCheck");
-	      return memberDao.facebookIdCheck(mem);
-	   }
-	   @Override
-	   public int neigDelete(String memberId, String memberId2){
-	      return memberDao.neigDelete(memberId, memberId2);
-	   }
+		return memberDao.facebookConnect(mem);
+	}
+	
+	@Override
+	public Member naverIdCheck(Member mem){
+		System.out.println("service.naverIdCheck");
+		return memberDao.naverIdCheck(mem);
+	}//네이버아이디중복체크
+	
+	public Member kakaoIdCheck(Member mem){
+		System.out.println("service.kakaoIdCheck");
+		return memberDao.kakaoIdCheck(mem);
+	}//카카오아이디중복체크
+	
+	public Member facebookIdCheck(Member mem){
+		System.out.println("service.facebookIdCheck");
+		return memberDao.facebookIdCheck(mem);
+	}
+	
+	@Override
+	public int neigDelete(String memberId, String memberId2){
+		return memberDao.neigDelete(memberId, memberId2);
+	}
 }

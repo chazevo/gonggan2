@@ -35,8 +35,12 @@ public class BlogController {
 	public ModelAndView selectBlog(@RequestParam String writer_id, ModelAndView mv) {
 
 		Blog blog = blogService.selectBlog(writer_id);
-
-		mv.setViewName("myhome");
+		
+		if (blog == null)
+			mv.setViewName("error");
+		else
+			mv.setViewName("myhome");
+		
 		mv.addObject("blog", blog);
 
 		return mv;

@@ -106,7 +106,7 @@
       <div class="mypage">
          <div><span>${sessionScope.loginUser.getMember_id()}</span> 님</div>
          <div class="right">
-            <a href="uploadform.do" class="transparentFont">포스트쓰기</a>
+            <a href="uploadform.do?writer_id=${param.writer_id}" class="transparentFont">포스트쓰기</a>
             <a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">
                <div class="goToMyBlog">내 블로그</div>
             </a>
@@ -341,9 +341,11 @@
                   <td class="td">
                      <table>
                         <tr><td><b>내가 남긴글</b></td></tr>
+                        <c:if test="${empty mylist }">
                         <tr>
                            <td>게시글을 작성하고 이웃을 만들어보세요!! </td>
                         </tr>
+                        </c:if>
                         <tbody id="listbody">   
                         
                            <c:if test="${!empty mylist }">

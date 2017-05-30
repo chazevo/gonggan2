@@ -229,7 +229,7 @@
    
 			<div class="header-content">
 				<div class="header-content-inner">
-					<h2><a href="myhome.do">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
+					<h2><a href="selectBlog.do?writer_id=${param.writer_id} ">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
 				</div>
 				<div class="header-content-inner2">
 					<a href="controll.do">

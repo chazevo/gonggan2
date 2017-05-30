@@ -7,7 +7,14 @@ import com.kh.gonggan.post.model.vo.Post;
 public interface PostService {
 
 	Post postDetail(int post_id);
-	List<Post> selectUserAll(String writer_id);
+	List<Post> selectUserAll(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserMusic(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserMovie(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserReview(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserBook(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserNews(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserPlace(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserDiary(String writer_id, int rownum, int rownum2);
 	String selectPostWriter(int post_id);
 	List<Post> selectAll(int rownum, int rownum2);
 	List<Post> selectLikeAll(int rownum, int rownum2);

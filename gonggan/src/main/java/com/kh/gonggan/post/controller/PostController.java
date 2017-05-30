@@ -114,67 +114,78 @@ public class PostController {
 		
 			List<Post> plist  = null;
 			
-			if (writer_id == ""){
-				switch (category) {
-				case "all":
-					plist = postService.selectAll(rownum, rownum2);
-					break;
-				case "music":
-					plist = postService.selectMusic(rownum, rownum2);
-					break;
-				case "movie":
-					plist = postService.selectMovie(rownum, rownum2);
-					break;
-				case "diary":
-					plist = postService.selectDiary(rownum, rownum2);
-					break;
-				case "review":
-					plist = postService.selectReview(rownum, rownum2);
-					break;
-				case "news":
-					plist = postService.selectNews(rownum, rownum2);
-					break;
-				case "book":
-					plist = postService.selectBook(rownum, rownum2);
-					break;
-				}
-				
-			} else {
-				plist = postService.selectUserAll(writer_id);
+			switch (category) {
+			case "all":
+				plist = (writer_id == "" ?
+						postService.selectAll(rownum, rownum2)
+						: postService.selectUserAll(writer_id, rownum, rownum2));
+				break;
+			case "music":
+				plist = (writer_id == "" ?
+						postService.selectMusic(rownum, rownum2)
+						: postService.selectUserMusic(writer_id, rownum, rownum2));
+				break;
+			case "movie":
+				plist = (writer_id == "" ?
+						postService.selectMovie(rownum, rownum2)
+						: postService.selectUserMovie(writer_id, rownum, rownum2));
+				break;
+			case "diary":
+				plist = (writer_id == "" ?
+						postService.selectDiary(rownum, rownum2)
+						: postService.selectUserDiary(writer_id, rownum, rownum2));
+				break;
+			case "review":
+				plist = (writer_id == "" ?
+						postService.selectReview(rownum, rownum2)
+						: postService.selectUserReview(writer_id, rownum, rownum2));
+				break;
+			case "news":
+				plist = (writer_id == "" ?
+						postService.selectNews(rownum, rownum2)
+						: postService.selectUserNews(writer_id, rownum, rownum2));
+				break;
+			case "book":
+				plist = (writer_id == "" ?
+						postService.selectBook(rownum, rownum2)
+						: postService.selectUserBook(writer_id, rownum, rownum2));
+				break;
 			}
-	
+			
 			JSONObject json = new JSONObject();
 			JSONArray jarr = new JSONArray();
 			
-			for(Post p : plist) {
-				
-				JSONObject job = new JSONObject();
-				
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(p.getPost_date());
-				
-				job.put("postId", p.getPost_id() + "");
-				job.put("writerId", p.getWriter_id());
-				try {
-					job.put("category", URLEncoder.encode(
-							p.getCategory(), "UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (plist != null) {
+				for(Post p : plist) {
+					
+					JSONObject job = new JSONObject();
+					
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(p.getPost_date());
+					
+					job.put("postId", p.getPost_id() + "");
+					job.put("writerId", p.getWriter_id());
+					try {
+						job.put("category", URLEncoder.encode(
+								p.getCategory(), "UTF-8"));
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					job.put("postId", p.getPost_id() + "");
+					job.put("sharYn", p.getShar_yn());
+					job.put("openYn", p.getOpen_yn());
+					job.put("writerId", p.getWriter_id());
+					job.put("goodCnt", p.getGoodCnt() + "");
+					job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+					job.put("year", cal.get(Calendar.YEAR) + "");
+					job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
+					job.put("date", cal.get(Calendar.DATE) + "");
+		
+					jarr.add(job);
 				}
-				job.put("postId", p.getPost_id() + "");
-				job.put("sharYn", p.getShar_yn());
-				job.put("openYn", p.getOpen_yn());
-				job.put("writerId", p.getWriter_id());
-				job.put("goodCnt", p.getGoodCnt() + "");
-				job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
-				job.put("year", cal.get(Calendar.YEAR) + "");
-				job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
-				job.put("date", cal.get(Calendar.DATE) + "");
-	
-				jarr.add(job);
+				json.put("list", jarr);
 			}
-			json.put("list", jarr);
 			
 			//ModelAndView mv = new ModelAndView();
 			/*

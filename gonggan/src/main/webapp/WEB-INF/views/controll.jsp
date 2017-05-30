@@ -122,6 +122,9 @@ int today = cal.get(Calendar.DATE);
 </script>
 </head>
 <body>
+<c:if test="${empty param || param.writer_id ne sessionScope.loginUser.getMember_id() }">
+	<jsp:forward page="error.jsp"></jsp:forward>
+</c:if>
 	<nav class="navbarCustom navbar-default">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="index.jsp">
@@ -144,10 +147,10 @@ int today = cal.get(Calendar.DATE);
 			<table id="idclick_table">
 				<tr id="center_align">
 					<td>
-						<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-						<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
+						<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-						<a href="#">로그아웃</a> 
+						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
 					</td>
 				</tr> 

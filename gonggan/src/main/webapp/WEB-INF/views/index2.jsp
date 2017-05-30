@@ -33,12 +33,16 @@ var loginUser = '${sessionScope.loginUser.getMember_id()}';
 var maxRownum = '${plistSize}';
 var initPosition;
 var prevPosition;
+var category = "all";
 
 window.onload = function() {
 
 	//trace(loginUser);
 	
-	requestList(rownum);
+	if (category == "all")
+		requestList(rownum);
+	else
+		requestCategoryList(rownum, category);
 	
 	/*
 	$("#div_Loading").click(function() {
@@ -95,25 +99,25 @@ window.onload = function() {
 		<!-- navbar-collapse 제거-> 메뉴 사라짐  -->
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="">일기</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'diary');">일기</a>
 				</li>
 				<li>
-					<a href="">장소</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'place');">장소</a>
 				</li>
 				<li>
-					<a href="#">리뷰</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'review');">리뷰</a>
 				</li>
 				<li>
-					<a href="#">음악</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'music');">음악</a>
 				</li>
 				<li>
-					<a href="">영화</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'movie');">영화</a>
 				</li>
 				<li>
-					<a href="">뉴스</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'news');">뉴스</a>
 				</li>
 				<li>
-					<a href="">책</a>
+					<a href="javascript:requestCategoryList(rownum = 1, category = 'book');">책</a>
 				</li>
 			</ul>
 		</div>
@@ -256,57 +260,58 @@ window.onload = function() {
 			</div>
 		</div>
 		<section>
-         <div>
-            <div class="searchPost">
-               <table>
-               <tr>
-                  <td>
-                     <div class="text-center div1">
-                        <select><option>내용 </option></select>
-                     </div>
-                  </td>
-                  <td>
-                     <div class="div2">
-                        <input type="text" id="searchPost" placeholder="검색" size="12">
-                        <a href="#">
-                           <img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
-                           width="10%">
-                        </a>
-                     </div>
-                  </td>
-               </tr>
-               </table>
-               <div class="div3">
-                  <select onchange="sorting();" id="select">
-                     <option value="date">최신순</option>
-                     <option value="like">좋아요</option>
-                  </select>
-               </div>
-            </div>
-            <div class="text-center blogHomeContentDiv" id="blogHomeContentDiv">
-            <%-- 
-            <c:set var="musiccount" value="0" />
-            <c:set var="diarycount" value="0" />
-            <c:set var="moviecount" value="0" />
-            <c:set var="newscount" value="0" />
-            <c:set var="reviewcount" value="0" />
-            
-            <c:forEach items="${plist}" var="i" begin="0" varStatus="status">
-               <c:if test="${i.category eq 'diary'}">
-                  <c:set var="diarycount" value="${diarycount + 1}" />
-                  <div>
-                     <table>
-                        <colgroup>
-                           <col width="40%" />
-                           <col width="60%" />
-                        </colgroup>
-                        <tr>
-                           <td colspan="2" class="blogHomeContent">
-                              <a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
-                                 ${dlist[diarycount-1].diary_content}
-                              </a>
-                           </td>
-                        </tr>
+			<div>
+				<div class="searchPost">
+					<table>
+						<tr>
+							<td>
+								<div class="text-center div1">
+									<select><option>내용 </option></select>
+								</div>
+							</td>
+							<td>
+								<div class="div2">
+									<input type="text" id="searchPost" placeholder="검색" size="12">
+									<a href="#">
+										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
+											width="10%">
+									</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="div3">
+					<select onchange="sorting();" id="select">
+						<option value="date">최신순</option>
+						<option value="like">좋아요</option>
+					</select>
+				</div>
+			</div>
+			<div class="text-center blogHomeContentDiv" id="blogHomeContentDiv">
+			<%-- 
+			<c:set var="musiccount" value="0" />
+			<c:set var="diarycount" value="0" />
+			<c:set var="moviecount" value="0" />
+			<c:set var="newscount" value="0" />
+			<c:set var="reviewcount" value="0" />
+			
+			<c:forEach items="${plist}" var="i" begin="0" varStatus="status">
+				<c:if test="${i.category eq 'diary'}">
+				<c:set var="diarycount" value="${diarycount + 1}" />
+				<div>
+					<table>
+						<colgroup>
+							<col width="40%" />
+							<col width="60%" />
+						</colgroup>
+						<tr>
+							<td colspan="2" class="blogHomeContent">
+								<a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
+									${dlist[diarycount-1].diary_content}
+								</a>
+							</td>
+						</tr>
                         <tr class="trBottom">
                            <td><a href="">${i.writer_id}</a></td>
                            <td class="rightAlign">

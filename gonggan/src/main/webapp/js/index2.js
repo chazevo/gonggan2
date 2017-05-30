@@ -29,6 +29,30 @@ function requestList(val) {
 	});
 }
 
+function requestCategoryList(val, category) {
+
+	var rownum2;
+	
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
+	
+	$.ajax({
+				url: "/gonggan/postlist.do",
+				//url: "/gonggan/userpostlist.do",
+				data: { writer_id : "",
+					rownum: rownum, rownum2: rownum2,
+					category: category
+				},
+				success: function(data) {
+					callbackList(data);
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
+	   });
+}
+
 function requestLikeList(val) {
 
 	var rownum2;
@@ -70,7 +94,9 @@ function callbackList(data) {
 	var div;
 	var table, tr, td;
 
-	var postId, content, writerId;
+	var postId, content, writerId, goodCnt;
+	
+	$("#blogHomeContentDiv").html("");
 	
 	for (var i in jsonArr.list) {
 		
@@ -80,6 +106,7 @@ function callbackList(data) {
 		postId = jsonArr.list[i].postId;
 		content = reqPostDetail(postId, jsonArr.list[i].category);
 		writerId = jsonArr.list[i].writerId;
+		goodCnt = jsonArr.list[i].goodCnt;
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
@@ -105,8 +132,9 @@ function callbackList(data) {
 			+ "<input type='checkbox' id='' "
 			+ "onclick='like(this, loginUser, " + postId + ");'>"
 			+ "<i class='like-icon'></i></label>&nbsp;"
-			+ "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
-			+ jsonArr.list[i].goodCnt + "</a>"
+			+ (goodCnt == 0? goodCnt
+					: "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+					+ goodCnt + "</a>");
 		tr.appendChild(td);
 		table.appendChild(tr);
 		

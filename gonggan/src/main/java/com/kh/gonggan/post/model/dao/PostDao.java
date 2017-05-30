@@ -16,10 +16,70 @@ public class PostDao {
 	private SqlSessionTemplate sqlSession;
 	public PostDao(){}
 
-	public List<Post> selectUserAll(String writer_id) {
-		return (List<Post>) sqlSession.selectList("postmapper.userplist", writer_id);
+	public List<Post> selectUserAll(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.userplist", map);
 	}
 	
+	public List<Post> selectUserMusic(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.usermusic", map);
+	}
+	
+	public List<Post> selectUserMovie(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.usermovie", map);
+	}
+
+	public List<Post> selectUserReview(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.userreview", map);
+	}
+
+	public List<Post> selectUserBook(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.userbook", map);
+	}
+
+	public List<Post> selectUserPlace(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.userplace", map);
+	}
+
+	public List<Post> selectUserNews(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.usernews", map);
+	}
+
+	public List<Post> selectUserDiary(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.userdiary", map);
+	}
+
 	public Post postDetail(int post_id) {
 		return (Post) sqlSession.selectOne("postmapper.pdetail", post_id);
 	}

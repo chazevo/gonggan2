@@ -64,7 +64,7 @@
 	select * from
 				(select rownum r, subquery.*
 				from (select *
-						from post left join music using(post_id)
+						from post right join music using(post_id)
 						) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
@@ -73,7 +73,7 @@
 	select * from
 				(select rownum r, subquery.*
 				from (select *
-						from post left join movie using(post_id)
+						from post right join movie using(post_id)
 						) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
@@ -82,7 +82,7 @@
 	select * from
 				(select rownum r, subquery.*
 				from (select *
-						from post left join diary using(post_id)
+						from post right join diary using(post_id)
 						) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
@@ -91,7 +91,7 @@
 	select * from
 				(select rownum r, subquery.*
 				from (select *
-						from post left join news using(post_id)
+						from post right join news using(post_id)
 						) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
@@ -100,7 +100,7 @@
 	select * from
 				(select rownum r, subquery.*
 				from (select *
-						from post left join review using(post_id)
+						from post right join review using(post_id)
 						) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
@@ -109,9 +109,79 @@
 	select * from
 				(select rownum r, subquery.*
 				from (select *
-						from post left join book using(post_id)
+						from post right join book using(post_id)
 						) subquery)
 				where r between #{rownum} and #{rownum2}
+	</select>
+		
+	<select id="userbook" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join book using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
+	</select>
+	
+	<select id="usermovie" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join movie using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
+	</select>
+	
+	<select id="usermusic" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join music using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
+	</select>
+	
+	<select id="userreview" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join review using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
+	</select>
+	
+	<select id="userplace" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join place using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
+	</select>
+	
+	<select id="usernews" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join news using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
+	</select>
+	
+	<select id="userdiary" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join diary using(post_id)
+						) subquery)
+				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
+				and writer_id = #{writer_id}
 	</select>
 	
 	<select id="pdetail" parameterType="int" resultMap="postResult">

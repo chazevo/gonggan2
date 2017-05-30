@@ -81,8 +81,7 @@ function requestList() {
 }
 
 function requestCategoryList(category) {
-	
-	alert(category);
+
 	$.ajax({
 				url: "/gonggan/postlist.do",
 				//url: "/gonggan/userpostlist.do",

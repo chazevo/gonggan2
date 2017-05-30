@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
@@ -23,6 +24,8 @@ import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
 import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.neighbor.model.service.NeighborService;
+import com.kh.gonggan.neighbor.model.vo.Neighbor;
 import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
 
@@ -31,20 +34,22 @@ import com.kh.gonggan.post.model.vo.Post;
  */
 @Controller
 public class HomeController {
-   @Autowired
-      private BlogService blogService;
-      @Autowired
-      private MemberService memberService;
-      @Autowired
-      private PostService postService;
-      @Autowired
-      private CommentService commentService;
-      @Autowired
-      private GoodService goodService;
-   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-   
-   /**
-    * Simply selects the home view to render by returning its name.
+	@Autowired
+	private BlogService blogService;
+	@Autowired
+	private MemberService memberService;
+	@Autowired
+	private PostService postService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private GoodService goodService;
+	@Autowired
+	private NeighborService neighborService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	/*** Simply selects the home view to render by returning its name.
     */
    @RequestMapping(value = "start.do", method = RequestMethod.GET)
    public String home(Locale locale, Model model) {

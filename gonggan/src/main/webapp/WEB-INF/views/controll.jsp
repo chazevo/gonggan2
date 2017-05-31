@@ -19,12 +19,14 @@ int today = cal.get(Calendar.DATE);
 <link rel="stylesheet"
    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel='stylesheet' href='css/css.css'/> 
+<link href="css/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="js/jquery.fancybox.js"></script>
 <script type="text/javascript" src="js/controll.js"></script>
 <title>다정 title here</title>
 <script>
@@ -320,13 +322,13 @@ int today = cal.get(Calendar.DATE);
             <tr><th colspan="3">메뉴 언어 설정 </th></tr>
             <tr>
                <td>
-                  <input type="radio" name="language" value="ko" checked>&nbsp;한국어
+                  <input type="radio" name="language" value="ko" <c:if test='${blog.languages eq "kor"}'>checked</c:if>>&nbsp;한국어
                </td>
                <td>
-                  <input type="radio" name="language" value="eng">&nbsp;영어 
+                  <input type="radio" name="language" value="eng" <c:if test='${blog.languages eq "eng"}'>checked</c:if>>&nbsp;영어 
                </td>
                <td>
-                  <input type="radio" name="language" value="jp">&nbsp;일본어 
+                  <input type="radio" name="language" value="jp" <c:if test='${blog.languages eq "jp"}'>checked</c:if>>&nbsp;일본어 
                </td>
             </tr>
          </table>
@@ -515,13 +517,13 @@ int today = cal.get(Calendar.DATE);
                         <c:set var="count" value="${count + 1}" />
                         <th>${count}</th>
                         <td>
-                           <a href="">${musiclist[musiccount-1].title}</a>
+                          <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${musiclist[musiccount-1].title}</a>
                         </td>
                         <td>
                            <label class='checkbox-wrap'>
                               <input type='checkbox' id='' onclick='like();'>
                               <i class='like-icon'></i>
-                           </label>${i.goodCnt }
+                           </label><a data-fancybox data-src="goodList.do?postId=${i.post_id }">${i.goodCnt }</a>
                         </td>
                      </tr>
                   </c:if>
@@ -531,13 +533,13 @@ int today = cal.get(Calendar.DATE);
                         <c:set var="count" value="${count + 1}" />
                         <th>${count}</th>
                         <td>
-                           <a href="">${dlist[diarycount-1].diary_content}</a>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${dlist[diarycount-1].diary_content}</a>
                         </td>
                         <td>
                            <label class='checkbox-wrap'>
                               <input type='checkbox' id='' onclick='like();'>
                               <i class='like-icon'></i>
-                           </label>${i.goodCnt }
+                           </label><a data-fancybox data-src="goodList.do?postId=${i.post_id }">${i.goodCnt }</a>
                         </td>
                      </tr>
                   </c:if>
@@ -547,13 +549,13 @@ int today = cal.get(Calendar.DATE);
                         <c:set var="count" value="${count + 1}" />
                         <th>${count}</th>
                         <td>
-                           <a href=""> ${reviewlist[reviewcount-1].review_content}</a>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'> ${reviewlist[reviewcount-1].review_content}</a>
                         </td>
                         <td>
                            <label class='checkbox-wrap'>
                               <input type='checkbox' id='' onclick='like();'>
                               <i class='like-icon'></i>
-                           </label>${i.goodCnt }
+                           </label><a data-fancybox data-src="goodList.do?postId=${i.post_id }">${i.goodCnt }</a>
                         </td>
                      </tr>
                   </c:if>
@@ -563,13 +565,13 @@ int today = cal.get(Calendar.DATE);
                         <c:set var="count" value="${count + 1}" />
                         <th>${count}</th>
                         <td>
-                           <a href=""> ${newslist[newscount-1].title}</a>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'> ${newslist[newscount-1].title}</a>
                         </td>
                         <td>
                            <label class='checkbox-wrap'>
                               <input type='checkbox' id='' onclick='like();'>
                               <i class='like-icon'></i>
-                           </label>${i.goodCnt }
+                           </label><a data-fancybox data-src="goodList.do?postId=${i.post_id }">${i.goodCnt }</a>
                         </td>
                      </tr>
                   </c:if>
@@ -579,19 +581,20 @@ int today = cal.get(Calendar.DATE);
                         <c:set var="count" value="${count + 1}" />
                         <th>${count}</th>
                         <td>
-                           <a href=""> ${movielist[moviecount-1].title}</a>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'> ${movielist[moviecount-1].title}</a>
                         </td>
                         <td>
                            <label class='checkbox-wrap'>
                               <input type='checkbox' id='' onclick='like();'>
                               <i class='like-icon'></i>
-                           </label>${i.goodCnt }
+                           </label><a data-fancybox data-src="goodList.do?postId=${i.post_id }">${i.goodCnt }</a>
                         </td>
                      </tr>
                   </c:if>
                </c:forEach>
             </table>
             <div class="divisionMargin">
+            <c:set var="countcomment" value="0" />
                <b>댓글수 순위</b>
                <table width=100%>
                <colgroup>
@@ -599,41 +602,78 @@ int today = cal.get(Calendar.DATE);
                   <col width="65%">
                   <col width="20%">
                </colgroup>
-               <tr>
-                  <th>1</th>
-                  <td>
-                     <a href="">발색이 엄청좋은 아리따움 물광틴트 리뷰</a>
-                  </td>
-                  <td>70</td>
-               </tr>
-               <tr>
-                  <th>2</th>
-                  <td>
-                     <a href="">에버랜드 신명나게 놀고왔다!!!!</a>
-                  </td>
-                  <td>70</td>
-               </tr>
-               <tr>
-                  <th>2</th>
-                  <td>
-                     <a href="">비발디비발디 오션월드 후기:)</a>
-                  </td>
-                  <td>70</td>
-               </tr>
-               <tr>
-                  <th>2</th>
-                  <td>
-                     <a href="">말도안되 오늘이상해..2017-04-30 일기</a>
-                  </td>
-                  <td>70</td>
-               </tr>
-               <tr>
-                  <th>2</th>
-                  <td>
-                     <a href="">Marry me - 구준회</a>
-                  </td>
-                  <td>70</td>
-               </tr>
+               
+               	<c:forEach items="${commentInOrder}" var="i"  begin ="0" varStatus="status">
+               	<c:if test="${i.category eq 'music'}">
+                           <c:set var="musiccount" value="${musiccount + 1}" />
+                     <tr>
+                        <c:set var="countcomment" value="${countcomment + 1}" />
+                        <th>${countcomment}</th>
+                        <td>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${musiclist[musiccount-1].title}</a>
+                        </td>
+                        <td>
+                        <img src="images/massage_x_icon.png" width="5px">
+                        ${i.comment_cnt }
+                        </td>
+                     </tr>
+                  </c:if>
+                  <c:if test="${i.category eq 'diary'}">
+                     <c:set var="diarycount" value="${diarycount + 1}" />
+                     <tr>
+                        <c:set var="countcomment" value="${countcomment + 1}" />
+                        <th>${countcomment}</th>
+                        <td>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${dlist[diarycount-1].diary_content}</a>
+                        </td>
+                        <td>
+                         <img src="images/massage_x_icon.png" width="5px">
+                        ${i.comment_cnt }
+                        </td>
+                     </tr>
+                  </c:if>
+                  <c:if test="${i.category eq 'review'}">
+                           <c:set var="reviewcount" value="${reviewcount + 1}" />
+                     <tr>
+                        <c:set var="countcomment" value="${countcomment + 1}" />
+                        <th>${countcomment}</th>
+                        <td>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'> ${reviewlist[reviewcount-1].review_content}</a>
+                        </td>
+                        <td>
+                                                  <img src="images/massage_x_icon.png" width="5px">
+                        ${i.comment_cnt }
+                        </td>
+                     </tr>
+                  </c:if>
+                  <c:if test="${i.category eq 'news'}">
+                           <c:set var="newscount" value="${newscount + 1}" />
+                     <tr>
+                        <c:set var="countcomment" value="${countcomment + 1}" />
+                        <th>${countcomment}</th>
+                        <td>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'> ${newslist[newscount-1].title}</a>
+                        </td>
+                        <td>
+                                                 <img src="images/massage_x_icon.png" width="5px">
+                        ${i.comment_cnt }
+                        </td>
+                     </tr>
+                  </c:if>
+                  <c:if test="${i.category eq 'movie'}">
+                           <c:set var="moviecount" value="${moviecount + 1}" />
+                     <tr>
+                        <c:set var="countcomment" value="${countcomment + 1}" />
+                        <th>${countcomment}</th>
+                        <td>
+                           <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'> ${movielist[moviecount-1].title}</a>
+                        </td>
+                        <td>
+                          <img src="images/massage_x_icon.png" width="5px"> ${i.comment_cnt }
+                        </td>
+                     </tr>
+                  </c:if>
+               	</c:forEach>
             </table>
             </div>
          </fieldset>

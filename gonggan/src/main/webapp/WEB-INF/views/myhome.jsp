@@ -210,25 +210,53 @@ var imgVal = <%= imgVal %>;
 			<div class="collapse navbar-collapse" id="menu">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('diary');">일기</a>
+						<a href="javascript:rownum=1; requestCategoryList('diary');">
+							<c:if test='${blog.languages eq "kor" }'>일기</c:if>
+							<c:if test='${blog.languages eq "eng" }'>diary</c:if>
+							<c:if test='${blog.languages eq "jp" }'>日記</c:if>
+						</a>
 					</li>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('place');">장소</a>
+						<a href="javascript:rownum=1; requestCategoryList('place');">
+							<c:if test='${blog.languages eq "kor" }'>장소</c:if>
+							<c:if test='${blog.languages eq "eng" }'>place</c:if>
+							<c:if test='${blog.languages eq "jp" }'>場所</c:if>
+						</a>
 					</li>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('review');">리뷰</a>
+						<a href="javascript:rownum=1; requestCategoryList('review');">
+							<c:if test='${blog.languages eq "kor" }'>리뷰</c:if>
+							<c:if test='${blog.languages eq "eng" }'>review</c:if>
+							<c:if test='${blog.languages eq "jp" }'>レビュー</c:if>
+						</a>
 					</li>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('music');">음악</a>
+						<a href="javascript:rownum=1; requestCategoryList('music');">
+							<c:if test='${blog.languages eq "kor" }'>음악</c:if>
+							<c:if test='${blog.languages eq "eng" }'>music</c:if>
+							<c:if test='${blog.languages eq "jp" }'>音楽</c:if>
+						</a>
 					</li>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('movie');">영화</a>
+						<a href="javascript:rownum=1; requestCategoryList('movie');">
+							<c:if test='${blog.languages eq "kor" }'>영화</c:if>
+							<c:if test='${blog.languages eq "eng" }'>movie</c:if>
+							<c:if test='${blog.languages eq "jp" }'>映画</c:if>
+						</a>
 					</li>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('news');">뉴스</a>
+						<a href="javascript:rownum=1; requestCategoryList('news');">
+							<c:if test='${blog.languages eq "kor" }'>뉴스</c:if>
+							<c:if test='${blog.languages eq "eng" }'>news</c:if>
+							<c:if test='${blog.languages eq "jp" }'>ニュース</c:if>
+						</a>
 					</li>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('book');">책</a>
+						<a href="javascript:rownum=1; requestCategoryList('news');">
+							<c:if test='${blog.languages eq "kor" }'>책</c:if>
+							<c:if test='${blog.languages eq "eng" }'>news</c:if>
+							<c:if test='${blog.languages eq "jp" }'>本</c:if>
+						</a>
 					</li>
 				</ul>
 			</div>

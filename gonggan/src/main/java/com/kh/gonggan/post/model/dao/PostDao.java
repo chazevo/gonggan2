@@ -158,4 +158,9 @@ public class PostDao {
 	public List<Post> likeInOrder(String writer_id) {
 	      return (List<Post>) sqlSession.selectList("postmapper.likeinorder", writer_id);
 	   }//나의 포스트에 좋아요 순위
+	public List<Post> commentInOrder(String writer_id) {
+	      return (List<Post>) sqlSession.selectList("postmapper.commentinorder", writer_id);
+	   }//나의 포스트에 댓글 순위
+	
+	
 }

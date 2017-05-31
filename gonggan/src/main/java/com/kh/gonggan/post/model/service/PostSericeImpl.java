@@ -119,4 +119,9 @@ public class PostSericeImpl implements PostService{
 	   public List<Post> likeInOrder(String writer_id){
 	      return postDao.likeInOrder(writer_id);
 	   }
+	@Override
+	   public List<Post> commentInOrder(String writer_id){
+	      return postDao.commentInOrder(writer_id);
+	   }
+	
 }

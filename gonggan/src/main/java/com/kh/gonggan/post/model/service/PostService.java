@@ -27,5 +27,6 @@ public interface PostService {
 	List<Post> selectBook(int rownum, int rownum2);
 	List<Post> likeInOrder(String writer_id);
 	int maxRownum(String category);
+	List<Post> commentInOrder(String writer_id);
 	
 }

@@ -26,7 +26,42 @@ public class Post {
 	private int goodCnt;
 	private String photo_path;
 	private Date post_date;
+	private int comment_cnt;
 	
+	public int getComment_cnt() {
+		return comment_cnt;
+	}
+
+	public void setComment_cnt(int comment_cnt) {
+		this.comment_cnt = comment_cnt;
+	}
+
+	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num,
+			String writer_id, String diary_content, String movie_content, String music_content, String news_content,
+			String review_content, String category, String shar_yn, String open_yn, int goodCnt, String photo_path,
+			Date post_date, int comment_cnt) {
+		super();
+		this.post_id = post_id;
+		this.music_num = music_num;
+		this.diary_num = diary_num;
+		this.movie_num = movie_num;
+		this.news_num = news_num;
+		this.review_num = review_num;
+		this.writer_id = writer_id;
+		this.diary_content = diary_content;
+		this.movie_content = movie_content;
+		this.music_content = music_content;
+		this.news_content = news_content;
+		this.review_content = review_content;
+		this.category = category;
+		this.shar_yn = shar_yn;
+		this.open_yn = open_yn;
+		this.goodCnt = goodCnt;
+		this.photo_path = photo_path;
+		this.post_date = post_date;
+		this.comment_cnt = comment_cnt;
+	}
+
 	public Post(){}
 
 	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num,

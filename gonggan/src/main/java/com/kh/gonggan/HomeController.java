@@ -115,6 +115,7 @@ public class HomeController {
 	   @RequestMapping(value = "controll.do")
 	   public ModelAndView controll(Locale locale, Model model,String writer_id, ModelAndView mv) {
 	      List<Post> likeInOrder = postService.likeInOrder(writer_id);
+	      List<Post> commentInOrder = postService.commentInOrder(writer_id);
 	      List<Music> musiclist = new ArrayList<Music>();
 	      List<Diary> diarylist = new ArrayList<Diary>();
 	      List<Review> reviewlist =  new ArrayList<Review>();
@@ -138,9 +139,24 @@ public class HomeController {
 	            movielist.add(movieService.movieDetail(postId));
 	         }
 	      }
-	         mv.addObject("likeInOrder", likeInOrder);
-	        mv.addObject("likeInOrdersize", likeInOrder.size());
-	         mv.addObject("musiclist", musiclist);
+	     
+	      for(int i = 0; i< commentInOrder.size(); i++){
+		         int postId = commentInOrder.get(i).getPost_id();
+		         if((category =  commentInOrder.get(i).getCategory()).equals("music")){
+		            musiclist.add(musicService.musicDetail(postId));
+		         }else if(category.equals("diary")){
+		            diarylist.add(diaryService.diaryDetail(postId));
+		         }else if(category.equals("review")){
+		            reviewlist.add(reviewService.reviewDetail(postId));
+		         }else if(category.equals("news")){
+		            newslist.add(newsService.newsDetail(postId));
+		         }else if(category.equals("movie")){
+		            movielist.add(movieService.movieDetail(postId));
+		         }
+		      }
+		 mv.addObject("likeInOrder", likeInOrder);
+		 mv.addObject("commentInOrder", commentInOrder);
+		 mv.addObject("musiclist", musiclist);
 	      mv.addObject("dlist", diarylist);
 	      mv.addObject("reviewlist", reviewlist);
 	      mv.addObject("newslist", newslist);

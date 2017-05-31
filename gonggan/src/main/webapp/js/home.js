@@ -5,6 +5,19 @@ function requestCategoryList(val, category) {
 
 	var rownum2;
 	
+	switch(category) {
+	case "music":
+		maxRownum = musicMaxRownum;
+	case "movie":
+		maxRownum = movieMaxRownum;
+	case "review":
+		maxRownum = reviewMaxRownum;
+	case "news":
+		maxRownum = newsMaxRownum;
+	case "diary":
+		maxRownum = diaryMaxRownum;
+	}
+	
 	if (maxRownum - val < 8)
 		var rownum2 = maxRownum;
 	else rownum2 = rownum + 7;

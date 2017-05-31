@@ -110,5 +110,13 @@ public class PostSericeImpl implements PostService{
 		return postDao.selectBook(rownum, rownum2);
 	}
 	
+	@Override
+	public int maxRownum(String category) {
+		return postDao.maxRownum(category);
+	}
 
+	@Override
+	   public List<Post> likeInOrder(String writer_id){
+	      return postDao.likeInOrder(writer_id);
+	   }
 }

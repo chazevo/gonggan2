@@ -42,7 +42,7 @@ public class BlogController {
 			mv.setViewName("myhome");
 		
 		mv.addObject("blog", blog);
-
+		
 		return mv;
 	}
 

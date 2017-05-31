@@ -27,7 +27,14 @@
 
 	var initPosition;
 	var prevPosition;
-	var maxRownum = 50;
+	var maxRownum;
+	var movieMaxRownum = ${movieMaxRownum};
+	var musicMaxRownum = ${musicMaxRownum};
+	var reviewMaxRownum = ${reviewMaxRownum};
+	var placeMaxRownum = 0;
+	var newsMaxRownum = ${newsMaxRownum};
+	var diaryMaxRownum = ${diaryMaxRownum};
+	var category = "main";
 	
 	window.onload = function() {
 		document.getElementById("id").focus();
@@ -37,13 +44,14 @@
 		$(window).scroll(function(){
 
 			initPosition = $(window).scrollTop()
-			
-			if (initPosition > prevPosition) {
-				if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
-					if(maxRownum >= rownum) {
-						$("#div_Loading").show();
-						alert(rownum);
-						setTimeout(function() { requestCategoryList(rownum, category);}, 1000);
+			if (category != 'main') {
+				if (initPosition > prevPosition) {
+					if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
+						if(maxRownum >= rownum) {
+							$("#div_Loading").show();
+							alert(rownum);
+							setTimeout(function() { requestCategoryList(rownum, category);}, 1000);
+						}
 					}
 				}
 			}
@@ -132,7 +140,7 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
 					<!-- sr-only : 숨김 -->
 				</button>
-				<a class="" href="#">
+				<a class="" href="start.do">
 				<img class="smallLogoImg" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
 			</div>
 				<div class="collapse navbar-collapse" id="menu">
@@ -140,25 +148,25 @@
 				<!-- navbar-collapse 제거-> 메뉴 사라짐  -->
 					<ul class="nav navbar-nav navbar-right ">
 						<li>
-						<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'diary');">일기</a>
+						<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'diary');">일기</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'place');">장소</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'place');">장소</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'review');">리뷰</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'review');">리뷰</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'music');">음악</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'music');">음악</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'movie');">영화</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'movie');">영화</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'news');">뉴스</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'news');">뉴스</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, 'book');">책</a>
+							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'book');">책</a>
 						</li>
 					</ul>
 				</div>

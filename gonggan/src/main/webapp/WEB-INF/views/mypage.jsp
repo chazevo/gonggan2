@@ -270,7 +270,7 @@
                                           게시글을 작성하고 이웃을 만들어보세요!!<br>
                                        <c:if test="${!empty (goodMyList)}">
                                         <c:forEach items="${ goodMyList}" var="i"  begin ="0">
-                                           <font><a href="selectBlog.do?writer_id=${i.member_id} }">${ i.member_id }</a> 님이</font> | 
+                                           <font><a href="selectBlog.do?writer_id=${i.member_id} ">${ i.member_id }</a> 님이</font> | 
                                              게시글에 <b>좋아요</b>을 누르셨습니다.<br>
                                         </c:forEach>
                                        </c:if>

@@ -148,4 +148,14 @@ public class PostDao {
 		map.put("rownum2", rownum2);
 		return (List<Post>) sqlSession.selectList("postmapper.booklist", map);
 	}
+	
+	public int maxRownum(String category) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("category", category);
+		return (int) sqlSession.selectOne("postmapper.maxrnum", map);
+	}
+	
+	public List<Post> likeInOrder(String writer_id) {
+	      return (List<Post>) sqlSession.selectList("postmapper.likeinorder", writer_id);
+	   }//나의 포스트에 좋아요 순위
 }

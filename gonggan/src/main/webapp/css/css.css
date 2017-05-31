@@ -881,7 +881,7 @@ img {
 }
 
 .header-content {
-	background-color: #E6E6E6;
+	/*background-color: #E6E6E6;*/
 	position:relative;
 	width:100%;
 	text-align:center;
@@ -1400,7 +1400,7 @@ input[type=file]:hover {
 }
 
 fieldset #blogTitle, #blogComment {
-	color:red;
+	/* color:red; */
 	background-color:transparent;
 	border-width:0px;
 	width:100%;

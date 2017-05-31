@@ -13,9 +13,13 @@
 <link rel='stylesheet' href='css/css.css'/> 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/postDetail.js"></script> 
+
+<script src="js/jquery.timeago.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 	var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	var postId = '${postId}';
+	var time= '${postDate}';
 	
 	window.onload = function() {
 		if (loginUser != "")
@@ -29,7 +33,29 @@
 			else
 				$(this).addClass("grayTd");
 		});
+		
+			
 	}
+	
+	jQuery.timeago.settings.strings = {
+			suffixAgo: "전",
+			suffixFromNow: "후",
+			seconds: "1분 이내",
+			minute: "1분",
+			minutes: "%d분",
+			hour: "1시간",
+			hours: "%d시간",
+			day: "하루",
+			days: "%d일",
+			month: "한달",
+			months: "%달",
+			year: "1년",
+			years: "%d년"
+	}
+	
+	jQuery(document).ready(function(){
+		jQuery("abbr.timeago").timeago();
+	});
 	
 </script>
 </head>
@@ -46,7 +72,7 @@
 			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${writerId} 님 </b></a>
 			
 			<div class="navbar-right hour">
-				2시간
+				<abbr class="timeago" title="${postDate}">${postDate}</abbr>
 			</div>
 			
 		</td>

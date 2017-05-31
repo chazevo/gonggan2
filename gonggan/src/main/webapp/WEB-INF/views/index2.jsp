@@ -34,6 +34,7 @@ var maxRownum = '${plistSize}';
 var initPosition;
 var prevPosition;
 var category = "all";
+var count = 0;
 
 window.onload = function() {
 

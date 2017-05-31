@@ -72,6 +72,14 @@ window.onload = function() {
 		prevPosition = initPosition
 	});
 	
+	$('#neighborList').click(function () {
+	      if(count == 0){
+	         neighborList(loginUser);
+	         count++;
+	         category="neighborlist";
+	      }
+	   });
+	
 	document.getElementById("searchPost").focus();
 }
 </script>
@@ -136,95 +144,100 @@ window.onload = function() {
 					<td class="disapear">
 						<img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
 					</td>
-					<td class="table2nd">
-						<table>
-							<colgroup>
-								<col style="width:*;" />
-								<col width="5%" />
-							</colgroup>
-							<tr>
-								<th id="postAlarm">내 포스트 알람_<font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
-								<td><a href="">▶</a></td>
-							</tr>
-							<tbody id="listbody_mytrace"></tbody>
-							<tbody id="listbody_newPost">
-								<tr>
-									<td>
-										<a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
-										<a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
-										<a href=""><font color="#2D86C9">이대장</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">토리와 함께 추억쌓기 놀이</a> |
-										<a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">행복가득한 그루터기 발자취</a> |
-										<a href=""><font color="#2D86C9">그루터기</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
-										<a href=""><font color="#2D86C9">깐깐징어</font></a>
-									</td>
-									<td></td>
-								</tr>
-							</tbody>
-							<tr>
-								<td colspan="2" align="center"  class="title">
-									<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
-								</td>
-							</tr>
-							<tr>
-								<td class="title">
-									서로이웃 신청_
-									<font color="#2D86C9">
-										<b id="neighborReqListSize">${neighborReqListSize }</b>
-									</font>
-								</td>
-								<td  class="title"><a href="">▶</a></td>
-							</tr>
-							<tbody id="listbody_newNeighbor">
-								<tr>
-									<td>
-										<table>
-											<tr>
-												<c:if test="${!empty (neighborReqList) }">
-												<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
-												<td>
-													<a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
-													<a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
-														<div class="neighborYN">수락</div>
-													</a>
-													<a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
-														<div class="neighborYN">거절</div>
-													</a>
-												</td>
-												</c:forEach>
-												</c:if>
-												<td></td>
-											</tr>
-										</table>
-									</td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
-					</td>
+					<td class="table2nd" style="overflow:scroll;">
+               <!--q<br>w<br>e<br>r<br>t<br>y<br>u<br>q<br>w<br>e<br>r<br>t<br>y<br>u<br>q<br>w<br>e<br>r<br>t<br>y<br>u<br>-->
+                  <table id="listbody_newPost">
+                     <colgroup>
+                        <col style="width:*;" />
+                        <col width="5%" />
+                     </colgroup>
+                     
+                     
+                     <tr>
+                        <th id="postAlarm">내 포스트 알람_<font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
+                        <td><a href="">▶</a></td>
+                     </tr>
+                     <tbody id="listbody_mytrace"></tbody>
+                     <tbody id="listbody_newPost">
+                        <tr>
+                           <td>
+                              <a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
+                              <a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
+                              <a href=""><font color="#2D86C9">이대장</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">토리와 함께 추억쌓기 놀이</a> |
+                              <a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">행복가득한 그루터기 발자취</a> |
+                              <a href=""><font color="#2D86C9">그루터기</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
+                              <a href=""><font color="#2D86C9">깐깐징어</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                     <tr>
+                        <td colspan="2" align="center"  class="title">
+                           <img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="title">
+                           서로이웃 신청_
+                           <font color="#2D86C9">
+                              <b id="neighborReqListSize">${neighborReqListSize }</b>
+                           </font>
+                        </td>
+                        <td  class="title"><a href="">▶</a></td>
+                     </tr>
+                  
+                     
+                     <tbody id="listbody_newNeighbor">
+                        <tr>
+                           <td>
+                              <table>
+                                 <tr>
+                                    <c:if test="${!empty (neighborReqList) }">
+                                    <c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
+                                    <td>
+                                       <a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+                                       <a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+                                          <div class="neighborYN">수락</div>
+                                       </a>
+                                       <a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+                                          <div class="neighborYN">거절</div>
+                                       </a>
+                                    </td>
+                                    </c:forEach>
+                                    </c:if>
+                                    <td></td>
+                                 </tr>
+                              </table>
+                           </td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </td>
 				</tr>
 			</table>
 			

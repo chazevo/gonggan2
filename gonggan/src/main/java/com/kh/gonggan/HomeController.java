@@ -8,6 +8,8 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
@@ -158,7 +161,7 @@ public class HomeController {
 		mv.setViewName("myhome");
 		return mv;
 	}
-   
+	
 	@RequestMapping("mypage.do")
 	public ModelAndView mypage(Locale locale, Model model,String writer_id , ModelAndView mv) {
       
@@ -260,12 +263,20 @@ public class HomeController {
 		return "map";
 	}
   
-	@RequestMapping(value="neighborlist.do")
-	public ModelAndView neighborlist(ModelAndView mv , @RequestParam String loginUser){
-		logger.info("Neighbor List! ");
-		List<Member> neighborlist = neighborService.selectNeighborList(loginUser);
-		mv.setViewName("neighborList");
-		mv.addObject("neighborlist",neighborlist);
-		return mv;
-	}
+	@RequestMapping(value="/neighborlist.do", produces={"application/json"})
+    @ResponseBody
+    public String neighborList(@RequestParam String loginUser){
+       List<Member> neighborlist = neighborService.selectNeighborList(loginUser);
+       
+       JSONObject json = new JSONObject();
+       JSONArray jarr = new JSONArray();
+       for(Member m : neighborlist){
+          JSONObject job = new JSONObject();
+          job.put("memberId", m.getMember_id() + "");
+          jarr.add(job);
+       }       
+    json.put("list", jarr);
+    return json.toJSONString();
+       
+    }
 }

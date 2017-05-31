@@ -64,8 +64,8 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 @Controller
 public class PostController {
 	
-	//메소드가 controller가 됨 컨트롤러를 메소드 단위로 작성하면 된다.
-	//공통으로 사용하는 것은 common에 넣어놓으면 됨
+	//硫붿냼�뱶媛� controller媛� �맖 而⑦듃濡ㅻ윭瑜� 硫붿냼�뱶 �떒�쐞濡� �옉�꽦�븯硫� �맂�떎.
+	//怨듯넻�쑝濡� �궗�슜�븯�뒗 寃껋� common�뿉 �꽔�뼱�넃�쑝硫� �맖
 	@Autowired
 	private PostService postService;
 	@Autowired
@@ -198,6 +198,61 @@ public class PostController {
 			
 			return json.toJSONString();
 		}
+	@RequestMapping(value="/postNeighborlist.do", produces={"application/json"})
+	@ResponseBody
+	public String selectList(@RequestParam String loginUser,
+			@RequestParam int rownum, @RequestParam int rownum2){
+	System.out.println("postNl.do");
+	System.out.println("rownum : " + rownum + " rownum2 : " + rownum2);
+	System.out.println("loginUser :" + loginUser);
+		List<Post> plist  = postService.selectUserNeighbor(loginUser, rownum, rownum2);
+		
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		if (plist != null) {
+			for(Post p : plist) {
+				
+				JSONObject job = new JSONObject();
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(p.getPost_date());
+				
+				job.put("postId", p.getPost_id() + "");
+				job.put("writerId", p.getWriter_id());
+				try {
+					job.put("category", URLEncoder.encode(
+							p.getCategory(), "UTF-8"));
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				job.put("postId", p.getPost_id() + "");
+				job.put("sharYn", p.getShar_yn());
+				job.put("openYn", p.getOpen_yn());
+				job.put("writerId", p.getWriter_id());
+				job.put("goodCnt", p.getGoodCnt() + "");
+				job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+				job.put("year", cal.get(Calendar.YEAR) + "");
+				job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
+				job.put("date", cal.get(Calendar.DATE) + "");
+	
+				jarr.add(job);
+			}
+			json.put("list", jarr);
+		}
+		
+		//ModelAndView mv = new ModelAndView();
+		/*
+		mv.setViewName("home");
+		mv.addObject("loginUser", loginUser);
+		*/
+		
+		/*return "home";*/
+		//return mv;
+		
+		return json.toJSONString();
+	}
 	
 	@RequestMapping(value="/plikelist.do", produces={"application/json"})
 	@ResponseBody
@@ -297,7 +352,7 @@ public class PostController {
 		req.setCharacterEncoding("utf-8");
 		
 		if(ServletFileUpload.isMultipartContent(req)) {
-			// 전송 파일 용량 제한 : 10Mbyte 제한한 경우
+			// �쟾�넚 �뙆�씪 �슜�웾 �젣�븳 : 10Mbyte �젣�븳�븳 寃쎌슦
 			int maxSize = 1024 * 1024 * 10;
 
 			String root = req.getSession().getServletContext().getRealPath("/");
@@ -315,7 +370,7 @@ public class PostController {
 			System.out.println("savepath : " + savePath);
 
 
-			// 파일 저장 경로(ex : webapp/uploadImages/) 정함
+			// �뙆�씪 ���옣 寃쎈줈(ex : webapp/uploadImages/) �젙�븿
 			MultipartRequest multiRequest  = new MultipartRequest(req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 			originalFileName = multiRequest.getFilesystemName("file");
 		
@@ -352,7 +407,7 @@ public class PostController {
 		public String map(@RequestParam String address){
 			String searchaddr = null;
 			
-			//필수는 query로 주소만..나머지 옵션은 api참고.
+			//�븘�닔�뒗 query濡� 二쇱냼留�..�굹癒몄� �샃�뀡�� api李멸퀬.
 			String api = null; 
 			StringBuffer sb = null;
 
@@ -365,11 +420,11 @@ public class PostController {
 				
 				URL url = new URL(api);
 				
-				HttpsURLConnection http = (HttpsURLConnection)url.openConnection();//고유아이디
-				http.setRequestProperty("X-Naver-Client-Id", "JVmBHBSdqNcd5JKBkRhO");//비밀번호
+				HttpsURLConnection http = (HttpsURLConnection)url.openConnection();//怨좎쑀�븘�씠�뵒
+				http.setRequestProperty("X-Naver-Client-Id", "JVmBHBSdqNcd5JKBkRhO");//鍮꾨�踰덊샇
 				http.setRequestProperty("X-Naver-Client-Secret", "eg9UxPaF2b");
 				//http.setDoOutput(true);
-				//네이버는 반드시 GET방식으로 호출해야함.
+				//�꽕�씠踰꾨뒗 諛섎뱶�떆 GET諛⑹떇�쑝濡� �샇異쒗빐�빞�븿.
 				http.setRequestMethod("GET");
 				http.connect();
 				
@@ -392,7 +447,7 @@ public class PostController {
 				String y = "";
 				
 				jsonObject = (JSONObject)parser.parse(sb.toString());
-				//디버깅을 해보면 알겠지만 json구조가 트리형태로 리턴되서 몇번 파싱 해야 원하는 좌표가 나온다.
+				//�뵒踰꾧퉭�쓣 �빐蹂대㈃ �븣寃좎�留� json援ъ“媛� �듃由ы삎�깭濡� 由ы꽩�릺�꽌 紐뉖쾲 �뙆�떛 �빐�빞 �썝�븯�뒗 醫뚰몴媛� �굹�삩�떎.
 				jsonObject = (JSONObject)jsonObject.get("result");
 				jsonArray = (JSONArray)jsonObject.get("items");
 				
@@ -406,7 +461,7 @@ public class PostController {
 				}
 				
 				//System.out.println(sb.toString());
-				System.out.println("x좌표==" + x + " y좌표==" + y);
+				System.out.println("x醫뚰몴==" + x + " y醫뚰몴==" + y);
 				
 				br.close();
 				in.close();
@@ -432,7 +487,7 @@ public class PostController {
 		public String mapAdd(@RequestParam String x, @RequestParam String y){
 			String searchaddr = null;
 			
-			//필수는 query로 주소만..나머지 옵션은 api참고.
+			//�븘�닔�뒗 query濡� 二쇱냼留�..�굹癒몄� �샃�뀡�� api李멸퀬.
 			String api = null; 
 			StringBuffer sb = null;
 
@@ -446,11 +501,11 @@ public class PostController {
 				
 				URL url = new URL(api);
 				
-				HttpsURLConnection http = (HttpsURLConnection)url.openConnection();//고유아이디
-				http.setRequestProperty("X-Naver-Client-Id", "JVmBHBSdqNcd5JKBkRhO");//비밀번호
+				HttpsURLConnection http = (HttpsURLConnection)url.openConnection();//怨좎쑀�븘�씠�뵒
+				http.setRequestProperty("X-Naver-Client-Id", "JVmBHBSdqNcd5JKBkRhO");//鍮꾨�踰덊샇
 				http.setRequestProperty("X-Naver-Client-Secret", "eg9UxPaF2b");
 				//http.setDoOutput(true);
-				//네이버는 반드시 GET방식으로 호출해야함.
+				//�꽕�씠踰꾨뒗 諛섎뱶�떆 GET諛⑹떇�쑝濡� �샇異쒗빐�빞�븿.
 				http.setRequestMethod("GET");
 				http.connect();
 				
@@ -470,7 +525,7 @@ public class PostController {
 				JSONArray jsonArray;
 				
 				jsonObject = (JSONObject)parser.parse(sb.toString());
-				//디버깅을 해보면 알겠지만 json구조가 트리형태로 리턴되서 몇번 파싱 해야 원하는 좌표가 나온다.
+				//�뵒踰꾧퉭�쓣 �빐蹂대㈃ �븣寃좎�留� json援ъ“媛� �듃由ы삎�깭濡� 由ы꽩�릺�꽌 紐뉖쾲 �뙆�떛 �빐�빞 �썝�븯�뒗 醫뚰몴媛� �굹�삩�떎.
 				jsonObject = (JSONObject)jsonObject.get("result");
 				jsonArray = (JSONArray)jsonObject.get("items");
 				
@@ -528,15 +583,15 @@ public class PostController {
 					+ "&markers=" + mapx + "," + mapy);
 		
 			
-			HttpsURLConnection http = (HttpsURLConnection)url.openConnection();//고유아이디
-			http.setRequestProperty("X-Naver-Client-Id", "JVmBHBSdqNcd5JKBkRhO");//비밀번호
+			HttpsURLConnection http = (HttpsURLConnection)url.openConnection();//怨좎쑀�븘�씠�뵒
+			http.setRequestProperty("X-Naver-Client-Id", "JVmBHBSdqNcd5JKBkRhO");//鍮꾨�踰덊샇
 			http.setRequestProperty("X-Naver-Client-Secret", "eg9UxPaF2b");
 			//http.setDoOutput(true);
-			//네이버는 반드시 GET방식으로 호출해야함.
+			//�꽕�씠踰꾨뒗 諛섎뱶�떆 GET諛⑹떇�쑝濡� �샇異쒗빐�빞�븿.
 			http.setRequestMethod("GET");
 			http.connect();
 			
-			// 전송 파일 용량 제한 : 10Mbyte 제한한 경우
+			// �쟾�넚 �뙆�씪 �슜�웾 �젣�븳 : 10Mbyte �젣�븳�븳 寃쎌슦
 			int maxSize = 1024 * 1024 * 10;
 
 			String root = req.getSession().getServletContext().getRealPath("/");
@@ -557,7 +612,7 @@ public class PostController {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
             
 	        /*
-	        변경할 파일명 만들기
+	        蹂�寃쏀븷 �뙆�씪紐� 留뚮뱾湲�
 	        renameFileName = sdf.format(new Date(current))+ "." + originalFileName.substring(
 	              originalFileName.lastIndexOf(".") + 1);
 	        */

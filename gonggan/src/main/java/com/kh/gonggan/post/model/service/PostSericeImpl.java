@@ -71,6 +71,11 @@ public class PostSericeImpl implements PostService{
 	public List<Post> selectUserNews(String writer_id, int rownum, int rownum2) {
 		return  postDao.selectUserNews(writer_id, rownum, rownum2);
 	}
+	@Override
+	public List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2) {
+		return  postDao.selectUserNeighbor(loginUser, rownum, rownum2);
+	}
+	
 	
 	@Override
 	public String selectPostWriter(int post_id){

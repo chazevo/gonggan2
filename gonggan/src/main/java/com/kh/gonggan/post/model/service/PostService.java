@@ -15,6 +15,7 @@ public interface PostService {
 	List<Post> selectUserNews(String writer_id, int rownum, int rownum2);
 	List<Post> selectUserPlace(String writer_id, int rownum, int rownum2);
 	List<Post> selectUserDiary(String writer_id, int rownum, int rownum2);
+	List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2);
 	String selectPostWriter(int post_id);
 	List<Post> selectAll(int rownum, int rownum2);
 	List<Post> selectLikeAll(int rownum, int rownum2);
@@ -28,5 +29,6 @@ public interface PostService {
 	List<Post> likeInOrder(String writer_id);
 	int maxRownum(String category);
 	List<Post> commentInOrder(String writer_id);
+	
 	
 }

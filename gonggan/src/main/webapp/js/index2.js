@@ -53,6 +53,32 @@ function requestCategoryList(val, category) {
 	   });
 }
 
+function requestNeighborPostList(val, loginUser) {
+
+	var rownum2;
+	var loginUser;
+	
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
+	
+	$.ajax({
+				url: "/gonggan/postNeighborlist.do",
+				//url: "/gonggan/userpostlist.do",
+				data: { loginUser : loginUser,
+					rownum: rownum, rownum2: rownum2
+				},
+				success: function(data) {
+					callbackList(data);
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
+	   });
+}
+
+
+
 function requestLikeList(val) {
 
 	var rownum2;
@@ -95,7 +121,6 @@ function callbackList(data) {
 	var table, tr, td;
 
 	var postId, content, writerId, goodCnt;
-	
 	$("#blogHomeContentDiv").html("");
 	
 	for (var i in jsonArr.list) {
@@ -150,6 +175,8 @@ function callbackList(data) {
 	}
 	$("#div_Loading").fadeOut(100);
 }
+
+
 
 function reqPostDetail(postId, category) {
 	

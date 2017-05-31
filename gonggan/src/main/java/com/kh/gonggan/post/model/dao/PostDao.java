@@ -79,6 +79,15 @@ public class PostDao {
 		map.put("rownum2", rownum2 + "");
 		return (List<Post>) sqlSession.selectList("postmapper.userdiary", map);
 	}
+	
+	public List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("loginUser", loginUser);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		System.out.println("DAO :"+map);
+		return (List<Post>) sqlSession.selectList("postmapper.neighborpost", map);
+	}
 
 	public Post postDetail(int post_id) {
 		return (Post) sqlSession.selectOne("postmapper.pdetail", post_id);
@@ -157,10 +166,10 @@ public class PostDao {
 	
 	public List<Post> likeInOrder(String writer_id) {
 	      return (List<Post>) sqlSession.selectList("postmapper.likeinorder", writer_id);
-	   }//나의 포스트에 좋아요 순위
+	   }//�굹�쓽 �룷�뒪�듃�뿉 醫뗭븘�슂 �닚�쐞
 	public List<Post> commentInOrder(String writer_id) {
 	      return (List<Post>) sqlSession.selectList("postmapper.commentinorder", writer_id);
-	   }//나의 포스트에 댓글 순위
+	   }//�굹�쓽 �룷�뒪�듃�뿉 �뙎湲� �닚�쐞
 	
 	
 }

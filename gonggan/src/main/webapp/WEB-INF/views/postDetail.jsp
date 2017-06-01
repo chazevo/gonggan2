@@ -13,13 +13,11 @@
 <link rel='stylesheet' href='css/css.css'/> 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/postDetail.js"></script> 
-
-<script src="js/jquery.timeago.js" type="text/javascript"></script>
+<script src="js/jquery-timeago.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	var postId = '${postId}';
-	var time= '${postDate}';
 	
 	window.onload = function() {
 		if (loginUser != "")
@@ -51,7 +49,7 @@
 			months: "%달",
 			year: "1년",
 			years: "%d년"
-	}
+	};
 	
 	jQuery(document).ready(function(){
 		jQuery("abbr.timeago").timeago();

@@ -28,10 +28,15 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -42,6 +47,41 @@ public class MusicController {
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 25;
 	private static YouTube youtube;
+	
+	@RequestMapping(value="/lyrics.do", produces={"text/plain;charset=UTF-8"})
+	@ResponseBody
+	public String lyrics(@RequestParam String title, String singer) {
+		
+		ArrayList<String> musicCodeList = new ArrayList<String>();
+		String lyrics = null;
+		
+		Document document = null;
+		
+		try {
+			document = Jsoup.connect("http://www.melon.com/search/lyric/index.htm?q="
+					+ title + "&section=&searchGnbYn=Y&ipath=srch_form").get();
+
+			Elements elements = document.select("dl.cntt_lyric");
+			
+			for(int i=0 ; i<elements.size()-1 ; i++){
+				Element element = elements.get(i);
+				musicCodeList.add(element.select("a").get(0).attr("data-song-no"));
+			}
+			
+			document = Jsoup.connect("http://www.melon.com/song/detail.htm?songId="
+					+ musicCodeList.get(0)).get();
+			
+			lyrics = document.select("div.lyric").text();
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		return lyrics;
+	}
 	
 	@RequestMapping(value="/musicpost.do", produces="text/plain;charset=UTF-8", method=RequestMethod.GET)
 	public ModelAndView musicpost(@RequestParam String keyword,

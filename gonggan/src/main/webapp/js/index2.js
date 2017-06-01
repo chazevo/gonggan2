@@ -30,7 +30,7 @@ function requestList(val) {
 }
 
 function requestCategoryList(val, category) {
-
+	
 	var rownum2;
 	
 	if (maxRownum - val < 8)
@@ -95,8 +95,6 @@ function callbackList(data) {
 	var table, tr, td;
 
 	var postId, content, writerId, goodCnt;
-	
-	$("#blogHomeContentDiv").html("");
 	
 	for (var i in jsonArr.list) {
 		
@@ -284,28 +282,90 @@ function acceptNeig(member_id, member_id2) {
 	
 	$(this).parent().remove();
 	
-/*	$.ajax({
-	      url: "/gonggan/naccept.do",
-	      data: {member_id: member_id, member_id2: member_id2},
-	      success: function(data) {
-		     $("#neighborReqListSize").text($("#neighborReqListSize").text() - 1);
-	    	 alert(data);
-	    	 $(this).parent().remove();
-	      },
-	      error: function(data,status,error){
-	         console.log("error : " + error);
-	      }
-	   });*/
+	/*
+	$.ajax({
+		url: "/gonggan/naccept.do",
+		data: {member_id: member_id, member_id2: member_id2},
+		success: function(data) {
+			$("#neighborReqListSize").text($("#neighborReqListSize").text() - 1);
+			alert(data);
+			$(this).parent().remove();
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});*/
 }
 
 function rejectNeig(member_id, member_id2) {
 	$.ajax({
-	      url: "/gonggan/nreject.do",
-	      data: {member_id: member_id, member_id2: member_id2},
+		url: "/gonggan/nreject.do",
+		data: {member_id: member_id, member_id2: member_id2},
+		success: function(data) {
+			alert(data);
+			$("#neighborReqListSize").text($("#neighborReqListSize").text() - 1);
+			$(this).parent().remove();
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+}
+
+function neighborList(loginUser) {
+	$.ajax({
+		url: "neighborlist.do",
+		data: { 
+			loginUser: loginUser},
+			success: function(data){
+			callbackNeighborList(data);         
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		} 
+	});
+} //이웃 블로그 목록
+
+function callbackNeighborList(data){
+
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+	
+	var div;
+	var tr, td;
+	
+	while (document.getElementById("listbody_newPost").rows.length > 1 )
+		document.getElementById("listbody_newPost").deleteRow(1);   
+
+	tr = document.createElement("tr");
+	td = document.createElement("td");
+	td.innerHTML = "서로이웃 수_<font color='#2D86C9'><b>" + jsonArr.list.length + "</b></font>";
+	tr.appendChild(td);
+	document.getElementById("listbody_newPost").appendChild( tr );
+	for(var i in jsonArr.list) {
+		var memberId = jsonArr.list[i].memberId;
+		tr = document.createElement( 'tr' );
+		td = document.createElement( 'td' );
+		var a = document.createElement( 'a' );
+		var aText = document.createTextNode(memberId);
+		var font = document.createElement('font');
+		a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
+		tr.appendChild(td);
+		td.appendChild(a);
+		a.appendChild( aText );
+		document.getElementById("listbody_newPost").appendChild( tr );
+	}
+} //이웃 블로그 목록
+
+function searchNeighbor() {
+	
+	$.ajax({
+	      url: "/gonggan/nsearch.do",
+	      data: {member_id:loginUser,
+	    	  member_id2 : $('#searchNeighbor').val()
+	    	  },
 	      success: function(data) {
-		    	 alert(data);
-		    	 $("#neighborReqListSize").text($("#neighborReqListSize").text() - 1);
-		    	 $(this).parent().remove();
+	    	  callbackNsearch(data);
 	      },
 	      error: function(data,status,error){
 	         console.log("error : " + error);
@@ -313,46 +373,27 @@ function rejectNeig(member_id, member_id2) {
 	   });
 }
 
-function neighborList(loginUser){
-	   $.ajax({
-	      url: "neighborlist.do",
-	      data: { 
-	         loginUser: loginUser},
-	      success: function(data){
-	         callbackNeighborList(data);         
-	      },
-	         error: function(data,status,error){
-	               console.log("error : " + error);
-	      } 
-	   });
-	}///이웃 블로그 목록
+function callbackNsearch(data) {
 
-	function callbackNeighborList(data){
-
-	   while (document.getElementById("listbody_newPost").rows.length > 0 )
-	      document.getElementById("listbody_newPost").deleteRow(0);   
-	   
-	   var jsonObj = JSON.stringify(data);
-	   var jsonArr = JSON.parse(jsonObj);
-	   
-	   var div;
-	   var tr, td;
-	   tr = document.createElement("tr");
-	   td = document.createElement("td");
-	   td.innerHTML = "서로이웃 수_<font color='#2D86C9'><b>" + jsonArr.list.length + "</b></font>";
-	   tr.appendChild(td);
-	   document.getElementById("listbody_newPost").appendChild( tr );
-	   for(var i in jsonArr.list){
-	      var memberId = jsonArr.list[i].memberId;
-	      tr = document.createElement( 'tr' );
-	      td = document.createElement( 'td' );
-	      var a = document.createElement( 'a' );
-	      var aText = document.createTextNode(memberId);
-	      var font = document.createElement('font');
-	      a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
-	      tr.appendChild(td);
-	      td.appendChild(a);
-	      a.appendChild( aText );
-	      document.getElementById("listbody_newPost").appendChild( tr );
-	   }
-	}///이웃 블로그 목록
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+	
+	var tr, td;
+	
+	while (document.getElementById("listbody_newPost").rows.length > 1 )
+		document.getElementById("listbody_newPost").deleteRow(1);
+	
+	for (var i in jsonArr.list) {
+		var member_id = jsonArr.list[i].member_id;
+		tr = document.createElement( 'tr' );
+		td = document.createElement( 'td' );
+		var a = document.createElement( 'a' );
+		var aText = document.createTextNode(member_id);
+		var font = document.createElement('font');
+		a.href="selectBlog.do?writer_id="+jsonArr.list[i].member_id;
+		tr.appendChild(td);
+		td.appendChild(a);
+		a.appendChild( aText );
+		document.getElementById("listbody_newPost").appendChild( tr );
+	}
+}

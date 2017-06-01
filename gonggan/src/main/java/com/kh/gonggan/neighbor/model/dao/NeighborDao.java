@@ -1,5 +1,6 @@
 package com.kh.gonggan.neighbor.model.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -25,4 +26,11 @@ public class NeighborDao {
 		return (List<Neighbor>) sqlSession.selectList("neighbormapper.neighborList");
 	}
 	
+	public List<Member> neighborSearch(String member_id, String member_id2) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("member_id", member_id);
+		map.put("member_id2", member_id2);
+		return (List<Member>) sqlSession.selectList("membermapper.nsearch", map);
+		
+	}
 }

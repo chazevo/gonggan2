@@ -5,6 +5,7 @@ public class Blog {
 	private String writer_id;
 	private String contents;
 	private String background;
+	private String background_color;
 	private String color;
 	private String languages;
 	private String blog_open_yn;
@@ -65,6 +66,15 @@ public class Blog {
 
 	public void setBackground(String background) {
 		this.background = background;
+	}
+
+	public String getBackground_color() {
+		return background_color;
+	}
+
+
+	public void setBackground_color(String background_color) {
+		this.background_color = background_color;
 	}
 
 

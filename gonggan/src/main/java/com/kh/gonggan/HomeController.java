@@ -1,15 +1,24 @@
 package com.kh.gonggan;
 
-import java.text.DateFormat;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +54,8 @@ import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
 import com.kh.gonggan.review.model.service.ReviewService;
 import com.kh.gonggan.review.model.vo.Review;
+
+import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
 
 /**
  * Handles requests for the application home page.
@@ -208,9 +219,56 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "uploadform.do", method = RequestMethod.GET)
-	public String uploadform(Locale locale, Model model) {
+	public ModelAndView uploadform(Locale locale, ModelAndView mv) {
+
 		logger.info("Welcome uploadform! ");
-		return "uploadform";
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+		
+		KobisOpenAPIRestService service = 
+				new KobisOpenAPIRestService("5337c5e39d3dd2ffebecbd935e09e9c2");
+		String weeklyResponse;
+		ObjectMapper mapper = new ObjectMapper();
+		HashMap<String, Object> weeklyResult = null;
+		
+		try {
+			
+			weeklyResponse = service.getWeeklyBoxOffice(
+					true, sdf.format(new Date()), "10", "0", "", "", "");
+
+			mapper = new ObjectMapper();
+			weeklyResult = 
+					mapper.readValue(weeklyResponse, HashMap.class);
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+
+		ArrayList<String> popKeyword = new ArrayList<String>();
+		
+		Document document = null;
+		
+		try {
+			document = Jsoup.connect("http://www.naver.com/").get();
+
+			Elements elements = document.select(".ah_roll_area .ah_l li");
+			
+			for(int i=0 ; i<elements.size()-1 ; i++){
+				Element element = elements.get(i);
+				popKeyword.add(element.select("span.ah_k").text());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		mv.setViewName("uploadform");
+		mv.addObject("weeklyResult", weeklyResult);
+		mv.addObject("popKeyword", popKeyword);
+		
+		return mv;
 	}
 
 	@RequestMapping(value = "uploadHtml.do", method = RequestMethod.GET)

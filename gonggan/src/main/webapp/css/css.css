@@ -18,6 +18,14 @@ body {
 	font-family: 'Nanum Barun Gothic', sans-serif;
 }
 
+.myhome .header-content-inner {
+	background-size: 100% 100%;
+}
+
+.myhome #todayHeader h3 a:hover {
+	text-decoration:none;
+}
+
 .map>div {
 	border: 1px solid red;
 	width:330px;
@@ -51,8 +59,9 @@ body {
 	width: 80%;
 }
 
-.gradBg .div2 input{
+.gradBg .div2 input, .table1st .div2 input {
 	width:80%;
+	text-align:center;
 }
 
 .gradBg>div {
@@ -336,7 +345,7 @@ overflow-x: hidden; } */
 }
 
 
-#booksearchBtn, #newssearchBtn{
+#booksearchBtn, #searchBtn{
 	display: inline-block;
 	background:linear-gradient(to right, #DEACC6, #91B2DF);
 	opacity:0.3;
@@ -906,7 +915,7 @@ img {
 	background:linear-gradient(to right, #CE729B, #2D86C9);
 	font-size: 9px;
 	color: #8C8C8C;
-	height:225px;
+	height:auto;
 }
 
 .blogHomeHeader a {
@@ -923,7 +932,6 @@ img {
 
 .blogHomeHeader .table1st {
 	width:80%;
-	height:100%;
 	display:inline-block;
 	background-color: transparent;
 	margin: 5px;
@@ -943,6 +951,10 @@ img {
 	-moz-binding: url('ellipsis.xml#ellipsis');
 	white-space: nowrap;
 	overflow:hidden;
+}
+
+.table2nd {
+	vertical-align:top;
 }
 
 .table2nd th {
@@ -1000,7 +1012,8 @@ img {
 	vertical-align:top;
 	width:17%;
 	height:100%;
-	padding-top: 20px;
+	margin-top:15px;
+	margin-bottom:15px;
 	color: black;
 	text-align: center;
 }
@@ -1081,6 +1094,14 @@ hr {
 	width: 200px;
 }
 
+.blogHomeHeader .table1st .div2 {
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 1px solid #E6E6E6;
+	border-radius:20px;
+	width: 200px;
+}
 
 .searchPost .div2 a {
 	right: 3px;
@@ -1119,7 +1140,7 @@ hr {
 	color: #E6E6E6;
 }
 
-.searchPost input[type=text] {
+.searchPost input[type=text], .table1st input[type=text] {
 	border-width: 0px;
 	color: #E6E6E6;
 }
@@ -1390,6 +1411,10 @@ input[type=file] {
 	-moz-opacity:0;
 }
 
+.commentRankDiv img {
+	display:inline-block;
+}
+
 input[type=file]:hover {
 	cursor:pointer;
 	border:none;
@@ -1418,7 +1443,7 @@ fieldset #blogTitle {
 	font-size:140%;
 }
 
-fieldset .bannerEdit {
+fieldset .bannerEdit {commentRankDiv
 	height:190px;
 	background-color:#E6E6E6;
 	/*font-weight:lighter;*/
@@ -1593,7 +1618,7 @@ legend {
 	
 	.blogHomeHeader {
 		position:relative;
-		height: 350px;
+		height: auto;
 	}
 	
 	.blogHomeHeader .table1st {
@@ -1614,11 +1639,10 @@ legend {
 	}
 	
 	.myDiv {
-		position:absolute !important;
-		bottom:0;
 		display:block !important;
 		width:100% !important;
-		height: 140px !important;
+		height: 100% !important;
+		margin-top:0px !important;
 	}
 	
 	.myDiv a {

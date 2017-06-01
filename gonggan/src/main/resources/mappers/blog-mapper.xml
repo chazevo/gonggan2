@@ -9,6 +9,7 @@
 		<result property="writer_id" column="writer_id" />
 		<result property="contents" column="contents" />
 		<result property="background" column="background" />
+		<result property="background_color" column="background_color" />
 		<result property="color" column="color" />
 		<result property="languages" column="languages" />
 		<result property="blog_open_yn" column="blog_open_yn" />

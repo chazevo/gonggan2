@@ -9,4 +9,5 @@ public interface NeighborService {
 	List<Member> selectNeighborList(String loginUser);
 
 	List<Neighbor> NeighborList();
+	List<Member> neighborSearch(String member_id, String member_id2);
 }

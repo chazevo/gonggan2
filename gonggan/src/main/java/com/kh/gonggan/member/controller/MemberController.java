@@ -2,11 +2,15 @@ package com.kh.gonggan.member.controller;
 
 import javax.servlet.http.HttpSession;
 
-
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +36,7 @@ import com.kh.gonggan.movie.model.service.MovieService;
 import com.kh.gonggan.movie.model.vo.Movie;
 import com.kh.gonggan.music.model.service.MusicService;
 import com.kh.gonggan.music.model.vo.Music;
+import com.kh.gonggan.neighbor.model.service.NeighborService;
 import com.kh.gonggan.news.model.service.NewsService;
 import com.kh.gonggan.news.model.vo.News;
 import com.kh.gonggan.post.model.service.PostService;
@@ -65,6 +70,8 @@ public class MemberController {
 	private NewsService newsService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private NeighborService neighborService;
 	
 	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
@@ -282,14 +289,37 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="neigdelete.do", produces="text/plain;charset=UTF-8")
-	   @ResponseBody
-	      public String neigDelete(@RequestParam String member_id, @RequestParam String member_id2, Model model){
-	      
-	         String msg = "실패";
-	   
-	         if (memberService.neigDelete(member_id, member_id2) > 0)
-	            msg = "삭제 성공";
-	         return msg;
-	      }//이웃 신청 수락/거절
+	@ResponseBody
+	public String neigDelete(@RequestParam String member_id, @RequestParam String member_id2, Model model){
+
+		String msg = "실패";
+		if (memberService.neigDelete(member_id, member_id2) > 0)
+			msg = "삭제 성공";
+		return msg;
+	} //이웃 신청 수락/거절
+	
+	@RequestMapping(value="nsearch.do", produces="application/json")
+	@ResponseBody
+	public String neighborSearch(@RequestParam String member_id,
+			@RequestParam String member_id2) {
+
+		List<Member> nlist = neighborService.neighborSearch(member_id, member_id2);
+		
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+
+		if (nlist != null) {
+			for(Member n : nlist) {
+				
+				JSONObject job = new JSONObject();
+				
+				job.put("member_id", n.getMember_id());
+				
+				jarr.add(job);
+			}
+			json.put("list", jarr);
+		}
+		return json.toString();
+	}
 	
 }

@@ -18,7 +18,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 
-
 import javax.net.ssl.HttpsURLConnection;
 
 import javax.annotation.Resource;
@@ -26,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.json.JSONString;
+import org.joda.time.DateTime;
 /*
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -85,12 +84,13 @@ public class PostController {
 	
 	@RequestMapping("pdetail.do")
 		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
-		
+			
 			List<Comment> commentList = commentService.selectPostComments(postId);
 			int goodCnt = goodService.goodCount(Integer.parseInt(postId));
 			Post postDetail = postService.postDetail(Integer.parseInt(postId));
-			
+		
 			mv.addObject("postDetail",postDetail);
+			mv.addObject("postDate", new DateTime(postDetail.getPost_date()).toString());
 			mv.addObject("postId", postId);
 			mv.addObject("writerId", writerId);
 			mv.addObject("commentList", commentList);
@@ -274,7 +274,7 @@ public class PostController {
 		}
 		
 		if (content.length() > 100)
-			content = content.substring(0, 100);
+			content = content.substring(0, 100) + "...";
 		
 		try {
 			content = URLEncoder.encode(content, "UTF-8");

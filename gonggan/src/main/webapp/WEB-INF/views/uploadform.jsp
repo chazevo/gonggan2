@@ -55,6 +55,24 @@
 				document.getElementById("tagaddtext").focus();
 			});
 		});
+
+		$("#newSearchLink").click(function() {
+			$("#news").toggle(function() {
+				document.getElementById("newsSearchText").focus();
+			});
+		});
+		
+		$("#bookSearchLink").click(function() {
+			$("#book").toggle(function() {
+				document.getElementById("bookSearchText").focus();
+			});
+		});
+		
+		$("#movieSearchLink").click(function() {
+			$("#news").toggle(function() {
+				document.getElementById("movieSearchText").focus();
+			});
+		});
 		
 		$("#imgUploadIcon").click(function() {
 			if ($("#imgUploadDiv").hasClass("hidden")) {
@@ -457,16 +475,16 @@
 					<tbody id="bookTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="center">
-									<a data-toggle="collapse" data-target="#book">책 찾아보기</a>
+									<a data-toggle="collapse" data-target="#book" id="bookSearchLink">책 찾아보기</a>
 									<div id="book" class="collapse text-center">
 										<!-- <h4>도서 검색 </h4> --><br>
-										제목&nbsp;<input type="text">&nbsp;&nbsp;&nbsp;
+										제목&nbsp;<input type="text" id="bookSearchText"
+										onkeydown="if (event.keyCode == 13) searchBook();">&nbsp;&nbsp;&nbsp;
 										저자&nbsp;<input type="text">&nbsp;&nbsp;&nbsp;
-										<button type="button" id="booksearchBtn">도 서 검 색</button>
+										<button type="button" id="searchBtn" onclick="searchBook();">도 서 검 색</button>
 										<br><br>
-										검색도서 표시 <br>
-										검색도서 표시 <br><br>
-										<button type="button" id="booksearchBtn">추 가 하 기</button>
+										<div></div>
+										<button type="button" id="searchBtn">추 가 하 기</button>
 									</div>
 								</td>
 						</tr>
@@ -485,17 +503,27 @@
 					<tbody id="movieTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="right">
-								<a data-toggle="collapse" data-target="#movie">영화 찾아보기</a>
+								<a data-toggle="collapse" data-target="#movie" id="movieSearchLink">영화 찾아보기</a>
 								<div id="movie" class="collapse">
-									<table width="100%">
+									<table width="100%" border="1">
 									<tr>
 										<td>제목</td>
-										<td><input type="text"></td>
-										<td rowspan="2"><button>검색</button></td>
+										<td><input type="text" id="movieSearchText" onkeyup="if (event.keyCode == 13) searchMovie();"></td>
+										<td rowspan="2">
+											<button type="button" id="searchBtn" onclick="searchMovie();">검색</button>
+										</td>
 									</tr>
 										<td>감독</td>
-										<td><input type="text"></td>
+										<td><input type="text" id="directorSearchText" ></td>
 									</tr>
+									<tr>
+										<td colspan="3">주간 박스오피스 </td>
+									</tr>
+									<c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
+									<tr>
+										<td colspan=3>${i.rank} ${i.movieNm } (${i.audiAcc }명)</td>
+									</tr>
+									</c:forEach>
 									</table>
 								</div>
 							</td>
@@ -504,15 +532,24 @@
 					<tbody id="newsTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="center">
-								<a data-toggle="collapse" data-target="#news">기사 찾아보기<img></a>
+								<a data-toggle="collapse" data-target="#news" id="newSearchLink">기사 찾아보기<img></a>
 								<div id="news" class="collapse">
-									<table width="100%">
+									<table width="100%" border="1">
 									<tr><td width="25%" align="center">인기검색어</td><td><h5 style="text-align:center;">기사 검색</h5></td></tr>
 									<tr>
-										<td align="center" >대선후보<br>아이유 컴백<br> </td>
-										<td width="65%" >
-											키워드&nbsp;<input type="text">&nbsp;&nbsp;&nbsp;
-											<button type="button" id="newssearchBtn">기 사 검 색</button><br><br>
+										<td align="center" >
+											<!--대선후보<br>아이유 컴백<br> -->
+											<c:set var="cnt" value="0" />
+											<c:forEach items="${popKeyword}" var="i" begin="0">
+											<c:set var="cnt" value="${cnt + 1 }" />
+											${cnt} ${i }<br>
+											</c:forEach>
+										</td>
+										<td width="65%" class="footerDiv" >
+											<div>
+												키워드&nbsp;<input type="text" id="newsSearchText">
+												<button type="button" id="searchBtn">기 사 검 색</button>
+											</div>
 										</td>
 									</tr>
 									</table>
@@ -535,7 +572,9 @@
 							<td colspan="5" align="right">
 								<a data-toggle="collapse" data-target="#lyrics">가사 찾아보기</a>
 								<div id="lyrics" class="collapse">
-									가사를 불러오는 부분 
+									제목&nbsp;<input type='text' id="musicSearchText" size="14">
+									<button type="button" id="searchBtn" onclick="searchMusic();">검색 </button>
+									<div></div>
 								</div>
 							</td>
 						</tr>

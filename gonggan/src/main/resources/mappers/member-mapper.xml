@@ -150,6 +150,13 @@
       WHERE CHECK_YN='Y' AND SENDER = #{member_id})
    </select>
 		
+	<select id="nsearch" parameterType="Map" resultMap="memberResult">
+	select * from member where member_id in( SELECT sender FROM NEIGHBOR
+      WHERE CHECK_YN='Y' AND RECEIVER =#{member_id} and sender like '%'||#{member_id2}||'%' )
+      or member_id  in(   SELECT receiver FROM NEIGHBOR
+      WHERE CHECK_YN='Y' AND SENDER = #{member_id} and receiver like '%'||#{member_id2}||'%' )
+	</select>
+	
 	<select id="naverIdCheck" parameterType="member" resultMap="memberResult">
       SELECT * FROM MEMBER
       WHERE MEMBER_NAVER_ID = #{member_naver_id}

@@ -24,4 +24,9 @@ public class NeighborServiceImpl implements NeighborService{
 		
 		return neighborDao.selectNeighborAll();
 	}
+	
+	@Override
+	public List<Member> neighborSearch(String member_id, String member_id2) {
+		return neighborDao.neighborSearch(member_id, member_id2);
+	}
 }

@@ -108,7 +108,7 @@ var imgVal = <%= imgVal %>;
 	}
 </script>
 </head>
-<body>
+<body class="myhome">
 	<c:if test="${empty param }">
 		<jsp:forward page="error.jsp"></jsp:forward>
 	</c:if>
@@ -175,7 +175,7 @@ var imgVal = <%= imgVal %>;
 		<!--<div class="container-fluid">--><div>
 		<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
 			<div class="header-content"
-				style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()}) cover;</c:if>">
+				style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color:${blog.background_color };</c:if>">
 				<div class="header-content-inner">
 					<h2>
 						<a href="selectBlog.do?writer_id=${param.writer_id} "

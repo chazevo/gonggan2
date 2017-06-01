@@ -8,5 +8,4 @@ public interface MusicService {
 	List<Music> selectAll(int rownum, int rownum2);
 	List<Music> selectAll_index2();
 	Music musicDetail(int postId);
-
 }

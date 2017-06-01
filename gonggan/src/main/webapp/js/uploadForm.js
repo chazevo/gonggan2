@@ -426,3 +426,38 @@ function cancel() {
 		location.href = "myhome.do?writer_id=" + loginUser;
 	else return;
 }
+
+function searchMovie() {
+	if ($("#movieSearchText").val() == "")
+		alert("검색어를 입력해주세요");
+}
+
+function searchMusic() {
+	
+	$.ajax({
+		url: "lyrics.do",
+		data: { title: $("#musicSearchText").val() },
+		success: function(data) {
+			$("#lyrics div").html(data);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	
+}
+
+function searchBook() {
+	
+	$.ajax({
+		url: "http://book.interpark.com/api/bestSeller.api?key=interpark&categoryId=100",
+		data: { output:"json"},
+		success: function(data) {
+			$("#book div").html(data);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	
+}

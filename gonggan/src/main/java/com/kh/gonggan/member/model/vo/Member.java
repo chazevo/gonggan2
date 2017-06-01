@@ -14,13 +14,12 @@ public class Member {
    private String member_naver_id;
    private String member_kakao_id;
    private String member_facebook_id;
-   private String member_twitter_id;
    public Member() {
       super();
    }
    public Member(String member_id, String member_pw, String member_name, String email, String profile,
          String member_gender, Date member_birth, String member_phone, String member_naver_id,
-         String member_kakao_id, String member_facebook_id, String member_twitter_id) {
+         String member_kakao_id, String member_facebook_id) {
       super();
       this.member_id = member_id;
       this.member_pw = member_pw;
@@ -33,7 +32,6 @@ public class Member {
       this.member_naver_id = member_naver_id;
       this.member_kakao_id = member_kakao_id;
       this.member_facebook_id = member_facebook_id;
-      this.member_twitter_id = member_twitter_id;
    }
    public String getMember_id() {
       return member_id;
@@ -101,19 +99,13 @@ public class Member {
    public void setMember_facebook_id(String member_facebook_id) {
       this.member_facebook_id = member_facebook_id;
    }
-   public String getMember_twitter_id() {
-      return member_twitter_id;
-   }
-   public void setMember_twitter_id(String member_twitter_id) {
-      this.member_twitter_id = member_twitter_id;
-   }
    @Override
    public String toString() {
       return "Member [member_id=" + member_id + ", member_pw=" + member_pw + ", member_name=" + member_name
             + ", email=" + email + ", profile=" + profile + ", member_gender=" + member_gender + ", member_birth="
             + member_birth + ", member_phone=" + member_phone + ", member_naver_id=" + member_naver_id
             + ", member_kakao_id=" + member_kakao_id + ", member_facebook_id=" + member_facebook_id
-            + ", member_twitter_id=" + member_twitter_id + "]";
+            +  "]";
    }
 
    

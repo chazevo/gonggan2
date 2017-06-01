@@ -1242,7 +1242,6 @@ hr {
 
 .td>div {
 	height:100%;
-	border: 1px solid blue;
 }
 
 .td>div table {
@@ -1269,7 +1268,6 @@ hr {
 }
 
 .mypage .td>div td {
-	border:1px solid red;
 	vertical-align: top;
 	padding:4px;
 }

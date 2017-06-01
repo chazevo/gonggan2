@@ -144,8 +144,8 @@ public class MemberController {
 	
 	@RequestMapping(value="/insert.do", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView  memberInsert(Member member, ModelAndView  mv){
-		int insertMem = memberService.insertMember(member);
 		System.out.println(member);
+		int insertMem = memberService.insertMember(member);
 		// 제대로 들어갔을 경우
 		if(insertMem > 0){
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());

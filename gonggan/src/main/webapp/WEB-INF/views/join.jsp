@@ -58,7 +58,7 @@
          onblur="blurEvent(this);"/>
           </span>님과 연락할 수 있는 <br>
          <span id="phoneSpan">
-            <input type="text" name="phone" value="" placeholder=" 휴대전화 번호" title="휴대전화 번호 입력(숫자만 입력가능)" class="phone join" maxlength="11" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style="ime-mode:disabled;"
+            <input type="text" name="member_phone" value="" placeholder=" 휴대전화 번호" title="휴대전화 번호 입력(숫자만 입력가능)" class="phone join" maxlength="11" onkeydown="return onlyNumber(event)" onkeyup="removeChar(event)" style="ime-mode:disabled;"
             onblur="blurEvent(this);"/>
             <em>숫자만 입력해 주세요.</em>
          </span>와 
@@ -75,12 +75,14 @@
          <span id="emailSpan">
             <input type="text" name="member_gender"  class="join" value="" placeholder=" 성별" title="성별 입력"
             onblur="blurEvent(this);"/>
-            <!-- <em>성별을 입력해 주세요.</em> -->
+            <em>성별을 입력해 주세요.</em>
          </span>과 
          <span id="emailSpan">
+         	<select>
+         	</select>
             <input type="text" name="member_birth" class="join" value="" placeholder=" 생일 " title="생일 입력"
             onblur="blurEvent(this);"/>
-            <!-- <em>프로필을 입력해 주세요.</em> -->
+            <em>생일을 입력해 주세요.</em>
          </span>을 입력해주세요.<br />
 
          <div class="divisionMargin2">

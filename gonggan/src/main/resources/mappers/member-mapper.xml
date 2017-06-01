@@ -47,7 +47,10 @@
 	</select>
 	
 	<insert id="minsert" parameterType="member">
-   insert into member values( #{member_id},#{member_pw},#{member_name},#{email},#{profile},#{member_gender},#{member_birth},#{member_phone})
+   insert into member values( #{member_id},
+   #{member_pw},#{member_name},#{email},#{profile},
+   #{member_gender},#{member_birth},#{member_phone},
+   #{member_naver_id},#{member_kakao_id},#{member_facebook_id})
    </insert>
 	
 	<update id="mupdate" parameterType="member">

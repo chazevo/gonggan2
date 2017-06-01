@@ -33,7 +33,6 @@ function requestNeighborPostList(val, loginUser) {
 
    
    $("#blogHomeContentDiv").html("");
-   alert("");
    
    var rownum2;
    var loginUser;
@@ -118,7 +117,7 @@ function sorting() {
 function callbackList(data) {
    var jsonObj = JSON.stringify(data);
    var jsonArr = JSON.parse(jsonObj);
-   alert(jsonObj);
+   
    var div;
    var table, tr, td;
 

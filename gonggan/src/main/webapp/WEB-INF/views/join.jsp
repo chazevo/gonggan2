@@ -39,7 +39,7 @@
             onblur="blurEvent(this);"/>
             <em>4-12자 이내 영문 소문자,숫자,underbar만 사용가능합니다.</em>
          </span>님의 이름은
-         <span id="idSpan">
+         <span id="nameSpan">
             <input type="text" name="member_name" value="" placeholder=" 이름" title="이름 입력(4-12자 이내 영문 소문자,한글만 사용가능)" class="join" maxlength="12" 
             onblur="blurEvent(this);"/>
             <em>4-12자 이내 영문 한글만 사용가능합니다.</em>
@@ -67,18 +67,19 @@
             onblur="blurEvent(this);"/>
             <em>이메일을 입력해 주세요.</em>
          </span>를 알려주세요.<br />
-         <span id="emailSpan">
+         <span id="profileSpan">
             <input type="text" name="profile" class="join" value="" placeholder=" 프로필" title="프로필 입력"
             onblur="blurEvent(this);"/>
             <em>프로필을 입력해 주세요.</em>
          </span>로 자기를 소개해 주세요.<br>
-         <span id="emailSpan">
+         <span id="genderSpan">
             <input type="text" name="member_gender"  class="join" value="" placeholder=" 성별" title="성별 입력"
             onblur="blurEvent(this);"/>
             <em>성별을 입력해 주세요.</em>
          </span>과 
-         <span id="emailSpan">
+         <span id="">
          	<select>
+         		<option></option>
          	</select>
             <input type="text" name="member_birth" class="join" value="" placeholder=" 생일 " title="생일 입력"
             onblur="blurEvent(this);"/>

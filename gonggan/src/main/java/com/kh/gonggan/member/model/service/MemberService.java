@@ -50,5 +50,9 @@ public interface MemberService {
 	
 	int neigDelete(String memberId, String memberId2);
 
+	Member joinIdCheck(String member_id);
+
+	Member joinEmailCheck(String email);
+
 	
 }

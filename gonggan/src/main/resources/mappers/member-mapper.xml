@@ -12,6 +12,9 @@
 		<result property="member_gender" column="member_gender"/>
 		<result property="member_birth" column="member_birth"/>
 		<result property="member_phone"	column="member_phone"/>
+		<result property="member_naver_id"	column="member_naver_id"/>
+		<result property="member_kakao_id"	column="member_kakao_id"/>
+		<result property="member_facebook_id"	column="member_facebook_id"/>
 	</resultMap>
 	
 	<resultMap id="memberNameResult" type="member">
@@ -34,6 +37,14 @@
 		SELECT * FROM MEMBER
 		WHERE MEMBER_ID = #{member_id} AND MEMBER_PW = #{member_pw}
 	</select>
+	<select id="joinemailcheck" parameterType="member"  resultMap="memberResult">
+		SELECT * FROM MEMBER
+		WHERE email =#{email}
+	</select>
+	<select id="joinidcheck" parameterType="member"  resultMap="memberResult">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{member_id} 
+	</select>
 	
 	<select id="mlist">
 	</select>
@@ -49,8 +60,7 @@
 	<insert id="minsert" parameterType="member">
    insert into member values( #{member_id},
    #{member_pw},#{member_name},#{email},#{profile},
-   #{member_gender},#{member_birth},#{member_phone},
-   #{member_naver_id},#{member_kakao_id},#{member_facebook_id})
+   #{member_gender},#{member_birth},#{member_phone},null,null,null)
    </insert>
 	
 	<update id="mupdate" parameterType="member">

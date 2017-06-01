@@ -24,13 +24,31 @@ function confirmInput() {
 }
 
 function goSubmit() {
-	$("#join").submit();
-	if ($("input[name='id']").val() == "") {
+	
+	if ($("input[name='member_id']").val() == "") {
 		$("#idSpan > em").text("아이디를 입력해주세요.");
-		$("input[name='id']").addClass("error");
+		$("input[name='member_id']").addClass("error");
 		$("#idSpan > em").addClass("error");
 		$("#idSpan > em").css("display", "block");
-		$("input[name='id']").focus();
+		$("input[name='member_id']").focus();
+		return;
+	}
+
+	else if ($("input[name='member_gender']").val() == "") {
+		$("#genderSpan > em").text("아이디를 입력해주세요.");
+		$("input[name='member_gender']").addClass("error");
+		$("#genderSpan > em").addClass("error");
+		$("#genderSpan > em").css("display", "block");
+		$("input[name='member_gender']").focus();
+		return;
+	}
+	
+	else if ($("input[name='member_name']").val() == "") {
+		$("#nameSpan > em").text("이름을 입력해주세요.");
+		$("input[name='member_name']").addClass("error");
+		$("#nameSpan > em").addClass("error");
+		$("#nameSpan > em").css("display", "block");
+		$("input[name='member_name']").focus();
 		return;
 	}
 	 
@@ -52,12 +70,12 @@ function goSubmit() {
 		return;
 	}
 	 
-	else if ($("input[name='phone']").val() == "") {
+	else if ($("input[name='member_phone']").val() == "") {
 		$("#phoneSpan > em").text("연락처를 입력해주세요.");
-		$("input[name='phone']").addClass("error");
+		$("input[name='member_phone']").addClass("error");
 		$("#phoneSpan > em").addClass("error");
 		$("#phoneSpan > em").css("display", "block");
-		$("input[name='phone']").focus();
+		$("input[name='member_phone']").focus();
 		return;
 	}
 	 
@@ -75,5 +93,50 @@ function goSubmit() {
 		$("input[name='pwd']").select();
 		return;
 	}
+	
+	joinIdCheck();
 	 
+}
+
+function joinIdCheck() {
+	   $.ajax({
+		      url: "joinidcheck.do",
+		      data: { member_id: $("input[name='member_id']").val()},
+		      success: function(data) {
+		    	  if (data == "실패") {
+		    			$("#idSpan > em").text("중복된 아이디 입니다.");
+		    			$("input[name='member_id']").addClass("error");
+		    			$("#idSpan > em").addClass("error");
+		    			$("#idSpan > em").css("display", "block");
+		    			$("input[name='member_id']").focus();
+		    	  }
+		    	  else if (data == "성공")
+		    		  joinEmailCheck();
+		      },
+		      error: function(data,status,error){
+		         console.log("error : " + error);
+		      }
+		   });
+}
+
+function joinEmailCheck() {
+	   $.ajax({
+		      url: "joinemailcheck.do",
+		      data: {	email: $("input[name='email']").val() },
+		      success: function(data) {
+		    	  if (data == "실패") {
+		    			$("#emailSpan > em").text("중복된 이메일 입니다.");
+		    			$("input[name='email']").addClass("error");
+		    			$("#emailSpan > em").addClass("error");
+		    			$("#emailSpan > em").css("display", "block");
+		    			$("input[name='email']").focus();
+		    	  }
+		    	  else if (data == "성공")
+		    	  	$("#join").submit();
+		    		  alert("완료");
+		      },
+		      error: function(data,status,error){
+		         console.log("error : " + error);
+		      }
+		   });
 }

@@ -15,6 +15,7 @@ public class EmailSender {
 		MimeMessage msg = emailSender.createMimeMessage();
 		try {
 			msg.setSubject(email.getSubject());
+			msg.setFrom();
 			msg.setText(email.getContent());
 			msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email.getReceiver()));
 		} catch (MessagingException e) {

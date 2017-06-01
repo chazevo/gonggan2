@@ -361,14 +361,14 @@ function callbackNeighborList(data){
    var div;
    var tr, td;
    
-   while (document.getElementById("listbody_newPost").rows.length > 1 )
-      document.getElementById("listbody_newPost").deleteRow(1);   
+   while (document.getElementById("table_newPost").rows.length > 1 )
+      document.getElementById("table_newPost").deleteRow(1);   
 
    tr = document.createElement("tr");
    td = document.createElement("td");
    td.innerHTML = "서로이웃 수_<font color='#2D86C9'><b>" + jsonArr.list.length + "</b></font>";
    tr.appendChild(td);
-   document.getElementById("listbody_newPost").appendChild( tr );
+   document.getElementById("table_newPost").appendChild( tr );
    for(var i in jsonArr.list) {
       var memberId = jsonArr.list[i].memberId;
       tr = document.createElement( 'tr' );
@@ -380,7 +380,7 @@ function callbackNeighborList(data){
       tr.appendChild(td);
       td.appendChild(a);
       a.appendChild( aText );
-      document.getElementById("listbody_newPost").appendChild( tr );
+      document.getElementById("table_newPost").appendChild( tr );
    }
 } //이웃 블로그 목록
 
@@ -407,8 +407,8 @@ function callbackNsearch(data) {
    
    var tr, td;
    
-   while (document.getElementById("listbody_newPost").rows.length > 1 )
-      document.getElementById("listbody_newPost").deleteRow(1);
+   while (document.getElementById("table_newPost").rows.length > 1 )
+      document.getElementById("table_newPost").deleteRow(1);
    
    for (var i in jsonArr.list) {
       var member_id = jsonArr.list[i].member_id;
@@ -421,6 +421,6 @@ function callbackNsearch(data) {
       tr.appendChild(td);
       td.appendChild(a);
       a.appendChild( aText );
-      document.getElementById("listbody_newPost").appendChild( tr );
+      document.getElementById("table_newPost").appendChild( tr );
    }
 }

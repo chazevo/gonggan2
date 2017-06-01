@@ -90,11 +90,12 @@
 						</a>
 					</td>
 				</tr>
+			<!-- 	<form action="selectPw.do"> -->
 				<tr>
 					<td rowspan="3"><p>비밀번호 찾기</p></td>
 					<td>
 						아이디를 입력해주세요.&nbsp;
-						<input type="text" id="id" class="find" size="12">
+						<input type="text" name="id"  id="id" class="find" size="12">
 					</td>
 					<td rowspan="3">
 						<a href="javascript:pwdFind();">
@@ -105,15 +106,16 @@
 				<tr>
 					<td>
 						이메일을 입력해주세요.&nbsp;
-						<input class="find" type="text" id="" size="15">
+						<input class="find" type="text" name="email2" id="email2" size="15">
 					</td>
 				</tr>
-				<tr>
+	<!-- 			<tr>
 					<td>
 						핸드폰 번호를 입력해주세요.&nbsp;
-						<input class="find" type="text" id="" size="13">
+						<input class="find" type="text" id="phone" size="13">
 					</td>
-				</tr>
+				</tr> -->
+				<!-- </form> -->
 				</table>
 			</div>
 		</div>

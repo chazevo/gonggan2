@@ -117,4 +117,12 @@ public class MemberServiceImpl implements MemberService{
 	public int neigDelete(String memberId, String memberId2){
 		return memberDao.neigDelete(memberId, memberId2);
 	}
+	@Override
+	public Member joinIdCheck (String member_id) {
+		return memberDao.joinIdCheck(member_id);
+	}
+	@Override
+	public Member joinEmailCheck (String email) {
+		return memberDao.joinEmailCheck(email);
+	}
 }

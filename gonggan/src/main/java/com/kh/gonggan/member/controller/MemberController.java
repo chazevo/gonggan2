@@ -110,7 +110,7 @@ public class MemberController {
 
 
 	         mv.setViewName("redirect:login2.do");
-	         mv.addObject("loginUser", loginUser);
+	         
 	         return mv;
 	      }
 	      
@@ -122,6 +122,34 @@ public class MemberController {
 	         return mv;
 	      }
 	   }//로그인하기
+	@RequestMapping(value="/joinidcheck.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	   public String joinIdCheck(@RequestParam String member_id){
+	    
+		String result = "";
+		Member idCheck = memberService.joinIdCheck(member_id);
+		if(idCheck == null)
+			 result = "성공";
+		else if(idCheck != null )   result= "실패";
+		return  result;
+		
+		
+	   }//id/email check
+	@RequestMapping(value="/joinemailcheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	   public String joinEmailCheck(@RequestParam String email){
+	    
+		String result = "";
+		Member emailCheck =memberService.joinEmailCheck(email);
+		
+		if(emailCheck ==null)
+			 result = "성공";
+		else if(emailCheck != null)   result= "실패";
+		return  result;
+		
+		
+	   }//id/email check
+	
 	
 	@RequestMapping("logOut.do")
 	   public ModelAndView logOut(HttpSession session, ModelAndView mv){
@@ -143,13 +171,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/insert.do", method={RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView  memberInsert(Member member, ModelAndView  mv){
+	public ModelAndView  memberInsert(Member member, ModelAndView  mv, HttpSession session){
 		System.out.println(member);
+		
 		int insertMem = memberService.insertMember(member);
 		// 제대로 들어갔을 경우
 		if(insertMem > 0){
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
-			mv.setViewName("index2");
+			mv.setViewName("home");
 		}else{
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
 			mv.setViewName("join");

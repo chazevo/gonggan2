@@ -24,8 +24,15 @@ public class MemberDao {
 		return (Member) sqlSession.selectOne("membermapper.loginSelect", loginVo);
 	}
 	
+	public Member joinIdCheck (String member_id) {
+		return (Member) sqlSession.selectOne("membermapper.joinidcheck",member_id);
+	}
+	public Member joinEmailCheck (String email) {
+		return (Member) sqlSession.selectOne("membermapper.joinemailcheck",email);
+	}
+	
 	public int insertMember(Member member){
-		return sqlSession.insert("minsert", member);
+		return sqlSession.insert("membermapper.minsert", member);
 	}//회원 등록
 	
 	public List<Member> memberList(){

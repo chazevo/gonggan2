@@ -152,7 +152,7 @@ window.onload = function() {
                   <img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
                </td>
                <td class="table2nd" style="overflow:scroll;">
-                  <table id="listbody_newPost">
+                  <table id="table_newPost">
                      <colgroup>
                         <col style="width:*;" />
                         <col width="5%" />

@@ -203,10 +203,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping("delete.do")
-	public String memberDelete(@RequestParam String member_id, Model model){
-		int deleteMem = memberService.deleteMember(member_id);
-		return null;
-	}//회원 삭제
+	   @ResponseBody
+	   public String memberDelete(@RequestParam String member_id, HttpSession session){
+	      int deleteMem = memberService.deleteMember(member_id);
+	      session.invalidate();
+	      return "";
+	   }
 
 	@RequestMapping("memberList.do")
 	public ModelAndView memberList(){

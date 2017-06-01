@@ -268,7 +268,9 @@ window.onload = function() {
                      <td><input type="password" name="member_pw"></td>
                   </tr>
                </table>
-               <a href="javascript:goSubmit();">로그인</a>
+               <a href="javascript:goSubmit();">로그인</a><a href="join.do">회원가입</a>
+                  <a href="findIdPwd.do">아이디 찾기</a>
+           	 <a href="findIdPwd.do">비밀번호 찾기</a>
             </form>
             
             </c:if>

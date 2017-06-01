@@ -212,10 +212,6 @@
                      </table>
                   </form>
                </td>
-               <form action="/gonggan/delete.do" method="post" id="update">
-                  <input type="hidden" value="${sessionScope.loginUser.getMember_id()}" name="member_id">
-                  <input type="submit" value="회원탈퇴">
-               </form>
                <!-- 마이페이지의 쪽지부분 -->
                <td class="td notTableList">
                <div>

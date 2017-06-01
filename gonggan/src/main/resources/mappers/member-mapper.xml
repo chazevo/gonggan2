@@ -67,9 +67,9 @@
 	UPDATE MEMBER SET EMAIL=#{email} WHERE MEMBER_ID = #{member_id} AND MEMBER_PW=#{member_pw}
 	</update>
 	
-	<delete id="mdelete">
-	delete from member
-	</delete>
+	<delete id="mdelete" parameterType="String">
+    delete from member where member_id = #{memberId}  
+   </delete>
 	
 	<insert id="requestNeig">
 	insert 

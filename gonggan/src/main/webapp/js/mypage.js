@@ -104,7 +104,18 @@ function profileImgDelete() {
 }
 
 function deleteMem() {
-	if(confirm("탈퇴하시겠습니까?") == true) {
-		
-	} else return;
-}
+	   if(confirm("탈퇴하시겠습니까?") == true) {
+	      $.ajax({
+	         url: "/gonggan/delete.do",
+	         data: {member_id: loginUser
+	         },
+	         success: function(data) {
+	            alert("탈퇴되셨습니다");
+	            location.href="home.do";
+	         },
+	         error: function(data,status,error) {
+	            console.log("error : " + error);
+	         }
+	      });
+	   } else return;
+	}

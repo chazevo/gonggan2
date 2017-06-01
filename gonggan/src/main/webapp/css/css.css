@@ -1230,22 +1230,48 @@ hr {
 	height: 100px;
 }
 
+.mypage #introducingArea {
+	height:100%;
+}
+
 .mypage .td {
 	height: 200px;
 	padding: 10px;
 	background-color: white;
 }
 
+.td>div {
+	height:100%;
+	border: 1px solid blue;
+}
+
+.td>div table {
+	width:100%;
+}
+
+.td .text-left {
+	float:left;
+}
+
+.mypage .td>table, .mypage .td form table {
+	width:100%;
+	height: 100%;
+	background-color: white;
+	
+}
+
 .mypage .notTableList {
 	line-height: 28px;
 }
 
-.mypage .td table {
-	height: 100%;
+.mypage form{
+	height:100%;
 }
 
-.mypage .td td {
+.mypage .td>div td {
+	border:1px solid red;
 	vertical-align: top;
+	padding:4px;
 }
 
 .mypage>table td img {
@@ -1412,7 +1438,9 @@ input[type=file] {
 }
 
 .commentRankDiv img {
-	display:inline-block;
+   display:inline-block;
+   width:15px;
+   height:15px;
 }
 
 input[type=file]:hover {
@@ -1443,7 +1471,7 @@ fieldset #blogTitle {
 	font-size:140%;
 }
 
-fieldset .bannerEdit {commentRankDiv
+fieldset .bannerEdit {
 	height:190px;
 	background-color:#E6E6E6;
 	/*font-weight:lighter;*/

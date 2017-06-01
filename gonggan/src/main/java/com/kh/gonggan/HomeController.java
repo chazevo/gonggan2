@@ -62,22 +62,22 @@ import kr.or.kobis.kobisopenapi.consumer.rest.KobisOpenAPIRestService;
  */
 @Controller
 public class HomeController {
-	@Autowired
-	private BlogService blogService;
-	@Autowired
-	private MemberService memberService;
-	@Autowired
-	private PostService postService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private GoodService goodService;
-	@Autowired
-	private NeighborService neighborService;
-	@Autowired
-	private MessageService messageService;
-	
-	@Autowired
+   @Autowired
+   private BlogService blogService;
+   @Autowired
+   private MemberService memberService;
+   @Autowired
+   private PostService postService;
+   @Autowired
+   private CommentService commentService;
+   @Autowired
+   private GoodService goodService;
+   @Autowired
+   private NeighborService neighborService;
+   @Autowired
+   private MessageService messageService;
+   
+   @Autowired
    private MusicService musicService;
    @Autowired
    private DiaryService diaryService;
@@ -87,257 +87,259 @@ public class HomeController {
    private MovieService movieService;
    @Autowired
    private NewsService newsService;
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/*** Simply selects the home view to render by returning its name.
-	*/
-	@RequestMapping(value = "start.do", method = RequestMethod.GET)
-	public ModelAndView home(Locale locale, ModelAndView mv) {
-		
-		logger.info("Welcome home! ");
-		
-		mv.addObject("movieMaxRownum", postService.maxRownum("movie"));
-		mv.addObject("musicMaxRownum", postService.maxRownum("music"));
-		mv.addObject("reviewMaxRownum", postService.maxRownum("review"));
-		//mv.addObject("placeMaxRownum", postService.maxRownum("place"));
-		mv.addObject("newsMaxRownum", postService.maxRownum("news"));
-		mv.addObject("diaryMaxRownum", postService.maxRownum("diary"));
-		mv.setViewName("home");
-		
-		return mv;
-	}
-	
-	@RequestMapping(value = "index2.do", method = RequestMethod.GET)
-	public ModelAndView index2(ModelAndView mv) {
-		logger.info("Welcome index2! ");
-		List<Post> plist = postService.selectAll_index2();
-		mv.addObject("plist",plist);
-		mv.setViewName("index2");
-		return mv;
-	}
-
-	@RequestMapping(value = "findIdPwd.do", method = RequestMethod.GET)
-	public String findIdPwd(Locale locale, Model model) {
-		logger.info("Welcome findIdPwd! ");
-		return "findIdPwd";
-	}
    
-	   @RequestMapping(value = "controll.do")
-	   public ModelAndView controll(Locale locale, Model model,String writer_id, ModelAndView mv) {
-	      List<Post> likeInOrder = postService.likeInOrder(writer_id);
-	      List<Post> commentInOrder = postService.commentInOrder(writer_id);
-	      List<Music> musiclist = new ArrayList<Music>();
-	      List<Diary> diarylist = new ArrayList<Diary>();
-	      List<Review> reviewlist =  new ArrayList<Review>();
-	      List<Movie> movielist =  new ArrayList<Movie>();
-	      List<News> newslist =  new ArrayList<News>();
-	      Blog blog = blogService.selectBlog(writer_id);
-	     
-	      String category = "";
-	      
-	      for(int i = 0; i< likeInOrder.size(); i++){
-	         int postId = likeInOrder.get(i).getPost_id();
-	         if((category =  likeInOrder.get(i).getCategory()).equals("music")){
-	            musiclist.add(musicService.musicDetail(postId));
-	         }else if(category.equals("diary")){
-	            diarylist.add(diaryService.diaryDetail(postId));
-	         }else if(category.equals("review")){
-	            reviewlist.add(reviewService.reviewDetail(postId));
-	         }else if(category.equals("news")){
-	            newslist.add(newsService.newsDetail(postId));
-	         }else if(category.equals("movie")){
-	            movielist.add(movieService.movieDetail(postId));
-	         }
-	      }
-	     
-	      for(int i = 0; i< commentInOrder.size(); i++){
-		         int postId = commentInOrder.get(i).getPost_id();
-		         if((category =  commentInOrder.get(i).getCategory()).equals("music")){
-		            musiclist.add(musicService.musicDetail(postId));
-		         }else if(category.equals("diary")){
-		            diarylist.add(diaryService.diaryDetail(postId));
-		         }else if(category.equals("review")){
-		            reviewlist.add(reviewService.reviewDetail(postId));
-		         }else if(category.equals("news")){
-		            newslist.add(newsService.newsDetail(postId));
-		         }else if(category.equals("movie")){
-		            movielist.add(movieService.movieDetail(postId));
-		         }
-		      }
-		 mv.addObject("likeInOrder", likeInOrder);
-		 mv.addObject("commentInOrder", commentInOrder);
-		 mv.addObject("musiclist", musiclist);
-	      mv.addObject("dlist", diarylist);
-	      mv.addObject("reviewlist", reviewlist);
-	      mv.addObject("newslist", newslist);
-	      mv.addObject("movielist", movielist);
-	      mv.addObject("blog", blog);
-	      mv.setViewName("controll");
-	      return mv;
-	   
-	   }
+   private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
    
-	@RequestMapping("myhome.do")
-	public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
-		Member loginUser  = memberService.loginCheck(member);
-           
-		String wr = loginUser.getMember_id();
-		System.out.println(wr);
-		mv.addObject("writer_id", wr);
-		mv.setViewName("myhome");
-		return mv;
-	}
-	
-	@RequestMapping("mypage.do")
-	public ModelAndView mypage(Locale locale, Model model,String writer_id , ModelAndView mv) {
+   /*** Simply selects the home view to render by returning its name.
+   */
+   @RequestMapping(value = "start.do", method = RequestMethod.GET)
+   public ModelAndView home(Locale locale, ModelAndView mv) {
       
-		logger.info("Welcome mypage! ");
-		System.out.println(writer_id);
-		List<Comment> mylist = commentService.myCommentList(writer_id);
-		List<Member> neighborReqList = memberService.checkNeig(writer_id);
-		List<Good> goodMyList = goodService.goodMyList(writer_id);
-		List<Comment> commentMyList = commentService.CommentMyList(writer_id);
-		List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
-		List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
-		List<Message> lastMessage = messageService.lastMessage(writer_id);
-		for(int i = 0; i< lastMessage.size(); i++){
-			System.out.println(lastMessage.get(i));
-		}
-
-		mv.addObject("mylist",mylist);
-		mv.addObject("writer_id", writer_id);
-		mv.addObject("neighborReqList", neighborReqList);
-		mv.addObject("goodMyList", goodMyList);
-		mv.addObject("commentMyList", commentMyList);
-		mv.addObject("commentNeigList", commentNeigList);
-		mv.addObject("neighborlist",neighborlist);
-		mv.addObject("lastMessage",lastMessage);
-		mv.setViewName("mypage");
-	
-		return mv;
-	}
-
-	@RequestMapping(value = "uploadform.do", method = RequestMethod.GET)
-	public ModelAndView uploadform(Locale locale, ModelAndView mv) {
-
-		logger.info("Welcome uploadform! ");
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
-		
-		KobisOpenAPIRestService service = 
-				new KobisOpenAPIRestService("5337c5e39d3dd2ffebecbd935e09e9c2");
-		String weeklyResponse;
-		ObjectMapper mapper = new ObjectMapper();
-		HashMap<String, Object> weeklyResult = null;
-		
-		try {
-			
-			weeklyResponse = service.getWeeklyBoxOffice(
-					true, sdf.format(new Date()), "10", "0", "", "", "");
-
-			mapper = new ObjectMapper();
-			weeklyResult = 
-					mapper.readValue(weeklyResponse, HashMap.class);
-			
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-
-		ArrayList<String> popKeyword = new ArrayList<String>();
-		
-		Document document = null;
-		
-		try {
-			document = Jsoup.connect("http://www.naver.com/").get();
-
-			Elements elements = document.select(".ah_roll_area .ah_l li");
-			
-			for(int i=0 ; i<elements.size()-1 ; i++){
-				Element element = elements.get(i);
-				popKeyword.add(element.select("span.ah_k").text());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		mv.setViewName("uploadform");
-		mv.addObject("weeklyResult", weeklyResult);
-		mv.addObject("popKeyword", popKeyword);
-		
-		return mv;
-	}
-
-	@RequestMapping(value = "uploadHtml.do", method = RequestMethod.GET)
-	public String uploadHtml(Locale locale, Model model) {
-		logger.info("Welcome uploadHtml! ");
-		return "uploadHtml";
-	}
-
-	@RequestMapping(value = "join.do", method = RequestMethod.GET)
-	public String join(Locale locale, Model model) {
-		logger.info("Welcome join! ");
-		return "join";
-	}
-	
-	@RequestMapping(value = "test.do", method = RequestMethod.GET)
-	public String test(Locale locale, Model model) {
-		logger.info("Welcome test! ");
-		return "test";
-	}
-
-	@RequestMapping(value = "massage.do", method = RequestMethod.GET)
-	public String massage(Locale locale, Model model) {
-		logger.info("Welcome massage! ");
-		return "massage";
-	}
-
-	@RequestMapping(value = "postDetail.do", method = RequestMethod.GET)
-	public String postDetail(Locale locale, Model model) {
-		logger.info("Welcome postDetail! ");
-		return "postDetail";
-	}
-
-	@RequestMapping(value = "likepage.do", method = RequestMethod.GET)
-	public String likepage(Locale locale, Model model) {
-		logger.info("Welcome likepage! ");
-		return "likepage";
-	}
+      logger.info("Welcome home! ");
+      
+      mv.addObject("movieMaxRownum", postService.maxRownum("movie"));
+      mv.addObject("musicMaxRownum", postService.maxRownum("music"));
+      mv.addObject("reviewMaxRownum", postService.maxRownum("review"));
+      //mv.addObject("placeMaxRownum", postService.maxRownum("place"));
+      mv.addObject("newsMaxRownum", postService.maxRownum("news"));
+      mv.addObject("diaryMaxRownum", postService.maxRownum("diary"));
+      mv.setViewName("home");
+      
+      return mv;
+   }
    
-	@RequestMapping(value = "searchAll.do", method = RequestMethod.GET)
-	public String searchAll(Locale locale, Model model) {
-		logger.info("Welcome searchAll! ");
-		return "searchAll";
-	}
-	
-	@RequestMapping(value = "kakao.do", method = RequestMethod.GET)
-	public String kakao(Locale locale, Model model) {
-		logger.info("Welcome kakao! ");
-		return "kakaoLogin";
-	}
-	
-	@RequestMapping(value = "redirect.do", method = RequestMethod.GET)
-	public String redirect(Locale locale, Model model) {
-		logger.info("Welcome redirect! ");
-		return "redirect";
-	}
-	
-	@RequestMapping(value = "facebook.do", method = RequestMethod.GET)
-	public String facebook(Locale locale, Model model) {
-		logger.info("Welcome facebook! ");
-		return "facebookLogin";
-	}
+   @RequestMapping(value = "index2.do", method = RequestMethod.GET)
+   public ModelAndView index2(ModelAndView mv) {
+      logger.info("Welcome index2! ");
+      List<Post> plist = postService.selectAll_index2();
+      mv.addObject("plist",plist);
+      mv.setViewName("index2");
+      return mv;
+   }
 
-	@RequestMapping(value = "map.do", method = RequestMethod.GET)
-	public String map(Locale locale, Model model) {
-		logger.info("Welcome map! ");
-		return "map";
-	}
+   @RequestMapping(value = "findIdPwd.do", method = RequestMethod.GET)
+   public String findIdPwd(Locale locale, Model model) {
+      logger.info("Welcome findIdPwd! ");
+      return "findIdPwd";
+   }
+   
+      @RequestMapping(value = "controll.do")
+      public ModelAndView controll(Locale locale, Model model,String writer_id, ModelAndView mv) {
+         List<Post> likeInOrder = postService.likeInOrder(writer_id);
+         List<Post> commentInOrder = postService.commentInOrder(writer_id);
+         List<Comment> commentAll = commentService.commentAll(writer_id);
+         List<Music> musiclist = new ArrayList<Music>();
+         List<Diary> diarylist = new ArrayList<Diary>();
+         List<Review> reviewlist =  new ArrayList<Review>();
+         List<Movie> movielist =  new ArrayList<Movie>();
+         List<News> newslist =  new ArrayList<News>();
+         Blog blog = blogService.selectBlog(writer_id);
+        
+         String category = "";
+         
+         for(int i = 0; i< likeInOrder.size(); i++){
+            int postId = likeInOrder.get(i).getPost_id();
+            if((category =  likeInOrder.get(i).getCategory()).equals("music")){
+               musiclist.add(musicService.musicDetail(postId));
+            }else if(category.equals("diary")){
+               diarylist.add(diaryService.diaryDetail(postId));
+            }else if(category.equals("review")){
+               reviewlist.add(reviewService.reviewDetail(postId));
+            }else if(category.equals("news")){
+               newslist.add(newsService.newsDetail(postId));
+            }else if(category.equals("movie")){
+               movielist.add(movieService.movieDetail(postId));
+            }
+         }
+        
+         for(int i = 0; i< commentInOrder.size(); i++){
+               int postId = commentInOrder.get(i).getPost_id();
+               if((category =  commentInOrder.get(i).getCategory()).equals("music")){
+                  musiclist.add(musicService.musicDetail(postId));
+               }else if(category.equals("diary")){
+                  diarylist.add(diaryService.diaryDetail(postId));
+               }else if(category.equals("review")){
+                  reviewlist.add(reviewService.reviewDetail(postId));
+               }else if(category.equals("news")){
+                  newslist.add(newsService.newsDetail(postId));
+               }else if(category.equals("movie")){
+                  movielist.add(movieService.movieDetail(postId));
+               }
+            }
+       mv.addObject("likeInOrder", likeInOrder);
+       mv.addObject("commentInOrder", commentInOrder);
+       mv.addObject("musiclist", musiclist);
+         mv.addObject("dlist", diarylist);
+         mv.addObject("reviewlist", reviewlist);
+         mv.addObject("newslist", newslist);
+         mv.addObject("movielist", movielist);
+         mv.addObject("blog", blog);
+         mv.addObject("commentAll",commentAll);
+         mv.setViewName("controll");
+         return mv;
+      
+      }
+   
+   @RequestMapping("myhome.do")
+   public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
+      Member loginUser  = memberService.loginCheck(member);
+           
+      String wr = loginUser.getMember_id();
+      System.out.println(wr);
+      mv.addObject("writer_id", wr);
+      mv.setViewName("myhome");
+      return mv;
+   }
+   
+   @RequestMapping("mypage.do")
+   public ModelAndView mypage(Locale locale, Model model,String writer_id , ModelAndView mv) {
+      
+      logger.info("Welcome mypage! ");
+      System.out.println(writer_id);
+      List<Comment> mylist = commentService.myCommentList(writer_id);
+      List<Member> neighborReqList = memberService.checkNeig(writer_id);
+      List<Good> goodMyList = goodService.goodMyList(writer_id);
+      List<Comment> commentMyList = commentService.CommentMyList(writer_id);
+      List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
+      List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
+      List<Message> lastMessage = messageService.lastMessage(writer_id);
+      for(int i = 0; i< lastMessage.size(); i++){
+         System.out.println(lastMessage.get(i));
+      }
+
+      mv.addObject("mylist",mylist);
+      mv.addObject("writer_id", writer_id);
+      mv.addObject("neighborReqList", neighborReqList);
+      mv.addObject("goodMyList", goodMyList);
+      mv.addObject("commentMyList", commentMyList);
+      mv.addObject("commentNeigList", commentNeigList);
+      mv.addObject("neighborlist",neighborlist);
+      mv.addObject("lastMessage",lastMessage);
+      mv.setViewName("mypage");
+   
+      return mv;
+   }
+
+   @RequestMapping(value = "uploadform.do", method = RequestMethod.GET)
+   public ModelAndView uploadform(Locale locale, ModelAndView mv) {
+
+      logger.info("Welcome uploadform! ");
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
+      
+      KobisOpenAPIRestService service = 
+            new KobisOpenAPIRestService("5337c5e39d3dd2ffebecbd935e09e9c2");
+      String weeklyResponse;
+      ObjectMapper mapper = new ObjectMapper();
+      HashMap<String, Object> weeklyResult = null;
+      
+      try {
+         
+         weeklyResponse = service.getWeeklyBoxOffice(
+               true, sdf.format(new Date()), "10", "0", "", "", "");
+
+         mapper = new ObjectMapper();
+         weeklyResult = 
+               mapper.readValue(weeklyResponse, HashMap.class);
+         
+      } catch (Exception e1) {
+         // TODO Auto-generated catch block
+         e1.printStackTrace();
+      }
+      
+      
+
+      ArrayList<String> popKeyword = new ArrayList<String>();
+      
+      Document document = null;
+      
+      try {
+         document = Jsoup.connect("http://www.naver.com/").get();
+
+         Elements elements = document.select(".ah_roll_area .ah_l li");
+         
+         for(int i=0 ; i<elements.size()-1 ; i++){
+            Element element = elements.get(i);
+            popKeyword.add(element.select("span.ah_k").text());
+         }
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+      
+      mv.setViewName("uploadform");
+      mv.addObject("weeklyResult", weeklyResult);
+      mv.addObject("popKeyword", popKeyword);
+      
+      return mv;
+   }
+
+   @RequestMapping(value = "uploadHtml.do", method = RequestMethod.GET)
+   public String uploadHtml(Locale locale, Model model) {
+      logger.info("Welcome uploadHtml! ");
+      return "uploadHtml";
+   }
+
+   @RequestMapping(value = "join.do", method = RequestMethod.GET)
+   public String join(Locale locale, Model model) {
+      logger.info("Welcome join! ");
+      return "join";
+   }
+   
+   @RequestMapping(value = "test.do", method = RequestMethod.GET)
+   public String test(Locale locale, Model model) {
+      logger.info("Welcome test! ");
+      return "test";
+   }
+
+   @RequestMapping(value = "massage.do", method = RequestMethod.GET)
+   public String massage(Locale locale, Model model) {
+      logger.info("Welcome massage! ");
+      return "massage";
+   }
+
+   @RequestMapping(value = "postDetail.do", method = RequestMethod.GET)
+   public String postDetail(Locale locale, Model model) {
+      logger.info("Welcome postDetail! ");
+      return "postDetail";
+   }
+
+   @RequestMapping(value = "likepage.do", method = RequestMethod.GET)
+   public String likepage(Locale locale, Model model) {
+      logger.info("Welcome likepage! ");
+      return "likepage";
+   }
+   
+   @RequestMapping(value = "searchAll.do", method = RequestMethod.GET)
+   public String searchAll(Locale locale, Model model) {
+      logger.info("Welcome searchAll! ");
+      return "searchAll";
+   }
+   
+   @RequestMapping(value = "kakao.do", method = RequestMethod.GET)
+   public String kakao(Locale locale, Model model) {
+      logger.info("Welcome kakao! ");
+      return "kakaoLogin";
+   }
+   
+   @RequestMapping(value = "redirect.do", method = RequestMethod.GET)
+   public String redirect(Locale locale, Model model) {
+      logger.info("Welcome redirect! ");
+      return "redirect";
+   }
+   
+   @RequestMapping(value = "facebook.do", method = RequestMethod.GET)
+   public String facebook(Locale locale, Model model) {
+      logger.info("Welcome facebook! ");
+      return "facebookLogin";
+   }
+
+   @RequestMapping(value = "map.do", method = RequestMethod.GET)
+   public String map(Locale locale, Model model) {
+      logger.info("Welcome map! ");
+      return "map";
+   }
   
-	@RequestMapping(value="/neighborlist.do", produces={"application/json"})
+   @RequestMapping(value="/neighborlist.do", produces={"application/json"})
     @ResponseBody
     public String neighborList(@RequestParam String loginUser){
        List<Member> neighborlist = neighborService.selectNeighborList(loginUser);

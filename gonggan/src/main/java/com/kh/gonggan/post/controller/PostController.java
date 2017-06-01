@@ -99,6 +99,62 @@ public class PostController {
 			return mv;
 	}
 	
+	@RequestMapping(value="/postNeighborlist.do", produces={"application/json"})
+	   @ResponseBody
+	   public String selectNeighborPostList(@RequestParam String loginUser,
+	         @RequestParam int rownum, @RequestParam int rownum2){
+	   System.out.println("postNl.do");
+	   System.out.println("rownum : " + rownum + " rownum2 : " + rownum2);
+	   System.out.println("loginUser :" + loginUser);
+	      List<Post> plist  = postService.selectUserNeighbor(loginUser, rownum, rownum2);
+	      
+	      JSONObject json = new JSONObject();
+	      JSONArray jarr = new JSONArray();
+	      
+	      if (plist != null) {
+	         for(Post p : plist) {
+	            
+	            JSONObject job = new JSONObject();
+	            
+	            Calendar cal = Calendar.getInstance();
+	            cal.setTime(p.getPost_date());
+	            
+	            job.put("postId", p.getPost_id() + "");
+	            job.put("writerId", p.getWriter_id());
+	            try {
+	               job.put("category", URLEncoder.encode(
+	                     p.getCategory(), "UTF-8"));
+	            } catch (UnsupportedEncodingException e) {
+	               // TODO Auto-generated catch block
+	               e.printStackTrace();
+	            }
+	            job.put("postId", p.getPost_id() + "");
+	            job.put("sharYn", p.getShar_yn());
+	            job.put("openYn", p.getOpen_yn());
+	            job.put("writerId", p.getWriter_id());
+	            job.put("goodCnt", p.getGoodCnt() + "");
+	            job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+	            job.put("year", cal.get(Calendar.YEAR) + "");
+	            job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
+	            job.put("date", cal.get(Calendar.DATE) + "");
+	   
+	            jarr.add(job);
+	         }
+	         json.put("list", jarr);
+	      }
+	      
+	      //ModelAndView mv = new ModelAndView();
+	      /*
+	      mv.setViewName("home");
+	      mv.addObject("loginUser", loginUser);
+	      */
+	      
+	      /*return "home";*/
+	      //return mv;
+	      
+	      return json.toJSONString();
+	   }
+	
 	@RequestMapping(value="/postlist.do", produces={"application/json"})
 		@ResponseBody
 		public String selectList(@RequestParam String writer_id,

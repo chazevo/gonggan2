@@ -162,5 +162,13 @@ public class PostDao {
 	      return (List<Post>) sqlSession.selectList("postmapper.commentinorder", writer_id);
 	   }//나의 포스트에 댓글 순위
 	
+	public List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("loginUser", loginUser);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		System.out.println("DAO :"+map);
+		return (List<Post>) sqlSession.selectList("postmapper.neighborpost", map);
+	}
 	
 }

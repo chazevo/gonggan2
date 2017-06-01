@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@page import="com.kh.gonggan.member.model.vo.Member"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -13,12 +13,12 @@ session.setAttribute("currentView", currentView);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+   content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <title>Insert title here</title>
 <link rel='stylesheet' href='http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css'/> 
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" media="(max-width: 900px)" href="css/css.css" />
 <link rel='stylesheet' href='css/css.css'/> 
 <link href="css/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
@@ -38,56 +38,56 @@ var count = 0;
 
 window.onload = function() {
 
-	$("#searchNeiDiv").hide();
-	
-	//trace(loginUser);
-	
-	if (category == "all")
-		requestList(rownum);
-	else
-		requestCategoryList(rownum, category);
-	
-	/*
-	$("#div_Loading").click(function() {
-		//alert("rownum : " + rownum);
-		if(maxRownum >= rownum)
-			requestList(rownum);
-	});
-	*/
-	
-	$(window).scroll(function(){
-		//if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
-		//if  ($(window).scrollTop() >= 500) {
-			// $(document).height() 현재 페이지 높이
-			// $(window).height() 윈도우 크기
-		
-		initPosition = $(window).scrollTop()
-		
-		if (initPosition > prevPosition) {
-			if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 5){
-				if(maxRownum >= rownum) {
-					$("#div_Loading").show();
-					alert(rownum);
-					setTimeout(function() {
-						requestList(rownum);
-						$(window).scrollTop($(window).height() / 2);
-					}, 1000);
-				}
-			}
-		}
-		prevPosition = initPosition
-	});
-	
-	$('#neighborList').click(function () {
-		$("#searchNeiDiv").show();
-		if(count == 0) {
-			neighborList(loginUser);
-			count++;
-			category="neighborlist";
-		}
-	});
-	
-	document.getElementById("searchPost").focus();
+   $("#searchNeiDiv").hide();
+   
+   //trace(loginUser);
+   
+   if (category == "all")
+      requestList(rownum);
+   else
+      requestCategoryList(rownum, category);
+   
+   /*
+   $("#div_Loading").click(function() {
+      //alert("rownum : " + rownum);
+      if(maxRownum >= rownum)
+         requestList(rownum);
+   });
+   */
+   
+   $(window).scroll(function(){
+      //if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
+      //if  ($(window).scrollTop() >= 500) {
+         // $(document).height() 현재 페이지 높이
+         // $(window).height() 윈도우 크기
+      
+      initPosition = $(window).scrollTop()
+      
+      if (initPosition > prevPosition) {
+         if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 5){
+            if(maxRownum >= rownum) {
+               $("#div_Loading").show();
+               alert(rownum);
+               setTimeout(function() {
+                  requestList(rownum);
+                  $(window).scrollTop($(window).height() / 2);
+               }, 1000);
+            }
+         }
+      }
+      prevPosition = initPosition
+   });
+   
+   $('#neighborList').click(function () {
+      $("#searchNeiDiv").show();
+      if(count == 0) {
+         neighborList(loginUser);
+         count++;
+         category="neighborlist";
+      }
+   });
+   
+   document.getElementById("searchPost").focus();
 }
 </script>
 <style>
@@ -97,134 +97,134 @@ window.onload = function() {
 <body>
 <!--<nav class="navbar navbar-default">-->
 <div>
-	<!--<div class="container-fluid">--><div>
-	<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-				data-target="#menu">
-				<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
-				<!-- sr-only : 숨김 -->
-			</button>
-			<a class="" href="login2.do">
-			<img class="" src="images/KakaoTalk_Photo_2017-04-22-23-02-45.png" width="70px">
-			<img class="smallLogoImg" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
-		</div>
-		<div class="collapse navbar-collapse" id="menu">
-		<!-- collapse 제거 -> 화면 크기 작아졌을 때 생기는 menu 아이콘을 클릭하지 않아도 메뉴가 펼쳐짐  -->
-		<!-- navbar-collapse 제거-> 메뉴 사라짐  -->
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'diary');">일기</a>
-				</li>
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'place');">장소</a>
-				</li>
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'review');">리뷰</a>
-				</li>
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'music');">음악</a>
-				</li>
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'movie');">영화</a>
-				</li>
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'news');">뉴스</a>
-				</li>
-				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'book');">책</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+   <!--<div class="container-fluid">--><div>
+   <!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#menu">
+            <span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
+            <!-- sr-only : 숨김 -->
+         </button>
+         <a class="" href="login2.do">
+         <img class="" src="images/KakaoTalk_Photo_2017-04-22-23-02-45.png" width="70px">
+         <img class="smallLogoImg" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+      <!-- collapse 제거 -> 화면 크기 작아졌을 때 생기는 menu 아이콘을 클릭하지 않아도 메뉴가 펼쳐짐  -->
+      <!-- navbar-collapse 제거-> 메뉴 사라짐  -->
+         <ul class="nav navbar-nav navbar-right">
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'diary');">일기</a>
+            </li>
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'place');">장소</a>
+            </li>
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'review');">리뷰</a>
+            </li>
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'music');">음악</a>
+            </li>
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'movie');">영화</a>
+            </li>
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'news');">뉴스</a>
+            </li>
+            <li>
+               <a href="javascript:$('#blogHomeContentDiv').html(''); requestCategoryList(rownum = 1, category = 'book');">책</a>
+            </li>
+         </ul>
+      </div>
+   </div>
 <!--</nav>--></div>
 <div class="divCenter">
-	<!--<div class="container-fluid">-->
-	<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
-		<div class="blogHomeHeader">
-			<table class="table1st">
-				<colgroup>
-					<col width="60%" />
-					<col width="40%" />
-				</colgroup>
-				<tr>
-					<td class="disapear">
-						<img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
-					</td>
-					<td class="table2nd" style="overflow:scroll;">
-						<table id="listbody_newPost">
-							<colgroup>
-								<col style="width:*;" />
-								<col width="5%" />
-							</colgroup>
-							<tr>
-								<td colspan="2">
-									<div class="div2" id="searchNeiDiv">
-										<input type="text" id="searchNeighbor" placeholder="검색" size="12"
-											onkeyup="searchNeighbor();">
-										<a href="javascript:searchNeighbor();">
-											<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
-												width="10%">
-										</a>
-									</div>
-								</td>
-							</tr>
-							 <tr>
-							 	<th id="postAlarm">내 포스트 알람_<font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
-								<td><a href="">▶</a></td>
-							</tr>
-							<tbody id="listbody_mytrace"></tbody>
-							<tbody id="listbody_newPost">
-								<tr>
-									<td>
-										<a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
-										<a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
-										<a href=""><font color="#2D86C9">이대장</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">토리와 함께 추억쌓기 놀이</a> |
-										<a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">행복가득한 그루터기 발자취</a> |
-										<a href=""><font color="#2D86C9">그루터기</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
-										<a href=""><font color="#2D86C9">깐깐징어</font></a>
-									</td>
-									<td></td>
-								</tr>
-							</tbody>
-							<tr>
-								<td colspan="2" align="center"  class="title">
-									<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
-								</td>
-							</tr>
-							<tr>
-								<td class="title">
-									서로이웃 신청_
-									<font color="#2D86C9">
-										<b id="neighborReqListSize">${neighborReqListSize }</b>
-									</font>
-								</td>
-								<td  class="title"><a href="">▶</a></td>
-							</tr>
+   <!--<div class="container-fluid">-->
+   <!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
+      <div class="blogHomeHeader">
+         <table class="table1st">
+            <colgroup>
+               <col width="60%" />
+               <col width="40%" />
+            </colgroup>
+            <tr>
+               <td class="disapear">
+                  <img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
+               </td>
+               <td class="table2nd" style="overflow:scroll;">
+                  <table id="listbody_newPost">
+                     <colgroup>
+                        <col style="width:*;" />
+                        <col width="5%" />
+                     </colgroup>
+                     <tr>
+                        <td colspan="2">
+                           <div class="div2" id="searchNeiDiv">
+                              <input type="text" id="searchNeighbor" placeholder="검색" size="12"
+                                 onkeyup="searchNeighbor();">
+                              <a href="javascript:searchNeighbor();">
+                                 <img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
+                                    width="10%">
+                              </a>
+                           </div>
+                        </td>
+                     </tr>
+                      <tr>
+                         <th id="postAlarm">내 포스트 알람_<font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
+                        <td><a href="">▶</a></td>
+                     </tr>
+                     <tbody id="listbody_mytrace"></tbody>
+                     <tbody id="listbody_newPost">
+                        <tr>
+                           <td>
+                              <a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
+                              <a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
+                              <a href=""><font color="#2D86C9">이대장</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">토리와 함께 추억쌓기 놀이</a> |
+                              <a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">행복가득한 그루터기 발자취</a> |
+                              <a href=""><font color="#2D86C9">그루터기</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
+                              <a href=""><font color="#2D86C9">깐깐징어</font></a>
+                           </td>
+                           <td></td>
+                        </tr>
+                     </tbody>
+                     <tr>
+                        <td colspan="2" align="center"  class="title">
+                           <img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="title">
+                           서로이웃 신청_
+                           <font color="#2D86C9">
+                              <b id="neighborReqListSize">${neighborReqListSize }</b>
+                           </font>
+                        </td>
+                        <td  class="title"><a href="">▶</a></td>
+                     </tr>
                      <tbody id="listbody_newNeighbor">
                         <tr>
                            <td>
@@ -252,93 +252,93 @@ window.onload = function() {
                      </tbody>
                   </table>
                </td>
-				</tr>
-			</table>
-			
-			<div class="myDiv">
-				<c:if test="${empty (loginUser) }">
-				<form action = "login.do" method="post" id="login">
-					<table>
-						<tr>
-							<td>아이디 </td>
-							<td><input type="text" name="member_id"></td>
-						</tr>
-						<tr>
-							<td>비밀번호 </td>
-							<td><input type="password" name="member_pw"></td>
-						</tr>
-					</table>
-					<a href="javascript:goSubmit();">로그인</a>
-				</form>
-				
-				</c:if>
-				<c:if test="${!empty (loginUser) }">
-				<c:out value="${loginUser.getMember_name()}님"></c:out>
-				<a href="/gonggan/logOut.do">로그아웃</a>
-				<!-- <a href="/gonggan/update.do">정보수정</a> -->
-				<hr class="whiteHr">
-				<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">내 블로그 소식</a></b>
-				<a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
-				<a href="#" id="neighborList">이웃 블로그</a>   <!-- 이웃 블로그 목록, 이웃 새글 -->
-				<a href="uploadform.do?writer_id=${sessionScope.loginUser.getMember_id()}">포스트 쓰기</a>
-				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
-				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
-				</c:if>
-			</div>
-		</div>
-		<section>
-			<div>
-				<div class="searchPost">
-					<table>
-						<tr>
-							<td>
-								<div class="text-center div1">
-									<select><option>내용 </option></select>
-								</div>
-							</td>
-							<td>
-								<div class="div2">
-									<input type="text" id="searchPost" placeholder="검색" size="12">
-									<a href="#">
-										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
-											width="10%">
-									</a>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="div3">
-					<select onchange="sorting();" id="select">
-						<option value="date">최신순</option>
-						<option value="like">좋아요</option>
-					</select>
-				</div>
-			</div>
-			<div class="text-center blogHomeContentDiv" id="blogHomeContentDiv">
-			<%-- 
-			<c:set var="musiccount" value="0" />
-			<c:set var="diarycount" value="0" />
-			<c:set var="moviecount" value="0" />
-			<c:set var="newscount" value="0" />
-			<c:set var="reviewcount" value="0" />
-			
-			<c:forEach items="${plist}" var="i" begin="0" varStatus="status">
-				<c:if test="${i.category eq 'diary'}">
-				<c:set var="diarycount" value="${diarycount + 1}" />
-				<div>
-					<table>
-						<colgroup>
-							<col width="40%" />
-							<col width="60%" />
-						</colgroup>
-						<tr>
-							<td colspan="2" class="blogHomeContent">
-								<a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
-									${dlist[diarycount-1].diary_content}
-								</a>
-							</td>
-						</tr>
+            </tr>
+         </table>
+         
+         <div class="myDiv">
+            <c:if test="${empty (loginUser) }">
+            <form action = "login.do" method="post" id="login">
+               <table>
+                  <tr>
+                     <td>아이디 </td>
+                     <td><input type="text" name="member_id"></td>
+                  </tr>
+                  <tr>
+                     <td>비밀번호 </td>
+                     <td><input type="password" name="member_pw"></td>
+                  </tr>
+               </table>
+               <a href="javascript:goSubmit();">로그인</a>
+            </form>
+            
+            </c:if>
+            <c:if test="${!empty (loginUser) }">
+            <c:out value="${loginUser.getMember_name()}님"></c:out>
+            <a href="/gonggan/logOut.do">로그아웃</a>
+            <!-- <a href="/gonggan/update.do">정보수정</a> -->
+            <hr class="whiteHr">
+            <b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">내 블로그 소식</a></b>
+            <a href='javascript:trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
+            <a href="javascript:requestNeighborPostList(rownum = 1, loginUser = loginUser);" id="neighborList">이웃 블로그</a>   <!-- 이웃 블로그 목록, 이웃 새글 -->
+            <a href="uploadform.do?writer_id=${sessionScope.loginUser.getMember_id()}">포스트 쓰기</a>
+            <a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
+            <img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
+            </c:if>
+         </div>
+      </div>
+      <section>
+         <div>
+            <div class="searchPost">
+               <table>
+                  <tr>
+                     <td>
+                        <div class="text-center div1">
+                           <select><option>내용 </option></select>
+                        </div>
+                     </td>
+                     <td>
+                        <div class="div2">
+                           <input type="text" id="searchPost" placeholder="검색" size="12">
+                           <a href="#">
+                              <img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
+                                 width="10%">
+                           </a>
+                        </div>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+            <div class="div3">
+               <select onchange="sorting();" id="select">
+                  <option value="date">최신순</option>
+                  <option value="like">좋아요</option>
+               </select>
+            </div>
+         </div>
+         <div class="text-center blogHomeContentDiv" id="blogHomeContentDiv">
+         <%-- 
+         <c:set var="musiccount" value="0" />
+         <c:set var="diarycount" value="0" />
+         <c:set var="moviecount" value="0" />
+         <c:set var="newscount" value="0" />
+         <c:set var="reviewcount" value="0" />
+         
+         <c:forEach items="${plist}" var="i" begin="0" varStatus="status">
+            <c:if test="${i.category eq 'diary'}">
+            <c:set var="diarycount" value="${diarycount + 1}" />
+            <div>
+               <table>
+                  <colgroup>
+                     <col width="40%" />
+                     <col width="60%" />
+                  </colgroup>
+                  <tr>
+                     <td colspan="2" class="blogHomeContent">
+                        <a data-fancybox data-src='pdetail.do?postId=${post_id} &writerId=${post_id} '>
+                           ${dlist[diarycount-1].diary_content}
+                        </a>
+                     </td>
+                  </tr>
                         <tr class="trBottom">
                            <td><a href="">${i.writer_id}</a></td>
                            <td class="rightAlign">
@@ -676,7 +676,7 @@ window.onload = function() {
             </div> -->
          </div>
 <div id="div_Loading" style="font-size:11pt; width:100%;text-align:center">
-	<img height='70px' src="images/InternetSlowdown_Day.gif">
+   <img height='70px' src="images/InternetSlowdown_Day.gif">
 </div>
       </section>
    </div>

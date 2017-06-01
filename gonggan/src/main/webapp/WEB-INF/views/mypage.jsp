@@ -144,7 +144,7 @@
                         </td>
                      </tr>
                      <tr>
-                        <td colspan="2">
+                        <td colspan="2" height="50%">
                            <a href="javascript:editProfile();">
                               <div class="grayBorder" id="editProfile">수정</div>
                            </a>
@@ -157,7 +157,11 @@
                </td>
                <td class="td">
                   <form action="/gonggan/update.do" method="post" id="update">
-                     <table width="100%">
+                     <table>
+                    	 <colgroup>
+                    	 	<col width="50%" />
+                    	 	<col width="50%" />
+                    	 </colgroup>
                         <tr>
                            <td><b>내 정보 수정</b></td>
                            <td class="relative">
@@ -214,12 +218,17 @@
                </form>
                <!-- 마이페이지의 쪽지부분 -->
                <td class="td notTableList">
-                  <table width="100%;">
+               <div>
+                  <table>
+                  	<colgroup>
+	                  	<col width="20%" />
+	                  	<col width="50%" />
+	                  	<col width="30%" />
+                  	</colgroup>
                      <tr>
                         <td colspan="3">
                            <a href=""> 쪽지함 <img style="display:inline-block" src="images/chat_icon.png"  class="smallIcon" >
                            </a>&nbsp; &nbsp;
-                           
                         </td>
                      </tr>
                      <c:if test="${!empty lastMessage }">
@@ -233,14 +242,15 @@
                                     <a href="selectBlog.do?writer_id=${i.sender}">${i.sender}</a>
                                     </c:if>
                                  </font></td>
-                                 <td width="70%">
+                                 <td>
                                  <a href="">${i.msg_text }</a>
                                  </td >
-                                 <td width="15%">${i.msg_date }</td>
+                                 <td>${i.msg_date }</td>
                      </tr>
                            </c:forEach>
                         </c:if>
                   </table>
+                  </div>
                </td>
             </tr>
             <!-- 이웃새글부분 -->
@@ -254,9 +264,10 @@
                                  게시글에 <b>댓글</b>을 남기셨습니다.<br>
                      </c:forEach>
                   </c:if>
-
+                  </td>
                   <!-- 댓글 좋아요 알림부분 -->
                      <td class="td notTableList">
+                     <div>
                         <table>
                         <tr>
                            <td colspan="2" align="center">
@@ -265,21 +276,18 @@
                         </tr>
                         <tr>
                            <td>
-                              <table>
-                                       <b>내 포스트 알람_좋아요</b><br>
-                                          게시글을 작성하고 이웃을 만들어보세요!!<br>
-                                       <c:if test="${!empty (goodMyList)}">
-                                        <c:forEach items="${ goodMyList}" var="i"  begin ="0">
-                                           <font><a href="selectBlog.do?writer_id=${i.member_id} ">${ i.member_id }</a> 님이</font> | 
-                                             게시글에 <b>좋아요</b>을 누르셨습니다.<br>
-                                        </c:forEach>
-                                       </c:if>
-                                 
-                              </table>
+                               <b>내 포스트 알람_좋아요</b><br>
+                                  게시글을 작성하고 이웃을 만들어보세요!!<br>
+                               <c:if test="${!empty (goodMyList)}">
+                                <c:forEach items="${ goodMyList}" var="i"  begin ="0">
+                                   <font><a href="selectBlog.do?writer_id=${i.member_id} ">${ i.member_id }</a> 님이</font> | 
+                                     게시글에 <b>좋아요</b>을 누르셨습니다.<br>
+                                </c:forEach>
+                               </c:if>
                            </td>
-                           <td></td>
                         </tr>
                      </table>
+                    </div>
                   </td>
                </tr>
             </table >
@@ -291,6 +299,7 @@
                </colgroup>
                <tr>
                   <td class="td">
+                 	<div>
                      <table>
                         <colgroup>
                            <col width="60%" />
@@ -318,27 +327,31 @@
                         </c:forEach>
                         </c:if>
                      </table>
+                     </div>
                   </td>
                   <td class="td">
+                  	<div>
                      <table>
                         <colgroup>
-                           <col width="73%" />
-                           <col width="12%" />
-                           <col width="15%" />
+                           <col width="20%" />
+                           <col width="50%" />
+                           <col width="30%" />
                         </colgroup>
                         <tr ><td colspan="3">서로이웃 목록</td></tr>
                         <c:if test="${!empty neighborlist }">
                            <c:forEach items="${ neighborlist}" var="i"  begin ="0" >
                            <tr>
                               <td> ${i.member_id }</td>
-                              <td><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
+                              <td class="text-left"><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
                               <td><a href="javascript:cancel('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');"><div class="neighborYN">취소</div></a></td>
                            </tr>
                            </c:forEach>
                         </c:if>
                      </table>
+                     </div>
                   </td>
                   <td class="td">
+                  	<div>
                      <table>
                         <tr><td><b>내가 남긴글</b></td></tr>
                         <c:if test="${empty mylist }">
@@ -362,6 +375,7 @@
                            
                         </tbody>
                      </table>
+                     </div>
                   </td>
                </tr>
             </table>

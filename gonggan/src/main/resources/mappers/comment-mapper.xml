@@ -4,63 +4,71 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="commentmapper">
 
-	<resultMap type="comment" id="commentResult">
-		<id property="comment_num" column="comment_num" />
-		<result property="post_id" column="post_id" />
-		<result property="writer_id" column="writer_id" />
-		<result property="comment_content" column="comment_content" />
-		<result property="comment_date" column="comment_date" />
-		<result property="comment_check" column="comment_check" />
-	</resultMap>
-	
-	<select id="clist" parameterType="String" resultMap="commentResult">
-	select * from comments where post_id = #{postId}
-	order by comment_num
+   <resultMap type="comment" id="commentResult">
+      <id property="comment_num" column="comment_num" />
+      <result property="post_id" column="post_id" />
+      <result property="writer_id" column="writer_id" />
+      <result property="comment_content" column="comment_content" />
+      <result property="comment_date" column="comment_date" />
+      <result property="comment_check" column="comment_check" />
+   </resultMap>
+   
+   <select id="clist" parameterType="String" resultMap="commentResult">
+   select * from comments where post_id = #{postId}
+   order by comment_num
    </select>
 
-		<select id="commentmylist" parameterType="String" resultMap="commentResult">
-	select *  from comments  where  post_id in (select post_id from post where writer_id=#{writer_id} )
-	</select>
-	
-	<select id="ccheckalram" parameterType="String" resultMap="commentResult">
-	select * from comments where post_id in (select post_id from post where writer_id = #{member_id})
-	and COMMENT_CHECK = 'N'
-	</select>
-	
-	<select id="commentcheckalram" parameterType="String" resultMap="commentResult">
-	 select * from comments where  writer_id = #{member_id}
-	and COMMENT_CHECK = 'N';
-	</select>
-		
-	<select id="commentneiglist" parameterType="String" resultMap="commentResult">
-	 select * from post where writer_id in (select sender   from neighbor where receiver=#{writer_id}  and check_yn='Y')
-	or writer_id in(select receiver from neighbor where sender=#{writer_id} and check_yn='Y')
-	</select>
+      <select id="commentmylist" parameterType="String" resultMap="commentResult">
+   select *  from comments  where  post_id in (select post_id from post where writer_id=#{writer_id} )
+   </select>
+   
+   <select id="ccheckalram" parameterType="String" resultMap="commentResult">
+   select * from comments where post_id in (select post_id from post where writer_id = #{member_id})
+   and COMMENT_CHECK = 'N'
+   </select>
+   
+   <select id="commentcheckalram" parameterType="String" resultMap="commentResult">
+    select * from comments where  writer_id = #{member_id}
+   and COMMENT_CHECK = 'N';
+   </select>
+      
+   <select id="commentneiglist" parameterType="String" resultMap="commentResult">
+    select * from post where writer_id in (select sender   from neighbor where receiver=#{writer_id}  and check_yn='Y')
+   or writer_id in(select receiver from neighbor where sender=#{writer_id} and check_yn='Y')
+   </select>
+      <select id="commentall" parameterType="String" resultMap="commentResult">
+    select * from comments where post_id in (select post_id from post where writer_id=#{writer_id})
+   </select>
 
-	 
-	<select id="cnum" parameterType="comment" resultType="int">
-	select nvl(max(comment_num), 0) from comments where post_id = #{post_id} + 1
-	</select>
-	
-	<select id="tracelist" parameterType="String" resultMap="commentResult">
-	select * from comments where writer_id = #{member_id}
-	order by comment_num
-	</select>
-	
-	<insert id="cinsert" parameterType="comment" >
-	insert into comments
-	values(#{post_id}, #{comment_num}, 
-	#{writer_id}, #{comment_content}, sysdate, default)
-	</insert>
-	
-	<update id="cupdate">
-	update table comment
-	set
-	</update>
-	
-	<delete id="cdelete" parameterType="comment" >
-	delete from comments
-	where post_id=#{post_id} and comment_num=#{comment_num}
-	</delete>
-	
+    
+   <select id="cnum" parameterType="comment" resultType="int">
+   select nvl(max(comment_num), 0) from comments where post_id = #{post_id} + 1
+   </select>
+   
+   <select id="tracelist" parameterType="String" resultMap="commentResult">
+   select * from comments where writer_id = #{member_id}
+   order by comment_num
+   </select>
+   
+   <insert id="cinsert" parameterType="comment" >
+   insert into comments
+   values(#{post_id}, #{comment_num}, 
+   #{writer_id}, #{comment_content}, sysdate, default)
+   </insert>
+   
+   <update id="cupdate">
+   update table comment
+   set
+   </update>
+   
+   <delete id="cdelete" parameterType="comment" >
+   delete from comments
+   where post_id=#{post_id} and comment_num=#{comment_num}
+   </delete>
+   <delete id="adelete" parameterType="comment" >
+   delete from alarm
+   where post_id=#{post_id} and comment_num=#{comment_num}
+   </delete>
+   
+   
 </mapper>

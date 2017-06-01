@@ -124,4 +124,8 @@ public class PostSericeImpl implements PostService{
 	      return postDao.commentInOrder(writer_id);
 	   }
 	
+	@Override
+	public List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2) {
+		return  postDao.selectUserNeighbor(loginUser, rownum, rownum2);
+	}
 }

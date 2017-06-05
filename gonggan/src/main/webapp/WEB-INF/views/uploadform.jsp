@@ -283,7 +283,7 @@
 								<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
 								<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-								<a href="#">로그아웃</a> 
+								<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 								<div id="dansun_line"></div>
 							</td>
 						</tr> 

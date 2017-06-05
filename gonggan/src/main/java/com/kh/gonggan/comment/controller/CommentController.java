@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class CommentController {
             // TODO Auto-generated catch block
             e.printStackTrace();
          }
-         job.put("commentDate", c.getComment_date() + "");
+         job.put("commentDate", new DateTime(c.getComment_date()).toString() + "");
 
          jarr.add(job);
       }

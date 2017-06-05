@@ -46,7 +46,7 @@
 			day: "하루",
 			days: "%d일",
 			month: "한달",
-			months: "%달",
+			months: "%d달",
 			year: "1년",
 			years: "%d년"
 	};
@@ -57,8 +57,8 @@
 	
 </script>
 </head>
-<body>
-<div style="overflow:auto;width:500px;height:500px;">
+<body style="">
+<div style="overflow:auto;width:100%;height:500px;">
 <table width="100%" align="center" class="postDetail">
 	<colgroup>
 		<col width="70%" />
@@ -107,11 +107,6 @@
 			<c:if test="${ goodCnt eq '0' }"> 
 			<b>좋아요 ${goodCnt }개</b>
 			</c:if>
-			<div id=dotdotdotDiv>
-				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
-				<a class="hover dotdotdot" href="" >공유</a>
-				<a class="hover dotdotdot" href="">쪽지 보내기</a>
-			</div>
 		</td>
 	</tr>
 	<tbody id="listbody">
@@ -138,9 +133,19 @@
 				<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 				<i class='like-icon'></i>
 			</label>&nbsp;
-			<input id='comment_content' type='text' placeholder='댓글 달기' onkeydown="if(event.keyCode==13) sendComment();">&nbsp;
-			<a href='javascript:sendComment();'><img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;
-			<a href='javascript:dotdotdot();'><img class='smallIcon2' src='images/thesee_icon.png'></a>
+			<input id='comment_content' type='text' placeholder='댓글 달기'
+				onkeydown="if(event.keyCode==13) sendComment();">&nbsp;
+			<a href='javascript:sendComment();'>
+				<img  src='images/dettext_icon.png' width='45px' >
+			</a>&nbsp; &nbsp;
+			<div class='dotdotdotDiv'>
+				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
+				<a class="hover dotdotdot" href="" >공유</a>
+				<a class="hover dotdotdot" href="">쪽지 보내기</a>
+			</div>
+			<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
+				<img class='smallIcon2' src='images/thesee_icon.png'>
+			</a>
 		</td>
 	</tr>
 </table>

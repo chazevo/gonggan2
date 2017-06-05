@@ -19,24 +19,26 @@
 		$("input[name=keyword]").focus();
 		
 		$("th a").click(function() {
-			if ($(this).next().hasClass('hidden')) {
 				$("th a").next().addClass('hidden');
+				$("th a").removeClass('selectedTab');
 				$("th a").next().hide();
 				$(this).next().removeClass('hidden');
+				$(this).addClass('selectedTab');
 				$(this).next().show();
-			}
 		});
 		
 		$("th a").hover(function() {
 			if ($(this).next().hasClass('hidden')) {
-				$("th a").next().addClass('hidden');
-				$("th a").next().hide();
 				$(this).next().removeClass('hidden');
 				$(this).next().show();
 			}
 			else {
-				$(this).next().addClass('hidden');
-				$(this).next().hide();
+				$("th a").each(function(index, element) {
+					if (!$(this).hasClass("selectedTab")) {
+						$(this).next().addClass('hidden');
+						$(this).next().hide();
+					}
+				});
 			}
 		});
 		
@@ -44,13 +46,20 @@
 </script>
 <title>Insert title here</title>
 </head>
-<body class="gradBg">
+<body class="gradBg searchAll">
 <div>
-	<table width="100%"  border="1" class="searchAllTable" >
+	<table width="100%" class="searchAllTable" >
+		<colgroup>
+			<col width="20%" />
+			<col width="20%" />
+			<col width="20%" />
+			<col width="20%" />
+			<col width="20%" />
+		</colgroup>
 		<tr>
 			<th class="text-center">
 				<div>
-					<a href="javascript:categoryval=0; changeCategory();">책</a>
+					<a class="selectedTab" href="javascript:categoryval=0; changeCategory();">책</a>
 					<hr class="<c:if test="${category ne 0 && !empty param }">hidden</c:if>">
 				</div>
 			</th>
@@ -94,9 +103,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th colspan="5">
-				<div><hr></div>
-			</th>
+			<th colspan="5"><hr></th>
 		</tr>
 		<tbody id="listbody">
 			<c:if test="${!empty searchMusicList}">

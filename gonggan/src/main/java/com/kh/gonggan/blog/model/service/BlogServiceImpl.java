@@ -15,6 +15,10 @@ public class BlogServiceImpl implements BlogService {
 	@Autowired
 	BlogDao blogDao; // 객체를 스프링에서 생성하여 주입시킴
 
+	public int insertBlog(Blog blog) {
+		return blogDao.insertBlog(blog);
+	}
+	
 	public Blog selectBlog(String writer_id) {
 		return blogDao.selectBlog(writer_id);
 	}
@@ -34,5 +38,9 @@ public class BlogServiceImpl implements BlogService {
 	
 	public void blogvisit(String writer_id, String visitor_id) {
 		blogDao.blogvisit(writer_id, visitor_id);
+	}
+	
+	public int blogSetting(Blog blog) {
+		return blogDao.blogSetting(blog);
 	}
 }

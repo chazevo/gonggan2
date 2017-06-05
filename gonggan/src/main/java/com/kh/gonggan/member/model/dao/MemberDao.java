@@ -54,17 +54,10 @@ public class MemberDao {
 		return sqlSession.update("membermapper.mupdate", mem);
 	}//회원 정보 수정
 	
-	public Member selectId(String email){
-		return (Member) sqlSession.selectOne("membermapper.selectId", email);
-	}//아이디 찾기
-/*	
-	public Member selectPw(String memberId, String email){
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put("memberId", memberId);
-		map.put("email", email);
-	//	return (Member) sqlSession.selectOne("membermapper.selectPw", map);
-	}//비밀번호 찾기
-*/
+	public String selectIdbyEmail(String email){
+		return (String) sqlSession.selectOne("membermapper.selectIdbyEmail", email);
+	} //아이디 찾기
+	
 	public int requestNeig(String memberId) {
 		// TODO Auto-generated method stub
 		return  sqlSession.insert("membermapper.requestNeig", memberId);

@@ -21,8 +21,6 @@
 	<update id="ginsert3" parameterType="int">
 		update post set good_count=(GOOD_COUNT+1) where post_id = #{postId}
 	</update>
-		
-
 	
 	<select id="gcheck" parameterType="good" resultMap="goodResult">
 	select * from good where post_id = #{post_id} and member_id = #{member_id}
@@ -36,6 +34,13 @@
 	</select>
 	
 	<delete id="gdelete" parameterType="good">
+	delete from alarm 
+	where post_id = #{post_id} and
+	alarm_num = (select alarm_num from good
+	where post_id = #{post_id} and member_id = #{member_id})
+	</delete>
+	
+	<delete id="gdelete2" parameterType="good">
 	delete from good 
 	where post_id = #{post_id} and member_id = #{member_id}
 	</delete>

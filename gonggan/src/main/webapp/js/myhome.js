@@ -32,7 +32,7 @@ function callbacktrace(data) {
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
-		//document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
+		//document.getElementById("listbody").innerHTML += "<tr><td colSpan='7'>"
 
 		td.innerHTML = " <a data-fancybox data-src='pdetail.do?postId="+jsonArr.list[j].postId+"&writerId=" + jsonArr.list[j].postWriter +"'>"
 		+ decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " ")) +"</a><b>댓글</b>을 남기셨습니다. " ;
@@ -200,14 +200,21 @@ function callbackList2(data) {
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
-		//document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
-		
+
 		td.innerHTML = "<img "
 			+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>" + "</td></tr>";
-		td.colspan="7";
+		td.colSpan="7";
 		tr.appendChild(td);
 		document.getElementById("listbody").appendChild(tr);
-		
+
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+
+		td.innerHTML = decodeURIComponent((jsonArr.list[j].content).replace(Ca, " "));
+		td.colSpan="7";
+		tr.appendChild(td);
+		document.getElementById("listbody").appendChild(tr);
+
 		reqCommentList(postId);
 		
 	}
@@ -238,9 +245,10 @@ function callbackCommentList(data, postId){
 	var td = document.createElement("td");
 	//var tbody = document.createElement("tbody");
 	
-	td.innerHTML = "<a href='javascript:moreComment(" + postId + ");'>더보기</a>";
+	td.innerHTML = "<a href='javascript:void(0);' onclick='moreComment(" + postId + ", $(this).parent().parent());'>"
+			+ "더보기</a>";
 	td.class = "moreComment";
-	td.colspan = "7";
+	td.colSpan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
 
@@ -248,13 +256,12 @@ function callbackCommentList(data, postId){
 		if (j > jsonArr.list.length - 1) break;
 	    tr = document.createElement("tr");
 		td = document.createElement("td");
-		td.innerHTML = "<a href='myhome.do?writer_id=" + jsonArr.list[j].writerId + "'>"
-			+ jsonArr.list[j].writerId +"</a>";
-		td.colspan = "2";
-		tr.appendChild(td);
-	    td = document.createElement("td");
-		td.innerHTML = decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "));
-		td.colspan = "5";
+		td.colSpan = "7";
+		td.innerHTML = "<a href='selectBlog.do?writer_id=" + jsonArr.list[j].writerId + "'><b>"
+			+ jsonArr.list[j].writerId +"</b></a>&nbsp;"
+			+ decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "))
+			+ "&nbsp;<abbr class='timeago' title='" + jsonArr.list[j].commentDate + "'>"
+	    		+ jsonArr.list[j].commentDate + "</abbr>";
 		tr.appendChild(td);
 		//tbody.appendChild(tr);
 		document.getElementById("listbody").appendChild(tr);
@@ -270,28 +277,55 @@ function callbackCommentList(data, postId){
 	+ "onkeyup='if( event.keyCode==13 ) sendComment(postId);'>&nbsp;"
 	+ "<a href='javascript:sendComment(postId);'>"
 	+ "<img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
-	+ "<a href='javascript:dotdotdot();'>"
-	+ "<img class='smallIcon2' src='images/thesee_icon.png'></a></td></tr>";
-	td.colspan = "7";
+	+ "<a href='javascript:void(0);' onclick='dotdotdot($(this));'>"
+	+ "<img class='smallIcon2' src='images/thesee_icon.png'></a>"
+	+ "<div class='dotdotdotDiv right'>"
+	+ "<a class='hover dotdotdot' href=''>부적절한 컨텐츠 신고</a>"
+	+ "<a class='hover dotdotdot' href='' >공유</a>"
+	+ "<a data-fancybox data-src='messageList.do?"
+	+ "memberId1=" + loginUser + "&memberId2=" + writer_id
+	+ "' class='hover dotdotdot fb'>"
+	+ "쪽지 보내기</a></div></td></tr>";
+	td.colSpan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
-    
+
+	jQuery("abbr.timeago").timeago();
+
+	$(".fb").fancybox({
+  	  //'modal' : true,
+  	  //'openEffect' : 'none',
+  	  //'closeEffect' : 'none',
+  	  //'scrolling' : false,
+  	  'autoSize':false,
+  	  'closeBtn' : false,
+  	  'fullScreen' : false
+  	 });
+	
+	$(".hover").hover(function(){
+		//$(this).css("backgroundColor", "gray");
+		if ($(".hover").hasClass("grayTd"))
+			$(this).removeClass("grayTd");
+		else
+			$(this).addClass("grayTd");
+	});
+	
 }
 
 function sendComment(postId) {
 	alert(postId + " 코멘트");
 }
 
-function moreComment(postId) {
+function moreComment(postId, obj) {
 	
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
 	
 	td.innerHTML = postId + "의 댓글 더 보기 ";
-	td.colspan = "7";
+	td.colSpan = "7";
 
     tr.appendChild(td);
-    
+    obj.after("<tr><td colspan='7'>" + postId + "의 댓글 더 보기</td></tr>");
 	
 }
 
@@ -351,10 +385,25 @@ function checkboxControl(type, object) {
 		*/
 }
 
-function dotdotdot(){
+function dotdotdot(obj){
 	
-	if (document.getElementById("dotdotdotDiv").style.display == "block")
-		$('#dotdotdotDiv').css("display","none");
-	else
-		$('#dotdotdotDiv').css("display","block");
+	if (obj.next().css('display') == "block")
+		obj.next().css("display", "none");
+	else {
+		$(".dotdotdotDiv").css("display", "none");
+		obj.next().css("display", "block");
+	}
+}
+
+function reqNeig() {
+	
+	var obj = $(".blogOwnerClick>div>div").children("a:nth-child(1)");
+	
+	if (obj.text() == "이웃 신청") {
+		obj.text("신청 취소");
+	}
+	
+	 else if (obj.text() == "이웃 신청") {
+		obj.text("신청 취소");
+	}
 }

@@ -115,65 +115,67 @@ function sorting() {
 }
 
 function callbackList(data) {
-   var jsonObj = JSON.stringify(data);
-   var jsonArr = JSON.parse(jsonObj);
+	
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+	
+	var div, table, tr, td;
+	
+	var postId, content, writerId, goodCnt;
+	
+	for (var i in jsonArr.list) {
+		
+		div = document.createElement("div");
+		div.class = "";
+		table = document.createElement("table");
+		table.border = "1";
+      
+		postId = jsonArr.list[i].postId;
+		content = reqPostDetail(postId, jsonArr.list[i].category);
+		writerId = jsonArr.list[i].writerId;
+		goodCnt = jsonArr.list[i].goodCnt;
+      
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.colSpan = "2";
+		td.class = "blogHomeContent";
+		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
+			+ "postId=" + postId
+			+ "&writerId=" + writerId + "'>"
+			+ decodeURIComponent(content.replace(Ca, " "))
+			+ "</a>"
+			tr.appendChild(td);
+		table.appendChild(tr);
+      
+		tr = document.createElement("tr");
+		tr.class = "trBottom";
+		td = document.createElement("td");
+		td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
+		+ writerId + "</a>";
+		tr.appendChild(td);
+		td = document.createElement("td");
+		td.class = "rightAlign";
+		td.innerHTML = "<label class='checkbox-wrap'>"	
+			+ "<input type='checkbox' id='' "
+			+ "onclick='like($(this), loginUser, " + postId + ");'>"
+			+ "<i class='like-icon'></i></label>&nbsp;<span>"
+			+ (goodCnt == 0? goodCnt
+					: "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+					+ goodCnt + "</a></span>");
+		tr.appendChild(td);
+		table.appendChild(tr);
+      
+		div.appendChild(table);
+      
+		document.getElementById("blogHomeContentDiv").appendChild(div);
+	}
    
-   var div;
-   var table, tr, td;
-
-   var postId, content, writerId, goodCnt;
-   
-   for (var i in jsonArr.list) {
-      
-      div = document.createElement("div");
-      table = document.createElement("table");
-      
-      postId = jsonArr.list[i].postId;
-      content = reqPostDetail(postId, jsonArr.list[i].category);
-      writerId = jsonArr.list[i].writerId;
-      goodCnt = jsonArr.list[i].goodCnt;
-      
-      tr = document.createElement("tr");
-      td = document.createElement("td");
-      td.colspan = "2";
-      td.class = "blogHomeContent";
-      td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
-         + "postId=" + postId
-         + "&writerId=" + writerId + "'>"
-         + decodeURIComponent(content.replace(Ca, " "))
-         + "</a>"
-      tr.appendChild(td);
-      table.appendChild(tr);
-      
-      tr = document.createElement("tr");
-      tr.class = "trBottom";
-      td = document.createElement("td");
-      td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
-         + writerId + "</a>";
-      tr.appendChild(td);
-      td = document.createElement("td");
-      td.class = "rightAlign";
-      td.innerHTML = "<label class='checkbox-wrap'>"
-         + "<input type='checkbox' id='' "
-         + "onclick='like(this, loginUser, " + postId + ");'>"
-         + "<i class='like-icon'></i></label>&nbsp;"
-         + (goodCnt == 0? goodCnt
-               : "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
-               + goodCnt + "</a>");
-      tr.appendChild(td);
-      table.appendChild(tr);
-      
-      div.appendChild(table);
-      
-      document.getElementById("blogHomeContentDiv").appendChild(div);
-   }
-   
-   if (rownum >= maxRownum) {
-      $("#div_Loading").html("더이상 포스트가 존재하지 않습니다.");
-      $("#div_Loading").show();
-      return;
-   }
-   $("#div_Loading").fadeOut(100);
+	if (rownum >= maxRownum) {
+		$("#div_Loading").html("더이상 포스트가 존재하지 않습니다.");
+		$("#div_Loading").show();
+		return;
+	}
+	$("#div_Loading").fadeOut(100);
 }
 
 function reqPostDetail(postId, category) {
@@ -232,7 +234,7 @@ function callbacktrace(data) {
       
       tr = document.createElement("tr");
       td = document.createElement("td");
-      //document.getElementById("listbody").innerHTML += "<tr><td colspan='7'>"
+      //document.getElementById("listbody").innerHTML += "<tr><td colSpan='7'>"
       
       td.innerHTML = "<a data-fancybox data-src='pdetail.do?postId="+jsonArr.list[j].postId+"&writerId=" + jsonArr.list[j].postWriter +"'>"
       + decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " ")) +"</a> " ;
@@ -265,44 +267,72 @@ function checkGood(loginUser, postId){
 
 
 function like(obj, loginUser, postId){
-   
-   if (loginUser == ""){
-      alert("로그인 하셔야 가능합니다 ! ");
+	
+	var target = obj.parent().next();
+	var plikecnt;
+	
+	if (loginUser == "") {
+		alert("로그인 하셔야 가능합니다 ! ");
 
-     if (obj.checked == true)
-        obj.checked = false;
-     else 
-        obj.checked = true;
+		if (obj.prop("checked") == true) 
+			obj.prop("checked", false);
+		else 
+			obj.prop("checked", true);
    
-     return ;
-   }
+		return ;
+	}
    
-   if (obj.checked == true) {
-      $.ajax({
-            url: "/gonggan/insertGood.do",
-        data: {loginUser:loginUser,
-               postId:1},
-        success: function(data) {
-           alert("좋아요 함 ");
-        },
-        error: function(data,status,error){
-           console.log("error : " + error);
-        }
-      });
-   }
-   else {
-      $.ajax({
-            url: "/gonggan/deleteGood.do",
-        data: {loginUser:loginUser,
-               postId:1},
-        success: function(data) {
-           alert("좋아요 취소함 ");
-        },
-        error: function(data,status,error){
-           console.log("error : " + error);
-        }
-      });
-   }
+	if (obj.prop("checked") == true) {
+		$.ajax({
+			url: "/gonggan/insertGood.do",
+			data: {loginUser:loginUser,
+				postId:postId},
+				success: function(data) {
+					alert("좋아요 함 ");
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
+		});
+	}
+	else {
+		$.ajax({
+			url: "/gonggan/deleteGood.do",
+			data: {loginUser:loginUser,
+				postId:1},
+				success: function(data) {
+					alert("좋아요 취소함 ");
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
+		});
+		
+		plikecnt =  postLikeCnt(postId);
+		target.html( ( plikecnt > 0 ?
+				("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+				+ plikecnt +  "</a>") : (plikecnt + "") ) );
+		
+	}
+}
+
+function postLikeCnt(postId) {
+	
+	var gcnt;
+	
+	$.ajax({
+		async:false,
+		url: "/gonggan/plikecnt.do",
+		data: { postId:postId },
+			success: function(data) {
+				gcnt = data;
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+	});
+	alert(gcnt);
+	return gcnt;
 }
 
 function acceptNeig(member_id, member_id2) {

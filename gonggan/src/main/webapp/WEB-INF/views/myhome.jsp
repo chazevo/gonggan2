@@ -8,6 +8,7 @@ String writer = session.getId();
 //세션저장 (플래그, 값)
 session.setAttribute("currentView", currentView);
 session.setAttribute("wr_id", writer);
+
 int year, month, today, firstday, lastdate;
 String str = "";
 int imgVal = 0;
@@ -62,24 +63,58 @@ System.out.println(str);
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="js/jquery.fancybox.js"></script>
+<script src="js/jquery-timeago.js" type="text/javascript"></script>
 <script src="js/myhome.js"></script>
 <script type="text/javascript">
-var loginUser = '${sessionScope.loginUser.getMember_id()}';
-var writer_id = "${blog.getWriter_id()}";
-var year = <%= year %>;
-var month = <%= month %>;
-var today = <%= today %>;
-var firstday = <%= firstday %>;
-var lastdate = <%= lastdate %>;
-var imgVal = <%= imgVal %>;
+	var loginUser = '${sessionScope.loginUser.getMember_id()}';
+	var writer_id = "${blog.getWriter_id()}";
+	var year = <%= year %>;
+	var month = <%= month %>;
+	var today = <%= today %>;
+	var firstday = <%= firstday %>;
+	var lastdate = <%= lastdate %>;
+	var imgVal = <%= imgVal %>;
+
+	jQuery.timeago.settings.strings = {
+			suffixAgo: "전",
+			suffixFromNow: "후",
+			seconds: "1분 이내",
+			minute: "1분",
+			minutes: "%d분",
+			hour: "1시간",
+			hours: "%d시간",
+			day: "하루",
+			days: "%d일",
+			month: "한달",
+			months: "%d달",
+			year: "1년",
+			years: "%d년"
+	};
+	
+	jQuery(document).ready(function(){
+		jQuery("abbr.timeago").timeago();
+	});
 
 	window.onload = function() {
 		visit();
 		requestList();
+
+		$(".blogOwnerClick").hide();
 		
 		$("#year").text(year);
 		$("#month").text(month<10 ? "0" + month : month);
 		$("#today").text(today<10 ? "0" + today : today);
+		
+		$("#blogOwnerClick").click(function() {
+			if ($(".blogOwnerClick").hasClass("hidden")) {
+				$(".blogOwnerClick").removeClass("hidden");
+				$(".blogOwnerClick").show();
+				}
+			else {
+				$(".blogOwnerClick").addClass("hidden");
+				$(".blogOwnerClick").hide();
+			}
+		});
 		
 		$("#loginUser").click(function() {
 			if ($("#loginUserDetail").hasClass("hidden")) {
@@ -92,13 +127,6 @@ var imgVal = <%= imgVal %>;
 			}
 		});
 		
-		$(".hover").hover(function(){
-			//$(this).css("backgroundColor", "gray");
-			if ($(".hover").hasClass("grayTd"))
-				$(this).removeClass("grayTd");
-			else
-				$(this).addClass("grayTd");
-		});
 		
 		/*
 		$(".hover").onblur(function(){
@@ -159,12 +187,12 @@ var imgVal = <%= imgVal %>;
 						</tr>
 				<tr>
 				      <td class="hover">
-				            <font><a href="#"> 긍정의아이콘|토리|</a></font> <a href="#">님이 토리와 함께 추억쌓기 놀이 | 게시글에 좋아요를 누르셨습니다.</a>
+				            <font><a href="#"> 긍정의아이콘|토리|</a></font> <a href="#">이 토리와 함께 추억쌓기 놀이 | 게시글에 좋아요를 누르셨습니다.</a>
 				      </td>
 				</tr> -->
          		<tr>
 					<td class="hover">
-						${param.writer_id }님의 알림이 없습니다.
+						${sessionScope.loginUser.getMember_id() }님의 알림이 없습니다.
 					</td>
 				</tr>
 			</table>
@@ -184,7 +212,7 @@ var imgVal = <%= imgVal %>;
 							${blog.getTitle() }
 						</a>
 					</h2>
-					<h4>${blog.getContents() }</h4>
+					<h4 style="color:${blog.contents_color}">${blog.getContents() }</h4>
 				</div>
 				<div class="header-content-inner2">
 					<c:if test="${ param.writer_id eq sessionScope.loginUser.getMember_id()}">
@@ -201,10 +229,18 @@ var imgVal = <%= imgVal %>;
 					<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
 					<!-- sr-only : 숨김 -->
 				</button>
-				<a href="#" style="display:inline-block">
+				<a href="javascript:void(0);" id="blogOwnerClick" style="display:inline-block">
 					<img src="images/default.png" height="40px"class="img-circle">
 					&nbsp;${param.writer_id }
 				</a> &nbsp;
+				<div class="blogOwnerClick hidden">
+					<div>
+						<div>
+							<a href="javascript:reqNeig();">이웃 신청</a><hr><a href="">프로필 보기</a>
+						</div>
+						<img src="images/idclick_icon.png" width="100%" height="100%">
+					</div>
+				</div>
 				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writer_id}"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
@@ -317,11 +353,13 @@ var imgVal = <%= imgVal %>;
 							</td>
 						</tr>
 						</table>
+						<!--
 						<div id="dotdotdotDiv">
 							<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
 							<a class="hover dotdotdot" href="" >공유</a>
 							<a class="hover dotdotdot" href="">쪽지 보내기</a>
 						</div>
+						-->
 					</div>
 				</div>
 			</div>

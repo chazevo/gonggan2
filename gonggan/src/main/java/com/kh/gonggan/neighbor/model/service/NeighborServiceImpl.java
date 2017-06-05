@@ -18,11 +18,15 @@ public class NeighborServiceImpl implements NeighborService{
 	public List<Member> selectNeighborList(String loginUser) {
 		return neighborDao.selectNeighborList(loginUser); 
 	}
-
+	
 	@Override
-	public List<Neighbor> NeighborList() {
-		
-		return neighborDao.selectNeighborAll();
+	public int requestNeig(String member_id1, String member_id2){
+		return neighborDao.requestNeig(member_id1, member_id2);
+	}
+	   
+	@Override
+	public List<Neighbor> neigList(String loginUser, String writer_id){
+		return neighborDao.neigList(loginUser,writer_id);
 	}
 	
 	@Override

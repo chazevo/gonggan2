@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
+import com.kh.gonggan.blog.model.vo.Blog;
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.diary.model.service.DiaryService;
@@ -37,6 +38,7 @@ import com.kh.gonggan.movie.model.vo.Movie;
 import com.kh.gonggan.music.model.service.MusicService;
 import com.kh.gonggan.music.model.vo.Music;
 import com.kh.gonggan.neighbor.model.service.NeighborService;
+import com.kh.gonggan.neighbor.model.vo.Neighbor;
 import com.kh.gonggan.news.model.service.NewsService;
 import com.kh.gonggan.news.model.vo.News;
 import com.kh.gonggan.post.model.service.PostService;
@@ -133,8 +135,22 @@ public class MemberController {
 		else if(idCheck != null )   result= "실패";
 		return  result;
 		
-		
 	   }//id/email check
+	
+	@RequestMapping(value="nrequest.do", produces="text/plain;charset=UTF-8")
+	   @ResponseBody
+	   public ModelAndView requestNeig(@RequestParam String member_id1,@RequestParam String member_id2, ModelAndView mv){
+
+	         String msg = "실패";
+	       int nrequest = neighborService.requestNeig(member_id1, member_id2);
+	       List<Neighbor> neigList =neighborService.neigList(member_id1,member_id2);
+	       System.out.println(neigList);
+	       mv.addObject("neigList", neigList);
+	       mv.setViewName("likepage");
+	       if(nrequest > 0) msg="성공";
+	      return mv;
+	   }//이웃 신청
+	
 	@RequestMapping(value="/joinemailcheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	   public String joinEmailCheck(@RequestParam String email){
@@ -175,8 +191,10 @@ public class MemberController {
 		System.out.println(member);
 		
 		int insertMem = memberService.insertMember(member);
+		int insertBlog =  blogService.insertBlog(new Blog(member.getMember_id()));
+		
 		// 제대로 들어갔을 경우
-		if(insertMem > 0){
+		if(insertMem > 0 && insertBlog > 0){
 			System.out.println(member.getMember_id()+member.getMember_pw()+member.getMember_name());
 			mv.setViewName("home");
 		}else{
@@ -195,9 +213,9 @@ public class MemberController {
 		int updateResult = memberService.updateMember(member);
 		session.setAttribute("loginUser", loginUser);
 		
-		if(updateResult<0){
+		if(updateResult<0)
 			session.setAttribute("error", "실패");
-		}
+		
 		mv.setViewName("mypage");
 		return mv;
 	}
@@ -258,11 +276,13 @@ public class MemberController {
 	}//비밀번호 찾을 때 회원 검색
 	
 	
-	@RequestMapping("selectId.do")
-	public String selectId(String email){
-		Member selectId = memberService.selectId(email);
-		return null;
-	}//아이디 찾을 때 회원 검색
+	@RequestMapping(value="selectIdByEmail.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectIdByEmail(@RequestParam String email){
+		System.out.println("selectIdByEmail.do");
+		String selectId = memberService.selectIdByEmail(email);
+		return selectId;
+	} //아이디 찾을 때 회원 검색
 	
 	@RequestMapping("selectMember.do")
 	public Member selectMember(@RequestParam String member_id, Model model){

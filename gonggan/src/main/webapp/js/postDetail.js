@@ -136,10 +136,12 @@ function callbackCommentDelete(data, comment_num){
 	alert(data);
 }
 
-function dotdotdot(){
+function dotdotdot() {
+
+	if ($("#comm>div").css('display') == "block")
+		$("#comm>div").css("display", "none");
+	else {
+		$("#comm>div").css("display", "block");
+	}
 	
-	if (document.getElementById("dotdotdotDiv").style.display == "block")
-		$('#dotdotdotDiv').css("display","none");
-	else
-		$('#dotdotdotDiv').css("display","block");
 }

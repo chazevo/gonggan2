@@ -22,6 +22,10 @@ public class BlogDao {
 		return (Blog) sqlSession.selectOne("blogmapper.bselect", writer_id);
 	}
 	
+	public int insertBlog(Blog blog) {
+		return sqlSession.insert("blogmapper.binsert", blog);
+	}
+	
 	public List<Member> selectVisitorList(String wirter_id){
 		
 		Object obj = sqlSession.selectOne("blogmapper.selectBlogId", wirter_id);
@@ -73,6 +77,10 @@ public class BlogDao {
 		map.put("visitor_id", visitor_id);
 		
 		sqlSession.insert("blogmapper.bvisit", map);
+	}
+	
+	public int blogSetting(Blog blog) {
+		return sqlSession.insert("blogmapper.bsetting", blog);
 	}
 	
 }

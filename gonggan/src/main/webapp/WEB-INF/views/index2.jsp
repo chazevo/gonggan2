@@ -234,10 +234,10 @@ window.onload = function() {
                                     <c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
                                     <td>
                                        <a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
-                                       <a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+                                       <a onclick="acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
                                           <div class="neighborYN">수락</div>
                                        </a>
-                                       <a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+                                       <a onclick="rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
                                           <div class="neighborYN">거절</div>
                                        </a>
                                     </td>

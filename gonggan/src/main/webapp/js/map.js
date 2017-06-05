@@ -1,3 +1,8 @@
+var image;
+
+function selectSubmit() {
+	$("#form").submit();
+}
 
 function getAddr(adress, mapx, mapy) {
 
@@ -21,10 +26,10 @@ function getAddr(adress, mapx, mapy) {
 				position: myaddr,
 				map: map,
 				icon: {
-					url: './images/heart_r.png',
-					size: new naver.maps.Size(22, 35),
-					origin: new naver.maps.Point(0, 0),
-					anchor: new naver.maps.Point(11, 35)
+					url: './images/marker.png',
+		            size: new naver.maps.Size(70, 100),
+		            origin: new naver.maps.Point(0, 0),
+		            anchor: new naver.maps.Point(11, 35)
 				}
 		};
 		var marker = new naver.maps.Marker(markerOptions);
@@ -37,7 +42,7 @@ function getAddr(adress, mapx, mapy) {
 		
 	    // 마크 클릭시 인포윈도우 오픈
 		var infowindow = new naver.maps.InfoWindow({
-			content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
+			content: '<button type="button" id="searchBtn" style="display:block;float:right;" onclick="selectMap(image);">추 가 하 기</button>'
 		});
 	});
 	
@@ -50,8 +55,8 @@ function mapImg(mapx, mapy) {
 		data: {mapx:mapx,
 			mapy:mapy},
 		success:function(data){
+			image = data;
 			alert(data);
-			selectMap(data);
 		}
 	});
 }

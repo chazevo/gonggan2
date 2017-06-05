@@ -41,7 +41,7 @@ public class GoodController {
 	
 	@RequestMapping("deleteGood.do")
 		@ResponseBody
-		public String goodDelete(@RequestParam int postId, @RequestParam String loginUser){
+		public String goodDelete(@RequestParam int postId, @RequestParam String loginUser) {
 			int goodDelete = goodService.goodDelete(postId,loginUser);
 			System.out.println(goodDelete);
 			return "" + goodDelete;

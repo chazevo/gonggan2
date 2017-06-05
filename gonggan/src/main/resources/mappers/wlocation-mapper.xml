@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wlocationmapper">
+	<resultMap id="wlocationResult" type="wlocation">
+		<id property="city" column="city"/>
+		<result property="lat" column="lat"/>
+		<result property="lon" column="lon"/>
+	</resultMap>
+	<select id="wloclist" parameterType="wlocation" resultMap="wlocationResult">
+	 select * from location
+	</select>
+</mapper>

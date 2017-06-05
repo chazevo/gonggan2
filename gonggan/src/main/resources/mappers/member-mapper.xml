@@ -49,8 +49,8 @@
 	<select id="mlist">
 	</select>
 	
-	<select id="selectId">
-	select 
+	<select id="selectIdbyEmail" parameterType="String" resultType="String">
+	SELECT MEMBER_ID FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 	
 	<select id="selectPw" parameterType="Map" resultMap="memberResult">

@@ -40,6 +40,7 @@
 		document.getElementById("id").focus();
 
 		$("#div").hide();
+		$("#div_Loading").hide();
 		
 		$(window).scroll(function(){
 

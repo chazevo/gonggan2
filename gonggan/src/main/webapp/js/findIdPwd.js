@@ -1,7 +1,23 @@
 function idFind() {
+	
 	if (document.getElementById("email").value == "") {
 		alert("아이디를 입력해주세요 ");
 		return;
+	}
+	
+	else {
+		$.ajax({
+			url: "/gonggan/selectIdByEmail.do",
+			data: {
+				email : $("#email").val()
+			},
+			success: function(data) {
+				alert("아이디는 "+data+ " 입니다.");
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+		});
 	}
 }
 

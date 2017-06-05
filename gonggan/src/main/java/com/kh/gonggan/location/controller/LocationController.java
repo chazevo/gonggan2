@@ -2,31 +2,73 @@ package com.kh.gonggan.location.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.kh.gonggan.book.model.vo.Book;
+import com.kh.gonggan.location.model.service.WlocationService;
 import com.kh.gonggan.location.model.vo.Location;
-import com.kh.gonggan.post.model.vo.PostBook;
+import com.kh.gonggan.location.model.vo.Wlocation;
 import com.kh.gonggan.post.model.vo.PostLocation;
 
 @Controller
 public class LocationController {
+	
+	@Autowired
+	private WlocationService wlocationService;
+	
+	@RequestMapping(value="/wloc.do", produces={"application/json"})
+	@ResponseBody
+	public String selectWlocation() {
+		
+		List<Wlocation> wlocList = wlocationService.selectWlocationList();
+
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		if (wlocList != null) {
+			
+			for(Wlocation wloc : wlocList) {
+				
+				JSONObject job = new JSONObject();
+				
+				try {
+					
+					job.put("city", URLEncoder.encode(wloc.getCity() + "", "UTF-8"));
+					job.put("lat", wloc.getLat());
+					job.put("lon", wloc.getLon());
+
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				jarr.add(job);
+			}
+			json.put("list", jarr);
+		}
+		
+		return json.toJSONString();
+	}
+	
 	@RequestMapping(value="/locationsearch.do", method=RequestMethod.GET)
 	public ModelAndView searchLocation(ModelAndView mv, @RequestParam String keyword, HttpSession session){
 		

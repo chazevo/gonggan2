@@ -25,12 +25,61 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/uploadForm.js"></script>
 <script src="js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=JVmBHBSdqNcd5JKBkRhO"></script>
 <title>uploadform.jsp</title>
 <script>
 
 	var loginUser = "${sessionScope.loginUser.getMember_id()}";
 
+	Date.prototype.currTime = function(f) {
+		
+		if (!this.valueOf()) return " ";
+		var d = this;
+		
+		return f.replace(/(E|hh|mm|ss|a\/p)/gi, function($1) {
+		// $1, $2…: 그룹
+		// 정규표현식을기재할 때 /(a)(v)/이런 식으로 기재하면
+		// a는$1이 되고 v는$2
+		
+			switch ($1) {
+			case "hh":
+				//return ((h = d.getHours() % 12) ? h : 12).addZero(2);
+				return ((h = d.getHours() % 12) ? h : 12) + "";
+			case "mm":
+				//return d.getMinutes().addZero(2);
+				return d.getMinutes() + "";
+			case "ss":
+				//return d.getSeconds().addZero(2);
+				return d.getSeconds() + "";
+			case "a/p":
+				return d.getHours() < 12 ? '오전' : '오후';
+			default:
+				return $1;
+			}
+		});
+		
+	};
+
+	/*
+	String.prototype.string = function(len) {
+		var s = '', i = 0;
+		while (i++ < len) {
+			s += this;
+		}
+		return s;
+	};
+	
+	String.prototype.addZero = function(len) {
+		return "0".string(len - this.length) + this;
+	};
+	
+	Number.prototype.addZero = function(len) {
+		return this.toString().addZero(len);
+	};
+	*/
+	
 	$(document).ready(function() {
+
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
@@ -73,6 +122,19 @@
 				document.getElementById("movieSearchText").focus();
 			});
 		});
+
+		$("#weatherLink").click(function() {
+			if ($("#weatherDiv").hasClass("hidden")) {
+				$("#weatherDiv").removeClass("hidden");
+				$("#weatherDiv").show();
+				requestWlocationList();
+				viewSearchTime();
+			}
+			else {
+				$("#weatherDiv").addClass("hidden");
+				$("#weatherDiv").hide();
+			}
+		});
 		
 		$("#imgUploadIcon").click(function() {
 			if ($("#imgUploadDiv").hasClass("hidden")) {
@@ -89,7 +151,8 @@
 			if ($("#imo_icon_area").hasClass("hidden")) {
 				$("#imo_icon_area").removeClass("hidden");
 				$("#imo_icon_area").show();
-				}
+				je_doc.body.focus();
+			}
 			else {
 				$("#imo_icon_area").addClass("hidden");
 				$("#imo_icon_area").hide();
@@ -144,10 +207,12 @@
 			else
 				$(this).addClass("grayTd");
 		});
+		
 		function getExtend(path) {
 	         var str = path.substring(path.lastIndexOf(".") + 1);
 	         return str;
-	      }
+		}
+		/*
 		window
         .addEventListener(
               "load",
@@ -175,7 +240,7 @@
                                 }
                              });
               });
-
+*/
 	      function readImg(inputId, outputId) {
 	         var file = document.getElementById(inputId).files[0];
 	         var reader = new FileReader();
@@ -187,6 +252,7 @@
 	            	"<img src='" + reader.result + "'>";
 	         }
 	      }
+		
 	});
 </script>
 </head>
@@ -214,8 +280,8 @@
 					<table id="idclick_table">
 						<tr id="center_align">
 							<td>
-								<a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-								<a href="myhome.do">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+								<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
+								<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="#">로그아웃</a> 
 								<div id="dansun_line"></div>
@@ -245,14 +311,24 @@
 				</div>
 			</div>
    
-			<div class="header-content">
+			<div class="header-content"
+				style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color:${blog.background_color };</c:if>">
 				<div class="header-content-inner">
-					<h2><a href="selectBlog.do?writer_id=${param.writer_id} ">당신만의 공간에서 당신의 글을 만들어보세요.</a></h2>
+					<h2>
+						<a href="selectBlog.do?writer_id=${param.writer_id} "
+							style="color:${blog.getColor() }">
+							<!--당신만의 공간에서 당신의 글을 만들어보세요.-->
+							${blog.getTitle() }
+						</a>
+					</h2>
+					<h4>${blog.getContents() }</h4>
 				</div>
 				<div class="header-content-inner2">
-					<a href="controll.do">
+					<c:if test="${ param.writer_id eq sessionScope.loginUser.getMember_id()}">
+					<a href="controll.do?writer_id=${sessionScope.loginUser.getMember_id() }">
 					<img class="smallIcon"
 					src="images/KakaoTalk_Photo_2017-04-24-10-28-40_21.png"></a>
+					</c:if>
 				</div>
 			</div>
 			<div class="navbar-header idView">
@@ -320,8 +396,13 @@
 					</tr>
 					<tr>
 						<td>
-							<select>
-								<option value="">나눔고딕 </option>
+							<select onchange="je_doc.execCommand('fontname', false, this.value)">
+								<option value="">선택</option>
+								<option value="nanumbarungothic">나눔고딕</option>
+								<option value="Arial">굴림체</option>
+								<option value="Gungseo">궁서체</option>
+								<option value="Georgia">Georgia</option>
+								<option value="Dotum">돋움체</option>
 							</select>
 						</td> 	
 						<td colspan="2" style="padding:5px;">
@@ -336,23 +417,32 @@
 								
 							<input type="image"  src="images/cencleline_icon.png" width="15px"
 											onclick="je_doc.execCommand('strikethrough', 'false', 'null')">&nbsp; &nbsp;
-							<img alt="" src="images/text_color.png" width="10%"  id="colorChoice">
+							<img alt="" src="images/text_color.png" width="7%"  id="colorChoice">
 							<div id="colorchart" class="hidden"></div>
-							<img alt="" src="images/highlighter.jpg" width="10%"  id="colorChoice3">
+							<img alt="" src="images/highlighter.jpg" width="7%"  id="colorChoice3">
 							<div id="colorchart3" class="hidden"></div>
+							<select id="fontsize" onchange="je_doc.execCommand('FontSize', 'false', this.value)">
+								<option value="">글자크기 </option>
+								<option value="1" style="font-size:1;">가나다</option>
+								<option value="2" style="font-size:2;">가나다</option>
+								<option value="3" style="font-size:3;">가나다</option>
+								<option value="4" style="font-size:4;">가나다</option>
+								<option value="5" style="font-size:5;">가나다</option>
+								<option value="6" style="font-size:6;">가나다</option>
+								<option value="7" style="font-size:7;">가나다</option>
+							</select>
 
-							
-					<!-- 		<select id=contenttextcolor2 onchange='contenttextcolor2()'>
+							<select id=contenttextcolor2 onchange='contenttextcolor2()'>
 								<option class='imageOp'  selected  >글자색상 선택</option>
-								<option class='imageOp'  value='black'  style="background-color:black; color:white">검정색</option>
-								<option class='imageOp'  value='red'  style="background-color:red; color:white">빨강색 </option>
+								<option class='imageOp'  value='black'  style="background-color:black; color:white;">검정색</option>
+								<option class='imageOp'  value='red'  style="background-color:red; color:white;-webkit-appearance:button">빨강색 </option>
 								<option class='imageOp'  value='white'  style="background-color:white; color:black">흰색 </option>
 								<option class='imageOp'  value='yellow'  style="background-color:yellow; color:black">노란색 </option>
 								<option class='imageOp'  value='blue'  style="background-color:blue; color:white">파란색 </option>
 								<option class='imageOp'  value='pink' style="background-color:pink; color:white">분홍색 </option>
 								<option class='imageOp'  value='green' style="background-color:green; color:white"> 초록색 </option>
 								<option class='imageOp'  value='orange' style="background-color:orange; color:white">주황색</option>
-							</select> -->
+							</select> 
 						</td>
 						<td>
 							<input type="image"  src="images/align_left_icon.png" id="content_allign_left"  width="18px" 
@@ -421,10 +511,119 @@
 							 </form> 
 							</td>
 						<td>
-							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="12%"></a>
+							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
+							<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');" data-target="#layerpop" data-toggle="modal">
+								테이블 삽입
+							</a>
+							<div class="modal fade" id="layerpop">
+							<!--
+							$('#modal_id').modal({backdrop: 'static'});
+							modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
+							(닫기버튼을 눌러야만 닫힌다)
+							-->
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<!-- header -->
+										<div class="modal-header">
+											<!-- 닫기(x) 버튼 -->
+											<button type="button" class="close" data-dismiss="modal">×</button>
+											<!-- header title -->
+											<h4 class="modal-title">테이블 삽입 </h4>
+										</div>
+										<!-- body -->
+										<div class="modal-body text-center">
+											테이블 행과 열 갯수를 입력해주세요<br>
+											행 :&nbsp;<input class="text-center" type="number" id="nrow" value="1" style="width:8%"><br>
+											열 :&nbsp;
+											<input class="text-center" type="number" id="ncol" value="1" style="width:8%"
+											onkeydown="if (event.keyCode == 13) {if (insertTable($('#nrow').val(), $('#ncol').val())) $('#layerpop').modal('hide');}">
+										</div>
+										<!-- Footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												onclick="if (insertTable($('#nrow').val(), $('#ncol').val())) $('#layerpop').modal('hide');">
+												OK
+											</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">취소  </button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</td>
 						<td>
-							<a href="javascript:line();"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
+							<a id="weatherLink" href="javascript:void(0);">날씨</a>
+							<div id="weatherDiv" class="hidden" >
+								<div id="wmapDiv">
+									<script>
+										
+										var mapOptions = {
+												center: new naver.maps.LatLng(35.6995704, 127.225399),
+												level: 0,
+												maxZoom: 0, //지도의 최대 줌 레벨
+												minZoom: 0,
+												logoControl: false,
+												mapDataControl: false,
+												scaleControl: false,
+												draggable: false,
+												
+											};
+										
+										var position = new naver.maps.LatLng(37.3849483, 127.1229117);
+	
+										var map = new naver.maps.Map('wmapDiv', mapOptions);
+										
+										var CustomOverlay = function(options) {
+											this._element = $('<div style="position:absolute;left:0;top:0;width:124px;background-color:#F2F0EA;text-align:center;">' +
+											'<img src="./img/example/brown.png" style="width: 120px; height:130px">' +
+											'<span style="font-weight: bold;"> Brown </span></div>')
+										// 그냥 텍스트는 안나타남 (태그 지정해야)	
+											
+										    this.setPosition(options.position);
+										    this.setMap(options.map || null);
+										};
+										
+										CustomOverlay.prototype = new naver.maps.OverlayView();
+										CustomOverlay.prototype.constructor = CustomOverlay;
+	
+										CustomOverlay.prototype.setPosition = function(position) {
+										    this._position = position;
+										    this.draw();
+										};
+	
+										CustomOverlay.prototype.getPosition = function() {
+										    return this._position;
+										};
+	
+										CustomOverlay.prototype.onAdd = function() {
+										    var overlayLayer = this.getPanes().overlayLayer;
+	
+										    this._element.appendTo(overlayLayer);
+										};
+	
+										CustomOverlay.prototype.draw = function() {
+										    if (!this.getMap()) {
+										        return;
+										    }
+	
+										    var projection = this.getProjection(),
+										        position = this.getPosition(),
+										        pixelPosition = projection.fromCoordToOffset(position);
+	
+										    this._element.css('left', pixelPosition.x);
+										    this._element.css('top', pixelPosition.y);
+										};
+										
+										CustomOverlay.prototype.onRemove = function() {
+										    var overlayLayer = this.getPanes().overlayLayer;
+	
+										    this._element.remove();
+										    this._element.off();
+										};
+	
+										
+									</script>
+								</div>
+							</div>
 						</td>
 						<td id="dateTd">날짜 </td>
 						<td id="dateTd2">
@@ -436,7 +635,6 @@
 										onclick="imageChange();">&nbsp; &nbsp;배경
 						</td>
 						<td colspan="2" id="imageOp_selected" >
-							<!-- <div id="content_backgound" ></div>  -->
 							<select class="imagess"  onchange="diaryBg();">
 								<option value="0" >선택 </option>
 								<option value="1" >하트 </option>
@@ -456,7 +654,8 @@
 							<div id="colorchart2" class="hidden"></div>
 						</td>
 						<td colspan="2" >
-							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="20px"></a>
+							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="8%"></a>
+							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="5%"></a>
 						</td>
 					</tr>
 					<tr>
@@ -478,13 +677,18 @@
 									<a data-toggle="collapse" data-target="#book" id="bookSearchLink">책 찾아보기</a>
 									<div id="book" class="collapse text-center">
 										<!-- <h4>도서 검색 </h4> --><br>
-										제목&nbsp;<input type="text" id="bookSearchText"
+										<c:if test="${! empty bestSellerList }">
+										<c:forEach items="${bestSellerList}" var="i" begin="0" end="4">
+										<a href=""><img src="${i.coverSmallUrl}" style="display:inline-block;"></a>
+										</c:forEach>
+										</c:if>
+										<br>제목&nbsp;<input type="text" id="bookSearchText"
 										onkeydown="if (event.keyCode == 13) searchBook();">&nbsp;&nbsp;&nbsp;
 										저자&nbsp;<input type="text">&nbsp;&nbsp;&nbsp;
 										<button type="button" id="searchBtn" onclick="searchBook();">도 서 검 색</button>
 										<br><br>
 										<div></div>
-										<button type="button" id="searchBtn">추 가 하 기</button>
+										
 									</div>
 								</td>
 						</tr>
@@ -600,7 +804,7 @@
 					<tr>
 						<td class="uploadContent" colspan="5">
 							 <!-- <textarea id="textarea" rows="20" id="content" ></textarea> --> 
-							 <iframe id='editor' src="uploadHtml.do" style='width:100%;height:400px;' ></iframe>
+							 <iframe id='editor' src="uploadHtml.do" style='width:100%;height:400px;'></iframe>
 						</td>
 					</tr>
 					
@@ -621,6 +825,8 @@
 				</table>
 				<button onclick="seeHTML();">소스보기</button><br>
 				<textarea id="dhtmlText"></textarea>
+				<img src="images/marker.png" id="kae" draggable="true" ondragstart="drag(event);">
+				<iframe src="clipboard.do" id="clipboard"></iframe>
 				<br><br><br><br><br><br><br><br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br>

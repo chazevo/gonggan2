@@ -54,11 +54,14 @@ import com.kh.gonggan.news.model.service.NewsService;
 import com.kh.gonggan.news.model.vo.News;
 import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
+import com.kh.gonggan.post.model.vo.PostBestSeller;
 import com.kh.gonggan.review.model.service.ReviewService;
 import com.kh.gonggan.review.model.vo.Review;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
+import sun.net.www.protocol.http.HttpURLConnection;
 
 @Controller
 public class PostController {
@@ -97,6 +100,12 @@ public class PostController {
 			mv.addObject("goodCnt", goodCnt);
 			mv.setViewName("postDetail");
 			return mv;
+	}
+	
+	@RequestMapping(value="/plikecnt.do")
+	@ResponseBody
+	public int postLikeCnt(@RequestParam int postId) {
+		return goodService.goodCount(postId);
 	}
 	
 	@RequestMapping(value="/postNeighborlist.do", produces={"application/json"})
@@ -222,6 +231,7 @@ public class PostController {
 					job.put("postId", p.getPost_id() + "");
 					job.put("writerId", p.getWriter_id());
 					try {
+						job.put("content", contentSort(p));
 						job.put("category", URLEncoder.encode(
 								p.getCategory(), "UTF-8"));
 					} catch (UnsupportedEncodingException e) {
@@ -254,6 +264,40 @@ public class PostController {
 			
 			return json.toJSONString();
 		}
+	
+	public String contentSort(Post p) {
+		
+		String content = null;
+		
+		switch(p.getCategory()) {
+		case "music":
+			content = p.getMusic_content();
+			break;
+		case "movie":
+			content = p.getMovie_content();
+			break;
+		case "book":
+			break;
+		case "diary":
+			content = p.getDiary_content();
+			break;
+		case "review":
+			content = p.getReview_content();
+			break;
+		case "news":
+			content = p.getNews_content();
+			break;
+		}
+		
+		try {
+			content = URLEncoder.encode(
+					content, "UTF-8");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return content;
+	}
 	
 	@RequestMapping(value="/plikelist.do", produces={"application/json"})
 	@ResponseBody
@@ -340,6 +384,52 @@ public class PostController {
 		}
 		
 		return content; 
+	}
+	
+	@RequestMapping(value="/weather.do", produces="application/json;charset=UTF-8")
+	@ResponseBody
+	public String weather(@RequestParam String lat, @RequestParam String lon/*,
+			String city, String country, String village*/) {
+		
+		// 다음의 Request Parameter는 한 종류만 선택적으로 사용해야 한다.
+		// - 1)lat/lon, 2)city/county/village, 3)stnid
+		
+		URL url = null;
+		HttpURLConnection http = null;
+		InputStreamReader in = null;
+		BufferedReader br = null;
+		String line;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+
+			url = new URL("http://apis.skplanetx.com/weather/current/minutely?"
+					+ "version=1&lat=" + lat + "&lon=" + lon);
+					//+ "&city=" + city + "country=" + country + "village" + village + "&stnid=108"
+			
+			http = (HttpURLConnection)url.openConnection();
+			http.setRequestProperty("Accept", "application/json");
+			http.setRequestProperty("appKey", "ba6dd3bc-1655-3ad9-a20d-de885d696b9b");
+			http.connect();
+		
+			in = new InputStreamReader(http.getInputStream(),"utf-8");
+			br = new BufferedReader(in);
+
+			while ((line = br.readLine()) != null) {
+				sb.append(line).append("\n");
+			}
+		
+			br.close();
+			in.close();
+			
+		} catch (IOException e2) {
+		// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		System.out.println(sb.toString());
+      
+		return sb.toString();
 	}
 
 	@RequestMapping(value="/imgupload.do", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")

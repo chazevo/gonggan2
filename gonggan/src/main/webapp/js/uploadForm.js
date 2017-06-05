@@ -1,10 +1,11 @@
-
+var reg = /<(?:img)[^>]*(src)?=.*\/(.*\.(?:jpg|jpeg|gif|bmp|png))[^<]*>/i;
 var je_doc={};
+var currTimeFormat = 'a/p hh시 mm분 ss초';
+var temperature;
 
 $(function() {
 	$( "#toDate" ).datepicker({
 		inline: true,
-		dateFormat: "yy-mm-dd",    /* 날짜 포맷 */
 		prevText: 'prev',
 		nextText: 'next',
 		showButtonPanel: true,    /* 버튼 패널 사용 */
@@ -34,11 +35,15 @@ $(function() {
 		}
 	});
 });
-/*-------------------------------------------------------- */
-function line(){
-	je_doc.execCommand('InsertHorizontalRule', 'null');
-	//document.getElementById('editor').contentWindow.document.body.innerHTML += "<hr>";
+
+
+function viewSearchTime() {
+	var nowTime = new Date().currTime(currTimeFormat);
+	$("#weatherDiv").html($("#weatherDiv").html() + nowTime + " 기준");
 }
+
+
+/*-------------------------------------------------------- */
 
 	 
 	 function callback(data){
@@ -191,6 +196,7 @@ function run(){
 	
 	je_doc = document.getElementById('editor').contentWindow.document;
 	je_doc.designMode="on";
+	je_doc.addEventListener("keydown", showDeleteImgPath, false);
 	
 }
 
@@ -460,4 +466,216 @@ function searchBook() {
 		}
 	});
 	
+}
+
+function showDeleteImgPath(evt) {
+	var ord =  evt.keyCode;
+	//alert(ord + "????");
+	if ( ord == 8 || ord == 46 ) { // ord는 delete키 키코드 번호
+		
+		var capturetags;
+		var reg = /<(?:img)[^>]*(src)?=.*\/(.*\.(?:jpg|jpeg|gif|bmp|png))[^<]*>/i;
+		var delimgfile = "";
+		var url;
+	
+		var hTextRange = je_doc.getSelection();
+		var range = je_doc.createRange();
+		hTextRange.addRange(range);
+		je_doc.execCommand("Copy");
+		
+	}
+} // if ( capturetags != "" )
+
+function requestWlocationList() {
+
+	$.ajax({
+		url : "wloc.do",
+		success:function(data){
+            callbackWlocationList(data);
+		}
+		
+	});
+}
+
+function callbackWlocationList(data) {
+	
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+	var lat, lon;
+	var icon;
+	
+	//for (var i in jsonArr.list) {
+	for (var i=0 ; i<1 ; i++) {
+		
+		icon = wstateIcon(requestWeatherStatus(lat = jsonArr.list[i].lat, lon = jsonArr.list[i].lon));
+		
+		var overlay = new CustomOverlay({
+	        position: new naver.maps.LatLng(lat, lon)
+	    });
+		
+		overlay._element.html('<a href="javascript:je_doc.body.focus(); je_doc.execCommand(\'InsertImage\', false, \'images/weatherIcons/' + icon + '\');">'
+				+ '<div style="position:absolute;left:0;top:0;width:25%;background-color:white;font-size:50%;text-align:center;">'
+                + '<span style="font-weight: bold;">'
+                + decodeURIComponent(jsonArr.list[i].city) + '</span><br>'
+                + "<img src='images/weatherIcons/" + icon + "' width='60%'>"
+                + '<br>' + temperature.substring(0,2) + '℃</div>');
+	    overlay.setMap(map);
+	}
+	
+	
+}
+
+function requestWeatherStatus(lat, lon) {
+
+	var status;
+	
+	$.ajax({
+		async:false,
+		url : "weather.do",
+		data: {lat: lat, lon: lon},
+		success:function(data){
+			status = callbackWeatherStatus(data);
+		}
+		
+	});
+	
+	return status;
+}
+
+function callbackWeatherStatus(data) {
+
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+
+	temperature = jsonArr.weather.minutely[0].temperature.tc
+	
+	return decodeURIComponent(jsonArr.weather.minutely[0].sky.name);
+	
+	
+	/*
+	{"weather":{"minutely":[{"station":{"longitude":"126.9657900000","latitude":"37.5714100000","name":"서울","id":"108","type":"KMA"},
+											"wind":{"wdir":"222.70","wspd":"2.70"},
+											"precipitation":{"sinceOntime":"0.00","type":"0"},
+											"sky":{"code":"SKY_A01","name":"맑음"},
+											"rain":{"sinceOntime":"0.00","sinceMidnight":"0.00","last10min":"0.00","last15min":"0.00","last30min":"0.00","last1hour":"0.00","last6hour":"0.00","last12hour":"0.00","last24hour":"0.00"},
+											"temperature":{"tc":"24.30","tmax":"27.00","tmin":"15.00"},
+											"humidity":"31.50",
+											"pressure":{"surface":"996.50","seaLevel":"1006.20"},
+											"lightning":"0",
+											"timeObservation":"2017-06-03 17:32:00"}]},
+		"common":{"alertYn":"Y","stormYn":"N"},
+		"result":{"code":9200,"requestUrl":"/weather/current/minutely?lon=126.965891&lat=37.5713793&version=1","message":"성공"}
+	}
+	*/
+}
+
+function wstateIcon(status) {
+	
+	var icon;
+	
+	switch(status) {
+	case "맑음":
+		icon = "01.png";
+		break;
+	case "구름조금":
+		icon = "02.png";
+		break;
+	case "구름많음":
+		icon = "03.png";
+		break;
+	case "구름많고 비":
+		icon = "12.png";
+		break;
+	case "구름많고 눈":
+		icon = "13.png";
+		break;
+	case "구름많고 비 또는 눈":
+		icon = "14.png";
+		break;
+	case "흐림":
+		icon = "17.png";
+		break;
+	case "흐리고 비":
+		icon = "21.png";
+		break;
+	case "흐리고 눈":
+		icon = "32.png";
+		break;
+	case "흐리고 비 또는 눈":
+		icon = "04.png";
+		break;
+	case "흐리고 낙뢰":
+		icon = "29.png";
+		break;
+	case "뇌우, 비":
+		icon = "26.png";
+		break;
+	case "뇌우, 눈":
+		icon = "27.png";
+		break;
+	case "뇌우, 비 또는 눈":
+		icon = "28.png";
+		break;
+	}
+	
+	return icon;
+}
+
+function insertTable(nrow, ncol) {;
+	if (nrow == "" || ncol == "" || nrow < 1 || ncol < 1) {
+		if (nrow == "" && ncol == "")
+			alert("행 수와 열 수를 입력해주세요!");
+		else if (nrow == "")
+			alert("행 갯수를 입력해주세요! ");
+		else if (ncol == "")
+			alert("행 갯수를 입력해주세요! ");
+		else
+			alert("1 이상의 값만 입력해주세요");
+		return false;
+	}
+	
+	var strTemporaryID = Math.random().toString();
+	// 새로운 ID를 부여해주지 않으면,
+	//테이블을 하나만 삽입할때는 별다른 이상이 없으나
+	//2개, 3개 삽입할 경우 먼저번 삽입된 테이블 객체와 새로 삽입될 테이블 객체를 구분 못해 에러 발생
+	
+	var temp;
+	
+	var table = je_doc.createElement("table");
+	var strTableID = Math.random().toString();
+	
+	je_doc.body.focus();
+	je_doc.execCommand("InsertHorizontalRule", "", strTemporaryID);
+	// hr 삽입 (임시객체)
+	temp = je_doc.getElementById(strTemporaryID);
+	
+	table.id = strTableID;
+	table.border = "1";
+	table.cellSpacing = "0";
+	table.width = "100%";
+	je_doc.body.replaceChild(table, temp);
+	
+	for (var i=0; i<nrow; i++) {
+		var tr = table.insertRow();
+		for (var j=0; j<ncol; j++) tr.insertCell();
+	}
+
+	return true;
+
+}
+
+function allowDrop(ev) {
+	ev.preventDefault(); // 요소 위에 다른 요소가 올 수 있도록 허용 
+}
+
+function drag(ev) {
+	ev.dataTransfer.setData("text", ev.target.id);
+	// 드래그 시 클릭된 img의  text 형식 id값 가져옴 
+	
+}
+
+function drop(ev) {
+	var id = ev.dataTransfer.getData("text");
+	//ev.preventDefault(); // 요소 위에 다른 요소가 올 수 있도록 허용
+	ev.target.appendChild(document.getElementById(id));
 }

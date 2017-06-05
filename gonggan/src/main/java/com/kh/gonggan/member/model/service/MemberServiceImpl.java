@@ -49,10 +49,9 @@ public class MemberServiceImpl implements MemberService{
 	}//회원 수정
 	
 	@Override
-	public Member selectId(String email){
-		return memberDao.selectId(email);
-	}//아이디 찾기
-
+	public String selectIdByEmail(String email) {
+		return memberDao.selectIdbyEmail(email);
+	}
 	@Override
 	public String getPw(Map<String, Object> paramMap){
 		return memberDao.getPw(paramMap);

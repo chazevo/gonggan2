@@ -35,6 +35,16 @@
             $("#loginUserDetail").hide();
          }
       });
+      
+      $(".fb").fancybox({
+    	  //'modal' : true,
+    	  //'openEffect' : 'none',
+    	  //'closeEffect' : 'none',
+    	  //'scrolling' : false,
+    	  'autoSize':false,
+    	  'closeBtn' : false,
+    	  'fullScreen' : false
+    	 });
    }
 </script>
 </head>
@@ -50,12 +60,12 @@
    </div>
    <div class="navbar-right">
       <c:if test="${empty sessionScope.loginUser }">
-               <a class="navbar-brand"  href="" >
-                  로그인or회갑부분
-               </a>
+               <a class="loginbox"  href="index.jsp" >
+					l o g i n
+				</a>
             </c:if>
             <c:if test="${!empty sessionScope.loginUser }">
-               <a id="loginUser" class="navbar-brand"  href="" >
+               <a id="loginUser" class="navbar-brand">
                   <img src="images/default.png" height="40px" class="img-circle">&nbsp;
                   ${sessionScope.loginUser.getMember_id() } 님
                </a>
@@ -67,7 +77,7 @@
       <table id="idclick_table">
          <tr id="center_align">
             <td>
-               <a href="mypage.do">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
+               <a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
                <a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
                <a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
                <a href="#">로그아웃</a> 
@@ -232,14 +242,17 @@
                               <tr>
                                  <td width="15%"><font>
                                     <c:if test="${sessionScope.loginUser.getMember_id() eq i.sender}">
+                                    <c:set var="opposite" value="${i.receiver}" />
                                     <a href="selectBlog.do?writer_id=${i.receiver}">${i.receiver}</a>
                                     </c:if>
-                                       <c:if test="${sessionScope.loginUser.getMember_id() eq i.receiver}">
+                                    <c:if test="${sessionScope.loginUser.getMember_id() eq i.receiver}">
                                     <a href="selectBlog.do?writer_id=${i.sender}">${i.sender}</a>
+                                    <c:set var="opposite" value="${i.sender}" />
                                     </c:if>
                                  </font></td>
                                  <td>
-                                 <a href="">${i.msg_text }</a>
+                                 	<a class="fb" data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${opposite }">
+                                 		${i.msg_text }</a>
                                  </td >
                                  <td>${i.msg_date }</td>
                      </tr>
@@ -339,7 +352,7 @@
                            <tr>
                               <td> ${i.member_id }</td>
                               <td class="text-left"><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
-                              <td><a href="javascript:cancel('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');"><div class="neighborYN">취소</div></a></td>
+                              <td><a href="javascript:cancel('${sessionScope.loginUser.getMember_id() }', '${i.member_id }', $(this));"><div class="neighborYN">취소</div></a></td>
                            </tr>
                            </c:forEach>
                         </c:if>

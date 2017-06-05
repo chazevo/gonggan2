@@ -19,7 +19,7 @@ public interface MemberService {
 
 	int updateMember(Member mem);
 
-	Member selectId(String email);
+	String selectIdByEmail(String email);
 	/*
 	 * Member selectPw(String memberId, String email);
 	 */

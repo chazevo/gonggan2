@@ -5,22 +5,29 @@
 <mapper namespace="blogmapper">
 
 	<resultMap type="blog" id="blogResult">
+		<result property="blog_id" column="blog_id" />
 		<result property="title" column="title" />
 		<result property="writer_id" column="writer_id" />
 		<result property="contents" column="contents" />
 		<result property="background" column="background" />
 		<result property="background_color" column="background_color" />
 		<result property="color" column="color" />
+		<result property="contents_color" column="contents_color" />
 		<result property="languages" column="languages" />
 		<result property="blog_open_yn" column="blog_open_yn" />
-		<result property="blog_id" column="blog_id" />
+		<result property="diary_open_yn" column="diary_open_yn" />
+		<result property="place_open_yn" column="place_open_yn" />
+		<result property="review_open_yn" column="review_open_yn" />
+		<result property="music_open_yn" column="music_open_yn" />
+		<result property="movie_open_yn" column="movie_open_yn" />
+		<result property="news_open_yn" column="news_open_yn" />
 	</resultMap>
 
 	<insert id="binsert" parameterType="blog">
-		insert into blog values(
-		#{title}, #{writer_id}, #{contents}, #{background}, #{color},
-		#{languages}, #{blog_open_yn}, #{blog_id})
+		insert into blog (writer_id, blog_id) values(
+		#{writer_id}, (select blog_seq.nextval from dual))
 	</insert>
+	
 	<select id="bselect" resultMap="blogResult" parameterType="String">
 		select * from blog where writer_id = #{writer_id}
 	</select>
@@ -34,5 +41,16 @@
 		insert into visitor values(#{visitor_id}, to_number(#{blog_id}), default)
 	</insert>
 	
+	<insert id="bsetting" parameterType="blog">
+		update blog set(
+		title = #{title}, contents = #{contents},
+		background = #{background}, color = #{color},
+		languages = #{languages}, blog_open_yn = #{blog_open_yn},
+		background_color = #{background_color}, contents_color = #{contents_color}, 
+		diary_open_yn = #{diary_open_yn}, place_open_yn = #{place_open_yn}, 
+		review_open_yn = #{review_open_yn}, music_open_yn = #{music_open_yn},
+		movie_open_yn = #{movie_open_yn}, news_open_yn = #{news_open_yn})
+		where writer_id = #{writer_id}
+	</insert>
 	
 </mapper>

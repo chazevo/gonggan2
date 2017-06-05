@@ -37,12 +37,13 @@ public class GoodDao {
 		System.out.println(" plist 실패");
 		}
 		return sqlSession.insert("goodmapper.ginsert2", gmember);
-	}//good 카운트 증가
+	} //good 카운트 증가
 
 	public int goodDelete(int postId, String memberId){
 		Good gmember = new Good(postId, memberId);
-		return sqlSession.delete("goodmapper.gdelete", gmember);
-	}//good 카운트 감소
+		sqlSession.delete("goodmapper.gdelete", gmember);
+		return sqlSession.delete("goodmapper.gdelete2", gmember);
+	} //good 카운트 감소
 
 
 	public Object goodCheck(int postId, String memberId) {

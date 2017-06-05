@@ -5,22 +5,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 <link rel='stylesheet' href='css/css.css' />
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=JVmBHBSdqNcd5JKBkRhO&submodules=geocoder"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
-<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" >
+	window.onload = function() {
+		$("input[name=keyword]").focus();
+	}
+</script>
 </head>
-<body class="map gradBg">
+<body class="mapBd gradBg">
 
 <div>
 	<table width="100%">
 		<tr>
 			<td>
 				<div class="div2"  style="margin:auto;">
-					<form action="locationsearch.do">
+					<form id="form" action="locationsearch.do">
 						<input type="text" name="keyword" value="${keyword }" placeholder="search"  onkeydown="if(event.keyCode == 13) selectSubmit();">
 						<!-- <input type="submit" value="건물명으로 주소 검색"> -->
 							<a href="javascript:selectSubmit();">
@@ -47,10 +52,8 @@
 		</c:forEach>
 		</c:if>
 	</table>
+</div><div id="map">
 </div>
-
-
-<div id="map" ></div>
 <script type="text/javascript">
 	var myaddress = '불정로 6';
 	var map = new naver.maps.Map('map');
@@ -92,14 +95,10 @@
 	    });
 	    // 마크 클릭시 인포윈도우 오픈
 	    var infowindow = new naver.maps.InfoWindow({
-	        content: '<h4> [네이버 개발자센터]</h4><a href="https://developers.naver.com" target="_blank"><img src="https://developers.naver.com/inc/devcenter/images/nd_img.png"></a>'
+	        content: '<button type="button" id="searchBtn" style="display:block;float:right;" onclick="selectMap(image);">추 가 하 기</button>'
 	    });
 	});
 
 </script>
-
-
-
-
 </body>
 </html>

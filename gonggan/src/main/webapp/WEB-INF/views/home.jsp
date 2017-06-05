@@ -50,7 +50,7 @@
 					if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3){
 						if(maxRownum >= rownum) {
 							$("#div_Loading").show();
-							alert(rownum);
+							//alert(rownum);
 							setTimeout(function() { requestCategoryList(rownum, category);}, 1000);
 						}
 					}

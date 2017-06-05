@@ -66,8 +66,8 @@
 	</colgroup>
 	<tr>
 		<td id="userId" colspan="2">
-			<a id="loginUser" href="#" >
-			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${writerId} 님 </b></a>
+			<a id="loginUser" href="selectBlog.do?writer_id=${writerId}" target="_blank">
+			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${writerId}</b></a>
 			
 			<div class="navbar-right hour">
 				<abbr class="timeago" title="${postDate}">${postDate}</abbr>

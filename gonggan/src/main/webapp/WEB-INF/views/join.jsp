@@ -9,19 +9,19 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/join.js"></script>
 <script type="text/javascript">
-   $(document).ready(function() {
-     
-      $("input[name='member_id']").keyup(function() {
-         $("input[name='member_id_']").val($(this).val());
-         });
-      $("input[name='member_id_']").keyup(function() {
-         $("input[name='member_id']").val($(this).val());
-         });
-      $("input").click(function() {
-         $(this).next().css("display", "block");
-         });
-      $("input[name='id']").focus();
-      });
+	$(document).ready(function() {
+		
+		$("input[name='member_id']").keyup(function() {
+			$("input[name='member_id_']").val($(this).val());
+		});
+		$("input[name='member_id_']").keyup(function() {
+			$("input[name='member_id']").val($(this).val());
+		});
+		
+		$("input").on('focus', function() {
+			$(this).next().css("display", "block");
+		});
+	});
 </script>
 </head>
 <body id="indexBg">

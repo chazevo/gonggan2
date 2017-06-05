@@ -215,6 +215,7 @@ public class BlogController {
 								multiRequest.getParameter("musicOpenYn"),
 								multiRequest.getParameter("movieOpenYn"),
 								multiRequest.getParameter("newsOpenYn"))) > 0)
+					
 					System.out.println("성공");
 				
 				in.close();

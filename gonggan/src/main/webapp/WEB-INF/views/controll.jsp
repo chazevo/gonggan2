@@ -272,8 +272,8 @@ int today = cal.get(Calendar.DATE);
 									<input type="file" id="file" name="file" accept=".gif,.jpeg,.jpg,.png"
 										onchange="$('#filename').val($(this).val()); changeBgImg(this);">
 								</div>
-								<button onclick="$('input[name=file]').val(''); $('.bannerEdit').css('background', 'none');">&nbsp;삭제</button>&nbsp;
-								<button onclick="">취소</button>
+								<input type="button" value="삭제" button onclick="$('input[name=file]').val(''); $('.bannerEdit').css('background', 'none');">&nbsp;&nbsp;
+								<input type="button" value="취소">
 								<!-- button누르면 submit 되는 이유?, 배경이미지, 배경색 선택적 적용 구현 안됨 -->
 							</td>
 						</tr>
@@ -281,16 +281,17 @@ int today = cal.get(Calendar.DATE);
 							<td>배경색&nbsp;<input type="radio" name="bgmode" value="color"></td>
 							<td>
 								<input type="color" name="background_color" onchange="changeBgColor(this);">&nbsp;
-								<button onclick="$('input[name=background_color]').val('${blog.background_color}');">&nbsp;취소</button>
+								<input type="button" onclick="$('input[name=background_color]').val('${blog.background_color}');" value="취소">&nbsp;
 							</td>
 						</tr>
 						<tr>
 							<td>제목</td>
 							<td>
 								<c:if test="${!empty blog }">
-								<input type="text" name="blogTitle" class="full" value="${blog.title }" >
+								<input type="text" name="blogTitle" class="full" value="${blog.title }" >&nbsp;
+								<input type="button" value="취소" onclick="$('input[name=blogTitle]').val('${blog.title}')">&nbsp;
 								&nbsp;<input type="color" name="color" onchange="changeTitleColor(this);">&nbsp;
-								<button onclick="$('input[name=blogTitle]').val('${blog.title}')">취소</button> 
+								<input type="button" value="취소" onclick="cancelTitleColorChange();">
 								</c:if>
 							</td>
 						</tr>
@@ -298,9 +299,10 @@ int today = cal.get(Calendar.DATE);
 							<td>내용</td>
 							<td>
 								<c:if test="${!empty blog }">
-								<textarea name="blogComment" rows="3" class="full" >${blog.contents }</textarea>
+								<textarea name="blogComment" rows="3" class="full" >${blog.contents }</textarea>&nbsp;
+								<input type="button" value="취소" onclick="$('textarea[name=blogComment]').val('${blog.contents }')">&nbsp;
 								&nbsp;<input type="color" name="contents_color" onchange="changeContentsColor(this);">&nbsp;
-								<button onclick="$('textarea[name=blogComment]').val('${blog.contents }')">취소 </button>
+								<input type="button" value="취소" onclick="cancelContentColorChange();">
 								</c:if>
 							</td>
 						</tr>

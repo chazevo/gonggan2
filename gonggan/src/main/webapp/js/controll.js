@@ -281,6 +281,26 @@ function changeContentsColor(obj) {
 	$('#blogComment').css('color', obj.value); 
 }
 
+function cancelTitleColorChange() {
+	var div = document.createElement("div");
+	d.style.color = color;
+	$('input[name=contents_color]').val('${blog.contents_color }');
+	colorSplit1step = contents_color.split("(")[1];
+	$("input[name=contents_color]").val(cnvrtRGBClrToHex(
+			colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
+	document.body.removeChild(div);
+}
+
+function cancelContentColorChange() {
+	var div = document.createElement("div");
+	d.style.color = contents_color;
+	$('input[name=contents_color]').val('${blog.contents_color }');
+	colorSplit1step = contents_color.split("(")[1];
+	$("input[name=contents_color]").val(cnvrtRGBClrToHex(
+			colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
+	document.body.removeChild(div);
+}
+
 function settingComplete() {
 	if (confirm("수정사항을 반영하시겠습니까?") == true) {
 		if ($("input[name=bgmode]").val() == "img")

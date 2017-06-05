@@ -170,7 +170,7 @@ System.out.println(str);
 					<td>
 						<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
 						<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
 					</td>
@@ -290,7 +290,7 @@ System.out.println(str);
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('news');">
 							<c:if test='${blog.languages eq "kor" }'>책</c:if>
-							<c:if test='${blog.languages eq "eng" }'>news</c:if>
+							<c:if test='${blog.languages eq "eng" }'>book</c:if>
 							<c:if test='${blog.languages eq "jp" }'>本</c:if>
 						</a>
 					</li>

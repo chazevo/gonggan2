@@ -32,14 +32,14 @@ function requestList(val) {
 function requestNeighborPostList(val, loginUser) {
 
    
-   $("#blogHomeContentDiv").html("");
+	$("#blogHomeContentDiv").html("");
    
-   var rownum2;
-   var loginUser;
+	var rownum2;
+	var loginUser;
    
-   if (maxRownum - val < 8)
-      var rownum2 = maxRownum;
-   else rownum2 = rownum + 7;
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
    
    $.ajax({
             url: "/gonggan/postNeighborlist.do",
@@ -199,54 +199,57 @@ function reqPostDetail(postId, category) {
 }
 
 function trace(loginUser) {
-   $.ajax({
-         url: "/gonggan/trace.do",
-         data: {loginUser:loginUser},
-         success: function(data) {
-               callbacktrace(data);
-         },
-         error: function(data,status,error){
-            console.log("error : " + error);
-         }
-      });
+	$.ajax({
+		url: "/gonggan/trace.do",
+		data: {loginUser:loginUser},
+		success: function(data) {
+			callbacktrace(data);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
 }
 
 function callbacktrace(data) {
    
-   var jsonObj = JSON.stringify(data);
-   var jsonArr = JSON.parse(jsonObj);   
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);   
 
-   var tr;
-   var td;
-   
-   $("#listbody_newPost").hide();
-   $("#listbody_newNeighbor").hide();
-   $(".title").hide();
-   $("#postAlarm").text('나의 흔적_');
-   $("#postAlarmCnt").text(jsonArr.list.length + "");
-   
-   while (document.getElementById("listbody_mytrace").rows.length > 0 )
-      document.getElementById("listbody_mytrace").deleteRow(0);
-   
-   for (var j=0 ; j<7 ; j++){
+	var tr;
+	var td;
+
+	$("#listbody_mytrace").show();
+	$("#searchNeiDiv").hide();
+	$("#listbody_neighbor").hide();
+	$("#listbody_newPost").hide();
+	$("#listbody_newNeighbor").hide();
+	$(".title").hide();
+	$("#postAlarm").text('나의 흔적_');
+	$("#postAlarmCnt").text(jsonArr.list.length + "");
+
+	while (document.getElementById("listbody_mytrace").rows.length > 0 )
+		document.getElementById("listbody_mytrace").deleteRow(0);   
+	
+	for (var j=0 ; j<7 ; j++){
       
-      loginUser = jsonArr.list[j].loginUser;
+		loginUser = jsonArr.list[j].loginUser;
       
-      tr = document.createElement("tr");
-      td = document.createElement("td");
-      //document.getElementById("listbody").innerHTML += "<tr><td colSpan='7'>"
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		//document.getElementById("listbody").innerHTML += "<tr><td colSpan='7'>"
       
-      td.innerHTML = "<a data-fancybox data-src='pdetail.do?postId="+jsonArr.list[j].postId+"&writerId=" + jsonArr.list[j].postWriter +"'>"
-      + decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " ")) +"</a> " ;
-      tr.appendChild(td);
-      document.getElementById("listbody_mytrace").appendChild(tr);
+		td.innerHTML = "<a data-fancybox data-src='pdetail.do?postId="+jsonArr.list[j].postId+"&writerId=" + jsonArr.list[j].postWriter +"'>"
+		+ decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " ")) +"</a> " ;
+		tr.appendChild(td);
+		document.getElementById("listbody_mytrace").appendChild(tr);
       
-      if (jsonArr.list.length-1 == j) break;
+		if (jsonArr.list.length-1 == j) break;
       
-   }
+	}
       
-   
 }
+
 function checkGood(loginUser, postId){
    
    $.ajax({
@@ -381,38 +384,41 @@ function neighborList(loginUser) {
          console.log("error : " + error);
       } 
    });
-} //이웃 블로그 목록
+} // 이웃 블로그 목록
 
 function callbackNeighborList(data){
 
-   var jsonObj = JSON.stringify(data);
-   var jsonArr = JSON.parse(jsonObj);
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
    
-   var div;
-   var tr, td;
-   
-   while (document.getElementById("table_newPost").rows.length > 1 )
-      document.getElementById("table_newPost").deleteRow(1);   
+	var div;
+	var tr, td;
 
-   tr = document.createElement("tr");
-   td = document.createElement("td");
-   td.innerHTML = "서로이웃 수_<font color='#2D86C9'><b>" + jsonArr.list.length + "</b></font>";
-   tr.appendChild(td);
-   document.getElementById("table_newPost").appendChild( tr );
-   for(var i in jsonArr.list) {
-      var memberId = jsonArr.list[i].memberId;
-      tr = document.createElement( 'tr' );
-      td = document.createElement( 'td' );
-      var a = document.createElement( 'a' );
-      var aText = document.createTextNode(memberId);
-      var font = document.createElement('font');
-      a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
-      tr.appendChild(td);
-      td.appendChild(a);
-      a.appendChild( aText );
-      document.getElementById("table_newPost").appendChild( tr );
-   }
-} //이웃 블로그 목록
+	$("#listbody_neighbor").show();
+	$(".title").hide();
+	$("#postAlarm").text("서로이웃 수_");
+	$("#postAlarmCnt").text(jsonArr.list.length + "");
+	$("#listbody_newNeighbor").hide();
+	$("#listbody_newPost").hide();
+	$("#listbody_mytrace").hide();
+	
+	while (document.getElementById("listbody_neighbor").rows.length > 0 )
+		document.getElementById("listbody_neighbor").deleteRow(0);   
+	
+	for(var i in jsonArr.list) {
+		var memberId = jsonArr.list[i].memberId;
+		tr = document.createElement( 'tr' );
+		td = document.createElement( 'td' );
+		var a = document.createElement( 'a' );
+		var aText = document.createTextNode(memberId);
+		var font = document.createElement('font');
+		a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
+		tr.appendChild(td);
+		td.appendChild(a);
+		a.appendChild( aText );
+		document.getElementById("listbody_neighbor").appendChild( tr );
+	}
+} // 이웃 블로그 목록
 
 function searchNeighbor() {
    
@@ -437,8 +443,8 @@ function callbackNsearch(data) {
    
    var tr, td;
    
-   while (document.getElementById("table_newPost").rows.length > 1 )
-      document.getElementById("table_newPost").deleteRow(1);
+   while (document.getElementById("listbody_neighbor").rows.length > 1 )
+      document.getElementById("listbody_neighbor").deleteRow(1);
    
    for (var i in jsonArr.list) {
       var member_id = jsonArr.list[i].member_id;
@@ -451,6 +457,20 @@ function callbackNsearch(data) {
       tr.appendChild(td);
       td.appendChild(a);
       a.appendChild( aText );
-      document.getElementById("table_newPost").appendChild( tr );
+      document.getElementById("listbody_neighbor").appendChild( tr );
    }
+}
+
+function goSubmit() {
+	
+	if ($("#pass").val() =="") {
+		alert("비밀번호를 입력해주세요");
+		return;
+	}
+	else if ($("#id").val() =="") {
+		alert("아이디를 입력해주세요");
+		return;
+	}
+	else
+		$("#login").submit();
 }

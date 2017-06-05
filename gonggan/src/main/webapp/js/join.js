@@ -10,14 +10,20 @@ function onlyNumber(event){
 	}
 }
 
+function removeChar() {
+	
+}
+
 function blurEvent(object) {
 	
 	$(object).next().css('display', 'none');
 	
+	/*
 	if ($(object).val() != "") {
 		$(object).removeClass("error");
 		$(object).next().removeClass("error");
 	}
+	*/
 }
 function confirmInput() {
  
@@ -120,23 +126,25 @@ function joinIdCheck() {
 }
 
 function joinEmailCheck() {
-	   $.ajax({
-		      url: "joinemailcheck.do",
-		      data: {	email: $("input[name='email']").val() },
-		      success: function(data) {
-		    	  if (data == "실패") {
-		    			$("#emailSpan > em").text("중복된 이메일 입니다.");
-		    			$("input[name='email']").addClass("error");
-		    			$("#emailSpan > em").addClass("error");
-		    			$("#emailSpan > em").css("display", "block");
-		    			$("input[name='email']").focus();
-		    	  }
-		    	  else if (data == "성공")
-		    	  	$("#join").submit();
-		    		  alert("완료");
-		      },
-		      error: function(data,status,error){
-		         console.log("error : " + error);
-		      }
-		   });
+	$.ajax({
+		url: "joinemailcheck.do",	
+		data: {	email: $("input[name='email']").val() },
+		success: function(data) {
+			if (data == "실패") {
+				alert(data);
+				$("#emailSpan > em").text("중복된 이메일 입니다.");
+				$("input[name='email']").addClass("error");
+				$("#emailSpan > em").addClass("error");
+				$("#emailSpan > em").css("display", "block");
+				$("input[name='email']").focus();
+			}
+			else if (data == "성공") {
+				$("#join").submit();
+				alert("완료");
+			}
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
 }

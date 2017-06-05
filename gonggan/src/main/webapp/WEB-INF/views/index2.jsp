@@ -67,7 +67,7 @@ window.onload = function() {
          if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 5){
             if(maxRownum >= rownum) {
                $("#div_Loading").show();
-               alert(rownum);
+               //alert(rownum);
                setTimeout(function() {
                   requestList(rownum);
                   $(window).scrollTop($(window).height() / 2);
@@ -105,7 +105,7 @@ window.onload = function() {
             <span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
             <!-- sr-only : 숨김 -->
          </button>
-         <a class="" href="login2.do">
+         <a class="" href="login.do">
          <img class="" src="images/KakaoTalk_Photo_2017-04-22-23-02-45.png" width="70px">
          <img class="smallLogoImg" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
       </div>
@@ -139,133 +139,145 @@ window.onload = function() {
    </div>
 <!--</nav>--></div>
 <div class="divCenter">
-   <!--<div class="container-fluid">-->
-   <!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
-      <div class="blogHomeHeader">
-         <table class="table1st">
-            <colgroup>
-               <col width="60%" />
-               <col width="40%" />
-            </colgroup>
-            <tr>
-               <td class="disapear">
-                  <img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
-               </td>
-               <td class="table2nd" style="overflow:scroll;">
-                  <table id="table_newPost">
-                     <colgroup>
-                        <col style="width:*;" />
-                        <col width="5%" />
-                     </colgroup>
-                     <tr>
-                        <td colspan="2">
-                           <div class="div2" id="searchNeiDiv">
-                              <input type="text" id="searchNeighbor" placeholder="검색" size="12"
-                                 onkeyup="searchNeighbor();">
-                              <a href="javascript:searchNeighbor();">
-                                 <img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
-                                    width="10%">
-                              </a>
-                           </div>
-                        </td>
-                     </tr>
-                      <tr>
-                         <th id="postAlarm">내 포스트 알람_<font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
-                        <td><a href="">▶</a></td>
-                     </tr>
-                     <tbody id="listbody_mytrace"></tbody>
-                     <tbody id="listbody_newPost">
-                        <tr>
-                           <td>
-                              <a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
-                              <a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
-                           </td>
-                           <td></td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
-                              <a href=""><font color="#2D86C9">이대장</font></a>
-                           </td>
-                           <td></td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="">토리와 함께 추억쌓기 놀이</a> |
-                              <a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
-                           </td>
-                           <td></td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="">행복가득한 그루터기 발자취</a> |
-                              <a href=""><font color="#2D86C9">그루터기</font></a>
-                           </td>
-                           <td></td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
-                              <a href=""><font color="#2D86C9">깐깐징어</font></a>
-                           </td>
-                           <td></td>
-                        </tr>
-                     </tbody>
-                     <tr>
-                        <td colspan="2" align="center"  class="title">
-                           <img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
-                        </td>
-                     </tr>
-                     <tr>
-                        <td class="title">
-                           서로이웃 신청_
-                           <font color="#2D86C9">
-                              <b id="neighborReqListSize">${neighborReqListSize }</b>
-                           </font>
-                        </td>
-                        <td  class="title"><a href="">▶</a></td>
-                     </tr>
-                     <tbody id="listbody_newNeighbor">
-                        <tr>
-                           <td>
-                              <table>
-                                 <tr>
-                                    <c:if test="${!empty (neighborReqList) }">
-                                    <c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
-                                    <td>
-                                       <a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
-                                       <a onclick="acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
-                                          <div class="neighborYN">수락</div>
-                                       </a>
-                                       <a onclick="rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
-                                          <div class="neighborYN">거절</div>
-                                       </a>
-                                    </td>
-                                    </c:forEach>
-                                    </c:if>
-                                    <td></td>
-                                 </tr>
-                              </table>
-                           </td>
-                           <td></td>
-                        </tr>
-                     </tbody>
-                  </table>
-               </td>
-            </tr>
-         </table>
+	<!--<div class="container-fluid">-->
+	<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
+		<div class="blogHomeHeader">
+			<table class="table1st">
+				<c:if test="${!empty sessionScope.loginUser}">
+				<colgroup>
+					<col width="60%" />
+					<col width="40%" />
+ 				</colgroup>
+				</c:if>
+ 				<tr>
+ 					<td class="disapear">
+ 						<img src="images/KakaoTalk_Photo_2017-04-26-10-19-25.png" width="100%">
+					</td>
+					<c:if test="${!empty sessionScope.loginUser}">
+					<td class="table2nd" style="overflow:scroll;">
+						<table id="table_newPost">
+							<colgroup>
+								<col style="width:*;" />
+								<col width="5%" />
+							</colgroup>
+							<tr>
+								<td colspan="2">
+									<div class="div2" id="searchNeiDiv">
+										<input type="text" id="searchNeighbor" placeholder="검색" size="12"
+											onkeyup="searchNeighbor();">
+										<a href="javascript:searchNeighbor();">
+											<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
+												width="10%">
+										</a>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th id="postAlarm"><span id="postAlarm">내 포스트 알람_</span><font color="#2D86C9"><b id="postAlarmCnt">6</b></font></th>
+								<td><a href="">▶</a></td>
+							</tr>
+							<tbody id="listbody_neighbor"></tbody>
+							<tbody id="listbody_mytrace" style="border:1px solid blue;"></tbody>
+							<tbody id="listbody_newPost">
+								<tr>
+									<td>
+										<a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
+										<a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
+										<a href=""><font color="#2D86C9">이대장</font></a>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<a href="">토리와 함께 추억쌓기 놀이</a> |
+										<a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<a href="">행복가득한 그루터기 발자취</a> |
+										<a href=""><font color="#2D86C9">그루터기</font></a>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
+										<a href=""><font color="#2D86C9">깐깐징어</font></a>
+									</td>
+									<td></td>
+								</tr>
+							</tbody>
+							<tr>
+								<td colspan="2" align="center"  class="title">
+									<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
+								</td>
+							</tr>
+							<tr>
+								<td class="title">
+									서로이웃 신청_
+									<font color="#2D86C9">
+										<b id="neighborReqListSize">${neighborReqListSize }</b>
+									</font>
+								 </td>
+								 <td  class="title"><a href="">▶</a></td>
+								</tr>
+								<tbody id="listbody_newNeighbor">
+									<tr>
+										<td>
+											<table>
+												<tr>
+													<c:if test="${!empty (neighborReqList) }">
+													<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
+													<td>
+														<a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+														<a onclick="acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
+															<div class="neighborYN">수락</div>
+														</a>
+														<a onclick="rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
+															<div class="neighborYN">거절</div>
+														</a>
+													</td>
+													</c:forEach>
+													</c:if>
+													<td></td>
+												</tr>
+											</table>
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						</c:if>
+					</tr>
+				</table>
          
          <div class="myDiv">
             <c:if test="${empty (loginUser) }">
             <form action = "login.do" method="post" id="login">
                <table>
+               	<colgroup>
+               		<col width="40%" />
+               		<col width="60%" />
+               	</colgroup>
                   <tr>
                      <td>아이디 </td>
-                     <td><input type="text" name="member_id"></td>
+                     <td><input type="text" name="member_id" width="100%"></td>
                   </tr>
                   <tr>
                      <td>비밀번호 </td>
-                     <td><input type="password" name="member_pw"></td>
+                     <td>
+                     	<input type="password" name="member_pw" width="100%"
+                     		onkeydown="if (event.keyCode == 13) goSubmit();">
+                     </td>
                   </tr>
                </table>
                <a href="javascript:goSubmit();">로그인</a><a href="join.do">회원가입</a>

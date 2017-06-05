@@ -282,7 +282,7 @@
 							<td>
 								<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
 								<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-								<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+								<a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="#">로그아웃</a> 
 								<div id="dansun_line"></div>
 							</td>
@@ -557,10 +557,10 @@
 									<script>
 										
 										var mapOptions = {
-												center: new naver.maps.LatLng(35.6995704, 127.225399),
-												level: 0,
-												maxZoom: 0, //지도의 최대 줌 레벨
-												minZoom: 0,
+												center: new naver.maps.LatLng(35.7995704, 127.925399),
+												level: 1,
+												maxZoom: 1, //지도의 최대 줌 레벨
+												minZoom: 1,
 												logoControl: false,
 												mapDataControl: false,
 												scaleControl: false,
@@ -709,7 +709,7 @@
 							<td colspan="5" align="right">
 								<a data-toggle="collapse" data-target="#movie" id="movieSearchLink">영화 찾아보기</a>
 								<div id="movie" class="collapse">
-									<table width="100%" border="1">
+									<table width="100%">
 									<tr>
 										<td>제목</td>
 										<td><input type="text" id="movieSearchText" onkeyup="if (event.keyCode == 13) searchMovie();"></td>

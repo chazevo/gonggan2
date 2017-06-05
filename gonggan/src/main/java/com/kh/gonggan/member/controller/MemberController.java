@@ -75,58 +75,31 @@ public class MemberController {
 	@Autowired
 	private NeighborService neighborService;
 	
-	@RequestMapping(value="/login2.do", method=RequestMethod.GET)
-	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
-
-		Member loginUser = (Member) session.getAttribute("loginUser");
-		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
-		List<Post> plist = postService.selectAll_index2();  
-		List<Movie> movielist = movieService.selectAll_index2();
-		List<Diary> diarylist = diaryService.selectAll_index2();
-		List<Music> musiclist = musicService.selectAll_index2();
-		List<News> newslist = newsService.selectAll_index2();
-		List<Review> reviewlist = reviewService.selectAll_index2();
-		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
-
-		mv.setViewName("index2");
-		mv.addObject("reviewlist", reviewlist);
-		mv.addObject("newslist", newslist);
-		mv.addObject("musiclist", musiclist);
-		mv.addObject("dlist", diarylist);
-		mv.addObject("plist",plist);
-		mv.addObject("movielist",movielist);
-		mv.addObject("plistSize", plist.size());
-		mv.addObject("neighborReqList", neighborReqList);
-		mv.addObject("neighborReqListSize", neighborReqList.size());
-		
-		return mv;
-	}
-	
-	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	   public ModelAndView loginCheck(Member member, ModelAndView mv, HttpSession session){
-	      Member loginUser  = memberService.loginCheck(member);
+	@RequestMapping(value="/login.do")
+	public ModelAndView loginCheck(Member member, ModelAndView mv, HttpSession session){
+		Member loginUser  = memberService.loginCheck(member);
 	      
-	      if(loginUser != null) {
-	         session.setAttribute("loginUser", loginUser);
-	         System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
-
-
-	         mv.setViewName("redirect:login2.do");
+		if(loginUser != null) {
+			session.setAttribute("loginUser", loginUser);
+			System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
+			
+			mv.setViewName("redirect:index2.do");
 	         
-	         return mv;
-	      }
+			return mv;
+		}
 	      
-	      else {
-	         session.setAttribute("error", "실패");
-	         System.out.println("로그인 실패");
-	         mv.addObject("logmsg","failure");
-	         mv.setViewName("home");
-	         return mv;
-	      }
-	   }//로그인하기
+		else {
+			session.setAttribute("error", "실패");
+			System.out.println("로그인 실패");
+			mv.addObject("logmsg","failure");
+			mv.setViewName("home");
+			return mv;
+		}
+	} //로그인하기
+	
 	@RequestMapping(value="/joinidcheck.do", produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	   public String joinIdCheck(@RequestParam String member_id){
+	public String joinIdCheck(@RequestParam String member_id){
 	    
 		String result = "";
 		Member idCheck = memberService.joinIdCheck(member_id);
@@ -138,49 +111,53 @@ public class MemberController {
 	   }//id/email check
 	
 	@RequestMapping(value="nrequest.do", produces="text/plain;charset=UTF-8")
-	   @ResponseBody
+	@ResponseBody
 	   public ModelAndView requestNeig(@RequestParam String member_id1,@RequestParam String member_id2, ModelAndView mv){
 
-	         String msg = "실패";
-	       int nrequest = neighborService.requestNeig(member_id1, member_id2);
-	       List<Neighbor> neigList =neighborService.neigList(member_id1,member_id2);
-	       System.out.println(neigList);
-	       mv.addObject("neigList", neigList);
-	       mv.setViewName("likepage");
-	       if(nrequest > 0) msg="성공";
-	      return mv;
-	   }//이웃 신청
+		String msg = "실패";
+		int nrequest = neighborService.requestNeig(member_id1, member_id2);
+		List<Neighbor> neigList =neighborService.neigList(member_id1,member_id2);
+		System.out.println(neigList);
+		mv.addObject("neigList", neigList);
+		mv.setViewName("likepage");
+		if(nrequest > 0) msg="성공";
+		
+		return mv;
+	
+	} //이웃 신청
 	
 	@RequestMapping(value="/joinemailcheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	   public String joinEmailCheck(@RequestParam String email){
+	public String joinEmailCheck(@RequestParam String email){
 	    
 		String result = "";
-		Member emailCheck =memberService.joinEmailCheck(email);
+		Member emailCheck = memberService.joinEmailCheck(email);
 		
-		if(emailCheck ==null)
-			 result = "성공";
-		else if(emailCheck != null)   result= "실패";
+		if (emailCheck == null)
+			result = "성공";
+		else if (emailCheck != null)
+			result = "실패";
+		
 		return  result;
 		
-		
-	   }//id/email check
+	   } //id/email check
 	
 	
 	@RequestMapping("logOut.do")
-	   public ModelAndView logOut(HttpSession session, ModelAndView mv){
+	public ModelAndView logOut(HttpSession session, ModelAndView mv){
 	      
-	      String vn = (String) session.getAttribute("currentView");
-	      System.out.println("vn:"+vn);
-	      //String wr = (String)session.getAttribute("wr_id");
+		String vn = (String) session.getAttribute("currentView");
+		System.out.println("vn:"+vn);
+		//String wr = (String)session.getAttribute("wr_id");
 	      
-	      //mv.addObject("writer_id", wr);
-	      mv.setViewName(vn);
+		//mv.addObject("writer_id", wr);
+		mv.setViewName(vn);
 	      
-	      if(session != null)
-	         session.invalidate();
-	      return mv;
-	   }
+		if(session != null)
+			session.invalidate();
+		return mv;
+	}
+
 	@RequestMapping("updateform.do")
 	public String updateform(HttpSession session){
 		return "updateform";
@@ -204,45 +181,50 @@ public class MemberController {
 		}
 		return mv;
 
-	}//회원가입
+	} //회원가입
 	
 	@RequestMapping("/update.do")
-	public ModelAndView memberUpdate(Member member, ModelAndView mv, HttpSession session){
+	@ResponseBody
+	public String memberUpdate(Member member, HttpSession session) {
+		
 		System.out.println(member);
+		String result = null;
 		Member loginUser  = memberService.loginCheck(member);
 		int updateResult = memberService.updateMember(member);
 		session.setAttribute("loginUser", loginUser);
 		
-		if(updateResult<0)
-			session.setAttribute("error", "실패");
+		if (updateResult < 0)
+			result = "fail";
+			//session.setAttribute("error", "실패");
 		
-		mv.setViewName("mypage");
-		return mv;
+		else
+			result = "success";
+		
+		return result;
 	}
 	
 	@RequestMapping("delete.do")
-	   @ResponseBody
-	   public String memberDelete(@RequestParam String member_id, HttpSession session){
-	      int deleteMem = memberService.deleteMember(member_id);
-	      session.invalidate();
-	      return "";
-	   }
+	@ResponseBody
+	public String memberDelete(@RequestParam String member_id, HttpSession session){
+		int deleteMem = memberService.deleteMember(member_id);
+		session.invalidate();
+		return "";
+	}
 
 	@RequestMapping("memberList.do")
 	public ModelAndView memberList(){
 		return null;
-	}//리스트로 회원 보기
+	} //리스트로 회원 보기
 	
 	@Autowired
 	private EmailSender emailSender;
 	@Autowired
 	private Email emaila;
 	
-	@RequestMapping("selectPw.do")
+	@RequestMapping(value="selectPw.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
 	//public ModelAndView selectPw(@RequestParam Map<String, Object> paramMap, ModelMap model)throws Exception{
-	public ModelAndView selectPw(@RequestParam String memberId, String email/*, String phone*/)throws Exception{
-		
-		ModelAndView mav;
+	public String selectPw(@RequestParam String memberId, String email/*, String phone*/)throws Exception{
 		
 		/*
 		String id=(String)paramMap.get("member_id");
@@ -260,20 +242,16 @@ public class MemberController {
 		
 		System.out.println(pw);
 		
-		if(pw != null){
+		if (!pw.equals("실패"))  {
+			emaila.setSubject("GONG:GAN 비밀번호 찾기 메일 ");
 			emaila.setContent("비밀번호는 " + pw + " 입니다");
 			emaila.setReceiver(email);
 			emailSender.SendEmail(emaila);
-			mav =new ModelAndView("redirect:/findPwd.do");
-			return mav;
-			
-		}else{
-			mav = new ModelAndView("redirect:/findPwd.do");
-			return mav;
 		}
 		
-			
-	}//비밀번호 찾을 때 회원 검색
+		return pw;
+		
+	} // 비밀번호 찾을 때 회원 검색
 	
 	
 	@RequestMapping(value="selectIdByEmail.do", produces="text/plain;charset=UTF-8")
@@ -281,7 +259,10 @@ public class MemberController {
 	public String selectIdByEmail(@RequestParam String email){
 		System.out.println("selectIdByEmail.do");
 		String selectId = memberService.selectIdByEmail(email);
+		if (selectId == null)
+			selectId = "실패";
 		return selectId;
+		
 	} //아이디 찾을 때 회원 검색
 	
 	@RequestMapping("selectMember.do")

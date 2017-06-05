@@ -504,8 +504,8 @@ function callbackWlocationList(data) {
 	var lat, lon;
 	var icon;
 	
-	//for (var i in jsonArr.list) {
-	for (var i=0 ; i<1 ; i++) {
+	for (var i in jsonArr.list) {
+	//for (var i=7 ; i==7 ; i++) {
 		
 		icon = wstateIcon(requestWeatherStatus(lat = jsonArr.list[i].lat, lon = jsonArr.list[i].lon));
 		

@@ -25,7 +25,7 @@
 
 	<insert id="binsert" parameterType="blog">
 		insert into blog (writer_id, blog_id) values(
-		#{writer_id}, (select blog_seq.nextval from dual))
+		#{writer_id}, blog_seq.nextval)
 	</insert>
 	
 	<select id="bselect" resultMap="blogResult" parameterType="String">

@@ -108,6 +108,8 @@ public class HomeController {
       
 		logger.info("Welcome home! ");
       
+		System.out.println("movieMaxRownum : " + postService.maxRownum("movie"));
+		
 		mv.addObject("movieMaxRownum", postService.maxRownum("movie"));
 		mv.addObject("musicMaxRownum", postService.maxRownum("music"));
 		mv.addObject("reviewMaxRownum", postService.maxRownum("review"));
@@ -120,11 +122,40 @@ public class HomeController {
 	}
    
 	@RequestMapping(value = "index2.do", method = RequestMethod.GET)
-	public ModelAndView index2(ModelAndView mv) {
+	public ModelAndView index2(ModelAndView mv, HttpSession session) {
+		
 		logger.info("Welcome index2! ");
-		List<Post> plist = postService.selectAll_index2();
-		mv.addObject("plist",plist);
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		List<Post> plist = postService.selectAll_index2();  
+		List<Movie> movielist = movieService.selectAll_index2();
+		List<Diary> diarylist = diaryService.selectAll_index2();
+		List<Music> musiclist = musicService.selectAll_index2();
+		List<News> newslist = newsService.selectAll_index2();
+		List<Review> reviewlist = reviewService.selectAll_index2();
+		
+		List<Member> neighborReqList = null;
+		List<Comment> commentReqList = null;
+		
+		if (loginUser != null) {
+			neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+			commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
+		}
+
 		mv.setViewName("index2");
+		mv.addObject("reviewlist", reviewlist);
+		mv.addObject("newslist", newslist);
+		mv.addObject("musiclist", musiclist);
+		mv.addObject("dlist", diarylist);
+		mv.addObject("plist",plist);
+		mv.addObject("movielist",movielist);
+		mv.addObject("plistSize", plist.size());
+		mv.addObject("neighborReqList", neighborReqList);
+		mv.addObject("neighborReqListSize", neighborReqList.size());
+		
+		mv.setViewName("index2");
+		
 		return mv;
 	}
 
@@ -416,6 +447,34 @@ public class HomeController {
 		}       
 		json.put("list", jarr);
 		return json.toJSONString();
-       
 	}
+	
+	@RequestMapping(value="/neighborBlogPost.do", method=RequestMethod.GET)
+	   public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
+	      System.out.println("neighborBlogPost.do");
+	      Member loginUser = (Member) session.getAttribute("loginUser");
+	      System.out.println("loginUser : " + loginUser);
+	      List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+	      List<Post> plist = postService.selectAll_index2();  
+	      List<Movie> movielist = movieService.selectAll_index2();
+	      List<Diary> diarylist = diaryService.selectAll_index2();
+	      List<Music> musiclist = musicService.selectAll_index2();
+	      List<News> newslist = newsService.selectAll_index2();
+	      List<Review> reviewlist = reviewService.selectAll_index2();
+	      List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
+
+	      mv.setViewName("neighborPost");
+	      mv.addObject("reviewlist", reviewlist);
+	      mv.addObject("newslist", newslist);
+	      mv.addObject("musiclist", musiclist);
+	      mv.addObject("dlist", diarylist);
+	      mv.addObject("plist",plist);
+	      mv.addObject("movielist",movielist);
+	      mv.addObject("plistSize", plist.size());
+	      mv.addObject("neighborReqList", neighborReqList);
+	      mv.addObject("neighborReqListSize", neighborReqList.size());
+	      
+	      return mv;
+	   }
+	
 }

@@ -28,7 +28,7 @@ public class MemberDao {
 		return (Member) sqlSession.selectOne("membermapper.joinidcheck",member_id);
 	}
 	public Member joinEmailCheck (String email) {
-		return (Member) sqlSession.selectOne("membermapper.joinemailcheck",email);
+		return (Member) sqlSession.selectOne("membermapper.joinemailcheck", email);
 	}
 	
 	public int insertMember(Member member){
@@ -88,7 +88,17 @@ public class MemberDao {
 	
 	public String getPw(Map<String, Object> paramMap) {
 		// TODO Auto-generated method stub
-		return ((Member)(sqlSession.selectOne("membermapper.selectPw", paramMap))).getMember_pw();
+		
+		Member result =  (Member) sqlSession.selectOne(
+				"membermapper.selectPw", paramMap);
+		String pw;
+		
+		if (result == null)
+			pw = "실패";
+		else
+			pw = result.getMember_pw();
+		
+		return pw;
 	}
 	public Member naverIdCheck(Member mem) {
 	      // TODO Auto-generated method stub

@@ -29,7 +29,7 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
 					<!-- sr-only : 숨김 -->
 				</button>
-				<a class="" href="#">
+				<a class="" href="index.jsp">
 				<img class="smallLogoImg" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px"></a>
 			</div>
 				<div class="collapse navbar-collapse" id="menu">
@@ -64,7 +64,7 @@
 	<header>
 		<div class="header-content" id="indexBg">
 			<div class="header-content-inner">
-				<table class="findTable" align="center" border="1">
+				<table class="findTable" align="center">
 				<colgroup>
 					<col width="20%" />
 					<col width="68%" />
@@ -82,7 +82,8 @@
 					<td><p>아이디 찾기</p></td>
 					<td>
 						이메일을 입력해주세요.&nbsp;
-						<input id="email" class="find" type="text" id="" size="15">
+						<input id="email" class="find" type="text" id="" size="15"
+							onkeydown="if (event.keyCode == 13 )idFind();">
 					</td>
 					<td>
 						<a href="javascript:idFind();">
@@ -106,7 +107,8 @@
 				<tr>
 					<td>
 						이메일을 입력해주세요.&nbsp;
-						<input class="find" type="text" name="email2" id="email2" size="15">
+						<input class="find" type="text" name="email2" id="email2" size="15"
+							onkeydown="if (event.keyCode == 13 )pwdFind();">
 					</td>
 				</tr>
 	<!-- 			<tr>

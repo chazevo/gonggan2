@@ -40,7 +40,6 @@
     select * from comments where post_id in (select post_id from post where writer_id=#{writer_id})
    </select>
 
-    
    <select id="cnum" parameterType="comment" resultType="int">
    select nvl(max(comment_num), 0) from comments where post_id = #{post_id} + 1
    </select>
@@ -50,10 +49,14 @@
    order by comment_num
    </select>
    
-   <insert id="cinsert" parameterType="comment" >
+	<insert id="cinsert" parameterType="Map">
+   insert into alarm values (seq_alarm.nextval, 'C', #{postId}, null, ${comment_num})
+   </insert>
+    
+   <insert id="cinsert2" parameterType="comment" >
    insert into comments
    values(#{post_id}, #{comment_num}, 
-   #{writer_id}, #{comment_content}, sysdate, default)
+   #{writer_id}, #{comment_content}, sysdate, default, seq_alarm.nextval)
    </insert>
    
    <update id="cupdate">

@@ -87,7 +87,7 @@ function editInfo() {
       $("#editInfoCancel").css("display", "block");
    }
    else if ($("#editInfo").text() == "완료") {
-      newEmail = $("#email").val();
+	   newEmail = $("#email").val();
 
       if (confirm("변경 내용을 반영하시겠습니까?") == true) {
          $.ajax({
@@ -95,16 +95,17 @@ function editInfo() {
             data: { email:newEmail
             },
             success: function(data) {
-               if(data == '실패'){
+               if (data == 'fail') {
                   emailCheckEI =  'NO';
                   alert("이미 가입된 이메일 입니다.");
                   editInfo();
                }
-               else{
+               else if (data == "success") {
                   emailCheckEI = 'YES';
                   if ($("#pwd").val() != $("#pwd2").val()) {
                      alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
                      editInfo();
+                     // 비밀번호 유효성 체크 
                   }
                   else 
                   $("#update").submit();

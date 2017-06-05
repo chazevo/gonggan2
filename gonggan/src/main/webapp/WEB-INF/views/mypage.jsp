@@ -3,7 +3,13 @@
 <%@page import="com.kh.gonggan.member.model.vo.Member"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%
-   Member loginUser = (Member) session.getAttribute("loginUser");
+	Member loginUser = (Member) session.getAttribute("loginUser");
+
+	String currentView = "home";
+	String writer = session.getId();
+	//세션저장 (플래그, 값)
+	session.setAttribute("currentView", currentView);
+	session.setAttribute("wr_id", writer);
 %>
 <!DOCTYPE html>
 <html>
@@ -79,8 +85,8 @@
             <td>
                <a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
                <a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-               <a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
-               <a href="#">로그아웃</a> 
+               <a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+               <a href="logOut.do">로그아웃</a> 
                <div id="dansun_line"></div>
             </td>
          </tr>

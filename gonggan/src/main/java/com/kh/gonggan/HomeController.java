@@ -450,31 +450,32 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/neighborBlogPost.do", method=RequestMethod.GET)
-	   public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
-	      System.out.println("neighborBlogPost.do");
-	      Member loginUser = (Member) session.getAttribute("loginUser");
-	      System.out.println("loginUser : " + loginUser);
-	      List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
-	      List<Post> plist = postService.selectAll_index2();  
-	      List<Movie> movielist = movieService.selectAll_index2();
-	      List<Diary> diarylist = diaryService.selectAll_index2();
-	      List<Music> musiclist = musicService.selectAll_index2();
-	      List<News> newslist = newsService.selectAll_index2();
-	      List<Review> reviewlist = reviewService.selectAll_index2();
-	      List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
+	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
+		
+		System.out.println("neighborBlogPost.do");
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		System.out.println("loginUser : " + loginUser);
+		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+		List<Post> plist = postService.selectAll_index2();  
+		List<Movie> movielist = movieService.selectAll_index2();
+		List<Diary> diarylist = diaryService.selectAll_index2();
+		List<Music> musiclist = musicService.selectAll_index2();
+		List<News> newslist = newsService.selectAll_index2();
+		List<Review> reviewlist = reviewService.selectAll_index2();
+		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
 
-	      mv.setViewName("neighborPost");
-	      mv.addObject("reviewlist", reviewlist);
-	      mv.addObject("newslist", newslist);
-	      mv.addObject("musiclist", musiclist);
-	      mv.addObject("dlist", diarylist);
-	      mv.addObject("plist",plist);
-	      mv.addObject("movielist",movielist);
-	      mv.addObject("plistSize", plist.size());
-	      mv.addObject("neighborReqList", neighborReqList);
-	      mv.addObject("neighborReqListSize", neighborReqList.size());
+		mv.setViewName("neighborPost");
+		mv.addObject("reviewlist", reviewlist);
+		mv.addObject("newslist", newslist);
+		mv.addObject("musiclist", musiclist);
+		mv.addObject("dlist", diarylist);
+		mv.addObject("plist",plist);
+		mv.addObject("movielist",movielist);
+		mv.addObject("plistSize", plist.size());
+		mv.addObject("neighborReqList", neighborReqList);
+		mv.addObject("neighborReqListSize", neighborReqList.size());
 	      
-	      return mv;
-	   }
+		return mv;
+	}
 	
 }

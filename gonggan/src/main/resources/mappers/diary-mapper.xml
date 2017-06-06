@@ -8,6 +8,11 @@
 		<result property="post_id" column="post_id"/>
 		<result property="diary_content" column="diary_content"/>
 	</resultMap>
+	
+	<insert id="dinsert" parameterType="Map">
+		insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content})
+	</insert>
+	
 	<select id="diarylist" resultMap="diaryResult" parameterType="Map">
 	
 	select rownum, subquery.* from (select * from diary
@@ -21,9 +26,5 @@
 	<select id="diarydetail" resultMap="diaryResult" parameterType="int">
 	select * from diary where post_id = #{postId}
 	</select>
-	
-	<insert id="dinsert" parameterType="Map">
-	insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content})
-	</insert>
 	
 </mapper>

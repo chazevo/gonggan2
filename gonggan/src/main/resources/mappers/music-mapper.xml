@@ -11,8 +11,8 @@
 		<result property="singer" column="singer"/>
 		<result property="music_content" column="music_content"/>
 	</resultMap>
-	<select id="musiclist" resultMap="musicResult" parameterType="Map">
 	
+	<select id="musiclist" resultMap="musicResult" parameterType="Map">
 	select rownum, subquery.* from (select * from music
 				order by 5 desc) subquery "
 				where rownum between #{rownum} and #{rownum2}
@@ -26,7 +26,7 @@
 	</select>
 	
 	<insert id="minsert" parameterType="Map">
-      insert into music values(#{post_id},nvl((select max(music_num) from music),0) + 1,#{content},null,null,null)
+      insert into music values(#{post_id}, nvl((select max(music_num) from music), 0) + 1, #{content}, null, null, null)
    </insert>
 	
 </mapper>

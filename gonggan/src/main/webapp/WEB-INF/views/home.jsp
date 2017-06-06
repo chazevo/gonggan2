@@ -129,7 +129,7 @@
 </head>
 <body>
 <c:if test="${!empty sessionScope.loginUser }">
-   <jsp:forward page="login2.do"></jsp:forward>
+   <jsp:forward page="index2.do"></jsp:forward>
 </c:if>
 <div id="indexBg">
 <nav class="navbar navbar-default" id="mainNav">

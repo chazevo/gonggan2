@@ -11,6 +11,11 @@
 		<result property="title" column="title"/>
 		<result property="news_content" column="news_content"/>
 	</resultMap>
+	
+	<insert id="ninsert" parameterType="Map">
+	insert into news values(#{post_id},nvl((select max(news_num) from news),0) + 1,null,null,null,#{content})
+	</insert>
+	
 	<select id="newslist" resultMap="newsResult" parameterType="Map">
 	
 	select rownum, subquery.* from (select * from news
@@ -27,4 +32,5 @@
 	<select id="newsdetail" resultMap="newsResult" parameterType="int">
 	select * from news where post_id = #{postId}
 	</select>
+
 </mapper>

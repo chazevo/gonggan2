@@ -392,35 +392,39 @@ function changeForm() {
 		$("#movieTbody").css("display", "table-row-group");
 		je_doc.body.innerHTML += "<div style='border:1px solid red; position;display:table;'>"
 				+ "<img src='images/template/getout.jpg'>"
-				+ "<h2 style='display:block;position:absolute; top:0;bottom:0;right:0;left:0; margin:auto;width:300px;height:50px;'><b><span style='color:black'>GET</span><span style='color:white'>OUT</span></b></h2>"
-				+"</div><br>흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기<br>" +
-						"<hr><table><tr><td><img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg'>" +
-						"</td></tr><tr><td>GETOUT 2017</td></tr>" +
-						"</table>" +
-						"<table><tr><td text-align='center'><h2><b><span style='color:black'>SYNO</span><span style='color:white'>PSIS</span></h2></td></tr>" +
-						"<tr><td>ABOUT MOVIE <br>" +
-						"공개 6일 만에 메인 예고편 조회수 1,000만 뷰 돌파! 개봉 요청 쇄도! <br>" +
-						"관객들의 폭발적 반응이 개봉시킨 영화! <br>" +
-						"영화 <겟 아웃>은 흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기로 북미 개봉 직후 박스오피스 1위를 차지한 바 있다." +
-						" 무서운 흥행세를 발휘한 <겟 아웃>은 SNS를 통해 게재된 예고편을 통해서 국내 관객들에게도" +
-						" 폭발적인 반응을 불러일으켰다. 국내 개봉이 확정되기도 전에 SNS에 게재된 해외 예고편은" +
-						" 무려 370만 뷰의 조회수를 돌파한 것은 물론, 7만 개를 웃도는 댓글수를 기록하기도 했다. " +
-						"예고편을 접한 국내 관객들은 예측불허의 전개에 호기심을 드러내면서도 " +
-						"영화가 선사하는 미스터리한 분위기에 놀라움을 자아내기도 했다. 압도적 몰입감과 궁금증을 불러일으키는 " +
-						"예고편은 곧 네티즌들의 국내 개봉을 요청하는 목소리로 이어졌다. " +
-						"해외에서 시작된 뜨거운 흥행세와 해외 언론 매체들의 극찬 세례에 궁금증을 감추지 못한 네티즌들은 " +
-						"배급사인 UPI코리아를 통해 국내 개봉을 요청하며 영화에 대한 높은 기대를 드러냈다. " +
-						"UPI코리아는 “독보적인 장르의 <겟 아웃>을 어떻게 알려야 할지 고민이 많아 사실상 한국 개봉은 미정이었다." +
-						" 하지만 국내 팬들의 열화와 같은 관심과 개봉 요청 쇄도로 개봉을 결정하게 되었다”며 " +
-						"이례적인 개봉 결정의 이유를 밝혔다. 특히 관객들의 뜨거운 관심 속에 개봉을 확정 지은 <겟 아웃>은 " +
-						"메인 예고편을 공개한지 6일 만에 누적 조회수 약 1,143만 뷰를 돌파, 상반기 최고 화제작으로 등극했다. " +
-						"이렇듯 관객들의 폭발적 반응이 개봉시킨 영화 <겟 아웃>은 지금껏 본 적 없는 새로움과 신선한 충격으로 " +
-						"관객들을 사로잡을 예정이다. <br>" +
-						"</td></tr>" +
-						"<tr><td><h2><b><span style='color:black'>REV</span><span style='color:white'>IEW</span></h2></td></tr>" +
-						"<tr><td>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>" +
-						"2. 영화 처음 안드레가 납치되는 장면범인이 뒤에서 목을 졸라서 납치하는데로즈의 남동생이 식사시간에 주짓수를 말하고 헤드락을 걸려고 헀던 것과 일치하고 영화 ...<br>" +
-						"</td></tr> ";
+				+ "<h2 style='display:block;position:absolute; top:0;bottom:0;right:0;left:0; margin:auto;width:300px;height:50px;'>"
+				+ "<b><span style='color:black'>GET</span>"
+				+ "<span style='color:white'>OUT</span></b></h2>"
+				+"</div><br>흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기<br>"
+				+ "<hr><table><tr><td><img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg'>"
+				+ "</td></tr><tr><td>GETOUT 2017</td></tr></table>"
+				+ "<table><tr><td text-align='center'>"
+				+ "<h2><b><span style='color:black'>SYNO</span>"
+				+ "<span style='color:white'>PSIS</span></h2></td></tr>"
+				+ "<tr><td>ABOUT MOVIE <br>"
+				+ "공개 6일 만에 메인 예고편 조회수 1,000만 뷰 돌파! 개봉 요청 쇄도! <br>"
+				+ "관객들의 폭발적 반응이 개봉시킨 영화! <br>"
+				+ "영화 <겟 아웃>은 흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기로 북미 개봉 직후 박스오피스 1위를 차지한 바 있다."
+				+ " 무서운 흥행세를 발휘한 <겟 아웃>은 SNS를 통해 게재된 예고편을 통해서 국내 관객들에게도"
+				+ " 폭발적인 반응을 불러일으켰다. 국내 개봉이 확정되기도 전에 SNS에 게재된 해외 예고편은"
+				+ " 무려 370만 뷰의 조회수를 돌파한 것은 물론, 7만 개를 웃도는 댓글수를 기록하기도 했다. "
+				+ "예고편을 접한 국내 관객들은 예측불허의 전개에 호기심을 드러내면서도 "
+				+ "영화가 선사하는 미스터리한 분위기에 놀라움을 자아내기도 했다. 압도적 몰입감과 궁금증을 불러일으키는 "
+				+ "예고편은 곧 네티즌들의 국내 개봉을 요청하는 목소리로 이어졌다. "
+				+ "해외에서 시작된 뜨거운 흥행세와 해외 언론 매체들의 극찬 세례에 궁금증을 감추지 못한 네티즌들은 "
+				+ "배급사인 UPI코리아를 통해 국내 개봉을 요청하며 영화에 대한 높은 기대를 드러냈다. "
+				+ "UPI코리아는 “독보적인 장르의 <겟 아웃>을 어떻게 알려야 할지 고민이 많아 사실상 한국 개봉은 미정이었다."
+				+ " 하지만 국내 팬들의 열화와 같은 관심과 개봉 요청 쇄도로 개봉을 결정하게 되었다”며 "
+				+ "이례적인 개봉 결정의 이유를 밝혔다. 특히 관객들의 뜨거운 관심 속에 개봉을 확정 지은 <겟 아웃>은 "
+				+ "메인 예고편을 공개한지 6일 만에 누적 조회수 약 1,143만 뷰를 돌파, 상반기 최고 화제작으로 등극했다. "
+				+ "이렇듯 관객들의 폭발적 반응이 개봉시킨 영화 <겟 아웃>은 지금껏 본 적 없는 새로움과 신선한 충격으로 "
+				+ "관객들을 사로잡을 예정이다. <br></td></tr>"
+				+ "<tr><td><h2><b><span style='color:black'>REV</span>"
+				+ "<span style='color:white'>IEW</span></h2></td></tr>"
+				+ "<tr><td>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>"
+				+ "2. 영화 처음 안드레가 납치되는 장면범인이 뒤에서 목을 졸라서 납치하는데 "
+				+ "로즈의 남동생이 식사시간에 주짓수를 말하고 헤드락을 걸려고 헀던 것과 일치하고 영화 ...<br>"
+				+ "</td></tr></table>";
 	}
 	else
 		$("#movieTbody").css("display", "none");

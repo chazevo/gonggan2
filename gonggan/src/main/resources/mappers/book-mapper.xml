@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bookmapper">
+	<resultMap type="book" id="bookResult">
+		<id property="book_num" column="book_num"/>
+		<result property="book_id" column="book_id"/>
+		<result property="book_content" column="book_content"/>
+	</resultMap>
+	<insert id="binsert" parameterType="Map">
+		insert into music values(#{post_id},nvl((select max(book_num) from book),0) + 1,#{content})
+	</insert>
+	
+</mapper>

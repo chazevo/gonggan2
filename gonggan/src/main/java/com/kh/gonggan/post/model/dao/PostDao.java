@@ -171,4 +171,44 @@ public class PostDao {
 		return (List<Post>) sqlSession.selectList("postmapper.neighborpost", map);
 	}
 	
+	   public int pinsert(String loginUser, String category, String content) {
+		      Map<String, String> map = new HashMap<String, String>();
+		      int post_id = (int) sqlSession.selectOne("postmapper.postid");
+		      map.put("post_id", post_id+"");
+		      map.put("loginUser", loginUser);
+		      map.put("category",category);
+		      map.put("content",content);
+		      
+		      int pinsert = sqlSession.insert("postmapper.pinsert",map);
+		      if("news".equals(category)) {
+		         System.out.println(""+category);
+		         sqlSession.insert("newsmapper.ninsert",map);
+		      }
+		      else if("diary".equals(category)){
+		         sqlSession.insert("diarymapper.dinsert",map);
+		      }
+		      else if("review".equals(category)){
+		         sqlSession.insert("reviewmapper.rinsert",map);
+		      }
+		      else if("book".equals(category)){
+		         sqlSession.insert("bookmapper.binsert",map);
+		      }
+		      else if("movie".equals(category)){
+		         sqlSession.insert("moviemapper.insert",map);
+		      }
+		      else if("music".equals(category)){
+		         sqlSession.insert("musicmapper.minsert",map);
+		      }
+		      else if("place".equals(category)){
+		         sqlSession.insert("placemapper.pinsert",map);
+		      }
+		      else if("default".equals(category)){
+		         
+		         System.out.println(""+category);
+		         sqlSession.insert("freemapper.finsert",map);
+		      }
+		      
+		      return pinsert;
+		   }
+	
 }

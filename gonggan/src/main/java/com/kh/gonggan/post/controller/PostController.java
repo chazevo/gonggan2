@@ -741,5 +741,17 @@ public class PostController {
 		return renameFile.getName();
 	}
 		
-	
+	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
+	   public ModelAndView upload(@RequestParam String loginUser,@RequestParam String category,@RequestParam String content, ModelAndView mv) throws Exception{
+	   
+	      int pinsert = postService.pinsert(loginUser,category,content);
+	      if(pinsert < 0){
+	         System.out.println("안됨");
+	         mv.setViewName("uploadform");
+	      }else{
+	         System.out.println("된거");
+	         mv.setViewName("myhome");
+	      }
+	         return mv;
+	   }
 }

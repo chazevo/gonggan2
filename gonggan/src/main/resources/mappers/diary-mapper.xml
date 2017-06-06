@@ -21,4 +21,9 @@
 	<select id="diarydetail" resultMap="diaryResult" parameterType="int">
 	select * from diary where post_id = #{postId}
 	</select>
+	
+	<insert id="dinsert" parameterType="Map">
+	insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content})
+	</insert>
+	
 </mapper>

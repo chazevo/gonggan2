@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="freemapper">
+	<resultMap type="free" id="freeResult">
+		<id property="free_num" column="free_num"/>
+		<result property="post_id" column="post_id"/>
+		<result property="free_content" column="free_content"/>
+	</resultMap>
+
+	<insert id="finsert" parameterType="Map">
+		insert into free values(#{post_id},nvl((select max(free_num) from free), 0) + 1,#{content})
+	</insert>
+	
+</mapper>

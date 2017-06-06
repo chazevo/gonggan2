@@ -30,4 +30,9 @@
 	<select id="moviedetail" resultMap="movieResult" parameterType="int">
 	select * from movie where post_id = #{postId}
 	</select>
+	
+	<insert id="pinsert" parameterType="Map">
+	insert into movie values(#{post_id},nvl((select max(movie_num) from movie),0) + 1,null,null,null,null,null,null,null,null,#{content})
+	</insert>
+	
 </mapper>

@@ -128,4 +128,9 @@ public class PostSericeImpl implements PostService{
 	public List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2) {
 		return  postDao.selectUserNeighbor(loginUser, rownum, rownum2);
 	}
+	
+	@Override
+	public int pinsert(String loginUser, String category,String content){
+		return postDao.pinsert(loginUser,category,content);
+	}
 }

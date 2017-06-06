@@ -257,6 +257,8 @@
 </script>
 </head>
 <body onload='run();' id="aa">
+<form id="form" action="upload.do" method="post">
+<input type="hidden" name="loginUser" value="${sessionScope.loginUser.getMember_id() }">
 	<c:if test="${empty param || param.writer_id ne sessionScope.loginUser.getMember_id() }">
 		<jsp:forward page="error.jsp"></jsp:forward>
 	</c:if>
@@ -406,16 +408,16 @@
 							</select>
 						</td> 	
 						<td colspan="2" style="padding:5px;">
-							<input type="image"  src="images/bold_icon.png" width="12px"
+							<img src="images/bold_icon.png" width="12px"
 											onclick="je_doc.execCommand('bold', 'false', 'null')">&nbsp; &nbsp;
 								
-							<input type="image"  src="images/italic_icon.png" width="10px"
+							<img src="images/italic_icon.png" width="10px"
 											onclick="je_doc.execCommand('italic', 'false', 'null')">&nbsp; &nbsp;
 								
-							<input type="image"  src="images/underline_icon.png" width="15px"
+							<img src="images/underline_icon.png" width="15px"
 											onclick="je_doc.execCommand('underline', 'false', 'null')">&nbsp; &nbsp;
 								
-							<input type="image"  src="images/cencleline_icon.png" width="15px"
+							<img src="images/cencleline_icon.png" width="15px"
 											onclick="je_doc.execCommand('strikethrough', 'false', 'null')">&nbsp; &nbsp;
 							<img alt="" src="images/text_color.png" width="7%"  id="colorChoice">
 							<div id="colorchart" class="hidden"></div>
@@ -445,25 +447,25 @@
 							</select> 
 						</td>
 						<td>
-							<input type="image"  src="images/align_left_icon.png" id="content_allign_left"  width="18px" 
+							<img src="images/align_left_icon.png" id="content_allign_left"  width="18px" 
 										onclick="je_doc.execCommand('justifyleft', 'false', 'null')"> &nbsp; &nbsp;
-							<input type="image"  src="images/align_center_icon.png" id="content_allign_center" width="18px"
+							<img  src="images/align_center_icon.png" id="content_allign_center" width="18px"
 										onclick="je_doc.execCommand('justifycenter', 'false', 'null')"> &nbsp; &nbsp;
-							<input type="image" src="images/align_right_icon.png" id="content_allign_right" width="18px"
+							<img src="images/align_right_icon.png" id="content_allign_right" width="18px"
 										onclick="je_doc.execCommand('justifyright', 'false', 'null')"> &nbsp;
 						</td>
 						<td>
-								<input type="image"  src="images/link_icon.png" width="42px"
+								<img  src="images/link_icon.png" width="42px"
 											onclick='var s=prompt();if(s!="") je_doc.execCommand("createlink",false,s);'> &nbsp;&nbsp;
 							
-								<input type="image"  src="images/urlErase_icon.png" width="42px"
+								<img  src="images/urlErase_icon.png" width="42px"
 											onclick='je_doc.execCommand("unlink",false, null);'>&nbsp; &nbsp;
 								
-								<input type="image"  src="images/efErase_icon.png" width="42px"
+								<img  src="images/efErase_icon.png" width="42px"
 											onclick="je_doc.execCommand('removeformat', 'false', 'null')"> &nbsp;	
 
 												
-								<input type="image"  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
+								<img  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
 								<!-- 이모티콘 -->
 								<div id="imo_icon_area" class="hidden">
 									<table id="idclick_table">
@@ -472,17 +474,17 @@
 										</tr>
 										<tr id="center_align">
 											<td>
-												<input type="image"  src="images/emoticon/1.png" width="20px" id="imo_icon"
+												<img  src="images/emoticon/1.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
-												<input type="image"  src="images/emoticon/2.png" width="20px" id="imo_icon"
+												<img  src="images/emoticon/2.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
-												<input type="image"  src="images/emoticon/3.png" width="20px" id="imo_icon"
+												<img  src="images/emoticon/3.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
-												<input type="image"  src="images/emoticon/4.png" width="20px" id="imo_icon"
+												<img  src="images/emoticon/4.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
-												<input type="image"  src="images/emoticon/5.png" width="20px" id="imo_icon"
+												<img  src="images/emoticon/5.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
-												<input type="image"  src="images/emoticon/6.png" width="20px" id="imo_icon"
+												<img  src="images/emoticon/6.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
 											</td>
 										</tr> 
@@ -497,7 +499,7 @@
 									<option class="imageOp"  value="news">이미지 삽입</option>
 									</select>
 									<div id="content_backgound" ></div> -->
-								<input type="image"  src="images/pickture_icon.png" id="imgUploadIcon" width="18px"
+								<img  src="images/pickture_icon.png" id="imgUploadIcon" width="18px"
 											onclick="je_doc.execCommand('removeformat', 'false', 'null')">&nbsp; &nbsp;이미지	
 							 <form action="imgupload.do" method="post" enctype="multipart/form-data" id="imgUpload"> 
 								<div id="imgUploadDiv" class="hidden">	
@@ -631,7 +633,7 @@
 						</td>
 					<tr>
 						<td>
-							<input type="image"  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
+							<img  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
 										onclick="imageChange();">&nbsp; &nbsp;배경
 						</td>
 						<td colspan="2" id="imageOp_selected" >
@@ -788,7 +790,7 @@
 			
 							
    <!-- END다정다정 -->		
-							<!-- <input type="image"  src="images/efErase_icon.png" id="content_allign_center" width="42px"
+							<!-- <img src="images/efErase_icon.png" id="content_allign_center" width="42px"
 										onclick="contentalligncenter();">ㄴㄹㄴㅇ색&nbsp; &nbsp;	&nbsp; 
 							 -->
 							
@@ -823,7 +825,7 @@
 						</td>
 					</tr>
 				</table>
-				<button onclick="seeHTML();">소스보기</button><br>
+				<input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>
 				<textarea id="dhtmlText"></textarea>
 				<img src="images/marker.png" id="kae" draggable="true" ondragstart="drag(event);">
 				<iframe src="clipboard.do" id="clipboard"></iframe>
@@ -836,5 +838,6 @@
 			</div>
 		</section>
 	</div>
+</form>
 </body>
 </html>

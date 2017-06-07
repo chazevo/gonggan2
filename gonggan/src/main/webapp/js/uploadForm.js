@@ -111,13 +111,21 @@ function recieveNews(title, originallink, description, pubDate) {
 
 function recieveBook(image, title, author, publisher, pubdate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<table align='center' border='1' width='80%'><tr><td rowspan='4' width='30%'>"
+		"<table style='border:1px solid gray; color:gray;'align='center' width='50%'><tr><td rowspan='4' width='30%'>"
 		+ "<img src='" + image + "' width='100%'></td>"
-		+ "<td>" + title + "</td>"
-		+ "<tr><td>저자 "+ author + "</td></tr>" 
-		+ "<tr><td>출판  "+ publisher + "</td></tr>"
-		+"<tr><td> 발매 "+pubdate+" </td></tr>"
-		+ "</td></tr></table>";
+		+ "<td><b><h3>" + title + "</h3></b></td>"
+		+ "<tr><td><b>저자</b> "+ author + "</td></tr>" 
+		+ "<tr><td><b>출판</b>  "+ publisher + "</td></tr>"
+		+"<tr><td><b> 발매</b> "+pubdate+" </td></tr>"
+		+ "</td></tr></table>" +
+				"<center><div sytle='margin: 0 auto;'><img src='images/bookicon.png' width='100px'><div></center>" +
+				"<center><h3><b>"+ title +"</b></h3></center>" +
+						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:80%;height:2px; border:0px'>" +
+						"내용을 입력해주세요.<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>" +
+						"<center><div sytle='margin: 0 auto;'><img src='images/star.png' width='100px'><div></center>" +
+						"<center><b><h3>추천해요!</h3></b></center>" +
+						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:80%;height:2px; border:0px'>" +
+						"내용을 입력해주세요.";
 }
 
 function recieveMap(image) {
@@ -839,7 +847,7 @@ function callbackBookSearch(data) {
 		td = document.createElement("td");
 		a = document.createElement("a");
 		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
-		a.text =author;
+		a.innerHTML =author;
 		td.appendChild(a);
 		tr.appendChild(td);
 		document.getElementById("bookSearchRes").appendChild(tr);
@@ -848,7 +856,7 @@ function callbackBookSearch(data) {
 		td = document.createElement("td");
 		a = document.createElement("a");
 		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
-		a.text =publisher;
+		a.innerHTML =publisher;
 		td.appendChild(a);
 		tr.appendChild(td);
 		document.getElementById("bookSearchRes").appendChild(tr);

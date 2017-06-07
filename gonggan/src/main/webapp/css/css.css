@@ -45,12 +45,17 @@ body {
 	background:linear-gradient(to bottom, rgb(145, 156, 178), rgb(207,167 ,168 ));
 }
 
-.searchAll {
-	overflow:scroll;
+#bookTbody .searchAll {
+	height:300px;
+	overflow:auto;
+	overflow-x:hidden;
 }
+
+
 
 .searchAll>div {
 	overflow:scroll;
+ 	overflow-x:hidden;
 	width:100%;
 }
 
@@ -657,16 +662,6 @@ a.loginbox:hover {
 	padding: 10px;
 }
 
-#bookTbody .searchAll {
-	height:300px;
-	overflow:scroll;
-	overflow-x:hidden;
-}
-
- .searchAll {
- 	overflow:scroll;
- 	overflow-x:hidden;
-}
 
 .uploadFormDiv {
 	position:relative;

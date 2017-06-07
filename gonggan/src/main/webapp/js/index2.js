@@ -154,6 +154,10 @@ function sorting() {
 			if (plistcount > 0)
 				requestList(rownum = 1);
 		}
+		else if (category == "psearch") {
+			psearchRownum();
+			searchPost(rownum = 1);
+		}
 		else {
 			addCount();
 			requestCategoryList(rownum = 1, category);
@@ -528,7 +532,15 @@ function callbackNsearch(data) {
    }
 }
 
-function searchPost() {
+function searchPost(val) {
+	
+	var rownum2;
+	
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	else
+		rownum2 = rownum + 7;
+	
 	if ($("#searchPost").val() == "")
 		alert("검색어를 입력해주세요");
 	else {
@@ -537,7 +549,7 @@ function searchPost() {
 			url: "psearch.do",
 			data: { keyword: $("#searchPost").val(),
 				option: $("#select2").val(),
-				rownum:rownum, rownum2:rownum2
+				rownum:val, rownum2:rownum2
 			},
 			success: function(data) {
 				callbackList(data);
@@ -547,6 +559,23 @@ function searchPost() {
 			}
 		});
 	}
+}
+
+function psearchRownum() {
+	
+	$.ajax({
+		async:false,
+		url: "psearchmax.do",
+		data: { keyword: $("#searchPost").val(),
+			option: $("#select2").val()
+		},
+		success: function(data) {
+			maxRownum = data;
+		},
+		error: function(data,status,error) {
+			console.log("error : " + error);
+		}
+	});
 }
 
 function goSubmit() {

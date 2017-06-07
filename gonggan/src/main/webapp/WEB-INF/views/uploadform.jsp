@@ -674,30 +674,32 @@
 		
 
 					<tbody id="bookTbody" style="display:none">
-                  <tr>
-                     <td colspan="5" align="center">
-                           <a data-toggle="collapse" data-target="#book" id="bookSearchLink">책 찾아보기</a>
-                           <div id="book" class="collapse text-center">
-                              <!-- <h4>도서 검색 </h4> --><br>
-                              <c:if test="${! empty bestSellerList }">
-                              <c:forEach items="${bestSellerList}" var="i" begin="0" end="4">
-                              <a href=""><img src="${i.coverSmallUrl}" style="display:inline-block;"></a>
-                              </c:forEach>
-                              </c:if>
-                              <br>
-                                 <input type="text" id="bookSearchText" name="keyword" value="${keyword }" placeholder="도 서 검 색" 
-                                    onkeydown="if(event.keyCode == 13) bookSearch();">
-                                 <a href="javascript:bookSearch();">
-                                    <img src=images/search.png width="5%" >
-                                 </a>
-                              <br><br>
-                              <div class="searchAll">
-                                 <table width="100%" id="bookSearchRes"></table>
-                              </div>
-                           </div>
-                        </td>
-                  </tr>
-               </tbody>
+						<tr>
+							<td colspan="5" align="center">
+								<a data-toggle="collapse" data-target="#book" id="bookSearchLink">
+									책 찾아보기
+								</a>
+								<div id="book" class="collapse text-center">
+									<!-- <h4>도서 검색 </h4> --><br>
+									<c:if test="${! empty bestSellerList }">
+									<c:forEach items="${bestSellerList}" var="i" begin="0" end="4">
+									<a href=""><img src="${i.coverSmallUrl}" style="display:inline-block;"></a>
+									</c:forEach>
+									</c:if>
+									<br>
+									<input type="text" id="bookSearchText" name="keyword" value="${keyword }" placeholder="도 서 검 색" 
+										onkeydown="if(event.keyCode == 13) bookSearch();">
+									<a href="javascript:bookSearch();">
+										<img src=images/search.png width="5%" >
+									</a>
+									<br><br>
+									<div class="searchAll">
+										<table width="100%" id="bookSearchRes"></table>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
 					<tbody id="placeTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="right">

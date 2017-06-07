@@ -7,6 +7,8 @@ import com.kh.gonggan.post.model.vo.Post;
 public interface PostService {
 
 	Post postDetail(int post_id);
+	int postContentSearchMaxRnum(String keyword);
+	int postWriterSearchMaxRnum(String keyword);
 	List<Post> postContentSearch(String keyword, int rownum, int rownum2);
 	List<Post> postWriterSearch(String wirter_id, int rownum, int rownum2);
 	List<Post> selectUserAll(String writer_id, int rownum, int rownum2);

@@ -12,6 +12,7 @@
 <script type="text/javascript">
 	
 	var loginUser =  "${sessionScope.loginUser.getMember_id()}";
+	var memberId2 = '${param.memberId2}';	
 	
 	window.onload = function() {
 		document.getElementById("msg").focus();

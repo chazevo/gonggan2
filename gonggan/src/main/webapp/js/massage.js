@@ -1,4 +1,4 @@
-var memberId2 = "jis";	
+
 
 function send_message() {
 		websocket = new WebSocket(
@@ -37,10 +37,12 @@ function onError(evt) {
 	
 function appendMessage(msg) {
 
+	alert(loginUser + "에게로 메시지 왔다 " + msg.split(":")[1].split(" ")[0] + "로부터 ");
+	
 	if (msg.split(":")[1].split(" ")[0] == loginUser)
 		$("#chatArea").append("<div class='sender'>"
 				+ msg.split(" : ")[1] + "</div>");
-	else if (msg.split(":")[2].split(" ")[0] == memberId2)
+	else if (msg.split(":")[1].split(" ")[0] == memberId2)
 		$("#chatArea").append("<div class='receiver'>"
 				+ msg.split(" : ")[1] + "</div>");
 	

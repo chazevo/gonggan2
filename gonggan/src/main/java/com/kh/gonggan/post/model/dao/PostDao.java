@@ -100,12 +100,20 @@ public class PostDao {
 		return (Post) sqlSession.selectOne("postmapper.pdetail", post_id);
 	}
 	
+	public int postContentSearchMaxRnum(String keyword) {
+		return (int) sqlSession.selectOne("postmapper.pcontentsearchmax", keyword);
+	}
+	
+	public int postWriterSearchMaxRnum(String keyword) {
+		return (int) sqlSession.selectOne("postmapper.pwritersearchmax", keyword);
+	}
+	
 	public List<Post> postContentSearch(String keyword, int rownum, int rownum2) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("keyword", keyword);
 		map.put("rownum", rownum + "");
 		map.put("rownum2", rownum2 + "");
-		return (List<Post>) sqlSession.selectList("postmapper.pcontentsearch", keyword);
+		return (List<Post>) sqlSession.selectList("postmapper.pcontentsearch", map);
 	}
 	
 	public List<Post> postWriterSearch(String keyword, int rownum, int rownum2) {
@@ -113,7 +121,7 @@ public class PostDao {
 		map.put("keyword", keyword);
 		map.put("rownum", rownum + "");
 		map.put("rownum2", rownum2 + "");
-		return (List<Post>) sqlSession.selectList("postmapper.pwritersearch", keyword);
+		return (List<Post>) sqlSession.selectList("postmapper.pwritersearch", map);
 	}
 
 	public String selectPostWriter(int post_id) {

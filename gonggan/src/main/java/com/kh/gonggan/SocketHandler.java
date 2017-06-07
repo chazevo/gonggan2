@@ -75,17 +75,21 @@ private MessageService messageService;
 	 //메시지 DB에 저장하는 부분 
 	 
 	 if (users2.containsKey(receiver)) {
+		 System.out.println("지금 접속중 ");
 		 if ((result = messageService.insertMessage(sender, receiver, msg_text, "Y")) < 0)
 				 System.out.println("메시지 삽입 실패");
 		 
 		 memberId2sSessionId = users2.get(receiver);
 		 memberId2sSession = users.get(memberId2sSessionId);
 		 memberId2sSession.sendMessage(message);
+		 System.out.println(memberId2sSessionId + "한테 전송 ");
 	 }
 	 
-	 else
+	 else {
+		 System.out.println("상대가 오프라인 ");
 		 if ((result = messageService.insertMessage(sender, receiver, msg_text, "N")) < 0)
 			 System.out.println("메시지 삽입 실패");
+	 }
 	 
 	 session.sendMessage(message);
 	  

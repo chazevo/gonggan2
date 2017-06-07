@@ -51,6 +51,16 @@ public class PostSericeImpl implements PostService{
 		return  postDao.postDetail(post_id);
 		
 	}
+
+	@Override
+	public int postContentSearchMaxRnum(String keyword) {
+		return  postDao.postContentSearchMaxRnum(keyword);
+	}
+
+	@Override
+	public int postWriterSearchMaxRnum(String keyword) {
+		return  postDao.postWriterSearchMaxRnum(keyword);
+	}
 	
 	@Override
 	public List<Post> selectUserAll(String writer_id, int rownum, int rownum2){

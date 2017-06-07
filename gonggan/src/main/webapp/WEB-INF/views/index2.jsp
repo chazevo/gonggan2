@@ -43,6 +43,7 @@ var diarylistSize = ${diarylistSize};
 var movielistSize = ${movielistSize};
 var booklistSize = 0;
 var placelistSize = 0;
+var psearchSize = 0;
 
 var initPosition;
 var prevPosition;
@@ -81,6 +82,8 @@ window.onload = function() {
 						if (sort == "date") {
 							if (category == "all")
 								requestList(rownum);
+							if (category == "psearch")
+								searchPost(rownum);
 							else if (category == "neighborlist")
 								requestNeighborPostList(rownum, loginUser);
 							else
@@ -155,7 +158,7 @@ window.onload = function() {
 </div><!--</nav>-->
 <div class="divCenter">
 	<!--<div class="container-fluid">-->
-		<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
+		<!-- container-fluid : 화면category == "contentsearch" 너비가 resize 되더라도 화면에 가득 참  -->
 		<div class="blogHomeHeader">
 			<table class="table1st" style="<c:if test='${empty sessionScope.loginUser}'>width:65%;</c:if>">
 				<c:if test="${!empty sessionScope.loginUser}">
@@ -331,8 +334,8 @@ window.onload = function() {
 							<td>
 								<div class="div2">
 									<input type="text" id="searchPost" placeholder="검색" size="12"
-										onkeydown="if (event.keyCode == 13) searchPost();">
-									<a href="javascript:searchPost();">
+										onkeydown="if (event.keyCode == 13) { searchPost(rownum = 1); psearchRownum(); category = 'psearch'; }">
+									<a href="javascript:searchPost(rownum = 1); psearchRownum(); category = 'psearch';">
 										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
 											width="10%">
 									</a>

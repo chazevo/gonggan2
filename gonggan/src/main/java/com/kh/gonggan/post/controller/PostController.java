@@ -351,6 +351,21 @@ public class PostController {
 		return json.toJSONString();
 	}
 
+	@RequestMapping(value="psearchmax.do", produces={"application/json"})
+	@ResponseBody
+	public int postSearchMaxRnum(@RequestParam int option,
+			@RequestParam String keyword) {
+		
+		int result = 0;
+		
+		if (option == 0)
+			result = postService.postContentSearchMaxRnum(keyword);
+		else if (option == 1)
+			result = postService.postWriterSearchMaxRnum(keyword);
+		
+		return result;
+	}
+	
 	@RequestMapping(value="/psearch.do", produces={"application/json"})
 	@ResponseBody
 	public String postSearch(@RequestParam int option, @RequestParam String keyword,

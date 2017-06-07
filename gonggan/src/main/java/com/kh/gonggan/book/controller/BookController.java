@@ -32,45 +32,44 @@ public class BookController {
 		//메소드가 controller가 됨 컨트롤러를 메소드 단위로 작성하면 된다.
 		//공통으로 사용하는 것은 common에 넣어놓으면 됨
 	
-	   @RequestMapping(value="/booksearch2.do", produces={"application/json"})
-	   @ResponseBody
-	   public String searchBook2(@RequestParam String keyword, HttpSession session) {
-	      
+	@RequestMapping(value="/booksearch2.do", produces={"application/json"})
+	@ResponseBody
+	public String searchBook2(@RequestParam String keyword, HttpSession session) {
 
-	      List<Book> searchBookList = new ArrayList<Book>();
+		List<Book> searchBookList = new ArrayList<Book>();
 
-	      JSONObject json = new JSONObject();
-	      JSONArray jarr = new JSONArray();
-	         
-	      Gson gson = new Gson();
-	      Type type = new TypeToken<PostBook>(){}.getType();       
-	                              
-	      String clientId = "wby5y_qdDk0ASqaBNnEt"; //애플리케이션 클라이언트 아이디값";
-	      String clientSecret = "bmJftKj85P"; //애플리케이션 클라이언트 시크릿값";
-	      StringBuffer response_ = null;
-	      
-	      try {
-	         
-	         String text = URLEncoder.encode(keyword, "UTF-8");
-	         String apiURL = "https://openapi.naver.com/v1/search/book?query="+ text; // json 결과
-	         //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
-	         
-	         URL url = new URL(apiURL);
-	         HttpURLConnection con = (HttpURLConnection)url.openConnection();
-	         
-	         con.setRequestMethod("GET");
-	         con.setRequestProperty("X-Naver-Client-Id", clientId);
-	         con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
-	         
-	         int responseCode = con.getResponseCode();
-	         
-	         BufferedReader br;
-	         
-	         if(responseCode == 200) { // 정상 호출
-	             br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-	         } else {  // 에러 발생
-	             br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-	         }
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+     
+		Gson gson = new Gson();
+		Type type = new TypeToken<PostBook>(){}.getType();       
+                          
+		String clientId = "wby5y_qdDk0ASqaBNnEt"; //애플리케이션 클라이언트 아이디값";
+		String clientSecret = "bmJftKj85P"; //애플리케이션 클라이언트 시크릿값";
+		StringBuffer response_ = null;
+  
+		try {
+			
+			String text = URLEncoder.encode(keyword, "UTF-8");
+			String apiURL = "https://openapi.naver.com/v1/search/book?query="+ text; // json 결과
+			//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
+ 
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+ 
+			con.setRequestMethod("GET");
+			con.setRequestProperty("X-Naver-Client-Id", clientId);
+			con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+ 
+			int responseCode = con.getResponseCode();
+ 
+			BufferedReader br;
+			
+			if(responseCode == 200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {  // 에러 발생
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
 	         
 	         String inputLine;
 	         response_ = new StringBuffer();

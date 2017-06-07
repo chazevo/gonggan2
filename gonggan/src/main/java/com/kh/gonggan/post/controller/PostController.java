@@ -351,6 +351,53 @@ public class PostController {
 		return json.toJSONString();
 	}
 
+	@RequestMapping(value="/psearch.do", produces={"application/json"})
+	@ResponseBody
+	public String postSearch(@RequestParam int option, @RequestParam String keyword,
+			@RequestParam int rownum, @RequestParam int rownum2) {
+		
+		List<Post> plist = null;
+
+		String content;
+		
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		if (option == 0) 
+			plist = postService.postContentSearch(keyword, rownum, rownum2);
+		else if (option == 1)
+			plist = postService.postWriterSearch(keyword, rownum, rownum2);
+		
+		for(Post p : plist) {
+			
+			JSONObject job = new JSONObject();
+			
+			System.out.println(p.getCategory());
+			
+			try {
+				
+				job.put("content", contentSort(p));
+				job.put("category", URLEncoder.encode(
+						p.getCategory(), "UTF-8"));
+				
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			job.put("postId", p.getPost_id() + "");
+			job.put("sharYn", p.getShar_yn());
+			job.put("openYn", p.getOpen_yn());
+			job.put("writerId", p.getWriter_id());
+			job.put("goodCnt", p.getGoodCnt() + "");
+			job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+			
+			jarr.add(job);
+		}
+		json.put("list", jarr);
+		
+		return json.toJSONString();
+	}
 	
 	@RequestMapping(value="/plistDetail.do", produces={"text/plain;charset=UTF-8"})
 	@ResponseBody

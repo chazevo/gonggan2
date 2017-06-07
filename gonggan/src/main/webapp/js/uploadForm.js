@@ -789,3 +789,81 @@ function callbackNewsSearch(data) {
 	   }
 }
 
+function bookSearch() {
+
+	$.ajax({
+		url:"booksearch2.do",
+		data: {keyword : $('#bookSearchText').val() },
+		success:function(data) {
+			callbackBookSearch(data);
+		}
+	});
+}
+
+function callbackBookSearch(data) {
+
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+
+	var tr, td, a;
+
+	var image, title, author, publisher, pubdate;
+
+	for (var i in jsonArr.list) {
+     
+		image = decodeURIComponent((jsonArr.list[i].image).replace(Ca, " "));
+		title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
+		author = decodeURIComponent((jsonArr.list[i].author).replace(Ca, " "));
+		publisher = decodeURIComponent((jsonArr.list[i].publisher).replace(Ca, " "));
+		pubdate = jsonArr.list[i].pubdate;
+
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.rowSpan="4";
+		a = document.createElement("a");
+		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.innerHTML = (parseInt(i, 10) + 1) + ". " + "<img src=" + image + ">";
+     
+		td.appendChild(a);
+		tr.appendChild(td);
+     
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href =  "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.innerHTML = title;
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("bookSearchRes").appendChild(tr);
+    
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.text =author;
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("bookSearchRes").appendChild(tr);
+     
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.text =publisher;
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("bookSearchRes").appendChild(tr);
+     
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.text =pubdate;
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("bookSearchRes").appendChild(tr);
+   
+         
+		//jsonArr.list.originallink;
+		//jsonArr.list.pubDate;
+	}
+}

@@ -35,6 +35,16 @@ public class PostSericeImpl implements PostService{
 	public List<Post> selectLikeCategoryPost(int rownum, int rownum2, String category) {
 		return  postDao.selectLikeCategoryPost(rownum, rownum2, category);	
 	}
+
+	@Override
+	public List<Post> postContentSearch(String keyword, int rownum, int rownum2) {
+		return  postDao.postContentSearch(keyword, rownum, rownum2);
+	}
+	
+	@Override
+	public List<Post> postWriterSearch(String keyword, int rownum, int rownum2) {
+		return  postDao.postWriterSearch(keyword, rownum, rownum2);
+	}
 	
 	@Override
 	public Post postDetail(int post_id) {

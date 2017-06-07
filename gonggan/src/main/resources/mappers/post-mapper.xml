@@ -218,6 +218,36 @@
 						) subquery)
 				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
 				and writer_id = #{writer_id}
+	</select>	
+	
+	<select id="pcontentsearch" parameterType="Map" resultMap="postResult">
+	select * from post join movie using (post_id)
+	left join diary using(post_id)
+	left join music using(post_id)
+	left join book using(post_id)
+	left join place using(post_id)
+	left join news using(post_id)
+	left join review using(post_id)
+	where diary_content like '%'||#{keyword}||'%' OR
+	book_content like '%'||#{keyword}||'%' OR
+	diary_content like '%'||#{keyword}||'%' OR
+	news_content like '%'||#{keyword}||'%' OR
+	movie_content like '%'||#{keyword}||'%' OR
+	place_content like '%'||#{keyword}||'%' OR
+	music_content like '%'||#{keyword}||'%'
+	<!-- OR place_content like '%'||#{keyword}||'%' -->
+	
+	</select>
+	
+	<select id="pwritersearch" parameterType="Map" resultMap="postResult">
+	select * from post join movie using (post_id)
+	left join diary using(post_id)
+	left join book using(post_id)
+	left join place using(post_id)
+	left join music using(post_id)
+	left join news using(post_id)
+	left join review using(post_id)
+	where writer_id like '%'||#{keyword}||'%'
 	</select>
 	
 	<select id="pdetail" parameterType="int" resultMap="postResult">

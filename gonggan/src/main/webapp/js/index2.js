@@ -15,31 +15,32 @@ var newscount;
 var bookcount;
 
 function requestList(val) {
-   var rownum2;
-   plistcount++;
-   
-   //if (maxRownum - val < 20)
-   if (maxRownum - val < 8)
-      var rownum2 = maxRownum;
-   //else rownum2 = rownum + 19;
-   else rownum2 = rownum + 7;
-   
-   //alert("rownum2 : " + rownum2);
-   
-   $.ajax({
-      url: "postlist.do",
-      data: { writer_id: "",
-         rownum: rownum,
-         rownum2: rownum2,
-         category: "all" },
-      success: function(data) {
-         rownum = rownum2 + 1;
-         callbackList(data);
-      },
-      error: function(data,status,error){
-         console.log("error : " + error);
-      }
-   });
+	var rownum2;
+	plistcount++;
+	
+	//if (maxRownum - val < 20)
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	//else rownum2 = rownum + 19;
+	else rownum2 = rownum + 7;
+
+	//alert("rownum2 : " + rownum2);
+
+	$.ajax({
+		url: "postlist.do",
+		data: { writer_id: "",
+			rownum: rownum,
+			rownum2: rownum2,
+			category: "all"
+		},
+		success: function(data) {
+			rownum = rownum2 + 1;
+			callbackList(data);
+		},
+		error: function(data,status,error) {
+			console.log("error : " + error);
+		}
+	});
 }
 
 function requestNeighborPostList(val, loginUser) {
@@ -525,6 +526,27 @@ function callbackNsearch(data) {
       a.appendChild( aText );
       document.getElementById("listbody_neighbor").appendChild( tr );
    }
+}
+
+function searchPost() {
+	if ($("#searchPost").val() == "")
+		alert("검색어를 입력해주세요");
+	else {
+		$("#blogHomeContentDiv").html("");
+		$.ajax({
+			url: "psearch.do",
+			data: { keyword: $("#searchPost").val(),
+				option: $("#select2").val(),
+				rownum:rownum, rownum2:rownum2
+			},
+			success: function(data) {
+				callbackList(data);
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+		});
+	}
 }
 
 function goSubmit() {

@@ -148,7 +148,8 @@ public class BlogController {
 			}
 	
 	@RequestMapping(value = "bsetting.do", method = RequestMethod.POST)
-	public ModelAndView blogSetting(ModelAndView mv, HttpServletRequest req, HttpSession session) {
+	public ModelAndView blogSetting(ModelAndView mv, HttpServletRequest req,
+			HttpSession session) {
 		
 		int maxSize = 1024 * 1024 * 10;
 		MultipartRequest multiRequest;
@@ -156,7 +157,7 @@ public class BlogController {
 		FileOutputStream fos = null;
 		File renameFile = null;
 		String  renameFileName = null;
-		String originalFileName;
+		String originalFileName = null;
 		String[] originalFileNameSplit;
 
 		String root = req.getSession().getServletContext().getRealPath("/");
@@ -164,11 +165,11 @@ public class BlogController {
 		System.out.println("root : " + root);
 		String[] roots = root.split("\\\\");
 		String marger="";
-		
+  
 		for(int i=0 ; i<roots.length-3; i++)
 			marger += roots[i] + "\\";
-         
-		
+	         
+	      
 		System.out.println("marger : " + marger);
 		String savePath = marger + "src/main/webapp/backgroundImages/";
 		System.out.println("savepath : " + savePath);
@@ -176,22 +177,24 @@ public class BlogController {
 		if(ServletFileUpload.isMultipartContent(req)) {
 			
 			try {
-	
+				
 				multiRequest  = new MultipartRequest(
 						req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
 				originalFileName = multiRequest.getFilesystemName("file");
 				
+				System.out.println("originalFileName : " + originalFileName);
+				
 				long current = System.currentTimeMillis();
-		        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-	
-		        if (originalFileName != null)
-			        renameFileName = "bbg" + sdf.format(new Date(current))
-			        		+ ("." + (originalFileNameSplit = originalFileName.split("\\."))[originalFileNameSplit.length-1]);
-		        
-		        int input = 0;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				
+				if (originalFileName != null)
+					renameFileName = "bbg" + sdf.format(new Date(current))
+							+ ("." + (originalFileNameSplit = originalFileName.split("\\."))[originalFileNameSplit.length-1]);
+
+				int input = 0;
 				int cnt = 0;
 				byte[] data = new byte[1024];
-				
+	            
 				in = req.getInputStream();
 				fos = new FileOutputStream(renameFile = new File(savePath + renameFileName));
 				while((input = in.read(data)) != -1) {
@@ -199,38 +202,78 @@ public class BlogController {
 					cnt += input;
 					fos.flush();
 				}
-
-				if (blogService.blogSetting(
-						new Blog(multiRequest.getParameter("blogTitle"),
-								((Member) session.getAttribute("loginUser")).getMember_id(),
-								multiRequest.getParameter("blogComment"), renameFileName,
-								multiRequest.getParameter("color"),
-								multiRequest.getParameter("background_color"),
-								multiRequest.getParameter("contents_color"),
-								multiRequest.getParameter("languages"),
-								multiRequest.getParameter("blogOpenYn"),
-								multiRequest.getParameter("diaryOpenYn"),
-								multiRequest.getParameter("placeOpenYn"),
-								multiRequest.getParameter("reviewOpenYn"),
-								multiRequest.getParameter("musicOpenYn"),
-								multiRequest.getParameter("movieOpenYn"),
-								multiRequest.getParameter("newsOpenYn"))) > 0)
-					
-					System.out.println("성공");
 				
+				System.out.println(multiRequest.getParameter("background_color"));
+				System.out.println(renameFileName);
+				System.out.println(multiRequest.getParameter("bgmode"));
+	            
+				if(multiRequest.getParameter("bgmode").equals("color")){
+					blogService.blogSetting_color(
+							new Blog(multiRequest.getParameter("blogTitle"),
+									((Member) session.getAttribute("loginUser")).getMember_id(),
+									multiRequest.getParameter("blogComment"),
+									renameFileName,
+									multiRequest.getParameter("color"),
+									multiRequest.getParameter("background_color"),
+									multiRequest.getParameter("contents_color"),
+									multiRequest.getParameter("languages"),
+									multiRequest.getParameter("blogOpenYn"),
+									multiRequest.getParameter("diaryOpenYn"),
+									multiRequest.getParameter("placeOpenYn"),
+									multiRequest.getParameter("reviewOpenYn"),
+									multiRequest.getParameter("musicOpenYn"),
+									multiRequest.getParameter("movieOpenYn"),
+									multiRequest.getParameter("newsOpenYn")));
+				}
+				else {
+					blogService.blogSetting_background(
+							new Blog(multiRequest.getParameter("blogTitle"),
+									((Member) session.getAttribute("loginUser")).getMember_id(),
+									multiRequest.getParameter("blogComment"),
+									renameFileName,
+									multiRequest.getParameter("color"),
+									multiRequest.getParameter("background_color"),
+									multiRequest.getParameter("contents_color"),
+									multiRequest.getParameter("languages"),
+									multiRequest.getParameter("blogOpenYn"),
+									multiRequest.getParameter("diaryOpenYn"),
+									multiRequest.getParameter("placeOpenYn"),
+									multiRequest.getParameter("reviewOpenYn"),
+									multiRequest.getParameter("musicOpenYn"),
+									multiRequest.getParameter("movieOpenYn"),
+									multiRequest.getParameter("newsOpenYn")));
+					System.out.println("asdftest");
+				}
+				/*if (blogService.blogSetting(
+	                  new Blog(multiRequest.getParameter("blogTitle"),
+	                        ((Member) session.getAttribute("loginUser")).getMember_id(),
+	                        multiRequest.getParameter("blogComment"), renameFileName,
+	                        multiRequest.getParameter("color"),
+	                        
+	                        multiRequest.getParameter("background_color"),
+	                        multiRequest.getParameter("contents_color"),
+	                        multiRequest.getParameter("languages"),
+	                        multiRequest.getParameter("blogOpenYn"),
+	                        multiRequest.getParameter("diaryOpenYn"),
+	                        multiRequest.getParameter("placeOpenYn"),
+	                        multiRequest.getParameter("reviewOpenYn"),
+	                        multiRequest.getParameter("musicOpenYn"),
+	                        multiRequest.getParameter("movieOpenYn"),
+	                        multiRequest.getParameter("newsOpenYn"))) > 0)
+	               
+	               System.out.println("성공");
+				 */
 				in.close();
 				fos.close();
-				
+	            
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-	
-		mv.setViewName("controll");
 		
+		mv.setViewName("index2");
 		return mv;
+		
 	}
-			
-
 }

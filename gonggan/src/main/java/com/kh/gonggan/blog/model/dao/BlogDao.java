@@ -83,4 +83,14 @@ public class BlogDao {
 		return sqlSession.insert("blogmapper.bsetting", blog);
 	}
 	
+	public int blogSetting_color(Blog blog) {
+		System.out.println("blogDao : " + blog);
+		return sqlSession.insert("blogmapper.bsetting_color", blog);
+	}
+	
+	public int blogSetting_background(Blog blog) {
+		System.out.println("blogDao_background : " + blog);
+		return sqlSession.insert("blogmapper.bsetting_background", blog);
+	}
+	
 }

@@ -16,9 +16,9 @@
 		<result property="actor" column="actor"/>
 	</resultMap>
 	
-	<insert id="pinsert" parameterType="Map">
-		insert into movie values(#{post_id},nvl((select max(movie_num) from movie),0) + 1,null,null,null,null,null,null,null,null,#{content})
-	</insert>
+	<insert id="movieinsert" parameterType="Map">
+      insert into movie values(#{post_id},nvl((select max(movie_num) from movie),0) + 1,null,null,null,null,null,#{content})
+   </insert>
 	
 	<select id="movielist" resultMap="movieResult" parameterType="Map">
 	

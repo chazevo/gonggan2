@@ -43,4 +43,13 @@ public class BlogServiceImpl implements BlogService {
 	public int blogSetting(Blog blog) {
 		return blogDao.blogSetting(blog);
 	}
+	
+	public int blogSetting_color(Blog blog) {
+		return blogDao.blogSetting_color(blog);
+	}
+	
+	public int blogSetting_background(Blog blog) {
+		return blogDao.blogSetting_background(blog);
+	}
+	
 }

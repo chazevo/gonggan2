@@ -322,13 +322,17 @@ window.onload = function() {
 						<tr>
 							<td>
 								<div class="text-center div1">
-									<select><option>내용 </option></select>
+									<select id="select2">
+										<option value="0">내용</option>
+										<option value="1">작성자</option>
+									</select>
 								</div>
 							</td>
 							<td>
 								<div class="div2">
-									<input type="text" id="searchPost" placeholder="검색" size="12">
-									<a href="#">
+									<input type="text" id="searchPost" placeholder="검색" size="12"
+										onkeydown="if (event.keyCode == 13) searchPost();">
+									<a href="javascript:searchPost();">
 										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
 											width="10%">
 									</a>

@@ -160,27 +160,28 @@
 				</c:forEach>
 			</c:if>
 			<c:if test="${!empty searchBookList}">
-				<c:forEach items="${searchBookList}" var="i" begin="0">
-					<tr>
-						<td rowspan="4">
-							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
-							<img src="${i.image}"></a>
-						</td>
-						<td colspan="4">
-							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
-								${i.title}</a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4">${i.author }</td>
-					</tr>
-					<tr>
-						<td colspan="4">${i.publisher }</td>
-					</tr>
-					<tr>
-						<td colspan="4"><a href="${i.link }"  target="_blank">상세정보</a></td>
-					</tr>
-				</c:forEach>
+			<c:forEach items="${searchBookList}" var="i" begin="0">
+			<tr>
+				<td rowspan="4">
+					<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
+					<img src="${i.image}"></a>
+				</td>
+				<td colspan="4">
+					<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
+						${i.title}
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">${i.author }</td>
+			</tr>
+			<tr>
+				<td colspan="4">${i.publisher }</td>
+			</tr>
+			<tr>
+				<td colspan="4"><a href="${i.link }"  target="_blank">상세정보</a></td>
+			</tr>
+			</c:forEach>
 			</c:if>
 		</tbody>
 	</table>

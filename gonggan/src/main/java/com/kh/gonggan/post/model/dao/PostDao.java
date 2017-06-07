@@ -99,6 +99,22 @@ public class PostDao {
 	public Post postDetail(int post_id) {
 		return (Post) sqlSession.selectOne("postmapper.pdetail", post_id);
 	}
+	
+	public List<Post> postContentSearch(String keyword, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("keyword", keyword);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.pcontentsearch", keyword);
+	}
+	
+	public List<Post> postWriterSearch(String keyword, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("keyword", keyword);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.pwritersearch", keyword);
+	}
 
 	public String selectPostWriter(int post_id) {
 		

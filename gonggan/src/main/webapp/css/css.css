@@ -657,6 +657,17 @@ a.loginbox:hover {
 	padding: 10px;
 }
 
+#bookTbody .searchAll {
+	height:300px;
+	overflow:scroll;
+	overflow-x:hidden;
+}
+
+ .searchAll {
+ 	overflow:scroll;
+ 	overflow-x:hidden;
+}
+
 .uploadFormDiv {
 	position:relative;
 }

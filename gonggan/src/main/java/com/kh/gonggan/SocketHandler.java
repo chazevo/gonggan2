@@ -29,13 +29,20 @@ private MessageService messageService;
    WebSocketSession session) throws Exception {
   log(session.getId() + " 연결 됨!!");
   users.put(session.getId(), session);
+  System.out.println("users : " + users.keySet());
+  System.out.println(users.values());
  }
 
  @Override
  public void afterConnectionClosed(
    WebSocketSession session, CloseStatus status) throws Exception {
-  log(session.getId() + " 연결 종료됨");
+  log(session.getId() + " 연결 종료됨 (" + status + ")");
   users.remove(session.getId());
+  System.out.println("users : " + users.keySet());
+  System.out.println(users.values());
+  users2.remove(session.getId());
+  System.out.println("users2 : " + users2.keySet());
+  System.out.println(users2.values());
  }
 
  @Override
@@ -53,8 +60,12 @@ private MessageService messageService;
 	 
 	 int result = 0;
 
-	 if (!users2.containsKey(sender))
-		 users2.put(sender, session.getId());
+	 //if (!users2.containsKey(sender))
+	 if (!users2.containsValue(sender)) {
+		 users2.put(session.getId(), sender);
+		 System.out.println("users2 : " + users2.keySet());
+		 System.out.println(users2.values());
+	 }
 	 
 	 System.out.println("유저 아이디1 : " + sender);
 	 System.out.println("유저 아이디2 : " + receiver);
@@ -74,7 +85,8 @@ private MessageService messageService;
 
 	 //메시지 DB에 저장하는 부분 
 	 
-	 if (users2.containsKey(receiver)) {
+	 //if (users2.containsKey(receiver)) {
+	 if (users2.containsValue(receiver)) {
 		 System.out.println("지금 접속중 ");
 		 if ((result = messageService.insertMessage(sender, receiver, msg_text, "Y")) < 0)
 				 System.out.println("메시지 삽입 실패");

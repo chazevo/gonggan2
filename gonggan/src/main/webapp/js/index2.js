@@ -206,6 +206,7 @@ function callbackList(data) {
 		td.className = "rightAlign";
 		td.innerHTML = "<label class='checkbox-wrap'>"	
 			+ "<input type='checkbox' id='' "
+			+ (checkGood(loginUser, postId) ? "checked " : "")
 			+ "onclick='like($(this), loginUser, " + postId + ");'>"
 			+ "<i class='like-icon'></i></label>&nbsp;<span>"
 			+ (goodCnt == 0? goodCnt
@@ -225,6 +226,28 @@ function callbackList(data) {
 		return;
 	}
 	$("#div_Loading").fadeOut(100);
+}
+
+function checkGood(loginUser, postId){
+	
+	var isChecked;
+	
+	$.ajax({
+		async:false,
+		url: "/gonggan/checkGood.do",
+		data: {loginUser:loginUser,
+			postId:postId },
+		success: function(data) {
+			if (data == "good")
+				isChecked = true;
+			else if (data == "nogood")
+				isChecked = false;
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	return isChecked;
 }
 
 function reqPostDetail(postId, category) {
@@ -310,24 +333,6 @@ function callbacktrace(data) {
       
 }
 
-function checkGood(loginUser, postId){
-   
-   $.ajax({
-         url: "/gonggan/checkGood.do",
-     data: {loginUser:loginUser,
-            postId:postId},
-     success: function(data) {
-        if (data == "good")
-           document.getElementById("like").checked=true;
-        else if (data == "nogood")
-           document.getElementById("like").checked=false;
-     },
-     error: function(data,status,error){
-        console.log("error : " + error);
-     }
-   });
-}
-
 
 function like(obj, loginUser, postId){
 	
@@ -347,11 +352,16 @@ function like(obj, loginUser, postId){
    
 	if (obj.prop("checked") == true) {
 		$.ajax({
+			async:false,
 			url: "/gonggan/insertGood.do",
 			data: {loginUser:loginUser,
 				postId:postId},
 				success: function(data) {
 					alert("좋아요 함 ");
+					plikecnt =  postLikeCnt(postId);
+					target.html( ( plikecnt > 0 ?
+							("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+							+ plikecnt +  "</a>") : (plikecnt + "") ) );
 				},
 				error: function(data,status,error){
 					console.log("error : " + error);
@@ -360,21 +370,23 @@ function like(obj, loginUser, postId){
 	}
 	else {
 		$.ajax({
+			async:false,
 			url: "/gonggan/deleteGood.do",
 			data: {loginUser:loginUser,
-				postId:1},
+				postId:postId},
 				success: function(data) {
 					alert("좋아요 취소함 ");
+					plikecnt =  postLikeCnt(postId);
+					target.html( ( plikecnt > 0 ?
+							("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+							+ plikecnt +  "</a>") : (plikecnt + "") ) );
 				},
 				error: function(data,status,error){
 					console.log("error : " + error);
 				}
 		});
 		
-		plikecnt =  postLikeCnt(postId);
-		target.html( ( plikecnt > 0 ?
-				("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
-				+ plikecnt +  "</a>") : (plikecnt + "") ) );
+		
 		
 	}
 }

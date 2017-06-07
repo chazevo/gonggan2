@@ -49,10 +49,9 @@ public class GoodDao {
         Map<String, String> map = new HashMap<String, String>();
         map.put("postId", postId+"");
         map.put("memberId",memberId);
-		sqlSession.delete("goodmapper.gdelete", map);
 		sqlSession.update("goodmapper.gdelete3", map);
-		
-		return sqlSession.delete("goodmapper.gdelete2", map);
+
+		return sqlSession.delete("goodmapper.gdelete", map);
 	} //good 카운트 감소
 
 

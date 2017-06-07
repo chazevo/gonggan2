@@ -19,6 +19,8 @@ function checkGood(loginUser, postId){
 
 
 function like(obj, loginUser, postId){
+	var target = $('#good b');
+	var plikecnt;
 	
 	if (loginUser == ""){
 		alert("로그인 하셔야 가능합니다 ! ");
@@ -38,6 +40,11 @@ function like(obj, loginUser, postId){
 			  	 postId:postId},
 		  success: function(data) {
 			  alert("좋아요 함 ");
+			  plikecnt =  postLikeCnt(postId);
+				target.html( ( plikecnt > 0 ?
+						("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>좋아요&nbsp;"
+						+ plikecnt +  "개</a>") : (plikecnt + "") ) );
+
 		  },
 		  error: function(data,status,error){
 		     console.log("error : " + error);
@@ -51,6 +58,11 @@ function like(obj, loginUser, postId){
 			  	 postId:postId},
 		  success: function(data) {
 			  alert("좋아요 취소함 ");
+			  plikecnt =  postLikeCnt(postId);
+				target.html( ( plikecnt > 0 ?
+						("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>좋아요&nbsp;"
+						+ plikecnt +  "개</a>") : (plikecnt + "") ) );
+
 		  },
 		  error: function(data,status,error){
 		     console.log("error : " + error);
@@ -58,7 +70,24 @@ function like(obj, loginUser, postId){
 		});
 	}
 }
-
+function postLikeCnt(postId) {
+	
+	var gcnt;
+	
+	$.ajax({
+		async:false,
+		url: "/gonggan/plikecnt.do",
+		data: { postId:postId },
+			success: function(data) {
+				gcnt = data;
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+	});
+	alert(gcnt);
+	return gcnt;
+}
 function sendComment(){
 	if (loginUser == "")
 		alert("로그인을 해주세요");

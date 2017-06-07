@@ -14,6 +14,7 @@ function send_message() {
 function send() {
 	
 	var msg = $("#msg").val();
+	$("#msg").val("");
 	websocket.send("memberId1:" + loginUser + " "
 			+ "memberId2:" + memberId2 + " : " + msg);
 }

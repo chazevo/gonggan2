@@ -9,16 +9,18 @@
 		<result property="member_id" column="member_id" />
 		<result property="good_check" column="good_check" />
 	</resultMap>
-
-	<insert id="ginsert" parameterType="int">
-	insert into alarm values ((select max(alarm_num) from alarm) + 1, 'G',#{postId} , null)
+	<select id="alarmnum" parameterType="int" resultType="int">
+	select seq_alarm.nextval from dual
+	</select>
+	<insert id="ginsert" parameterType="Map">
+	insert into alarm values (#{alarm_num}, 'G',#{postId} , null)
 	</insert>
 	
-	<insert id="ginsert2" parameterType="good">
-	insert into good values(#{post_id}, #{member_id},'N',seq_alarm.nextval)
+	<insert id="ginsert2" parameterType="Map">
+	insert into good values(#{postId},#{memberId},'N',#{alarm_num})
 	</insert>
 	
-	<update id="ginsert3" parameterType="int">
+	<update id="ginsert3" parameterType="Map">
 		update post set good_count=(GOOD_COUNT+1) where post_id = #{postId}
 	</update>
 	
@@ -33,17 +35,20 @@
 	select *  from good where  post_id in (select post_id from post where writer_id= #{writer_id} and good_count > 0) 
 	</select>
 	
-	<delete id="gdelete" parameterType="good">
+	<delete id="gdelete" parameterType="Map">
 	delete from alarm 
-	where post_id = #{post_id} and
+	where post_id = #{postId} and
 	alarm_num = (select alarm_num from good
-	where post_id = #{post_id} and member_id = #{member_id})
+	where post_id = #{postId} and member_id = #{memberId})
 	</delete>
 	
-	<delete id="gdelete2" parameterType="good">
+	<delete id="gdelete2" parameterType="Map">
 	delete from good 
-	where post_id = #{post_id} and member_id = #{member_id}
+	where post_id = #{postId} and member_id = #{memberId}
 	</delete>
+	<update id="gdelete3" parameterType="Map">
+		update post set good_count=(GOOD_COUNT-1) where post_id = #{postId}
+	</update>
 	
 	<select id="gcount" parameterType="int" resultType="int">
 	select count(*) from good where post_id=#{postId}

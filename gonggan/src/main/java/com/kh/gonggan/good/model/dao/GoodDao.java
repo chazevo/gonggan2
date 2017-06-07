@@ -2,6 +2,7 @@ package com.kh.gonggan.good.model.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,29 @@ public class GoodDao {
 	
 
 	public int goodInsert(int postId, String memberId){
+
+        Map<String, String> map = new HashMap<String, String>();
+        int alarm_num = (int) sqlSession.selectOne("goodmapper.alarmnum");
+        map.put("alarm_num", alarm_num+"");
+        map.put("postId", postId+"");
+        map.put("memberId",memberId);
 		
-		Good gmember = new Good(postId, memberId);
-		if (sqlSession.insert("goodmapper.ginsert", postId) < 0){
+		if (sqlSession.insert("goodmapper.ginsert", map) < 0){
 			System.out.println("alarm 테이블 insert 실패");
-		}if(sqlSession.update("goodmapper.ginsert3", postId) <0){
+		}if(sqlSession.update("goodmapper.ginsert3", map) <0){
 		System.out.println(" plist 실패");
 		}
-		return sqlSession.insert("goodmapper.ginsert2", gmember);
+		return sqlSession.insert("goodmapper.ginsert2", map);
 	} //good 카운트 증가
 
 	public int goodDelete(int postId, String memberId){
-		Good gmember = new Good(postId, memberId);
-		sqlSession.delete("goodmapper.gdelete", gmember);
-		return sqlSession.delete("goodmapper.gdelete2", gmember);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("postId", postId+"");
+        map.put("memberId",memberId);
+		sqlSession.delete("goodmapper.gdelete", map);
+		sqlSession.update("goodmapper.gdelete3", map);
+		
+		return sqlSession.delete("goodmapper.gdelete2", map);
 	} //good 카운트 감소
 
 

@@ -1,9 +1,22 @@
 var rownum = 1;
 var Ca = /\+/g;
+var category = "all";
+var sort = "date";
+
+var plistcount = 0;
+var nplistcount = 0;
+
+var diarycount;
+var reviewcount;
+var moviecount;
+var placecount;
+var musiccount;
+var newscount;
+var bookcount;
 
 function requestList(val) {
-   
    var rownum2;
+   plistcount++;
    
    //if (maxRownum - val < 20)
    if (maxRownum - val < 8)
@@ -31,30 +44,27 @@ function requestList(val) {
 
 function requestNeighborPostList(val, loginUser) {
 
-   
-	$("#blogHomeContentDiv").html("");
-   
 	var rownum2;
 	var loginUser;
    
 	if (maxRownum - val < 8)
 		var rownum2 = maxRownum;
 	else rownum2 = rownum + 7;
-   
-   $.ajax({
-            url: "/gonggan/postNeighborlist.do",
-            //url: "/gonggan/userpostlist.do",
-            data: { loginUser : loginUser,
-               rownum: rownum, rownum2: rownum2
-            },
-            success: function(data) {
-               
-               callbackList(data);
-            },
-            error: function(data,status,error){
-               console.log("error : " + error);
-            }
-      });
+	
+	$.ajax({
+		url: "/gonggan/postNeighborlist.do",
+		//url: "/gonggan/userpostlist.do",
+		data: { loginUser : loginUser,
+			rownum: val, rownum2: rownum2
+		},
+		success: function(data) {
+			rownum = rownum2 + 1;
+			callbackList(data);
+		},
+		error: function(data,status,error) {
+			console.log("error : " + error);
+		}
+	});
 }
 
 function requestCategoryList(val, category) {
@@ -81,7 +91,7 @@ function requestCategoryList(val, category) {
       });
 }
 
-function requestLikeList(val) {
+function requestLikeList(val, category) {
 
    var rownum2;
 
@@ -92,7 +102,7 @@ function requestLikeList(val) {
    $.ajax({
       url: "plikelist.do",
       data: { rownum: rownum,
-         rownum2: rownum2 },
+         rownum2: rownum2, category:category, writer_id:loginUser },
       success: function(data) {
          rownum = rownum2 + 1;
          callbackList(data);
@@ -103,15 +113,51 @@ function requestLikeList(val) {
    });
 }
 
+function addCount() {
+	switch (category) {
+	case "music":
+		musiccount++;
+		break;
+	case "movie":
+		moviecount++;
+		break;
+	case "book":
+		bookcount++;
+		break;
+	case "place":
+		placecount++;
+		break;
+	case "news":
+		newscount++;
+		break;
+	case "review":
+		reviewcount++;
+		break;
+	}
+}
+
 function sorting() {
-   if ($("#select").val() == "like") {
-      $("#blogHomeContentDiv").html("");
-      requestLikeList(rownum = 1);
-   }
-   else if ($("#select").val() == "date") {
-      $("#blogHomeContentDiv").html("");
-      requestList(rownum = 1);
-   }
+	$("#blogHomeContentDiv").html("");
+	if ($("#select").val() == "like") {
+		sort = "like";
+		requestLikeList(rownum = 1, category);
+	}
+	else if ($("#select").val() == "date") {
+		sort = "date";
+		if (category == "neighborlist") {
+			if (nplistcount > 0) {
+				neighborList(loginUser);
+			}
+		}
+		else if (category == "all") {
+			if (plistcount > 0)
+				requestList(rownum = 1);
+		}
+		else {
+			addCount();
+			requestCategoryList(rownum = 1, category);
+		}
+	}
 }
 
 function callbackList(data) {
@@ -126,9 +172,7 @@ function callbackList(data) {
 	for (var i in jsonArr.list) {
 		
 		div = document.createElement("div");
-		div.class = "";
 		table = document.createElement("table");
-		table.border = "1";
       
 		postId = jsonArr.list[i].postId;
 		content = reqPostDetail(postId, jsonArr.list[i].category);
@@ -138,7 +182,7 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		td.colSpan = "2";
-		td.class = "blogHomeContent";
+		td.className = "blogHomeContent";
 		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
 			+ "postId=" + postId
 			+ "&writerId=" + writerId + "'>"
@@ -148,13 +192,13 @@ function callbackList(data) {
 		table.appendChild(tr);
       
 		tr = document.createElement("tr");
-		tr.class = "trBottom";
+		tr.className = "trBottom";
 		td = document.createElement("td");
 		td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
 		+ writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");
-		td.class = "rightAlign";
+		td.className = "rightAlign";
 		td.innerHTML = "<label class='checkbox-wrap'>"	
 			+ "<input type='checkbox' id='' "
 			+ "onclick='like($(this), loginUser, " + postId + ");'>"
@@ -199,6 +243,17 @@ function reqPostDetail(postId, category) {
 }
 
 function trace(loginUser) {
+
+	$(".whiteHr").next().css("fontWeight", "normal")
+	$(".whiteHr").next().next().next().css("fontWeight", "normal");
+	$(".whiteHr").next().next().css("fontWeight", "bold");
+	
+	$("#blogHomeContentDiv").html("");   
+	
+	plistcount++;
+	requestList(rownum = 1);
+	category = "all";
+	
 	$.ajax({
 		url: "/gonggan/trace.do",
 		data: {loginUser:loginUser},
@@ -373,17 +428,20 @@ function rejectNeig(member_id, member_id2) {
 }
 
 function neighborList(loginUser) {
-   $.ajax({
-      url: "neighborlist.do",
-      data: { 
-         loginUser: loginUser},
-         success: function(data){
-         callbackNeighborList(data);         
-      },
-      error: function(data,status,error){
-         console.log("error : " + error);
-      } 
-   });
+	
+	nplistcount++;
+	
+	$.ajax({
+		url: "neighborlist.do",
+		data: { 
+			loginUser: loginUser},
+			success: function(data) {
+				callbackNeighborList(data);
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+	});
 } // 이웃 블로그 목록
 
 function callbackNeighborList(data){
@@ -394,6 +452,10 @@ function callbackNeighborList(data){
 	var div;
 	var tr, td;
 
+	$(".whiteHr").next().css("fontWeight", "normal");
+	$(".whiteHr").next().next().css("fontWeight", "normal");
+	$(".whiteHr").next().next().next().css("fontWeight", "bold");
+	$("#searchNeiDiv").show();
 	$("#listbody_neighbor").show();
 	$(".title").hide();
 	$("#postAlarm").text("서로이웃 수_");
@@ -401,6 +463,11 @@ function callbackNeighborList(data){
 	$("#listbody_newNeighbor").hide();
 	$("#listbody_newPost").hide();
 	$("#listbody_mytrace").hide();
+
+	$("#blogHomeContentDiv").html("");
+
+	requestNeighborPostList(rownum = 1, loginUser);
+	category = "neighborlist";
 	
 	while (document.getElementById("listbody_neighbor").rows.length > 0 )
 		document.getElementById("listbody_neighbor").deleteRow(0);   
@@ -411,7 +478,6 @@ function callbackNeighborList(data){
 		td = document.createElement( 'td' );
 		var a = document.createElement( 'a' );
 		var aText = document.createTextNode(memberId);
-		var font = document.createElement('font');
 		a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
 		tr.appendChild(td);
 		td.appendChild(a);
@@ -443,8 +509,8 @@ function callbackNsearch(data) {
    
    var tr, td;
    
-   while (document.getElementById("listbody_neighbor").rows.length > 1 )
-      document.getElementById("listbody_neighbor").deleteRow(1);
+   while (document.getElementById("listbody_neighbor").rows.length > 0 )
+      document.getElementById("listbody_neighbor").deleteRow(0);
    
    for (var i in jsonArr.list) {
       var member_id = jsonArr.list[i].member_id;

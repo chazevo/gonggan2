@@ -3,7 +3,7 @@
 <%@page import="com.kh.gonggan.member.model.vo.Member"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%
-   Member loginUser = (Member) session.getAttribute("loginUser");
+	Member loginUser = (Member) session.getAttribute("loginUser");
 %>   
 <!DOCTYPE html >
 <html>

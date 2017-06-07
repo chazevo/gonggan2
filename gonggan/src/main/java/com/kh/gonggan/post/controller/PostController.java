@@ -301,15 +301,20 @@ public class PostController {
 	
 	@RequestMapping(value="/plikelist.do", produces={"application/json"})
 	@ResponseBody
-	public String selectLikeList(@RequestParam int rownum,
-			@RequestParam int rownum2){
+	public String selectBloghomeLikeList(@RequestParam int rownum,
+			@RequestParam int rownum2, @RequestParam String category, String writer_id){
 
 	System.out.println("rownum : " + rownum + " rownum2 : " + rownum2);
 	
 		List<Post> plist  = null;
 		
-		plist = postService.selectLikeAll(rownum, rownum2);
-
+		if (category.equals("all"))
+			plist = postService.selectLikeAll(rownum, rownum2);
+		else if (category.equals("neighborlist"))
+			plist = postService.selectLikeNpost(rownum, rownum2, writer_id);
+		else
+			plist = postService.selectLikeCategoryPost(rownum, rownum2, category);
+			
 		JSONObject json = new JSONObject();
 		JSONArray jarr = new JSONArray();
 		

@@ -384,7 +384,7 @@
 					<tr>
 						<td>분류 </td>
 						<td colspan="4">
-							<select id="category" onchange="changeForm();">
+							<select name="category" id="category" onchange="changeForm();">
 								<option value="default" selected>자유</option>
 								<option value="diary" >일기</option>
 								<option value="news">뉴스</option>
@@ -738,30 +738,66 @@
 					<tbody id="newsTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="center">
-								<a data-toggle="collapse" data-target="#news" id="newSearchLink">기사 찾아보기<img></a>
+								<a data-toggle="collapse" data-target="#news" id="newSearchLink">
+									기사 찾아보기<img>
+								</a>
 								<div id="news" class="collapse">
 									<table width="100%" border="1">
-									<tr><td width="25%" align="center">인기검색어</td><td><h5 style="text-align:center;">기사 검색</h5></td></tr>
-									<tr>
-										<td align="center" >
-											<!--대선후보<br>아이유 컴백<br> -->
-											<c:set var="cnt" value="0" />
-											<c:forEach items="${popKeyword}" var="i" begin="0">
-											<c:set var="cnt" value="${cnt + 1 }" />
-											${cnt} ${i }<br>
-											</c:forEach>
-										</td>
-										<td width="65%" class="footerDiv" >
-											<div>
-												키워드&nbsp;<input type="text" id="newsSearchText">
-												<button type="button" id="searchBtn">기 사 검 색</button>
-											</div>
-										</td>
-									</tr>
-									</table>
-								</div>
-							</td>
-						</tr>
+										<tr>
+											<td width="25%" align="center">인기검색어</td>
+											<td>
+												<input type="text" id="newsSearchText" name="keyword" value="${keyword }" placeholder="기 사 검 색" 
+													onkeydown="if(event.keyCode == 13) newsSearch();">
+												<a href="javascript:newsSearch();">
+													<img src=images/search.png width="5%" >
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td align="center" >
+												<!--대선후보<br>아이유 컴백<br> -->
+												<c:set var="cnt" value="0" />
+												<c:forEach items="${popKeyword}" var="i" begin="0">
+												<c:set var="cnt" value="${cnt + 1 }" />
+												<a href="javascript:$('#newsSearchText').val('${i }'); $('#newsSearchText').focus();">
+													${cnt} ${i }
+												</a><br>
+												</c:forEach>
+											</td>
+											<td width="65%" class="footerDiv" >
+												<table id="newSearchRes">
+													<%--
+													<c:if test="${!empty searchNewsList}">
+													<c:forEach items="${searchNewsList}" var="i" begin="0">
+													<tr>
+														<td>
+															<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+																${i.title}
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+																${i.description}
+															</a>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<a href="${i.originallink }"  target="_blank">상세정보</a>
+														</td>
+													</tr>
+													</c:forEach>
+													</c:if>
+													--%>
+												</table>
+											</td>
+										</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
 					</tbody>
 					<tbody id="reviewTbody" style="display:none">
 						<tr>
@@ -786,23 +822,23 @@
 						</tr>
 					</tbody>
 					<tr>
-						
-			
 							
-   <!-- END다정다정 -->		
-							<!-- <img src="images/efErase_icon.png" id="content_allign_center" width="42px"
-										onclick="contentalligncenter();">ㄴㄹㄴㅇ색&nbsp; &nbsp;	&nbsp; 
-							 -->
-							
+				
 								
-		
-										
+	   <!-- END다정다정 -->		
+								<!-- <img src="images/efErase_icon.png" id="content_allign_center" width="42px"
+											onclick="contentalligncenter();">ㄴㄹㄴㅇ색&nbsp; &nbsp;	&nbsp; 
+								 -->
+								
+									
+			
+											
 					</tr>
 					<tr>
 						 <td colspan="5" align="center" height="30px"><div id="dansunline"></div></td>
-						</tr>
+					</tr>
+							
 						
-					
 					<tr>
 						<td class="uploadContent" colspan="5">
 							 <!-- <textarea id="textarea" rows="20" id="content" ></textarea> --> 
@@ -826,7 +862,7 @@
 					</tr>
 				</table>
 				<input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>
-				<textarea id="dhtmlText"></textarea>
+				<textarea id="dhtmlText" name="content"></textarea>
 				<img src="images/marker.png" id="kae" draggable="true" ondragstart="drag(event);">
 				<iframe src="clipboard.do" id="clipboard"></iframe>
 				<br><br><br><br><br><br><br><br><br><br><br>

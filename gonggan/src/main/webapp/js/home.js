@@ -66,7 +66,7 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		td.colspan = "2";
-		td.class = "blogHomeContent";
+		td.className = "blogHomeContent";
 		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
 			+ "postId=" + postId
 			+ "&writerId=" + writerId + "'>"
@@ -76,13 +76,13 @@ function callbackList(data) {
 		table.appendChild(tr);
 		
 		tr = document.createElement("tr");
-		tr.class = "trBottom";
+		tr.className = "trBottom";
 		td = document.createElement("td");
 		td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
 			+ writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");
-		td.class = "rightAlign";
+		td.className = "rightAlign";
 		td.innerHTML = "<label class='checkbox-wrap'>"
 			+ "<input type='checkbox' id='' "
 			+ "onclick='like(this, loginUser, " + postId + ");'>"

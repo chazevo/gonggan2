@@ -10,18 +10,23 @@ public class Comment {
 	private String comment_content;
 	private Date comment_date;
 	private String comment_check;
+	private int alarm_num;
 	
 	public Comment() {
 		super();
 	}
-	public Comment(int post_id, int comment_num, String writer_id, String comment_content, Date comment_date, String comment_check) {
+	public Comment(int post_id, int comment_num, String writer_id,
+			String comment_content, Date comment_date, String comment_check,
+			int alarm_num) {
 		this.post_id = post_id;
 		this.comment_num = comment_num;
 		this.writer_id = writer_id;
 		this.comment_content = comment_content;
 		this.comment_date = comment_date;
 		this.comment_check = comment_check;
+		this.alarm_num = alarm_num;
 	}
+	
 	public Comment(String comment_content, String writer_id, int post_id) {
 		this.post_id = post_id;
 		this.writer_id = writer_id;
@@ -67,6 +72,13 @@ public class Comment {
 	}
 	public void setComment_check(String comment_check) {
 		this.comment_check = comment_check;
+	}
+	
+	public int getAlarm_num() {
+		return alarm_num;
+	}
+	public void setAlarm_num(int alarm_num) {
+		this.alarm_num = alarm_num;
 	}
 	
 	

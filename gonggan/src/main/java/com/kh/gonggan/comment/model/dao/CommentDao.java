@@ -28,18 +28,16 @@ public class CommentDao {
 	} // 코멘트 수정
 
 	public int insertComment(String comment_content, String writer_id, int postId) {
-		   
-		Map<String, Integer> map = new HashMap<String, Integer>();
-		   
+
 		Comment comment = new Comment(comment_content, writer_id, postId);
+		
 		int comment_num = (int) sqlSession.selectOne("commentmapper.cnum", comment);
+		comment.setAlarm_num((int) sqlSession.selectOne("commentmapper.alarmnum"));
 		comment.setComment_num(comment_num);
-	      
-		map.put("postId", postId);
-		map.put("comment_num", comment_num);
-	
-		int alarm_num = (int) sqlSession.selectOne("commentmapper.cinsert", map);
-		if (sqlSession.insert("commentmapper.cinsert2", map) < 0)
+		
+		if (sqlSession.insert("commentmapper.cinsert", comment) < 0)
+			System.out.println("알람 테이블 insert 실패!");
+		if (sqlSession.insert("commentmapper.cinsert2", comment) < 0)
 			System.out.println("코멘트 달기 실패 !");
 	      
 		return comment_num;
@@ -50,7 +48,7 @@ public class CommentDao {
       
 		Comment comment = new Comment(comment_num, writer_id, postId);
 		
-		if(sqlSession.delete("commentmapper.cdelete", comment)<0)
+		if (sqlSession.delete("commentmapper.cdelete", comment) < 0)
 			System.out.println("알람 테이블 데이터 삭제 실패");
 		return sqlSession.delete("commentmapper.adelete", comment);
 		

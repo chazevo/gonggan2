@@ -96,17 +96,16 @@ function callbackSendComment(data){
 	tr.id = "co" + data;
 	
 	td = document.createElement("td");
+	td.colSpan = "3";
 	td.innerHTML ='<b><a href="selectBlog.do?writer_id=' + loginUser
 			+ '" target="_blank">' + loginUser + '</a></b> &nbsp;&nbsp;'
-			+ $("#comment_content").val();
-	tr.appendChild(td);
-
-	td = document.createElement("td");
-	td.class = "commentDate";
-	td.innerHTML = comment_date.getFullYear() + "-"
-	+ (month<10 ? "0"+ month : month)  + "-" + (date<10 ? "0"+date : date)
-	+ '&nbsp;&nbsp;<a href="javascript:deleteComment(' + data + ')">'
-	+ '<img src="images/delete_sign_filled1600.png" width="10%"></a>';
+			+ $("#comment_content").val()
+			+"<span class='commentDate'>&nbsp;"
+			+ comment_date.getFullYear() + "-"
+			+ (month<10 ? "0"+ month : month)  + "-" + (date<10 ? "0"+date : date)
+			+ "</span>"
+			+ '&nbsp;&nbsp;<a href="javascript:deleteComment(' + data + ')">'
+			+ '<img src="images/delete_sign_filled1600.png" width="2%"></a>';
 	tr.appendChild(td);
 	
 	document.getElementById("listbody").appendChild(tr);
@@ -116,19 +115,21 @@ function callbackSendComment(data){
 }
 
 function deleteComment(comment_num){
-	$.ajax({
-		url: "/gonggan/codelete.do",
-		data: {writer_id:loginUser,
-			postId:postId,
-			comment_num:comment_num
-		},
-		success: function(data) {
-			callbackCommentDelete(data, comment_num);
-		},
-		error: function(data,status,error){
-			console.log("error : " + error);
-		}
-	});
+	
+	if (confirm("댓글을 삭제하시겠습니까?") == true)
+		$.ajax({
+			url: "/gonggan/codelete.do",
+			data: {writer_id:loginUser,
+				postId:postId,
+				comment_num:comment_num
+			},
+			success: function(data) {
+				callbackCommentDelete(data, comment_num);
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+		});
 }
 
 function callbackCommentDelete(data, comment_num){

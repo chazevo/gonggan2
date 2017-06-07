@@ -27,6 +27,16 @@ public class PostSericeImpl implements PostService{
 	}
 	
 	@Override
+	public List<Post> selectLikeNpost(int rownum, int rownum2, String writer_id) {
+		return  postDao.selectLikeNpost(rownum, rownum2, writer_id);	
+	}
+	
+	@Override
+	public List<Post> selectLikeCategoryPost(int rownum, int rownum2, String category) {
+		return  postDao.selectLikeCategoryPost(rownum, rownum2, category);	
+	}
+	
+	@Override
 	public Post postDetail(int post_id) {
 		return  postDao.postDetail(post_id);
 		
@@ -76,10 +86,17 @@ public class PostSericeImpl implements PostService{
 	public String selectPostWriter(int post_id){
 		return postDao.selectPostWriter(post_id);
 	}
+	
 	@Override
-	   public List<Post> selectAll_index2(){
+	   public List<Post> selectAll_index2() {
 	      return postDao.selectAll_index2();
 	   }
+	
+	@Override
+	public List<Post> selectNeighborAll_index2(String member_id) {
+	      return postDao.selectNeighborAll_index2(member_id);
+	}
+	
 	@Override
 	public List<Post> selectMusic(int rownum, int rownum2) {
 		return postDao.selectMusic(rownum, rownum2);

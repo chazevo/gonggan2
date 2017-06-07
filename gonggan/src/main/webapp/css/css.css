@@ -379,6 +379,15 @@ overflow-x: hidden; } */
 	border:none;
 }
 
+#newSearchRes ul {
+	list-style-type:none;
+}
+
+.moreBtb {
+	background:linear-gradient(to right, #DEACC6, #91B2DF);
+	color: white;
+	padding:3px;
+}
 
 #booksearchBtn, #searchBtn{
 	display: inline-block;
@@ -847,8 +856,7 @@ div div.gray {
 }
 
 .blogHomeContentDiv table .trBottom td, div #div .trBottom td {
-	border-top:1px solid #E6E6E6;
-	height:30%;
+	border-top:1px solid #E6E6E6!important;
 }
 
 .blogHomeContentDiv table td.rightAlign, div #div table td.rightAlign {
@@ -904,16 +912,18 @@ pre {
 }
 
 .idView .blogOwnerClick {
-	padding-top:10%;
-	border: 1px solid pink;
 	text-align:center;
 	position:absolute;
-	width:20%;
+	width:15%;
+	height:7%;
 }
 
-.idView .blogOwnerClick>div {
-	position:relative;
-	border: 1px solid blue;
+.idView .blogOwnerClick div {
+	position:absolute;
+	width:100%;
+	height:80%;
+	bottom:0;
+	z-index:99;
 }
 
 .idView>a:link {
@@ -922,17 +932,13 @@ pre {
 	margin: 5px;
 }
 
-.idView .blogOwnerClick div div {
-	position:absolute;
-	top:0;
-	z-index:99;
-	border:1px solid red;
+.idView a:hover  {
+	text-decoration:none;
 }
 
 .idView .blogOwnerClick div a:link {
 	color: black;
 	display:block;
-	margin: 5px;
 }
 
 .blogOwnerClick>img {
@@ -943,7 +949,7 @@ pre {
 
 .idView hr {
 	width:90%;
-	
+	margin:5px;
 }
 
 .idView a:visited{
@@ -1008,7 +1014,9 @@ img {
 
 
 .blogHomeHeader .table1st {
+	border:1px solid blue;
 	width:80%;
+	height:100%!important;
 	display:inline-block;
 	background-color: transparent;
 	margin: 5px;
@@ -1017,10 +1025,17 @@ img {
 }
 
 .blogHomeHeader .table1st .table2nd>table {
-	width:95%;
+	width:100%;
+	margin:0;
+	border:1px solid pink;
 }
 
-.blogHomeHeader .table2nd>table #listbody_newPost td, #listbody_mytrace td {
+.blogHomeHeader .table1st .table2nd tbody {
+	width:100%;
+	border: 1px solid brown;
+}
+
+.blogHomeHeader .table2nd>table #listbody_newPost td, #listbody_neighbor td {
 	vertical-align: middle;
 	max-width:0px;
 	text-overflow: ellipsis;
@@ -1031,6 +1046,8 @@ img {
 }
 
 .table2nd {
+	padding:5px;
+	height:225px;
 	vertical-align:top;
 }
 
@@ -1085,14 +1102,18 @@ img {
 }
 
 .blogHomeHeader .myDiv {
+	border: 1px solid white;
 	display: inline-block;
-	vertical-align:top;
 	width:17%;
 	height:100%;
+	vertical-align:top;
 	margin-top:15px;
 	margin-bottom:15px;
 	color: black;
 	text-align: center;
+}
+
+.myDiv tr td:first-child {
 }
 
 .myDiv a {
@@ -1430,7 +1451,6 @@ hr {
 
 .postDetail td {
 	position:relative;
-	border-collapse: collapse;
 	/*border: 1px solid gray;*/
 	vertical-align:middle;
 	padding:15px;
@@ -1448,15 +1468,19 @@ hr {
 	color:rgb(111,111,111);
 }
 
-.postDetail td.commentDate {
+.postDetail span.commentDate {
 	text-align:right;
 	color:#c0c0c0;
 }
 
-.postDetail td#comm{
-	height:50px;
+.postDetail #comm td {
+	text-align:center;
+	vertical-align:top;
+	padding:0px;
 }
-.postDetail .hour{
+
+.postDetail .hour {
+	position:absolute;
 	right:0;
 	margin-right:15px;
 	font-size:140%;
@@ -1630,6 +1654,15 @@ legend {
 	font-weight:bold;
 }
 
+.nPostTd{
+   background-size: 100% 100% !important;
+}
+
+.nPosthr {
+	border-top:2px solid #9C9C9C !important;
+	border-bottom:2px solid #F6F6F6 !important; 
+}
+
 .radio-wrap { 
 	cursor: pointer;
 	margin-left: 20px;
@@ -1706,6 +1739,7 @@ legend {
 }
 
 @media (max-width: 700px) {
+	
 	.disapear {
 		display: none;
 	}
@@ -1714,41 +1748,34 @@ legend {
 		display: inline-block !important;
 		color:white;
 	}
-.tbl2 a:hover{
-	color:white;
-}
+	.tbl2 a:hover{
+		color:white;
+	}
 	
 	.blogHomeHeader {
 		position:relative;
-		height: auto;
+		padding-bottom:10px;
 	}
 	
 	.blogHomeHeader .table1st {
-		width:99%;
-	}
-	
-	.blogHomeHeader .disapear  {
-		width: 0%;
+		width:100%!important;
+		margin:0px;
 	}
 	
 	.blogHomeHeader .table2nd {
-		display: block !important;
-		width: 100% !important;
-	}
-	
-	.table2nd img {
-		width:90%;
+		border:1px solid skyblue;
+		width: 100%!important;
 	}
 	
 	.myDiv {
 		display:block !important;
 		width:100% !important;
 		height: 100% !important;
-		margin-top:0px !important;
+		margin:0px !important;
 	}
 	
 	.myDiv a {
-		display:inline;
+		display:inline-block;
 	}
 	
 	.myDiv .goToMyBlog {
@@ -1758,12 +1785,6 @@ legend {
 
 @media (max-width: 900px) {
 
-/*
-	#weatherDiv {
-	width:100%
-}
-*/
-	
 	.divCenter {
 		width:100%;
 	}

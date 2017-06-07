@@ -127,8 +127,10 @@ public class HomeController {
 		logger.info("Welcome index2! ");
 		
 		Member loginUser = (Member) session.getAttribute("loginUser");
+		String memberId;
 		
-		List<Post> plist = postService.selectAll_index2();  
+		List<Post> plist = postService.selectAll_index2(); 
+		List<Post> nplist = null;
 		List<Movie> movielist = movieService.selectAll_index2();
 		List<Diary> diarylist = diaryService.selectAll_index2();
 		List<Music> musiclist = musicService.selectAll_index2();
@@ -139,22 +141,36 @@ public class HomeController {
 		List<Comment> commentReqList = null;
 		
 		if (loginUser != null) {
-			neighborReqList = memberService.checkNeig(loginUser.getMember_id());
-			commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
+			
+			memberId = loginUser.getMember_id();
+			
+			commentReqList = commentService.checkCommentAlram(memberId);
+			neighborReqList = memberService.checkNeig(memberId);
+			
+			nplist = postService.selectNeighborAll_index2(memberId);
+			
+			mv.addObject("neighborReqListSize", neighborReqList.size());
 		}
 
 		mv.setViewName("index2");
+		
+		mv.addObject("plist",plist);
+		mv.addObject("plistSize", plist.size());
+		mv.addObject("nplistSize", loginUser != null ? nplist.size() : 0);
+		
 		mv.addObject("reviewlist", reviewlist);
+		mv.addObject("movielist", movielist);
 		mv.addObject("newslist", newslist);
 		mv.addObject("musiclist", musiclist);
-		mv.addObject("dlist", diarylist);
-		mv.addObject("plist",plist);
-		mv.addObject("movielist",movielist);
-		mv.addObject("plistSize", plist.size());
-		mv.addObject("neighborReqList", neighborReqList);
-		mv.addObject("neighborReqListSize", neighborReqList.size());
+		mv.addObject("diarylist", diarylist);
 		
-		mv.setViewName("index2");
+		mv.addObject("reviewlistSize",reviewlist.size());
+		mv.addObject("movielistSize",movielist.size());
+		mv.addObject("newslistSize",newslist.size());
+		mv.addObject("musiclistSize",musiclist.size());
+		mv.addObject("diarylistSize",diarylist.size());
+		
+		mv.addObject("neighborReqList", neighborReqList);
 		
 		return mv;
 	}
@@ -451,11 +467,11 @@ public class HomeController {
 	
 	@RequestMapping(value="/neighborBlogPost.do", method=RequestMethod.GET)
 	public ModelAndView logincomplete(ModelAndView mv, HttpSession session){
-		
 		System.out.println("neighborBlogPost.do");
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		System.out.println("loginUser : " + loginUser);
 		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
+                
 		List<Post> plist = postService.selectAll_index2();  
 		List<Movie> movielist = movieService.selectAll_index2();
 		List<Diary> diarylist = diaryService.selectAll_index2();
@@ -465,6 +481,7 @@ public class HomeController {
 		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
 
 		mv.setViewName("neighborPost");
+       
 		mv.addObject("reviewlist", reviewlist);
 		mv.addObject("newslist", newslist);
 		mv.addObject("musiclist", musiclist);
@@ -474,7 +491,7 @@ public class HomeController {
 		mv.addObject("plistSize", plist.size());
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());
-	      
+       
 		return mv;
 	}
 	

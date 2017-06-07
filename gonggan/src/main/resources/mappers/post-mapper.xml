@@ -24,6 +24,14 @@
 		<result property="photo_path" column="photo_path" />
 		<result property="post_date" column="post_date" />
 	</resultMap>
+	
+	<select id="postid" parameterType="int" resultType="int">
+	select sequence_post.nextval from dual
+	</select>
+   
+      <insert id="pinsert" parameterType="Map">
+      insert into post values(${post_id},#{loginUser},#{category},'N','N',default,null,sysdate)
+   </insert>
 
 	<select id="plist" parameterType="Map" resultMap="postResult">
 	select * from
@@ -48,6 +56,34 @@
 						left join review using(post_id)
 						order by good_count desc) subquery)
 				where r between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="nplikelist" parameterType="Map" resultMap="postResult">
+	
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post left join movie using (post_id)
+						left join diary using(post_id)
+						left join music using(post_id)
+						left join news using(post_id)
+						left join review using(post_id)
+						order by good_count desc) subquery
+						where writer_id in (select member_id from member
+						where member_id in(   SELECT sender FROM NEIGHBOR
+						WHERE CHECK_YN='Y' AND RECEIVER =#{writer_id} ) or
+						member_id  in(   SELECT receiver FROM NEIGHBOR
+						WHERE CHECK_YN='Y' AND SENDER = #{writer_id})))
+				where (r between #{rownum} and #{rownum2})
+	</select>
+	
+	<select id="categoryplikelist" parameterType="Map" resultMap="postResult">
+	select * from
+				(select rownum r, subquery.*
+				from (select *
+						from post right join ${category} using (post_id)
+						order by good_count desc) subquery)
+				where (r between #{rownum} and #{rownum2})
 	</select>
 
 	<select id="userplist" parameterType="String" resultMap="postResult">
@@ -196,11 +232,25 @@
 		<select id="selectpostwriter" parameterType="int" resultType="String">
 	select writer_id from post where post_id =#{post_id}
 	</select>
+	
 	<select id="plist_index2" resultMap="postResult">
-   SELECT * FROM ( SELECT ROWNUM AS RNUM, GOOD_COUNT, POST_ID, CATEGORY, WRITER_ID, POST_DATE
-   FROM (SELECT * FROM POST ORDER BY POST_ID DESC) )
+	SELECT * FROM ( SELECT ROWNUM AS RNUM, GOOD_COUNT, POST_ID, CATEGORY, WRITER_ID, POST_DATE
+	FROM (SELECT * FROM POST ORDER BY POST_ID DESC) )
    <!-- <![CDATA[ WHERE RNUM<=8 ]]> -->
    </select>
+
+	<select id="nplist_index2" parameterType="String" resultMap="postResult">
+	SELECT * FROM POST
+	where (writer_id in
+		(select receiver from NEIGHBOR
+		where sender = #{member_id}
+		and CHECK_YN='Y'))
+		or
+		(writer_id in(select sender from NEIGHBOR
+		where
+		receiver = #{member_id} and CHECK_YN='Y'))
+	ORDER BY POST_ID DESC
+	</select>
 
 	<select id="maxrnum" parameterType="Map" resultType="int">
 	select count(*) from ${category}

@@ -20,6 +20,9 @@
 	var postId = '${postId}';
 	
 	window.onload = function() {
+		
+		document.getElementById("comment_content").focus();
+		
 		if (loginUser != "")
 			checkGood(loginUser, postId);
 		//alert(postId);
@@ -61,22 +64,23 @@
 <div style="overflow:auto;width:100%;height:500px;">
 <table width="100%" align="center" class="postDetail">
 	<colgroup>
-		<col width="70%" />
-		<col width="30%" />
+		<col width="5%" />
+		<col width="80%" />
+		<col width="15%" />
 	</colgroup>
 	<tr>
-		<td id="userId" colspan="2">
+		<td id="userId" colspan="3">
 			<a id="loginUser" href="selectBlog.do?writer_id=${writerId}" target="_blank">
 			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${writerId}</b></a>
 			
-			<div class="navbar-right hour">
+			<span class="navbar-right hour">
 				<abbr class="timeago" title="${postDate}">${postDate}</abbr>
-			</div>
+			</span>
 			
 		</td>
 	</tr> 
 	<tr>
-		<td id="photo" colspan="2">
+		<td id="photo" colspan="3">
 			<c:if test='${postDetail.getPhoto_path() ne null}'>
 			<img alt="" src="uploadImages/${postDetail.getPhoto_path()}" width="100%">
 			</c:if>
@@ -100,7 +104,7 @@
 		</td>
 
 	<tr>
-		<td id="good" colspan="2">
+		<td id="good" colspan="3">
 			<c:if test="${ goodCnt ne '0' }">
 				<b><a href="goodList.do?postId=${postId }">좋아요 ${goodCnt }개</a></b>
 			</c:if>
@@ -113,38 +117,48 @@
 	<c:if test="${!empty commentList}">
 	<c:forEach items="${commentList}" var="i" begin="0">
 	<tr id="co${i.comment_num }">
-		<td>
-			<b><a href="selectBlog.do?writer_id=${i.writer_id}"  target="_blank">${i.writer_id }</a></b> &nbsp;&nbsp;
-			${i.comment_content}
-		</td>
-		<td class="commentDate">
-			${i.comment_date} &nbsp;&nbsp; 
-			 <c:if test="${empty loginUser eq i.writer_id || loginUser eq writerId }">
-			<a href="javascript:deleteComment(${i.comment_num });"><img src="images/delete_sign_filled1600.png" width="10%"></a>
-		</c:if>
+		<td colspan="3">
+			<b>
+				<a href="selectBlog.do?writer_id=${i.writer_id}"  target="_blank">
+					${i.writer_id }
+				</a>
+			</b> &nbsp;&nbsp;
+			${i.comment_content}&nbsp;
+			<span class="commentDate">
+				${i.comment_date} &nbsp;&nbsp; 
+			 	<c:if test="${empty loginUser eq i.writer_id || loginUser eq writerId }">
+				<a href="javascript:deleteComment(${i.comment_num });">
+					<img src="images/delete_sign_filled1600.png" width="2%">
+				</a>
+				</c:if>
+			</span>
 		</td>
 	</tr>
 	</c:forEach>
 	</c:if>
 	</tbody>
-	<tr>
-		<td id="comm" colspan="2">
+	<tr id="comm">
+		<td>
 			<label class='checkbox-wrap'>
 				<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
 				<i class='like-icon'></i>
 			</label>&nbsp;
-			<input id='comment_content' type='text' placeholder='댓글 달기'
+		</td>
+		<td>
+			<input id='comment_content' type='text' placeholder='댓글 달기' style="width:100%"
 				onkeydown="if(event.keyCode==13) sendComment();">&nbsp;
+		</td>
+		<td>
 			<a href='javascript:sendComment();'>
 				<img  src='images/dettext_icon.png' width='45px' >
-			</a>&nbsp; &nbsp;
+			</a>
 			<div class='dotdotdotDiv'>
 				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
 				<a class="hover dotdotdot" href="" >공유</a>
 				<a class="hover dotdotdot" href="">쪽지 보내기</a>
 			</div>
-			<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
-				<img class='smallIcon2' src='images/thesee_icon.png'>
+			&nbsp;<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
+				<img width="15%" src='images/thesee_icon.png'>
 			</a>
 		</td>
 	</tr>

@@ -1,4 +1,5 @@
 var reg = /<(?:img)[^>]*(src)?=.*\/(.*\.(?:jpg|jpeg|gif|bmp|png))[^<]*>/i;
+var Ca = /\+/g;
 var je_doc={};
 var currTimeFormat = 'a/p hh시 mm분 ss초';
 var temperature;
@@ -102,10 +103,10 @@ function recieveMovie(image, title, director , actor, pubDate) {
 
 function recieveNews(title, originallink, description, pubDate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<table align='center' border='1' width='80%'><tr>"
-		+ "<td>" + title+"</td></tr>"
-		+ "<tr><td>" + description + "</td>"
-		+"</tr></table>";
+		"<div style='border:1px solid gray; color:gray;'><table align='center' width='80%'><tr>"
+	      + "<td><h3><b>" + title+"<b></h3></td></tr>"
+	      + "<tr><td>" + description + "</td>"
+	      +"</tr></table></div>";
 }
 
 function recieveBook(image, title, author, publisher, pubdate) {
@@ -242,7 +243,7 @@ function colorchart(){
 			
 			for (var k=0 ; k<16 ; k++) {
 				td = document.createElement("td");
-				td.class = "colorchartTd";
+				td.className = "colorchartTd";
 				td.width = "10px";
 				td.height = "10px";
 				td.bgColor = "#" + clr[i] + clr[j] + clr[k];
@@ -376,6 +377,11 @@ function changeForm() {
 		document.getElementById("dateTd").innerHTML = "날짜";
 		document.getElementById("dateTd2").innerHTML =
 			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
+		document.getElementById("dateTd2").innerHTML =
+			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
+		je_doc.body.innerHTML += "<table border='1'><tr><td rowspan='2'>2017-06-06</td>"
+				+ "<td><input type='text' placeholder='제목을 입력해주세요.'></td>"
+				+ "<tr><td><input type='text' placeholder='기분을 입력해주세요.'></td></tr> </tr></table>";
 	}
 	else {
 		document.getElementById("dateTd").innerHTML = "";
@@ -714,3 +720,72 @@ function drop(ev) {
 	//ev.preventDefault(); // 요소 위에 다른 요소가 올 수 있도록 허용
 	ev.target.appendChild(document.getElementById(id));
 }
+
+function newsSearch() {
+
+	$.ajax({
+		url:"newssearch2.do",
+		data: {keyword : $('#newsSearchText').val() },
+		success:function(data){
+            callbackNewsSearch(data);
+		}
+	});
+}
+
+function callbackNewsSearch(data) {
+
+	   var jsonObj = JSON.stringify(data);
+	   var jsonArr = JSON.parse(jsonObj);
+
+	   var tr, td, a;
+	   
+	   var title, description, originallink, pubDate;
+	   
+	   for (var i in jsonArr.list) {
+
+		   tr = document.createElement("tr");
+		   td = document.createElement("td");
+		   a = document.createElement("a");
+		   a.href = "javascript:recieveNews(title, originallink, description, "
+			   + "pubDate); alert(title);";
+		   a.text = (parseInt(i, 10) + 1) + ". " + title;
+		   
+		   title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
+		   description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
+		   originallink = jsonArr.list[i].originallink;
+		   pubDate = jsonArr.list[i].pubDate;
+		   
+		   /*
+		   td.innerHTML = "<a href='javascript:recieveNews("
+			   + title + ", " + originallink + ", " + description + ", "
+			   + pubDate + "); alert(" + title + ");'>"
+			   + (parseInt(i, 10) + 1) + ". "
+		   		+ title + "</a>";
+		   */
+		   td.appendChild(a);
+		   tr.appendChild(td);
+		   document.getElementById("newSearchRes").appendChild(tr);
+
+		   tr = document.createElement("tr");
+		   td = document.createElement("td");
+		   a = document.createElement("a");
+		   a.href = "javascript:recieveNews(title, originallink, description, "
+			   + "pubDate); alert(title);";
+		   a.text = description;
+		   
+		   /*
+		   td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
+			   + title + "\', \'" + originallink + "\', \'" + description + "\', \'"
+			   + pubDate + "\'); alert(title);'>"
+		   		+ description + "</a></li></ul>";
+		   */
+		   td.appendChild(a);
+		   tr.appendChild(td);
+		   document.getElementById("newSearchRes").appendChild(tr);
+		   
+		   
+		  //jsonArr.list.originallink;
+		  //jsonArr.list.pubDate;
+	   }
+}
+

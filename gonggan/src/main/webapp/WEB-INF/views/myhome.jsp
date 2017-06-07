@@ -104,6 +104,14 @@ System.out.println(str);
 		$("#year").text(year);
 		$("#month").text(month<10 ? "0" + month : month);
 		$("#today").text(today<10 ? "0" + today : today);
+
+		$(".hover").hover(function(){
+			//$(this).css("backgroundColor", "gray");
+			if ($(".hover").hasClass("grayTd"))
+				$(this).removeClass("grayTd");
+			else
+				$(this).addClass("grayTd");
+		});
 		
 		$("#blogOwnerClick").click(function() {
 			if ($(".blogOwnerClick").hasClass("hidden")) {
@@ -161,7 +169,7 @@ System.out.println(str);
 				</c:if>
 			</div>
 		</nav>
-	
+
 	<!-- 다정다정 -->
    
 		<div id="loginUserDetail" class="hidden">
@@ -235,11 +243,10 @@ System.out.println(str);
 				</a> &nbsp;
 				<div class="blogOwnerClick hidden">
 					<div>
-						<div>
-							<a href="javascript:reqNeig();">이웃 신청</a><hr><a href="">프로필 보기</a>
-						</div>
-						<img src="images/idclick_icon.png" width="100%" height="100%">
+						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
+						<hr><a class="hover" a href="">프로필 보기</a>
 					</div>
+					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>
 				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writer_id}"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
 			</div>

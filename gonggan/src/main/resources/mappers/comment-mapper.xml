@@ -11,6 +11,7 @@
       <result property="comment_content" column="comment_content" />
       <result property="comment_date" column="comment_date" />
       <result property="comment_check" column="comment_check" />
+      <result property="alarm_num" column="alarm_num" />
    </resultMap>
    
    <select id="clist" parameterType="String" resultMap="commentResult">
@@ -41,7 +42,7 @@
    </select>
 
    <select id="cnum" parameterType="comment" resultType="int">
-   select nvl(max(comment_num), 0) from comments where post_id = #{post_id} + 1
+   select nvl(max(comment_num), 0) + 1 from comments where post_id = #{post_id}
    </select>
    
    <select id="tracelist" parameterType="String" resultMap="commentResult">
@@ -49,29 +50,33 @@
    order by comment_num
    </select>
    
-	<insert id="cinsert" parameterType="Map">
-   insert into alarm values (seq_alarm.nextval, 'C', #{postId}, null, ${comment_num})
-   </insert>
-    
-   <insert id="cinsert2" parameterType="comment" >
-   insert into comments
-   values(#{post_id}, #{comment_num}, 
-   #{writer_id}, #{comment_content}, sysdate, default, seq_alarm.nextval)
-   </insert>
+	<select id="alarmnum" resultType="int">
+	select seq_alarm.nextval from dual
+	</select>
    
-   <update id="cupdate">
-   update table comment
-   set
-   </update>
-   
-   <delete id="cdelete" parameterType="comment" >
-   delete from comments
-   where post_id=#{post_id} and comment_num=#{comment_num}
-   </delete>
-   <delete id="adelete" parameterType="comment" >
-   delete from alarm
-   where post_id=#{post_id} and comment_num=#{comment_num}
-   </delete>
-   
-   
+	<insert id="cinsert" parameterType="comment">
+	insert into alarm values (${alarm_num}, 'C', ${post_id}, ${comment_num})
+	</insert>
+	
+	<insert id="cinsert2" parameterType="comment" >
+	insert into comments
+	values(#{post_id}, #{comment_num}, 
+	#{writer_id}, #{comment_content}, sysdate, default, ${alarm_num})
+	</insert>
+
+	<update id="cupdate">
+	update table comment
+	set
+	</update>
+
+	<delete id="cdelete" parameterType="comment" >
+	delete from comments
+	where post_id = #{post_id} and comment_num = #{comment_num}
+	</delete>
+
+	<delete id="adelete" parameterType="comment" >
+	delete from alarm
+	where post_id = #{post_id} and comment_num = #{comment_num}
+	</delete>
+
 </mapper>

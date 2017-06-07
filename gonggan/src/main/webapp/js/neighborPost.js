@@ -139,7 +139,7 @@ function callbackList(data) {
       td = document.createElement("td");
       td.colSpan = "2";
       td.class = "blogHomeContent";
-      alert(photoPath);
+      
       /*td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
          + "postId=" + postId
          + "&writerId=" + writerId + "'>"
@@ -156,16 +156,24 @@ function callbackList(data) {
             + decodeURIComponent(content.replace(Ca, " "))
             + "</a>"
             tr.appendChild(td);
+         td.width ="30px";
          table.appendChild(tr);
       }
       else{
-         td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
+        tr.innerHTML = "<td colspan='2' class='nPostTd' width='150px' height='150px' background='uploadImages/"
+          + photoPath + "'>" 
+             + "<a class='nPostText' data-fancybox data-src='pdetail.do?"
+                + "postId=" + postId
+                + "&writerId=" + writerId + "'>"
+                + decodeURIComponent(content.replace(Ca, " "))
+                + "</a><td></td>"
+         /*td.innerHTML = "<div class='nPostCell'><a class='nPostText' data-fancybox data-src='pdetail.do?"
             + "postId=" + postId
             + "&writerId=" + writerId + "'>"
             + decodeURIComponent(content.replace(Ca, " "))
-            + "<image src='uploadImages/"+ photoPath + "' width='170px' height='170px'>"
-            + "</a>"
-            tr.appendChild(td);
+            + "<image class='nPostImg' src='uploadImages/"+ photoPath + "' width='170px' height='170px'>"
+            + "</a></div>"
+            tr.appendChild(td);*/
          table.appendChild(tr);
       }
       

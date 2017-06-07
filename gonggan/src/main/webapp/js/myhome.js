@@ -1,6 +1,7 @@
 var postId;
 var Ca = /\+/g;
 var str = "";
+
 /*function trace(loginUser) {
 	$.ajax({
 	      url: "/gonggan/trace.do",
@@ -247,7 +248,7 @@ function callbackCommentList(data, postId){
 	
 	td.innerHTML = "<a href='javascript:void(0);' onclick='moreComment(" + postId + ", $(this).parent().parent());'>"
 			+ "더보기</a>";
-	td.class = "moreComment";
+	td.className = "moreComment";
 	td.colSpan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
@@ -270,7 +271,7 @@ function callbackCommentList(data, postId){
 
     tr = document.createElement("tr");
 	td = document.createElement("td");
-	td.class = 'divisionPadding';
+	td.className = 'divisionPadding';
 	td.innerHTML = "<label class='checkbox-wrap'>"
 	+ "<input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
 	+ "<input id='commentTb' type='text' placeholder='댓글 달기' "
@@ -301,14 +302,6 @@ function callbackCommentList(data, postId){
   	  'closeBtn' : false,
   	  'fullScreen' : false
   	 });
-	
-	$(".hover").hover(function(){
-		//$(this).css("backgroundColor", "gray");
-		if ($(".hover").hasClass("grayTd"))
-			$(this).removeClass("grayTd");
-		else
-			$(this).addClass("grayTd");
-	});
 	
 }
 
@@ -397,13 +390,13 @@ function dotdotdot(obj){
 
 function reqNeig() {
 	
-	var obj = $(".blogOwnerClick>div>div").children("a:nth-child(1)");
+	var obj = $(".blogOwnerClick>div").children("a:nth-child(1)");
 	
 	if (obj.text() == "이웃 신청") {
 		obj.text("신청 취소");
 	}
 	
-	 else if (obj.text() == "이웃 신청") {
-		obj.text("신청 취소");
+	 else if (obj.text() == "신청 취소") {
+		obj.text("이웃 신청");
 	}
 }

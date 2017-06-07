@@ -18,7 +18,10 @@ public interface PostService {
 	String selectPostWriter(int post_id);
 	List<Post> selectAll(int rownum, int rownum2);
 	List<Post> selectLikeAll(int rownum, int rownum2);
+	List<Post> selectLikeNpost(int rownum, int rownum2, String writer_id);
+	List<Post> selectLikeCategoryPost(int rownum, int rownum2, String category);
 	List<Post> selectAll_index2();
+	List<Post> selectNeighborAll_index2(String member_id);
 	List<Post> selectMusic(int rownum, int rownum2);
 	List<Post> selectMovie(int rownum, int rownum2);
 	List<Post> selectDiary(int rownum, int rownum2);

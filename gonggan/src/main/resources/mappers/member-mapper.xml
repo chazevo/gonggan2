@@ -71,10 +71,6 @@
     delete from member where member_id = #{memberId}  
    </delete>
 	
-	<insert id="requestNeig">
-	insert 
-	</insert>
-	
 	<update id="naccept" parameterType="Map">
 	update neighbor set alram_yn = 'Y', check_yn = 'Y'
 	where receiver = #{memberId} and sender = #{memberId2}
@@ -89,10 +85,6 @@
 	select sender from neighbor
 	where receiver = #{memberId}
 	and alram_yn = 'N'
-	</select>
-	
-	<select id="neigList">
-	select 
 	</select>
 	
 	<select id="selectVisitorList" parameterType="int" resultMap="memberResult">

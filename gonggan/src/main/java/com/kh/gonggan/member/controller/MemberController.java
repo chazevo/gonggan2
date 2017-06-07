@@ -151,8 +151,10 @@ public class MemberController {
 		//String wr = (String)session.getAttribute("wr_id");
 	      
 		//mv.addObject("writer_id", wr);
-		mv.setViewName(vn);
-	      
+		mv.setViewName("redirect:" + vn + ".do");
+	    // redirect는 다시한번 더 Controller를 거치게 되고
+		//redirect가 없다면 바로 jsp페이지를 불러오게 된다.
+		
 		if(session != null)
 			session.invalidate();
 		return mv;

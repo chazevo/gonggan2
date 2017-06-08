@@ -28,7 +28,7 @@ function selectBook(image, title, author, publisher, pubdate) {
 
 function selectMusic(videoId, title, thumbnail) {
 	
-	//parent.recieveMusic(videoId, title, thumbnail);
+	parent.recieveMusic(videoId, title, thumbnail);
 
 	parent.$.fancybox.close();
 }

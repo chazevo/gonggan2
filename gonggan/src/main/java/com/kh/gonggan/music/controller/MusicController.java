@@ -134,6 +134,7 @@ public class MusicController {
 		} catch (Throwable t) {
 			t.printStackTrace();
 	    }
+		System.out.println(searchMusicList);
 		
 		mv.setViewName("searchAll");
 		mv.addObject("searchMusicList", searchMusicList);

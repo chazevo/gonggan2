@@ -100,6 +100,13 @@ function recieveMovie(image, title, director , actor, pubDate) {
 		+"<tr><td> 개봉 "+pubDate+" </td></tr>"
 		+ "</td></tr></table>";
 }
+function recieveMusic(videoId, title, thumbnail){
+	document.getElementById('editor').contentWindow.document.body.innerHTML += 
+		"<center><b><h4>" +title+"</h4></b></center>" +
+		"<table align='center' width='60%' style='border:1px solid gray; color:gray;'>" +
+			"<tr><td><img src='" + thumbnail + "' width='100%' height='280px'></td></tr>"
+		+ "<tr><td>" + title + "</td></tr></table>";
+}
 
 function recieveNews(title, originallink, description, pubDate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
@@ -130,7 +137,20 @@ function recieveBook(image, title, author, publisher, pubdate) {
 
 function recieveMap(image) {
 	je_doc.body.focus();
+	je_doc.execCommand('justifycenter', 'false', 'null');
 	je_doc.execCommand('InsertImage', 'false', '/gonggan/uploadImages/' + image);
+	document.getElementById('editor').contentWindow.document.body.innerHTML += 
+					"<br><br><br><br><br><br><br>"
+					+ "<table width='80%' align='center'><tr><td>"
+					+ "<div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);" +
+					" color:white; border-radius:20px;'><b>어떤곳?</b></div></td></tr>" +
+					"<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>" +
+					"<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);" +
+					" color:white; border-radius:20px;'><b>무슨 일로?</b></div><br></td></tr>" +
+					"<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>" +
+					"<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF); color:white;" +
+					"border-radius:20px;'><b>무엇을 했나요?</b></div><br></td></tr>" +
+					"<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr></table>";
 }
 
 function tagaddfunc(){
@@ -365,6 +385,8 @@ function changeTitle() {
 }
 
 function changeForm() {
+	var today = new Date();
+	
 	$("#textarea").focus();
 	
 	if (document.getElementById("category").value == "review") {
@@ -387,9 +409,25 @@ function changeForm() {
 			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
 		document.getElementById("dateTd2").innerHTML =
 			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
-		je_doc.body.innerHTML += "<table border='1'><tr><td rowspan='2'>2017-06-06</td>"
-				+ "<td><input type='text' placeholder='제목을 입력해주세요.'></td>"
-				+ "<tr><td><input type='text' placeholder='기분을 입력해주세요.'></td></tr> </tr></table>";
+		je_doc.body.innerHTML += "<table style='border-collapse:collapse;width:100%;'>"
+				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='65%'/><col width='5%'/><col width='10%'/></colgroup>"
+				+ "<tr><td id='datetd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
+				+ (today.getDate() <10 ? "0"+ today.getDate() : today.getDate() )
+				+"</td>"
+				+"<td id='daytd' style='font-family: \"Francois One\", sans-serif; font-size:200%; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; border-right:1px solid #E6E6E6;padding:5px; -webkit-transform:rotate(270deg);' rowspan='2'>"
+				+ dateToday(today) + "</td>"
+				+"<td style='border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;'>제목</td>"
+				+ "<td id='title' style='border-top:1px solid #E6E6E6;color:#E6E6E6;'>"
+				+ "제목을 입력해주세요.</td>"
+				+ "<td style='border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; '>"
+				+ "<span style=''>날씨</span></td>"
+				+ "<td id='weathertd' style='border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; border-right:1px solid #E6E6E6;'>"
+				+ "<span style='color:#E6E6E6'></span></td></tr>"
+				+"<tr><td style='padding:5px;border-bottom:1px solid #E6E6E6;'></td>"
+				+ "<td style='border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; border-right:1px solid #E6E6E6;' colspan='3'>"
+				+ "<span style='color:#E6E6E6'>기분을 입력해주세요..</span></td>" +
+						"</tr></table>" +
+						"<div id='contentArea' style='padding:10px;'>내용을 입력해주세요.</div>";
 	}
 	else {
 		document.getElementById("dateTd").innerHTML = "";
@@ -463,13 +501,43 @@ function changeForm() {
 	
 }
 
+function dateToday(date) {
+	var returnValue;
+	switch(date.getDay()) {
+	case 0:
+		returnValue = "<span style='color:red'>SUN</span>";
+		break;
+	case 1:
+		returnValue = "MON";
+		break;
+	case 2:
+		returnValue = "TUE";
+		break;
+	case 3:
+		returnValue = "WED";
+		break;
+	case 4:
+		returnValue = "THU";
+		break;
+	case 5:
+		returnValue = "FRI";
+		break;
+	case 6:
+		returnValue = "<span style='color:blue'>SAT<span>";
+		break;
+	}
+	return returnValue;
+}
+
 function content_OK() {
 
 	console.log(je_doc.body.innerHTML == " ");
 
 	if (je_doc.body.innerHTML != "") {
-	      if (confirm("포스트를 게시하시겠습니까? ") == true)
-	         $('#form').submit();
+	      if (confirm("포스트를 게시하시겠습니까? ") == true) {
+	    	  $("input[name=title]").val(je_doc.getElementById("title").innerHTML);
+	      		$('#form').submit();
+	      }
 	      else return;
 	   }
 	   else alert("본문 내용을 입력해주세요");
@@ -562,7 +630,8 @@ function callbackWlocationList(data) {
 	        position: new naver.maps.LatLng(lat, lon)
 	    });
 		
-		overlay._element.html('<a href="javascript:je_doc.body.focus(); je_doc.execCommand(\'InsertImage\', false, \'images/weatherIcons/' + icon + '\');">'
+		//je_doc.body.focus(); je_doc.execCommand(\'InsertImage\', false, \'images/weatherIcons/' + icon + '\');
+		overlay._element.html('<a href="javascript:wiconInnerHTML(\'' + icon + '\');">'
 				+ '<div style="position:absolute;left:0;top:0;width:25%;background-color:white;font-size:50%;text-align:center;">'
                 + '<span style="font-weight: bold;">'
                 + decodeURIComponent(jsonArr.list[i].city) + '</span><br>'
@@ -572,6 +641,10 @@ function callbackWlocationList(data) {
 	}
 	
 	
+}
+
+function  wiconInnerHTML(icon) {
+	je_doc.getElementById('weathertd').innerHTML = "<img src='images/weatherIcons/" + icon +"' width='50%'>";
 }
 
 function requestWeatherStatus(lat, lon) {
@@ -751,17 +824,18 @@ function callbackNewsSearch(data) {
 	   
 	   for (var i in jsonArr.list) {
 
-		   tr = document.createElement("tr");
-		   td = document.createElement("td");
-		   a = document.createElement("a");
-		   a.href = "javascript:recieveNews(title, originallink, description, "
-			   + "pubDate); alert(title);";
-		   a.text = (parseInt(i, 10) + 1) + ". " + title;
 		   
 		   title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
 		   description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
 		   originallink = jsonArr.list[i].originallink;
 		   pubDate = jsonArr.list[i].pubDate;
+		   
+		   tr = document.createElement("tr");
+		   td = document.createElement("td");
+		   a = document.createElement("a");
+		   a.href = "javascript:recieveNews(title, originallink, description, "
+			   + "pubDate); alert(title);";
+		   a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
 		   
 		   /*
 		   td.innerHTML = "<a href='javascript:recieveNews("
@@ -779,7 +853,7 @@ function callbackNewsSearch(data) {
 		   a = document.createElement("a");
 		   a.href = "javascript:recieveNews(title, originallink, description, "
 			   + "pubDate); alert(title);";
-		   a.text = description;
+		   a.innerHTML ="<ul><li>"+ description+"</li></ul>";
 		   
 		   /*
 		   td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"

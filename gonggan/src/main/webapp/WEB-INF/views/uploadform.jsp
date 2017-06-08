@@ -87,6 +87,11 @@
 		colorchart2();
 		colorchart3();
 
+		$("#editor").click(function() {
+			alert();
+			if ($(this).text() == "내용을 입력해주세요." )  $(this).text("");
+		});
+		
 		$("#colorchart td").click(function() {
 			contenttextcolor($(this).attr('bgColor'));
 		});
@@ -860,6 +865,7 @@
 					<tr>
 						<td colspan="5" class="footerDiv">
 							<div>
+								<input type="hidden" name="title">
 								<div class="grad"  onclick="content_OK()">등 록</div>&nbsp;
 								<div class="grad" onclick="cancel();">취 소</div>
 							</div>

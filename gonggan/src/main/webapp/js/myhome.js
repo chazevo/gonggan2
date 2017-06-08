@@ -60,6 +60,18 @@ function visit() {
 		   });
 }
 
+function requestCalList(year, month) {
+	$.ajax({
+		url: "/gonggan/calpostlist.do",
+		data: { writer_id : writer_id,
+			year:year, month:month
+		},
+		success: function(data) {
+			callbackList(data);
+		}
+	});
+}
+
 function requestList() {
 	
 	$.ajax({
@@ -70,15 +82,12 @@ function requestList() {
 					category: "all"
 				},
 				success: function(data) {
-	    	  if (document.getElementById("calendar").checked == true )
-	    		  callbackList(data);
-	    	  else if (document.getElementById("calendar").checked == false )
-	    		  callbackList2(data);
-	      },
-	      error: function(data,status,error){
-	         console.log("error : " + error);
-	      }
-	   });
+					callbackList2(data);
+				},
+				error: function(data,status,error) {
+					console.log("error : " + error);
+				}
+	});
 }
 
 function requestCategoryList(category) {
@@ -340,7 +349,7 @@ function lastMonth() {
 	$("#month").text(month<10 ? "0" + month : month);
 	$("#today").text((date2.getMonth() + 1) == month ? date2.getDate() : "");
 	
-	requestList();
+	requestCalList(year, month);
 }
 
 function nextMonth() {
@@ -361,7 +370,7 @@ function nextMonth() {
 	$("#month").text(month<10 ? "0" + month : month);
 	$("#today").text((date2.getMonth() + 1) == month ? date2.getDate() : "");
 	
-	requestList();
+	requestCalList(year, month);
 }
 
 function checkboxControl(type, object) {

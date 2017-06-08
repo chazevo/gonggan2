@@ -13,7 +13,11 @@ public class PostSericeImpl implements PostService{
 	
 	@Autowired
 	PostDao postDao;
-	
+
+	@Override
+	public List<Post> selectCalendarAll(String writer_id, int year, int month) {
+		return  postDao.selectCalendarAll(writer_id, year, month);
+	}
 
 	@Override
 	public List<Post> selectAll(int rownum, int rownum2) {

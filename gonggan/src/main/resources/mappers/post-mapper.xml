@@ -32,6 +32,21 @@
       <insert id="pinsert" parameterType="Map">
       insert into post values(${post_id},#{loginUser},#{category},'N','N',default,null,sysdate)
    </insert>
+	
+	<select id="calplist" parameterType="Map" resultMap="postResult">
+	select *
+	from post left join movie using (post_id)
+	left join diary using(post_id)
+	left join music using(post_id)
+	left join news using(post_id)
+	left join review using(post_id)
+	where (post_date between to_date(#{year}||'-'||#{month}, 'YYYY-MM') and
+	to_date(decode(#{month}, 12, #{year}+1, #{year})||'-'||
+	decode(#{month}, 12, 1, #{month}+1), 'YYYY-MM')-1)
+	<!-- decode(값, 조건, 참일경우, 거짓일경우) -->
+	and writer_id = #{writer_id}
+	order by 1 desc
+	</select>
 
 	<select id="plist" parameterType="Map" resultMap="postResult">
 	select * from

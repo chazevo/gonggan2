@@ -20,6 +20,7 @@ public interface PostService {
 	List<Post> selectUserPlace(String writer_id, int rownum, int rownum2);
 	List<Post> selectUserDiary(String writer_id, int rownum, int rownum2);
 	String selectPostWriter(int post_id);
+	List<Post> selectCalendarAll(String writer_id, int year, int month);
 	List<Post> selectAll(int rownum, int rownum2);
 	List<Post> selectLikeAll(int rownum, int rownum2);
 	List<Post> selectLikeNpost(int rownum, int rownum2, String writer_id);

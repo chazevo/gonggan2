@@ -15,7 +15,16 @@ public class PostDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	public PostDao(){}
-
+	
+	public List<Post> selectCalendarAll(String writer_id, int year, int month) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("year", year + "");
+		map.put("month", month + "");
+		
+		return  (List<Post>) sqlSession.selectList("postmapper.calplist", map);
+	}
+	
 	public List<Post> selectUserAll(String writer_id, int rownum, int rownum2) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("writer_id", writer_id);

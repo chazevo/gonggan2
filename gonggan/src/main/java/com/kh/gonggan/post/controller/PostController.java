@@ -299,6 +299,49 @@ public class PostController {
 		return content;
 	}
 	
+	@RequestMapping(value="calpostlist.do", produces={"application/json"})
+	@ResponseBody
+	public String calendarPostList(@RequestParam String writer_id, 
+			@RequestParam int year, @RequestParam int month) {
+
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		List<Post> plist  = postService.selectCalendarAll(writer_id, year, month);
+		
+		for(Post p : plist) {
+			
+			JSONObject job = new JSONObject();
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(p.getPost_date());
+			
+			job.put("postId", p.getPost_id() + "");
+			job.put("writerId", p.getWriter_id());
+			try {
+				job.put("category", URLEncoder.encode(
+						p.getCategory(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			job.put("postId", p.getPost_id() + "");
+			job.put("sharYn", p.getShar_yn());
+			job.put("openYn", p.getOpen_yn());
+			job.put("writerId", p.getWriter_id());
+			job.put("goodCnt", p.getGoodCnt() + "");
+			job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+			job.put("year", cal.get(Calendar.YEAR) + "");
+			job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
+			job.put("date", cal.get(Calendar.DATE) + "");
+
+			jarr.add(job);
+		}
+		json.put("list", jarr);
+		
+		return json.toJSONString();
+	}
+	
 	@RequestMapping(value="/plikelist.do", produces={"application/json"})
 	@ResponseBody
 	public String selectBloghomeLikeList(@RequestParam int rownum,

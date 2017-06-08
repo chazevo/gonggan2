@@ -245,12 +245,11 @@ public class BlogController {
 					System.out.println("asdftest");
 				}
 				/*if (blogService.blogSetting(
-	                  new Blog(multiRequest.getParameter("blogTitle"),
-	                        ((Member) session.getAttribute("loginUser")).getMember_id(),
-	                        multiRequest.getParameter("blogComment"), renameFileName,
-	                        multiRequest.getParameter("color"),
-	                        
-	                        multiRequest.getParameter("background_color"),
+					new Blog(multiRequest.getParameter("blogTitle"),
+					((Member) session.getAttribute("loginUser")).getMember_id(),
+	                 multiRequest.getParameter("blogComment"), renameFileName,
+	                 multiRequest.getParameter("color"),
+	                 multiRequest.getParameter("background_color"),
 	                        multiRequest.getParameter("contents_color"),
 	                        multiRequest.getParameter("languages"),
 	                        multiRequest.getParameter("blogOpenYn"),

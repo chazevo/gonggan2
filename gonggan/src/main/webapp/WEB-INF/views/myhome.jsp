@@ -97,7 +97,7 @@ System.out.println(str);
 
 	window.onload = function() {
 		visit();
-		requestList();
+		requestCalList(year, month);
 
 		$(".blogOwnerClick").hide();
 		
@@ -323,7 +323,7 @@ System.out.println(str);
 									<a href="uploadform.do?writer_id=${param.writer_id}">포스트 쓰기 </a>
 								</c:if>
 								<label class='radio-wrap'>
-									<input type='radio' name='listType' id='calendar'  onclick='requestList();' checked>
+									<input type='radio' name='listType' id='calendar'  onclick='requestCalList(year, month);' checked>
 									<i class='calendar-icon'></i>
 								</label>
 								<label class='radio-wrap'>

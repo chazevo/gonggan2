@@ -43,7 +43,7 @@ function like(obj, loginUser, postId){
 			  plikecnt =  postLikeCnt(postId);
 				target.html( ( plikecnt > 0 ?
 						("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>좋아요&nbsp;"
-						+ plikecnt +  "개</a>") : (plikecnt + "") ) );
+						+ plikecnt +  "개</a>") : ("좋아요&nbsp;" + plikecnt + "") ) );
 
 		  },
 		  error: function(data,status,error){
@@ -61,7 +61,7 @@ function like(obj, loginUser, postId){
 			  plikecnt =  postLikeCnt(postId);
 				target.html( ( plikecnt > 0 ?
 						("<a data-fancybox data-src='goodList.do?postId=" + postId + "'>좋아요&nbsp;"
-						+ plikecnt +  "개</a>") : (plikecnt + "") ) );
+						+ plikecnt +  "개</a>") : ("좋아요&nbsp;" + plikecnt + "") ) );
 
 		  },
 		  error: function(data,status,error){
@@ -134,7 +134,7 @@ function callbackSendComment(data){
 			+ (month<10 ? "0"+ month : month)  + "-" + (date<10 ? "0"+date : date)
 			+ "</span>"
 			+ '&nbsp;&nbsp;<a href="javascript:deleteComment(' + data + ')">'
-			+ '<img src="images/delete_sign_filled1600.png" width="2%"></a>';
+			+ '<img src="images/delete_sign_filled1600.png" width="1%"></a>';
 	tr.appendChild(td);
 	
 	document.getElementById("listbody").appendChild(tr);

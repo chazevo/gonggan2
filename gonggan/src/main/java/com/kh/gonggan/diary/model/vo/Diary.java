@@ -4,8 +4,25 @@ public class Diary {
    private int post_id;
    private int diary_num;
    private String diary_content;
+   private String title;
    
-   public Diary(){}
+   public String getTitle() {
+	return title;
+}
+
+public void setTitle(String title) {
+	this.title = title;
+}
+
+public Diary(int post_id, int diary_num, String diary_content, String title) {
+	super();
+	this.post_id = post_id;
+	this.diary_num = diary_num;
+	this.diary_content = diary_content;
+	this.title = title;
+}
+
+public Diary(){}
 
    public Diary(int post_id, int diary_num, String diary_content) {
       super();

@@ -7,10 +7,11 @@
 		<id property="diary_num" column="diary_num"/>
 		<result property="post_id" column="post_id"/>
 		<result property="diary_content" column="diary_content"/>
+		<result property="title" column="title"/>
 	</resultMap>
 	
 	<insert id="dinsert" parameterType="Map">
-		insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content})
+		insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content},#{title})
 	</insert>
 	
 	<select id="diarylist" resultMap="diaryResult" parameterType="Map">

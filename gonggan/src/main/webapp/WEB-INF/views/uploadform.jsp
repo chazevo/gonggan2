@@ -378,7 +378,7 @@
 		
 		<section>	
 			<div class="uploadFormDiv" > <!-- style="border:1px;"  -->
-				<table border="1" width="100%"  id="uploadtable" > 
+				<table border="1" width="100%"  id="uploadtable" align="center"> 
 					<colgroup>
 						<col width="20%" />
 						<col width="20%" />
@@ -387,7 +387,7 @@
 						<col width="30%" />
 					</colgroup>
 					<tr>
-						<td>분류 </td>
+						<td align="center">분류 </td>
 						<td colspan="4">
 							<select name="category" id="category" onchange="changeForm();">
 								<option value="default" selected>자유</option>
@@ -451,7 +451,7 @@
 								<option class='imageOp'  value='orange' style="background-color:orange; color:white">주황색</option>
 							</select> 
 						</td>
-						<td>
+						<td align="center">
 							<img src="images/align_left_icon.png" id="content_allign_left"  width="18px" 
 										onclick="je_doc.execCommand('justifyleft', 'false', 'null')"> &nbsp; &nbsp;
 							<img  src="images/align_center_icon.png" id="content_allign_center" width="18px"
@@ -459,7 +459,7 @@
 							<img src="images/align_right_icon.png" id="content_allign_right" width="18px"
 										onclick="je_doc.execCommand('justifyright', 'false', 'null')"> &nbsp;
 						</td>
-						<td>
+						<td align="center">
 								<img  src="images/link_icon.png" width="42px"
 											onclick='var s=prompt();if(s!="") je_doc.execCommand("createlink",false,s);'> &nbsp;&nbsp;
 							
@@ -478,7 +478,7 @@
 											<th>이모티콘 선택</th>
 										</tr>
 										<tr id="center_align">
-											<td>
+											<td >
 												<img  src="images/emoticon/1.png" width="20px" id="imo_icon"
 													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
 												<img  src="images/emoticon/2.png" width="20px" id="imo_icon"
@@ -517,7 +517,7 @@
 								</div>
 							 </form> 
 							</td>
-						<td>
+						<td align="center">
 							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
 							<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');" data-target="#layerpop" data-toggle="modal">
 								테이블 삽입
@@ -557,7 +557,7 @@
 								</div>
 							</div>
 						</td>
-						<td>
+						<td align="center">
 							<a id="weatherLink" href="javascript:void(0);">날씨</a>
 							<div id="weatherDiv" class="hidden" >
 								<div id="wmapDiv">
@@ -632,12 +632,12 @@
 								</div>
 							</div>
 						</td>
-						<td id="dateTd">날짜 </td>
+						<td align="center" id="dateTd">날짜 </td>
 						<td id="dateTd2">
 							<input type="text" name="toDate" id="toDate" size="10" onchange="javascript:changeTitle()">
 						</td>
 					<tr>
-						<td>
+						<!-- <td>
 							<img  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
 										onclick="imageChange();">&nbsp; &nbsp;배경
 						</td>
@@ -659,13 +659,13 @@
 							</label>
 							<a id="colorChoice2" href="javascript:void(0);"><img  src="images/fill_color-512.png" width="8%" ></a>
 							<div id="colorchart2" class="hidden"></div>
+						</td> -->
+						<td >
+							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="12%"></a>
 						</td>
-						<td colspan="2" >
-							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="8%"></a>
-							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="5%"></a>
+						<td>
+							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="10%"></a>
 						</td>
-					</tr>
-					<tr>
 						<td>
 							<button type="button" data-toggle="collapse" id="tagadddbtn">태그</button>
 							<div id="tag" class="collapse">					
@@ -675,6 +675,9 @@
 							</div>
 						</td>
 						<td colspan="4" id="tagview"></td>
+					</tr>
+					<tr>
+						
 					</tr>
 		
 
@@ -723,21 +726,19 @@
 								<div id="movie" class="collapse">
 									<table width="100%">
 									<tr>
-										<td>제목</td>
-										<td><input type="text" id="movieSearchText" onkeyup="if (event.keyCode == 13) searchMovie();"></td>
-										<td rowspan="2">
-											<button type="button" id="searchBtn" onclick="searchMovie();">검색</button>
+										<td>
+											<input type="text" id="movieSearchText" name="keyword" value="${keyword }" placeholder="기 사 검 색" 
+													onkeydown="if(event.keyCode == 13) searchMovie();">
+												<a href="javascript:searchMovie();">
+													<img src=images/search.png width="5%" >
+												</a>
 										</td>
-									</tr>
-										<td>감독</td>
-										<td><input type="text" id="directorSearchText" ></td>
-									</tr>
 									<tr>
 										<td colspan="3">주간 박스오피스 </td>
 									</tr>
 									<c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
 									<tr>
-										<td colspan=3>${i.rank} ${i.movieNm } (${i.audiAcc }명)</td>
+										<td colspan=3><a href="javascript:$('movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">${i.rank} ${i.movieNm } (${i.audiAcc }명)</a></td>
 									</tr>
 									</c:forEach>
 									</table>

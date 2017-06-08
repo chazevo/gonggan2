@@ -143,6 +143,68 @@ public class MusicController {
 		
 		return mv;
 	}
+	@RequestMapping(value="/musicpost2.do", produces="text/plain;charset=UTF-8", method=RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView musicpost2(@RequestParam String keyword,
+			ModelAndView mv){
+		
+		List<Music> searchMusicList = null;
+		
+		/*
+		Properties properties = new Properties();
+		
+		try {
+			InputStream in = MusicController.class.getResourceAsStream(
+					"/" + PROPERTIES_FILENAME);
+			properties.load(in);
+		} catch (IOException e) {
+			System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
+	          + " : " + e.getMessage());
+			System.exit(1);
+		}
+		*/
+		try {
+			
+			youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
+				public void initialize(HttpRequest request) throws IOException {}
+			}).setApplicationName("youtube-cmdline-search-sample").build();
+			
+			//String queryTerm = getInputQuery();
+			String queryTerm = keyword;
+			
+			YouTube.Search.List search = youtube.search().list("id,snippet");
+			//String apiKey = properties.getProperty("youtube.apikey");
+			String apiKey = "AIzaSyC7QrEyk_66z2x-d5l2jRkgpheT9yf1VLQ";
+			search.setKey(apiKey);
+			search.setQ(queryTerm);
+			search.setType("video");
+			search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+			search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+			SearchListResponse searchResponse = search.execute();
+			List<SearchResult> searchResultList = searchResponse.getItems();
+			
+			if (searchResultList != null)
+				//prettyPrint(searchResultList.iterator(), queryTerm);
+				searchMusicList = prettyPrint(searchResultList.iterator(), queryTerm);
+			
+		} catch (GoogleJsonResponseException e) {
+			System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+					+ e.getDetails().getMessage());
+		} catch (IOException e) {
+			System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+		} catch (Throwable t) {
+			t.printStackTrace();
+	    }
+		System.out.println(searchMusicList);
+		
+		mv.setViewName("searchAll");
+		mv.addObject("searchMusicList", searchMusicList);
+		mv.addObject("keyword", keyword);
+		mv.addObject("category", 2);
+		
+		return mv;
+	}
+
 	
 	private static String getInputQuery() throws IOException {
 		

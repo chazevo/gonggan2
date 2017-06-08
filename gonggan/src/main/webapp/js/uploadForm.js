@@ -333,7 +333,7 @@ function colorchart2(){
 			table.appendChild(tr);
 		}
 		
-		document.getElementById("colorchart2").appendChild(table);
+		//document.getElementById("colorchart2").appendChild(table);
 	}
 
 }
@@ -410,7 +410,7 @@ function changeForm() {
 		document.getElementById("dateTd2").innerHTML =
 			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
 		je_doc.body.innerHTML += "<table style='border-collapse:collapse;width:100%;'>"
-				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='65%'/><col width='5%'/><col width='10%'/></colgroup>"
+				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='62%'/><col width='8%'/><col width='10%'/></colgroup>"
 				+ "<tr><td id='datetd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
 				+ (today.getDate() <10 ? "0"+ today.getDate() : today.getDate() )
 				+"</td>"
@@ -562,11 +562,27 @@ function searchMusic() {
 		data: { title: $("#musicSearchText").val() },
 		success: function(data) {
 			$("#lyrics div").html(data);
+			
 		},
 		error: function(data,status,error){
 			console.log("error : " + error);
 		}
 	});
+	
+	$.ajax({
+		url: "musicpost2.do",
+		data: { title: $("#musicSearchText2").val() },
+		success: function(data) {
+			callbackMusicSearch(data);
+			
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	
+}
+function callbackMusicSearch(data){
 	
 }
 
@@ -635,7 +651,7 @@ function callbackWlocationList(data) {
 				+ '<div style="position:absolute;left:0;top:0;width:25%;background-color:white;font-size:50%;text-align:center;">'
                 + '<span style="font-weight: bold;">'
                 + decodeURIComponent(jsonArr.list[i].city) + '</span><br>'
-                + "<img src='images/weatherIcons/" + icon + "' width='60%'>"
+                + "<img id='weatherIconClose' src='images/weatherIcons/" + icon + "' width='60%'>"
                 + '<br>' + temperature.substring(0,2) + '℃</div>');
 	    overlay.setMap(map);
 	}
@@ -645,6 +661,10 @@ function callbackWlocationList(data) {
 
 function  wiconInnerHTML(icon) {
 	je_doc.getElementById('weathertd').innerHTML = "<img src='images/weatherIcons/" + icon +"' width='50%'>";
+
+			$("#weatherDiv").hide();
+
+	
 }
 
 function requestWeatherStatus(lat, lon) {

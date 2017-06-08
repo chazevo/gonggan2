@@ -738,7 +738,7 @@
 									</tr>
 									<c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
 									<tr>
-										<td colspan=3><a href="javascript:$('movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">${i.rank} ${i.movieNm } (${i.audiAcc }명)</a></td>
+										<td colspan=3><a href="javascript:$('#movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">${i.rank} ${i.movieNm } (${i.audiAcc }명)</a></td>
 									</tr>
 									</c:forEach>
 									</table>

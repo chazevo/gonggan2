@@ -553,8 +553,20 @@ function cancel() {
 function searchMovie() {
 	if ($("#movieSearchText").val() == "")
 		alert("검색어를 입력해주세요");
+	else{
+		$.ajax({
+			url:"moviesearch2.do",
+			data: {keyword : $('#movieSearchText').val() },
+			success:function(data){
+	            callbackMovieSearch(data);
+			}
+		});
+	}
 }
 
+function callbackMovieSearch(data){
+	
+}
 function searchMusic() {
 	
 	$.ajax({
@@ -583,7 +595,60 @@ function searchMusic() {
 	
 }
 function callbackMusicSearch(data){
-	
+	 var jsonObj = JSON.stringify(data);
+	   var jsonArr = JSON.parse(jsonObj);
+
+	   var tr, td, a;
+	   
+	   var title, description, originallink, pubDate;
+	   
+	   for (var i in jsonArr.list) {
+
+		   
+		   title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
+		   description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
+		   originallink = jsonArr.list[i].originallink;
+		   pubDate = jsonArr.list[i].pubDate;
+		   
+		   tr = document.createElement("tr");
+		   td = document.createElement("td");
+		   a = document.createElement("a");
+		   a.href = "javascript:recieveNews(title, originallink, description, "
+			   + "pubDate); alert(title);";
+		   a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
+		   
+		   /*
+		   td.innerHTML = "<a href='javascript:recieveNews("
+			   + title + ", " + originallink + ", " + description + ", "
+			   + pubDate + "); alert(" + title + ");'>"
+			   + (parseInt(i, 10) + 1) + ". "
+		   		+ title + "</a>";
+		   */
+		   td.appendChild(a);
+		   tr.appendChild(td);
+		   document.getElementById("newSearchRes").appendChild(tr);
+
+		   tr = document.createElement("tr");
+		   td = document.createElement("td");
+		   a = document.createElement("a");
+		   a.href = "javascript:recieveNews(title, originallink, description, "
+			   + "pubDate); alert(title);";
+		   a.innerHTML ="<ul><li>"+ description+"</li></ul>";
+		   
+		   /*
+		   td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
+			   + title + "\', \'" + originallink + "\', \'" + description + "\', \'"
+			   + pubDate + "\'); alert(title);'>"
+		   		+ description + "</a></li></ul>";
+		   */
+		   td.appendChild(a);
+		   tr.appendChild(td);
+		   document.getElementById("newSearchRes").appendChild(tr);
+		   
+		   
+		  //jsonArr.list.originallink;
+		  //jsonArr.list.pubDate;
+	   }
 }
 
 function searchBook() {

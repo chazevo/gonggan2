@@ -243,13 +243,16 @@ public class HomeController {
 	}
    
 	@RequestMapping("myhome.do")
-	public ModelAndView selectBlog(Member member, ModelAndView mv, HttpSession session) {
-		Member loginUser  = memberService.loginCheck(member);
-           
-		String wr = loginUser.getMember_id();
-		System.out.println(wr);
-		mv.addObject("writer_id", wr);
+	public ModelAndView selectBlog(String writer_id, ModelAndView mv, HttpSession session) {
+		
+		Blog blog = new Blog();
+		
+		if (writer_id != null)
+			blog = blogService.selectBlog(writer_id);
+		
+		mv.addObject("blog", blog);
 		mv.setViewName("myhome");
+		
 		return mv;
 	}
    
@@ -283,11 +286,14 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "uploadform.do", method = RequestMethod.GET)
-	public ModelAndView uploadform(Locale locale,@RequestParam String writer_id, ModelAndView mv) {
+	public ModelAndView uploadform(Locale locale, String writer_id, ModelAndView mv) {
 
 		logger.info("Welcome uploadform! ");
 
-		Blog blog = blogService.selectBlog(writer_id);
+		Blog blog = new Blog();
+		
+		if (writer_id != null)
+			blog = blogService.selectBlog(writer_id);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
       

@@ -78,7 +78,7 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		tr.className = "trBottom";
 		td = document.createElement("td");
-		td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
+		td.innerHTML = "<a href='myhome.do?writer_id=" + writerId + "'>"
 			+ writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");

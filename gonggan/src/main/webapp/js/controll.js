@@ -170,8 +170,10 @@ function callbackNeighborVisitorList(data) {
 
 	for ( var j in jsonArr.list) {
 		$("#visitedNeighbor").html(
-				$("#visitedNeighbor").html() + "<a>"
-				+ jsonArr.list[j].member_id + "</a>");
+				$("#visitedNeighbor").html()
+						+ "<a href='myhome.do?writer_id="
+								+ jsonArr.list[j].member_id + "' target='_blank'>"
+						+ jsonArr.list[j].member_id + "</a>");
 
 	}
 }
@@ -185,7 +187,8 @@ function callbackMonNeiVisitorList(data) {
 
 	for ( var j in jsonArr.list) {
 		$("#monNeiVisitor").html(
-				$("#monNeiVisitor").html() + "<a href='myhome.do?userId='>"
+				$("#monNeiVisitor").html() + "<a href='myhome.do?writer_id="
+						+ jsonArr.list[j].member_id + "' target='_blank'>"
 						+ jsonArr.list[j].member_id + "</a>"
 						+ (j < jsonArr.list.length-1 ? ", " : ""));
 	}
@@ -200,7 +203,8 @@ function callbackMonNeiList(data) {
 
 	for ( var j in jsonArr.list) {
 		$("#monNei").html(
-				$("#monNei").html() + "<a href='myhome.do?userId='>"
+				$("#monNei").html() + "<a href='myhome.do?writer_id="
+						+ jsonArr.list[j].member_id + "' target='_blank'>"
 						+ jsonArr.list[j].member_id + "</a>"
 						+ (j < jsonArr.list.length-1 ? ", " : ""));
 	}
@@ -282,23 +286,44 @@ function changeContentsColor(obj) {
 }
 
 function cancelTitleColorChange() {
-	var div = document.createElement("div");
-	d.style.color = color;
-	$('input[name=contents_color]').val('${blog.contents_color }');
-	colorSplit1step = contents_color.split("(")[1];
-	$("input[name=contents_color]").val(cnvrtRGBClrToHex(
-			colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
-	document.body.removeChild(div);
+	var val;
+	
+	colorSplit1step = color.split("(")[1];
+	
+	val = cnvrtRGBClrToHex(
+			colorSplit1step.split(", ")[0],
+			colorSplit1step.split(", ")[1],
+			colorSplit1step.split(", ")[2].split(")")[0]);
+	
+	$("input[name=color]").val(val);
+	$('#blogTitle').css("color", val);
+	
 }
 
 function cancelContentColorChange() {
-	var div = document.createElement("div");
-	d.style.color = contents_color;
-	$('input[name=contents_color]').val('${blog.contents_color }');
+	var val;
 	colorSplit1step = contents_color.split("(")[1];
-	$("input[name=contents_color]").val(cnvrtRGBClrToHex(
-			colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
-	document.body.removeChild(div);
+	
+	val = cnvrtRGBClrToHex(
+			colorSplit1step.split(", ")[0],
+			colorSplit1step.split(", ")[1],
+			colorSplit1step.split(", ")[2].split(")")[0]);
+	
+	$("input[name=contents_color]").val(val);
+	$("#blogComment").css("color", val);
+}
+
+function cancelBgcolorChange() {
+	var val;
+	colorSplit1step = background_color.split("(")[1];
+	
+	val = cnvrtRGBClrToHex(
+			colorSplit1step.split(", ")[0],
+			colorSplit1step.split(", ")[1],
+			colorSplit1step.split(", ")[2].split(")")[0]);
+	
+	$("input[name=background_color]").val(val);
+	$(".bannerEdit").css("background-color", val);
 }
 
 function settingComplete() {

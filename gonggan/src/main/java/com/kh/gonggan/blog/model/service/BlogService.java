@@ -13,7 +13,8 @@ public interface BlogService {
 	List<Member> selectNeigborVisitorList(String wirter_id);
 	List<Member> selectMonNeigborVisitorList(String writer_id) ;
 	List<Member> selectMonNeiList(String writer_id);
-	void blogvisit(String writer_id, String visitor_id);
+	int checkVisit(String writer_id, String blog_id);
+	void blogvisit(String writer_id, String blog_id);
 	int blogSetting(Blog blog);
 	int blogSetting_color(Blog blog);
 	int blogSetting_background(Blog blog);

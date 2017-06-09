@@ -1,5 +1,20 @@
 var Ca = /\+/g;
 
+function visit() {
+	if (loginUser != writer_id)
+		$.ajax({
+		      url: "/gonggan/bvisit.do",
+		      data: {blog_id : blog_id,
+		    	  visitor_id : loginUser},
+		      success: function(data) {
+		    	  
+		      },
+		      error: function(data,status,error){
+		         console.log("error : " + error);
+		      }
+		   });
+}
+
 function checkGood(loginUser, postId){
 	$.ajax({
 		url: "/gonggan/checkGood.do",
@@ -126,7 +141,7 @@ function callbackSendComment(data){
 	
 	td = document.createElement("td");
 	td.colSpan = "3";
-	td.innerHTML ='<b><a href="selectBlog.do?writer_id=' + loginUser
+	td.innerHTML ='<b><a href="myhome.do?writer_id=' + loginUser
 			+ '" target="_blank">' + loginUser + '</a></b> &nbsp;&nbsp;'
 			+ $("#comment_content").val()
 			+"<span class='commentDate'>&nbsp;"
@@ -168,10 +183,10 @@ function callbackCommentDelete(data, comment_num){
 
 function dotdotdot() {
 
-	if ($("#comm>div").css('display') == "block")
-		$("#comm>div").css("display", "none");
+	if ($(".dotdotdotDiv").css('display') == "block")
+		$(".dotdotdotDiv").css("display", "none");
 	else {
-		$("#comm>div").css("display", "block");
+		$(".dotdotdotDiv").css("display", "block");
 	}
 	
 }

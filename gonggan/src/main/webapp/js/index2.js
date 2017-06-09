@@ -172,9 +172,11 @@ function callbackList(data) {
 	
 	var div, table, tr, td;
 	
-	var postId, content, writerId, goodCnt;
+	var postId, content, writerId, goodCnt, photoPath;
 	
 	for (var i in jsonArr.list) {
+		
+		photoPath = jsonArr.list[i].photoPath;
 		
 		div = document.createElement("div");
 		table = document.createElement("table");
@@ -188,6 +190,12 @@ function callbackList(data) {
 		td = document.createElement("td");
 		td.colSpan = "2";
 		td.className = "blogHomeContent";
+
+		if (photoPath != imgVal) {
+			td.style.backgroundImage = "url(uploadImages/" + photoPath + ")";
+			td.style.backgroundSize = "100% 100%";
+		}
+		
 		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
 			+ "postId=" + postId
 			+ "&writerId=" + writerId + "'>"
@@ -199,7 +207,7 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		tr.className = "trBottom";
 		td = document.createElement("td");
-		td.innerHTML = "<a href='selectBlog.do?writer_id=" + writerId + "'>"
+		td.innerHTML = "<a href='myhome.do?writer_id=" + writerId + "'>"
 		+ writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");
@@ -495,7 +503,7 @@ function callbackNeighborList(data){
 		td = document.createElement( 'td' );
 		var a = document.createElement( 'a' );
 		var aText = document.createTextNode(memberId);
-		a.href="selectBlog.do?writer_id="+jsonArr.list[i].memberId;
+		a.href="myhome.do?writer_id="+jsonArr.list[i].memberId;
 		tr.appendChild(td);
 		td.appendChild(a);
 		a.appendChild( aText );
@@ -536,7 +544,7 @@ function callbackNsearch(data) {
       var a = document.createElement( 'a' );
       var aText = document.createTextNode(member_id);
       var font = document.createElement('font');
-      a.href="selectBlog.do?writer_id="+jsonArr.list[i].member_id;
+      a.href="myhome.do?writer_id="+jsonArr.list[i].member_id;
       tr.appendChild(td);
       td.appendChild(a);
       a.appendChild( aText );

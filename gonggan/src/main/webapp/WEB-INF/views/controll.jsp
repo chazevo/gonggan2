@@ -33,7 +33,7 @@ int today = cal.get(Calendar.DATE);
 	var year = <%= year %>;
 	var month = <%= month %>;
 	var today = <%= today %>;
-	var writer_id = "jieun";
+	var writer_id = '${blog.writer_id}';
 	
 	var d = document.createElement("div");
 	var color = '${blog.color}';
@@ -45,21 +45,30 @@ int today = cal.get(Calendar.DATE);
 		d.style.color = color;
 		document.body.appendChild(d);
 		color = window.getComputedStyle(d).color;
+
 		var colorSplit1step = color.split("(")[1];
 		$("input[name=color]").val(cnvrtRGBClrToHex(
-				colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
+				colorSplit1step.split(", ")[0],
+				colorSplit1step.split(", ")[1],
+				colorSplit1step.split(", ")[2].split(")")[0]));
 		
 		d.style.color = contents_color;
 		contents_color = window.getComputedStyle(d).color;
+		
 		colorSplit1step = contents_color.split("(")[1];
 		$("input[name=contents_color]").val(cnvrtRGBClrToHex(
-				colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
+				colorSplit1step.split(", ")[0],
+				colorSplit1step.split(", ")[1],
+				colorSplit1step.split(", ")[2].split(")")[0]));
 
 		d.style.color = background_color;
 		background_color = window.getComputedStyle(d).color;
+		
 		colorSplit1step = background_color.split("(")[1];
 		$("input[name=background_color]").val(cnvrtRGBClrToHex(
-				colorSplit1step.split(", ")[0], colorSplit1step.split(", ")[1], colorSplit1step.split(", ")[2].split(")")[0]));
+				colorSplit1step.split(", ")[0],
+				colorSplit1step.split(", ")[1],
+				colorSplit1step.split(", ")[2].split(")")[0]));
 
 		document.body.removeChild(d);
 
@@ -179,7 +188,7 @@ int today = cal.get(Calendar.DATE);
 				<tr id="center_align">
 					<td>
 						<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-						<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="#">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
@@ -289,7 +298,7 @@ int today = cal.get(Calendar.DATE);
 							<td>
 								<c:if test="${!empty blog }">
 								<input type="text" name="blogTitle" class="full" value="${blog.title }" >&nbsp;
-								<input type="button" value="취소" onclick="$('input[name=blogTitle]').val('${blog.title}')">&nbsp;
+								<input type="button" value="취소" onclick="$('input[name=blogTitle], #blogTitle').val('${blog.title}')">&nbsp;
 								&nbsp;<input type="color" name="color" onchange="changeTitleColor(this);">&nbsp;
 								<input type="button" value="취소" onclick="cancelTitleColorChange();">
 								</c:if>
@@ -300,7 +309,7 @@ int today = cal.get(Calendar.DATE);
 							<td>
 								<c:if test="${!empty blog }">
 								<textarea name="blogComment" rows="3" class="full" >${blog.contents }</textarea>&nbsp;
-								<input type="button" value="취소" onclick="$('textarea[name=blogComment]').val('${blog.contents }')">&nbsp;
+								<input type="button" value="취소" onclick="$('textarea[name=blogComment], #blogComment').val('${blog.contents }')">&nbsp;
 								&nbsp;<input type="color" name="contents_color" onchange="changeContentsColor(this);">&nbsp;
 								<input type="button" value="취소" onclick="cancelContentColorChange();">
 								</c:if>
@@ -326,43 +335,85 @@ int today = cal.get(Calendar.DATE);
 						<tr>
 							<td>일기</td><td><input type="checkbox" checked disabled></td>
 							<td>자신의 느낌과 일상을 기록하는 기본메뉴</td>
-							<td><input type="radio" name="diaryOpenYn" value="Y" checked>&nbsp;공개</td>
-							<td><input type="radio" name="diaryOpenYn" value="N" >&nbsp;비공개</td>
+							<td>
+								<input type="radio" name="diaryOpenYn" value="Y"
+									checked="<c:if test='${blog.diary_open_yn eq "Y" }'>true</c:if>">
+									&nbsp;공개
+							</td>
+							<td><input type="radio" name="diaryOpenYn" value="N"
+									checked="<c:if test='${blog.diary_open_yn eq "N" }'>true</c:if>">
+									&nbsp;비공개
+							</td>
 						</tr>
 						<tr>
 							<td>장소</td>
 							<td><input type="checkbox"></td>
 							<td>위치정보가 첨부된 포스트를 작성할 수 있는 메뉴</td>
-							<td><input type="radio" name="placeOpenYn"  value="Y" checked>&nbsp;공개</td>
-							<td><input type="radio" name="placeOpenYn" value="N" >&nbsp;비공개</td>
+							<td>
+								<input type="radio" name="placeOpenYn" value="Y"
+									checked="<c:if test='${blog.place_open_yn eq "Y" }'>true</c:if>">
+									&nbsp;공개
+							</td>
+							<td><input type="radio" name="placeOpenYn" value="N"
+									checked="<c:if test='${blog.place_open_yn eq "N" }'>true</c:if>">
+									&nbsp;비공개
+							</td>
 						</tr>
 						<tr>
 							<td>리뷰</td>
 							<td><input type="checkbox"></td>
 							<td>사용후기, 방문후기 등 여러 후기들을 작성할 수 있는 메뉴</td>
-							<td><input type="radio" name="reviewOpenYn" value="Y"  checked>&nbsp;공개</td>
-							<td><input type="radio" name="reviewOpenYn" value="N" >&nbsp;비공개</td>
+							<td>
+								<input type="radio" name="reviewOpenYn" value="Y"
+									checked="<c:if test='${blog.review_open_yn eq "Y" }'>true</c:if>">
+									&nbsp;공개
+							</td>
+							<td><input type="radio" name="reviewOpenYn" value="N"
+									checked="<c:if test='${blog.review_open_yn eq "N" }'>true</c:if>">
+									&nbsp;비공개
+							</td>
 						</tr>
 						<tr>
 							<td>뮤직</td>
 							<td><input type="checkbox"></td>
 							<td>해당 음악을 유튜브로 연결이 가능하며 글을 작성할 수 있는 메뉴</td>
-							<td><input type="radio" name="musicOpenYn" value="Y"  checked>&nbsp;공개</td>
-							<td><input type="radio" name="musicOpenYn" value="N" >&nbsp;비공개</td>
+							<td>
+								<input type="radio" name="musicOpenYn" value="Y"
+									checked="<c:if test='${blog.music_open_yn eq "Y" }'>true</c:if>">
+									&nbsp;공개
+							</td>
+							<td><input type="radio" name="musicOpenYn" value="N"
+									checked="<c:if test='${blog.music_open_yn eq "N" }'>true</c:if>">
+									&nbsp;비공개
+							</td>
 						</tr>
 						<tr>
 							<td>영화</td>
 							<td><input type="checkbox"></td>
 							<td>영화를 첨부할 수 있고 글을 작성할 수 있는 메뉴</td>
-							<td><input type="radio" name="movieOpenYn" value="Y"  checked>&nbsp;공개</td>
-							<td><input type="radio" name="movieOpenYn" value="N" >&nbsp;비공개</td>
+							<td>
+								<input type="radio" name="movieOpenYn" value="Y"
+									checked="<c:if test='${blog.movie_open_yn eq "Y" }'>true</c:if>">
+									&nbsp;공개
+							</td>
+							<td><input type="radio" name="movieOpenYn" value="N"
+									checked="<c:if test='${blog.movie_open_yn eq "N" }'>true</c:if>">
+									&nbsp;비공개
+							</td>
 						</tr>
 						<tr>
 							<td>뉴스</td>
 							<td><input type="checkbox"></td>
 							<td>뉴스기사를 첨부할 수 있고 글을 작성할 수 있는 메뉴</td>
-							<td><input type="radio" name="newsOpenYn" value="Y" checked>공개</td>
-							<td><input type="radio" name="newsOpenYn" value="N">&nbsp;비공개</td>
+							<td>
+								<input type="radio" name="newsOpenYn" value="Y"
+									checked="<c:if test='${blog.news_open_yn eq "Y" }'>true</c:if>">
+									&nbsp;공개
+							</td>
+							<td><input type="radio" name="newsOpenYn" value="N"
+									checked="<c:if test='${blog.news_open_yn eq "N" }'>true</c:if>">
+									&nbsp;비공개
+							</td>
 						</tr>
 					</table>
 					<table width='100%' class="divisionMargin">

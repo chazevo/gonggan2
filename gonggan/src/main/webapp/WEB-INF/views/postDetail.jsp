@@ -11,8 +11,10 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel='stylesheet' href='css/css.css'/> 
+<link href="css/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/postDetail.js"></script> 
+<script src="js/jquery.fancybox.js"></script>
 <script src="js/jquery-timeago.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -20,6 +22,7 @@
 	var postId = '${postId}';
 	
 	window.onload = function() {
+		//visit();
 		
 		document.getElementById("comment_content").focus();
 		
@@ -35,8 +38,27 @@
 				$(this).addClass("grayTd");
 		});
 		
-			
+		$(".fb").fancybox({
+			//'modal' : true,
+			//'openEffect' : 'none',
+			//'closeEffect' : 'none',
+			//'scrolling' : false,
+			overlay : {
+      speedOut : 0
+     },
+			beforeShow : function() {
+        $('.fancybox-overlay').css({'background-color' :'#ec2d2d'});
+    },
+			'overlayShow':false,
+			'overlayOpacity':0,
+			'autoSize':false,
+			'closeBtn' : false,
+			'fullScreen' : false
+		});
+		
 	}
+	
+	$("#hidden_link").fancybox().trigger('click');
 	
 	jQuery.timeago.settings.strings = {
 			suffixAgo: "전",
@@ -70,7 +92,7 @@
 	</colgroup>
 	<tr>
 		<td id="userId" colspan="3">
-			<a id="loginUser" href="selectBlog.do?writer_id=${writerId}" target="_blank">
+			<a id="loginUser" href="myhome.do?writer_id=${writerId}" target="_blank">
 			<img src="images/default.png" height="40px" class="img-circle">&nbsp;<b>${writerId}</b></a>
 			
 			<span class="navbar-right hour">
@@ -80,7 +102,7 @@
 		</td>
 	</tr> 
 	<tr>
-		<td id="photo" colspan="3">
+		<td id="photo" colspan="3" class="contentArea">
 			<c:if test='${postDetail.getPhoto_path() ne null}'>
 			<img alt="" src="uploadImages/${postDetail.getPhoto_path()}" width="100%">
 			</c:if>
@@ -117,16 +139,16 @@
 	<c:if test="${!empty commentList}">
 	<c:forEach items="${commentList}" var="i" begin="0">
 	<tr id="co${i.comment_num }">
-		<td colspan="3">
+		<td colspan="3" class='commentArea'>
 			<b>
-				<a href="selectBlog.do?writer_id=${i.writer_id}"  target="_blank">
+				<a href="myhome.do?writer_id=${i.writer_id}"  target="_blank">
 					${i.writer_id }
 				</a>
 			</b> &nbsp;&nbsp;
 			${i.comment_content}&nbsp;
 			<span class="commentDate">
 				${i.comment_date} &nbsp;&nbsp; 
-			 	<c:if test="${empty loginUser eq i.writer_id || loginUser eq writerId }">
+			 	<c:if test="${sessionScope.loginUser.getMember_id() eq i.writer_id || (sessionScope.loginUser.getMember_id() eq writerId) }">
 				<a href="javascript:deleteComment(${i.comment_num });">
 					<img src="images/delete_sign_filled1600.png" width="2%">
 				</a>
@@ -137,7 +159,24 @@
 	</c:forEach>
 	</c:if>
 	</tbody>
-	<tr id="comm">
+	<tr><td colspan="3" class='commentArea'>
+			<div class='dotdotdotDiv'
+				style="bottom:0;right:0;margin-bottom:15px;margin-right:15px;">
+				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
+				<a class="hover dotdotdot" href="" >공유</a>
+				<c:if test='${!empty sessionScope.loginUser }'>
+				<a data-fancybox class="fb hover dotdotdot"
+					href="messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writerId }">
+					쪽지 보내기
+				</a>
+				</c:if>
+				<c:if test='${empty sessionScope.loginUser }'>
+				<a class="hover dotdotdot" href="javascript:alert('로그인이 필요합니다.');">
+					쪽지 보내기
+				</a>
+				</c:if>
+			</div></td></tr>
+	<tr id="comm" class='commentArea'>
 		<td>
 			<label class='checkbox-wrap'>
 				<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
@@ -152,11 +191,6 @@
 			<a href='javascript:sendComment();'>
 				<img  src='images/dettext_icon.png' width='45px' >
 			</a>
-			<div class='dotdotdotDiv'>
-				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
-				<a class="hover dotdotdot" href="" >공유</a>
-				<a class="hover dotdotdot" href="">쪽지 보내기</a>
-			</div>
 			&nbsp;<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
 				<img width="15%" src='images/thesee_icon.png'>
 			</a>

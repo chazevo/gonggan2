@@ -24,7 +24,7 @@ body {
 	
 }
 
-.myhome #todayHeader h3 a:hover {
+.myhome #todayHeader a:hover {
 	text-decoration:none;
 }
 
@@ -626,6 +626,30 @@ a.loginbox:hover {
 	border-radius: 3px;
 }
 
+.contentArea {
+	padding-top:80px;
+	padding-bottom:80px;
+	padding-left:20px;
+	padding-right:20px;
+	border:1px solid #ebebeb;
+}
+
+.commentArea {
+	padding-left:20px;
+	padding-right:20px;
+	color: gray!important;
+	background-color: #f7f7f7;
+}
+
+.commentArea a {
+	color: gray!important;
+}
+
+.contentDiv .cal td[colspan='7']  {
+	padding-left:20px ;
+	padding-right:20px ;
+}
+
 .contentDiv>table {
 	color: #E6E6E6;
 	margin-bottom: 100px;
@@ -654,8 +678,13 @@ a.loginbox:hover {
 .contentDiv table table .cal td {
 	border: 1px solid #E6E6E6;
 	height: 100px;
+	width:14%;
 	vertical-align: top;
 	padding: 5px;
+}
+
+.cal td a:hover {
+	text-decoration:none;
 }
 
 .CalendarHeader td {
@@ -1745,7 +1774,13 @@ legend {
 	border: 1px solid red;
 }
 
+@media (max-width: 200px) {
+	.dotdotdotDiv {
+	width:100%;
+	}
+}
 @media (max-width: 700px) {
+	
 	
 	.disapear {
 		display: none;

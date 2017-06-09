@@ -46,10 +46,10 @@ function callbacktrace(data) {
 
 }*/
 function visit() {
-	if (loginUser != "" || loginUser != writer_id)
+	if (loginUser != writer_id)
 		$.ajax({
 		      url: "/gonggan/bvisit.do",
-		      data: {writer_id : writer_id,
+		      data: {blog_id : blog_id,
 		    	  visitor_id : loginUser},
 		      success: function(data) {
 		    	  
@@ -61,6 +61,7 @@ function visit() {
 }
 
 function requestCalList(year, month) {
+	
 	$.ajax({
 		url: "/gonggan/calpostlist.do",
 		data: { writer_id : writer_id,
@@ -108,18 +109,9 @@ function requestCategoryList(category) {
 	   });
 }
 
-function callbackList(data) {
+function drawCalendar(firstday) {
 
-	var flag;
 	var str;
-	var week = 1;
-
-	var jsonObj = JSON.stringify(data);
-	var jsonArr = JSON.parse(jsonObj);
-
-	$('.CalendarHeader').show();
-	$("#todayHeader").show();
-	$('#listbody').addClass("cal");
 	
 	switch (firstday) {
 	case 1: 
@@ -145,11 +137,32 @@ function callbackList(data) {
 		break;
 	}
 	
+	return str;
+}
+
+function callbackList(data) {
+
+	var flag;
+	var str;
+	var week = 1;
+	var cnt = firstday - 1;
+	
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
+
+	$('.CalendarHeader').show();
+	$("#todayHeader").show();
+	$('#listbody').addClass("cal");
+	
+	str = drawCalendar(firstday);
+	
 	while (document.getElementById("listbody").rows.length > 0 )
 		document.getElementById("listbody").deleteRow(0);
 
 	for (var i=1 ; i<=lastdate ; i++) {
+		
 		flag = false;
+		cnt++;
 		
 		for (var j in jsonArr.list){
 			//jsonArr.list[i].imagePath;
@@ -161,7 +174,9 @@ function callbackList(data) {
 				
 				str += "<td>"
 					+ "<a data-fancybox data-src='pdetail.do?postId=" + postId + "&writerId=" + jsonArr.list[j].writerId + "'>"
-					+ "<img width='40px' class='" + (jsonArr.list[j].date == today ? "today" : "")
+					+ ( jsonArr.list[j].photoPath == imgVal ?
+							"<span style='color:pink;font-weght:bold;vertical-align:top;'>" + i + "</span>" : "")
+					+ "<img height='100%' class='" + (jsonArr.list[j].date == today ? "today" : "")
 					+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>"
 					+ "</a></td>";
 				flag = true;
@@ -171,20 +186,26 @@ function callbackList(data) {
 		
 		if (flag == false) str += "<td>" + i + "</td>";
 		
-		document.getElementById("listbody").innerHTML = str;
-		if (document.getElementById("listbody").children[week-1].children.length == 7) {
+		//document.getElementById("listbody").innerHTML += str;
+		// innerHTML 에 태그가 들어가면 자동으로 닫는태그 삽입됨 
+		
+		//if (document.getElementById("listbody").children[week-1].children.length == 7) {
+		if (cnt == 7) {
 			str += "</tr><tr>";
 			week++;
+			cnt = 0;
 		}
 	}
 	
-	if (document.getElementById("listbody").children[week-1].children.length < 7)
-		do {
+	//while (document.getElementById("listbody").children[week-1].children.length <= 7) {
+	if (cnt != 0)
+		while (cnt < 7) {
+	
 			str += "<td></td>";
-			document.getElementById("listbody").innerHTML = str;
-		} while (document.getElementById("listbody").children[week-1].children.length <= 7);
+			cnt++;
+		}
 	str += "</tr>";
-	document.getElementById("listbody").innerHTML = str;
+	document.getElementById("listbody").innerHTML += str;
 	
 }
 
@@ -208,6 +229,7 @@ function callbackList2(data) {
 		
 		postId = jsonArr.list[j].postId;
 		
+		/*
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 
@@ -216,11 +238,13 @@ function callbackList2(data) {
 		td.colSpan="7";
 		tr.appendChild(td);
 		document.getElementById("listbody").appendChild(tr);
+		*/
 
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 
 		td.innerHTML = decodeURIComponent((jsonArr.list[j].content).replace(Ca, " "));
+		td.className = "contentArea"
 		td.colSpan="7";
 		tr.appendChild(td);
 		document.getElementById("listbody").appendChild(tr);
@@ -257,7 +281,8 @@ function callbackCommentList(data, postId){
 	
 	td.innerHTML = "<a href='javascript:void(0);' onclick='moreComment(" + postId + ", $(this).parent().parent());'>"
 			+ "더보기</a>";
-	td.className = "moreComment";
+	td.className = "commentArea";
+	td.style.paddingTop = "20px";
 	td.colSpan = "7";
     tr.appendChild(td);
     document.getElementById("listbody").appendChild(tr);
@@ -266,8 +291,9 @@ function callbackCommentList(data, postId){
 		if (j > jsonArr.list.length - 1) break;
 	    tr = document.createElement("tr");
 		td = document.createElement("td");
+		td.className = "commentArea";
 		td.colSpan = "7";
-		td.innerHTML = "<a href='selectBlog.do?writer_id=" + jsonArr.list[j].writerId + "'><b>"
+		td.innerHTML = "<a href='myhome.do?writer_id=" + jsonArr.list[j].writerId + "'><b>"
 			+ jsonArr.list[j].writerId +"</b></a>&nbsp;"
 			+ decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "))
 			+ "&nbsp;<abbr class='timeago' title='" + jsonArr.list[j].commentDate + "'>"
@@ -280,12 +306,13 @@ function callbackCommentList(data, postId){
 
     tr = document.createElement("tr");
 	td = document.createElement("td");
-	td.className = 'divisionPadding';
+	td.className = 'divisionPadding commentArea';
+	td.style.paddingBottom = "20px";
 	td.innerHTML = "<label class='checkbox-wrap'>"
 	+ "<input type='checkbox' id='' onclick='like();'><i class='like-icon'></i></label>&nbsp;"
 	+ "<input id='commentTb' type='text' placeholder='댓글 달기' "
-	+ "onkeyup='if( event.keyCode==13 ) sendComment(postId);'>&nbsp;"
-	+ "<a href='javascript:sendComment(postId);'>"
+	+ "onkeyup='if( event.keyCode==13 ) sendComment(postId, $(this).parent());'>&nbsp;"
+	+ "<a href='javascript:void(0);' onclick='sendComment(postId, $(this).parent());'>"
 	+ "<img  src='images/dettext_icon.png' width='45px' ></a>&nbsp; &nbsp;"
 	+ "<a href='javascript:void(0);' onclick='dotdotdot($(this));'>"
 	+ "<img class='smallIcon2' src='images/thesee_icon.png'></a>"
@@ -314,63 +341,91 @@ function callbackCommentList(data, postId){
 	
 }
 
-function sendComment(postId) {
-	alert(postId + " 코멘트");
+function sendComment(postId, parent) {
+	if (parent.children("input").val() == "") {
+		alert("내용을 입력해주세요 ");
+	}
+	else 
+		alert(postId + " 코멘트");
 }
 
 function moreComment(postId, obj) {
 	
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
-	
-	td.innerHTML = postId + "의 댓글 더 보기 ";
 	td.colSpan = "7";
 
     tr.appendChild(td);
-    obj.after("<tr><td colspan='7'>" + postId + "의 댓글 더 보기</td></tr>");
+    obj.after("<tr><td colspan='7' class='commentArea'>" + postId + "의 댓글 더 보기</td></tr>");
 	
 }
 
 function lastMonth() {
-	
+
 	var date = new Date();
-	var date2 = new Date();
-	
-	if (month-1 > 0) {
-		date.setMonth(--month);
+	var currdate = new Date();
+	var currdate_date = currdate.getDate();
+
+	if (month-1 == currdate.getMonth() + 1) {
 		date.setDate(1);
+		firstday = date.getDay() + 1;
+		today = currdate_date;
+		month--;
 	}
 	
-	firstday = date.getDay();
-	today = 99;
-	lastdate = new Date(2017, month, 0).getDate();
+	else if ((currdate.getMonth() + 1) != month-1) {
+		
+		if (month-1 > 0) {
+			date.setMonth(--month - 1);
+			date.setDate(1);
+		}
+		
+		firstday = date.getDay() + 1;
+		today = 99;
+		
+	}
+	
+	lastdate = new Date(2017, month-1, 0).getDate();
 	
 	$("#year").text(year);
 	$("#month").text(month<10 ? "0" + month : month);
-	$("#today").text((date2.getMonth() + 1) == month ? date2.getDate() : "");
+	$("#today").text((currdate.getMonth() + 1) == month ? 
+			(currdate_date<10 ? "0" + currdate_date : currdate_date) : "");
 	
 	requestCalList(year, month);
 }
 
 function nextMonth() {
-	
 	var date = new Date();
-	var date2 = new Date();
+	var currdate = new Date();
+	var currdate_date = currdate.getDate();
 
-	if (month+1 <= 12) {
-		date.setMonth(++month);
+	if (month + 1 == currdate.getMonth() + 1) {
 		date.setDate(1);
+		firstday = date.getDay() + 1;
+		today = currdate_date;
+		month++;
 	}
 	
-	firstday = date.getDay();
-	today = 99;
-	lastdate = new Date(2017, month, 0).getDate();
+	else if ((currdate.getMonth() + 1) > month + 1) {
+		
+		if (month+1 <= 12) {
+			date.setMonth(month++);
+			date.setDate(1);
+		}
+		firstday = date.getDay() + 1;
+		today = 99;
+	}
 
+	lastdate = new Date(2017, month-1, 0).getDate();
+	
 	$("#year").text(year);
 	$("#month").text(month<10 ? "0" + month : month);
-	$("#today").text((date2.getMonth() + 1) == month ? date2.getDate() : "");
+	$("#today").text((currdate.getMonth() + 1) == month ? 
+			(currdate_date<10 ? "0" + currdate_date : currdate_date) : "");
 	
 	requestCalList(year, month);
+
 }
 
 function checkboxControl(type, object) {

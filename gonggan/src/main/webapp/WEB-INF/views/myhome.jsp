@@ -8,6 +8,7 @@ String writer = session.getId();
 //세션저장 (플래그, 값)
 session.setAttribute("currentView", currentView);
 session.setAttribute("wr_id", writer);
+session.setAttribute("writer_id", request.getParameter("writer_id"));
 
 int year, month, today, firstday, lastdate;
 String str = "";
@@ -21,6 +22,8 @@ month = cal.get(Calendar.MONTH)+1;
 lastdate = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 System.out.println(lastdate);
 switch (firstday = cal.get(Calendar.DAY_OF_WEEK)) {
+// 자바 DAY_OF_WEEK : 일(1) ~ 토(7)
+// 자바스크립트 getDate() : 일(0)~ 토(6)
 case 1:
 	str = "일 ";
 	 break;
@@ -68,6 +71,8 @@ System.out.println(str);
 <script type="text/javascript">
 	var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	var writer_id = "${blog.getWriter_id()}";
+	var blog_open_yn = '${blog.blog_open_yn}';
+	var blog_id = '${blog.blog_id}';
 	var year = <%= year %>;
 	var month = <%= month %>;
 	var today = <%= today %>;
@@ -97,7 +102,8 @@ System.out.println(str);
 
 	window.onload = function() {
 		visit();
-		requestCalList(year, month);
+		if (blog_open_yn == 'Y' || loginUser == writer_id)
+			requestCalList(year, month);
 
 		$(".blogOwnerClick").hide();
 		
@@ -145,7 +151,7 @@ System.out.println(str);
 </script>
 </head>
 <body class="myhome">
-	<c:if test="${empty param }">
+	<c:if test='${empty param || param.writer_id eq "" }'>
 		<jsp:forward page="error.jsp"></jsp:forward>
 	</c:if>
 	<div class="divCenter">
@@ -177,7 +183,7 @@ System.out.println(str);
 				<tr id="center_align">
 					<td>
 						<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id() }">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-						<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+						<a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 						<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 						<div id="dansun_line"></div>
@@ -214,7 +220,7 @@ System.out.println(str);
 				style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color:${blog.background_color };</c:if>">
 				<div class="header-content-inner">
 					<h2>
-						<a href="selectBlog.do?writer_id=${param.writer_id} "
+						<a href="myhome.do?writer_id=${param.writer_id} "
 							style="color:${blog.getColor() }">
 							<!--당신만의 공간에서 당신의 글을 만들어보세요.-->
 							${blog.getTitle() }
@@ -232,13 +238,15 @@ System.out.println(str);
 			</div>
 			<div class="navbar-header idView">
 			<!-- navbar-header : 메뉴 버튼 클릭 시 토글 width 100% -->
+				<c:if test='${blog.blog_open_yn eq "Y" }'>
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#menu">
+					data-target="#menu">
 					<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
 					<!-- sr-only : 숨김 -->
 				</button>
+				</c:if>
 				<a href="javascript:void(0);" id="blogOwnerClick" style="display:inline-block">
-					<img src="images/default.png" height="40px"class="img-circle">
+					<img src="images/default.png" height="40px" class="img-circle">
 					&nbsp;${param.writer_id }
 				</a> &nbsp;
 				<div class="blogOwnerClick hidden">
@@ -248,10 +256,14 @@ System.out.println(str);
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>
-				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writer_id}"><img src="images/chat_icon.png" height="28px"  id="chat_icon"></a>
+				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writer_id}">
+					<img src="images/chat_icon.png" height="28px"  id="chat_icon">
+				</a>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
+				<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 				<ul class="nav navbar-nav navbar-right">
+					<c:if test='${blog.diary_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('diary');">
 							<c:if test='${blog.languages eq "kor" }'>일기</c:if>
@@ -259,6 +271,8 @@ System.out.println(str);
 							<c:if test='${blog.languages eq "jp" }'>日記</c:if>
 						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.place_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('place');">
 							<c:if test='${blog.languages eq "kor" }'>장소</c:if>
@@ -266,6 +280,8 @@ System.out.println(str);
 							<c:if test='${blog.languages eq "jp" }'>場所</c:if>
 						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.review_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('review');">
 							<c:if test='${blog.languages eq "kor" }'>리뷰</c:if>
@@ -273,6 +289,8 @@ System.out.println(str);
 							<c:if test='${blog.languages eq "jp" }'>レビュー</c:if>
 						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.music_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('music');">
 							<c:if test='${blog.languages eq "kor" }'>음악</c:if>
@@ -280,6 +298,8 @@ System.out.println(str);
 							<c:if test='${blog.languages eq "jp" }'>音楽</c:if>
 						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.movie_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('movie');">
 							<c:if test='${blog.languages eq "kor" }'>영화</c:if>
@@ -287,6 +307,8 @@ System.out.println(str);
 							<c:if test='${blog.languages eq "jp" }'>映画</c:if>
 						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.news_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('news');">
 							<c:if test='${blog.languages eq "kor" }'>뉴스</c:if>
@@ -294,6 +316,7 @@ System.out.println(str);
 							<c:if test='${blog.languages eq "jp" }'>ニュース</c:if>
 						</a>
 					</li>
+					</c:if>
 					<li>
 						<a href="javascript:rownum=1; requestCategoryList('news');">
 							<c:if test='${blog.languages eq "kor" }'>책</c:if>
@@ -302,6 +325,7 @@ System.out.println(str);
 						</a>
 					</li>
 				</ul>
+				</c:if>
 			</div>
 		</div>
 		
@@ -315,7 +339,7 @@ System.out.println(str);
 					col-md-는 992px 이상,
 					col-lg-는 1200px 이상의 화면에서 적용하는 것
 					-->
-					
+						<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 						<table width="100%">
 						<tr>
 							<th class="th">
@@ -337,13 +361,13 @@ System.out.println(str);
 								<h3 class="section-heading text-center" style="color:#E6E6E6;">
 									<a href="javascript:lastMonth();">◀</a>&nbsp;
 									<span id="year"></span>.<span id="month"></span>.<span id="today"></span>
-									<a href="javascript:nextMonth();">►</a>&nbsp;
+									<a href="javascript:void(0);" onclick="nextMonth($(this));">►</a>&nbsp;
 								</h3>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<table id="" width="100%" border="1">
+								<table id="" width="100%" >
 									<tr class="CalendarHeader text-center">
 										<td><font color="#C90000">일</font></td>
 										<td>월</td><td>화</td><td>수</td><td>목</td><td>금</td>
@@ -360,6 +384,12 @@ System.out.println(str);
 							</td>
 						</tr>
 						</table>
+						</c:if>
+						
+						<c:if test='${blog.blog_open_yn eq "N" && sessionScope.loginUser.getMember_id() ne param.writer_id}'>
+						<div style="text-align:center"><br>비공개 블로그 입니다.</div> 
+						</c:if>
+						
 						<!--
 						<div id="dotdotdotDiv">
 							<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>

@@ -5,7 +5,7 @@
 <%
 	Member loginUser = (Member) session.getAttribute("loginUser");
 
-	String currentView = "home";
+	String currentView = "index2";
 	String writer = session.getId();
 	//세션저장 (플래그, 값)
 	session.setAttribute("currentView", currentView);
@@ -31,27 +31,28 @@
 <script type="text/javascript" src="js/index2.js"></script>
 <script type="text/javascript">
 
-   window.onload = function() {
-      $("#loginUser").click(function() {
-         if ($("#loginUserDetail").hasClass("hidden")) {
-            $("#loginUserDetail").removeClass("hidden");
-            $("#loginUserDetail").show();
-         } else {
-            $("#loginUserDetail").addClass("hidden");
-            $("#loginUserDetail").hide();
-         }
-      });
-      
-      $(".fb").fancybox({
-    	  //'modal' : true,
-    	  //'openEffect' : 'none',
-    	  //'closeEffect' : 'none',
-    	  //'scrolling' : false,
-    	  'autoSize':false,
-    	  'closeBtn' : false,
-    	  'fullScreen' : false
-    	 });
-   }
+	window.onload = function() {
+		$("#loginUser").click(function() {
+			if ($("#loginUserDetail").hasClass("hidden")) {
+				$("#loginUserDetail").removeClass("hidden");
+				$("#loginUserDetail").show();
+			} else {
+				$("#loginUserDetail").addClass("hidden");
+				$("#loginUserDetail").hide();
+			}
+		});
+		
+		
+		$(".fb").fancybox({
+			//'modal' : true,
+			//'openEffect' : 'none',
+			//'closeEffect' : 'none',
+			//'scrolling' : false,
+			'autoSize':false,
+			'closeBtn' : false,
+			'fullScreen' : false
+		});
+	}
 </script>
 </head>
 <body>
@@ -84,7 +85,7 @@
          <tr id="center_align">
             <td>
                <a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-               <a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+               <a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
                <a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
                <a href="logOut.do">로그아웃</a> 
                <div id="dansun_line"></div>
@@ -123,7 +124,7 @@
          <div><span>${sessionScope.loginUser.getMember_id()}</span> 님</div>
          <div class="right">
             <a href="uploadform.do?writer_id=${param.writer_id}" class="transparentFont">포스트쓰기</a>
-            <a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">
+            <a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }">
                <div class="goToMyBlog">내 블로그</div>
             </a>
             <img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
@@ -249,10 +250,10 @@
                                  <td width="15%"><font>
                                     <c:if test="${sessionScope.loginUser.getMember_id() eq i.sender}">
                                     <c:set var="opposite" value="${i.receiver}" />
-                                    <a href="selectBlog.do?writer_id=${i.receiver}">${i.receiver}</a>
+                                    <a href="myhome.do?writer_id=${i.receiver}">${i.receiver}</a>
                                     </c:if>
                                     <c:if test="${sessionScope.loginUser.getMember_id() eq i.receiver}">
-                                    <a href="selectBlog.do?writer_id=${i.sender}">${i.sender}</a>
+                                    <a href="myhome.do?writer_id=${i.sender}">${i.sender}</a>
                                     <c:set var="opposite" value="${i.sender}" />
                                     </c:if>
                                  </font></td>
@@ -274,7 +275,7 @@
                   <b>내 포스트 알람 _ 댓글 </b><br>
                   <c:if test="${!empty commentMyList }">
                      <c:forEach items="${ commentMyList}" var="i"  begin ="0">
-                     <font><a href="selectBlog.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이</font> |
+                     <font><a href="myhome.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이</font> |
                      <a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
                                  게시글에 <b>댓글</b>을 남기셨습니다.<br>
                      </c:forEach>
@@ -295,7 +296,7 @@
                                   게시글을 작성하고 이웃을 만들어보세요!!<br>
                                <c:if test="${!empty (goodMyList)}">
                                 <c:forEach items="${ goodMyList}" var="i"  begin ="0">
-                                   <font><a href="selectBlog.do?writer_id=${i.member_id} ">${ i.member_id }</a> 님이</font> | 
+                                   <font><a href="myhome.do?writer_id=${i.member_id} ">${ i.member_id }</a> 님이</font> | 
                                      게시글에 <b>좋아요</b>을 누르셨습니다.<br>
                                 </c:forEach>
                                </c:if>
@@ -327,7 +328,7 @@
                         <c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
                         
                         <td>
-                           <a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+                           <a href="myhome.do?writer_id=${i.member_id }">${i.member_id }</a>
                         </td>
                         <td>
                            <a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">

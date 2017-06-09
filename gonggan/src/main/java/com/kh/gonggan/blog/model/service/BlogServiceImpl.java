@@ -36,8 +36,12 @@ public class BlogServiceImpl implements BlogService {
 		return blogDao.selectMonNeiList(writer_id);
 	}
 	
-	public void blogvisit(String writer_id, String visitor_id) {
-		blogDao.blogvisit(writer_id, visitor_id);
+	public int checkVisit(String blog_id, String visitor_id) {
+		return blogDao.checkVisit(blog_id, visitor_id);
+	}
+	
+	public void blogvisit(String blog_id, String visitor_id) {
+		blogDao.blogvisit(blog_id, visitor_id);
 	}
 	
 	public int blogSetting(Blog blog) {

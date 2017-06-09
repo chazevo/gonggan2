@@ -55,7 +55,7 @@ function callbackSearchGood(data){
 	for (var j in jsonArr.list) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
-		td.innerHTML ='<a href="selectBlog.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
+		td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
 		tr.appendChild(td);
 		td = document.createElement("td");
 		td.innerHTML = '<button id="neighborBtn" class="neighborN" onclick="likeNeigh(\''

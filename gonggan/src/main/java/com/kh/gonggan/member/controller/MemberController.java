@@ -78,12 +78,20 @@ public class MemberController {
 	@RequestMapping(value="/login.do")
 	public ModelAndView loginCheck(Member member, ModelAndView mv, HttpSession session){
 		Member loginUser  = memberService.loginCheck(member);
-	      
+		Object writer_id = session.getAttribute("writer_id");
+		Object cv = session.getAttribute("currentView");
+		
 		if(loginUser != null) {
 			session.setAttribute("loginUser", loginUser);
 			System.out.println(loginUser.getMember_id() + "," + loginUser.getMember_pw());
-			
-			mv.setViewName("redirect:index2.do");
+
+			if (cv != null) {
+				System.out.println("cv : " + cv);
+				mv.setViewName("redirect:" + (String) cv + ".do?"
+						+ "writer_id=" + (writer_id != null ? (String) writer_id : ""));
+			}
+
+			else mv.setViewName("redirect:index2.do");
 	         
 			return mv;
 		}
@@ -144,19 +152,19 @@ public class MemberController {
 	
 	
 	@RequestMapping("logOut.do")
-	public ModelAndView logOut(HttpSession session, ModelAndView mv){
-	      
-		String vn = (String) session.getAttribute("currentView");
-		System.out.println("vn:"+vn);
-		//String wr = (String)session.getAttribute("wr_id");
-	      
-		//mv.addObject("writer_id", wr);
-		mv.setViewName("redirect:" + vn + ".do");
+	public ModelAndView logOut(HttpSession session, ModelAndView mv) {
+		
+		Object writer_id = session.getAttribute("writer_id");
+		
+		mv.setViewName("redirect:"
+				+ (String) session.getAttribute("currentView") + ".do"
+						+ "?writer_id=" + (writer_id != null ? (String) writer_id : ""));
 	    // redirect는 다시한번 더 Controller를 거치게 되고
 		//redirect가 없다면 바로 jsp페이지를 불러오게 된다.
 		
 		if(session != null)
 			session.invalidate();
+		
 		return mv;
 	}
 

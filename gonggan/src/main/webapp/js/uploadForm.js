@@ -384,9 +384,16 @@ function changeTitle() {
 	alert(document.getElementById("title").value);
 }
 
+function temp() {
+	je_doc.body.innerHTML = $("#temp").val();
+}
+
 function changeForm() {
+	
 	var today = new Date();
 	
+	$("#temp").val(je_doc.body.innerHTML);
+	je_doc.body.innerHTML = "";
 	$("#textarea").focus();
 	
 	if (document.getElementById("category").value == "review") {
@@ -535,7 +542,7 @@ function content_OK() {
 
 	if (je_doc.body.innerHTML != "") {
 	      if (confirm("포스트를 게시하시겠습니까? ") == true) {
-	    	  $("input[name=title]").val(je_doc.getElementById("title").innerHTML);
+	    	  $("input[name=title]").val(je_doc.getElementById("title").innerText);
 	      		$('#form').submit();
 	      }
 	      else return;
@@ -988,15 +995,15 @@ function callbackBookSearch(data) {
 		td = document.createElement("td");
 		td.rowSpan="4";
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
-		a.innerHTML = (parseInt(i, 10) + 1) + ". " + "<img src=" + image + ">";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		a.innerHTML = (parseInt(i, 10) + 1) + ". " + "<img src='" + image + "'>";
      
 		td.appendChild(a);
 		tr.appendChild(td);
      
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href =  "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
 		a.innerHTML = title;
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -1005,7 +1012,7 @@ function callbackBookSearch(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
 		a.innerHTML =author;
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -1014,7 +1021,8 @@ function callbackBookSearch(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		
 		a.innerHTML =publisher;
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -1023,7 +1031,7 @@ function callbackBookSearch(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook(image, title, author, publisher, pubdat); alert(title);";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
 		a.text =pubdate;
 		td.appendChild(a);
 		tr.appendChild(td);

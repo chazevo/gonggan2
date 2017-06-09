@@ -43,7 +43,7 @@
          <c:if test="${!empty goodList}">
             <c:forEach items="${goodList}" var="i" begin="0">
                <tr>
-                  <td><a href="selectBlog.do?writer_id=${i.member_id}" target="_blank">${i.member_id}</a></td>
+                  <td><a href="myhome.do?writer_id=${i.member_id}" target="_blank">${i.member_id}</a></td>
                   <c:if test="${i.member_id eq sessionScope.loginUser.getMember_id()}">
                      <td></td>
                   </c:if>

@@ -38,25 +38,11 @@ public class BlogController {
 	
 	@RequestMapping(value = "/bvisit.do", method = RequestMethod.GET)
  		@ResponseBody
-		public String blogvisit(@RequestParam String writer_id, @RequestParam String visitor_id) {
-			//blogService.blogvisit(writer_id, visitor_id);
+		public String blogvisit(@RequestParam String blog_id, @RequestParam String visitor_id) {
+			if (blog_id.equals("") || blogService.checkVisit(blog_id, visitor_id) == 0)
+				blogService.blogvisit(blog_id, visitor_id);
 			return "";
 		}
-	
-	@RequestMapping("selectBlog.do")
-	public ModelAndView selectBlog(@RequestParam String writer_id, ModelAndView mv) {
-
-		Blog blog = blogService.selectBlog(writer_id);
-		
-		if (blog == null)
-			mv.setViewName("error");
-		else
-			mv.setViewName("myhome");
-		
-		mv.addObject("blog", blog);
-		
-		return mv;
-	}
 
 	@RequestMapping(value = "/selectVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
 	 	@ResponseBody
@@ -70,7 +56,6 @@ public class BlogController {
 				for (Member m : VisitorList) {
 		
 					JSONObject job = new JSONObject();
-					
 					job.put("member_id", m.getMember_id());
 					job.put("gender", m.getMember_gender());
 					job.put("birth", m.getMember_birth()+"");

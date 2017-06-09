@@ -5,8 +5,9 @@
 
 <%
 Member loginUser = (Member) session.getAttribute("loginUser");
-String currentView = "index2"; // 세션저장 (플래그, 값)
-session.setAttribute("currentView", currentView);
+session.setAttribute("currentView", "index2");
+
+int imgVal = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -31,6 +32,8 @@ session.setAttribute("currentView", currentView);
 <script type="text/javascript">
 
 var loginUser = '${sessionScope.loginUser.getMember_id()}';
+
+var imgVal = <%= imgVal %>;
 
 var maxRownum;
 var plistSize = ${plistSize};
@@ -119,7 +122,7 @@ window.onload = function() {
 				<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
 				<!-- sr-only : 숨김 -->
 			</button>
-			<a class="" href="login.do">
+			<a class="" href="index2.do">
 				<img class="" src="images/KakaoTalk_Photo_2017-04-22-23-02-45.png" width="70px">
 				<img class="smallLogoImg" src="images/KakaoTalk_Photo_2017-04-22-18-18-54.png" width="70px">
 			</a>
@@ -260,7 +263,7 @@ window.onload = function() {
 												<c:if test="${!empty (neighborReqList) }">
 												<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
 												<td>
-													<a href="selectBlog.do?writer_id=${i.member_id }">${i.member_id }</a>
+													<a href="myhome.do?writer_id=${i.member_id }">${i.member_id }</a>
 													<a onclick="acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }'); $(this).parent().html('');">
 														<div class="neighborYN">수락</div>
 													</a>
@@ -313,7 +316,7 @@ window.onload = function() {
 				<a href='javascript:$("select").val("date"); plistcount = 0; maxRownum = plistSize; trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
 				<a href="javascript:$('select').val('date'); nplistcount = 0; maxRownum = nplistSize; neighborList(loginUser);" id="neighborList">이웃 블로그</a>   <!-- 이웃 블로그 목록, 이웃 새글 -->
 				<a href="uploadform.do?writer_id=${sessionScope.loginUser.getMember_id()}">포스트 쓰기</a>
-				<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
+				<a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
 				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
 				</c:if>
 			</div>

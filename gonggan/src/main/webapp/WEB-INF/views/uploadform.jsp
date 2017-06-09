@@ -205,6 +205,17 @@
 			}
 		});
 		
+		$("#blogOwnerClick").click(function() {
+			if ($(".blogOwnerClick").hasClass("hidden")) {
+				$(".blogOwnerClick").removeClass("hidden");
+				$(".blogOwnerClick").show();
+				}
+			else {
+				$(".blogOwnerClick").addClass("hidden");
+				$(".blogOwnerClick").hide();
+			}
+		});
+		
 		$(".hover").hover(function(){
 			//$(this).css("backgroundColor", "gray");
 			if ($(".hover").hasClass("grayTd"))
@@ -288,7 +299,7 @@
 						<tr id="center_align">
 							<td>
 								<a href="mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">마이페이지</a>&nbsp;&nbsp; |  &nbsp;&nbsp;
-								<a href="selectBlog.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
+								<a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }">내블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="neighborBlogPost.do">이웃 블로그</a>&nbsp;&nbsp; | &nbsp;&nbsp;
 								<a href="logOut.do?writer_id=${sessionScope.loginUser.getMember_id() }">로그아웃</a> 
 								<div id="dansun_line"></div>
@@ -322,7 +333,7 @@
 				style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color:${blog.background_color };</c:if>">
 				<div class="header-content-inner">
 					<h2>
-						<a href="selectBlog.do?writer_id=${param.writer_id} "
+						<a href="myhome.do?writer_id=${param.writer_id} "
 							style="color:${blog.getColor() }">
 							<!--당신만의 공간에서 당신의 글을 만들어보세요.-->
 							${blog.getTitle() }
@@ -345,9 +356,17 @@
 					<span class="sr-only">Toggle navigation</span> Menu <i class="menu"></i>
 				<!-- sr-only : 숨김 -->
 				</button>
-				<a href="#" >
+				<a href="javascript:void(0);" id="blogOwnerClick" style="display:inline-block" >
 					<img src="images/default.png" height="40px"
-								class="img-circle">&nbsp;${param.writer_id } 님 </a>
+						class="img-circle">&nbsp;${param.writer_id } 님
+				</a>&nbsp;
+				<div class="blogOwnerClick hidden">
+					<div>
+						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
+						<hr><a class="hover" a href="">프로필 보기</a>
+					</div>
+					<img src="images/idclick_icon.png" width="100%" height="100%">
+				</div>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<ul class="nav navbar-nav navbar-right">
@@ -387,7 +406,7 @@
 						<col width="30%" />
 					</colgroup>
 					<tr>
-						<td align="center">분류 </td>
+						<td align="center">분류</td>
 						<td colspan="4">
 							<select name="category" id="category" onchange="changeForm();">
 								<option value="default" selected>자유</option>
@@ -399,6 +418,8 @@
 								<option value="movie">영화</option>
 								<option value="music">뮤직</option>
 							</select>
+							&nbsp;<a href="javascript:temp();">임시저장 불러오기 </a>
+							<input type="hidden" id="temp">
 						</td>
 					</tr>
 					<tr>
@@ -667,7 +688,7 @@
 							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="10%"></a>
 						</td>
 						<td>
-							<button type="button" data-toggle="collapse" id="tagadddbtn">태그</button>
+							<input type="button" data-toggle="collapse" id="tagadddbtn" value="태그">
 							<div id="tag" class="collapse">					
 								<input id="tagaddtext" type="text"  size="15" 
 									onkeydown="if(event.keyCode ==13) tagaddfunc();">

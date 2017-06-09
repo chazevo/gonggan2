@@ -26,14 +26,13 @@ public class BlogDao {
 		return sqlSession.insert("blogmapper.binsert", blog);
 	}
 	
-	public List<Member> selectVisitorList(String wirter_id){
-		
+	public List<Member> selectVisitorList(String wirter_id) {
+
 		Object obj = sqlSession.selectOne("blogmapper.selectBlogId", wirter_id);
 		int blog_id = -1;
 		
 		if (obj != null)
 			blog_id =((Blog)obj).getBlog_id();
-		
 		return (List<Member>) sqlSession.selectList("membermapper.selectVisitorList", blog_id);
 	}
 	
@@ -68,10 +67,17 @@ public class BlogDao {
 		return (List<Member>) sqlSession.selectList("membermapper.selectMonNeiList", writer_id);
 	}
 
-	public void blogvisit(String writer_id, String visitor_id) {
+	public int checkVisit(String blog_id, String visitor_id) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		
-		int blog_id = ((Blog) sqlSession.selectOne("blogmapper.selectBlogId", writer_id)).getBlog_id();
+		map.put("blog_id", blog_id + "");
+		map.put("visitor_id", visitor_id);
+		
+		return (int)sqlSession.selectOne("blogmapper.checkvisit", map);
+	}
+	
+	public void blogvisit(String blog_id, String visitor_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
 		
 		map.put("blog_id", blog_id + "");
 		map.put("visitor_id", visitor_id);

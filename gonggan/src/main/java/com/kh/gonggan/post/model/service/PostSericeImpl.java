@@ -171,7 +171,7 @@ public class PostSericeImpl implements PostService{
 	}
 	
 	@Override
-	public int pinsert(String loginUser, String category,String content,String title){
-		return postDao.pinsert(loginUser,category,content,title);
+	public int pinsert(String loginUser, String category,String content,String title,String open){
+		return postDao.pinsert(loginUser,category,content,title,open);
 	}
 }

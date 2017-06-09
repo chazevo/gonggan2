@@ -745,28 +745,32 @@
 							<td colspan="5" align="right">
 								<a data-toggle="collapse" data-target="#movie" id="movieSearchLink">영화 찾아보기</a>
 								<div id="movie" class="collapse">
-									<table width="100%">
-									<tr>
-										<td>
-											<input type="text" id="movieSearchText" name="keyword" value="${keyword }" placeholder="기 사 검 색" 
+									<table width="100%" border="1">
+										<tr>
+											<td width="25%" align="center">주간 박스오피스 </td>
+											<td>
+												<input type="text" id="movieSearchText" name="keyword" value="${keyword }" placeholder="기 사 검 색" 
 													onkeydown="if(event.keyCode == 13) searchMovie();">
 												<a href="javascript:searchMovie();">
 													<img src=images/search.png width="5%" >
 												</a>
-										</td>
-									<tr>
-										<td colspan="3">주간 박스오피스 </td>
-									</tr>
-									<c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
-									<tr>
-										<td colspan=3><a href="javascript:$('#movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">${i.rank} ${i.movieNm } (${i.audiAcc }명)</a></td>
-									</tr>
-									</c:forEach>
-									</table>
-								</div>
-							</td>
-						</tr>
-					</tbody>
+											</td>
+                           <tr>
+                              <td align="center">
+                                 <c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
+                                    <a href="javascript:$('#movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">${i.rank} ${i.movieNm } (${i.audiAcc }명)
+                                    </a><br>
+                                 </c:forEach>
+                              </td>
+                              <td width="65%" class="footerDiv">
+                                 <table id="movieSearchRes"></table>
+                              </td>
+                           </tr>
+                           </table>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
 					<tbody id="newsTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="center">
@@ -837,22 +841,30 @@
 							<td>별점</td><td>✮✮✮✮✮</td>
 						</tr>
 					</tbody>
-					<tbody id="musicTbody" style="display:none">
-						<tr>
-							<td>가수</td><td><input type='text' size="14"></td>
-							<td>제목</td><td><input type='text'></td>
-						</tr>
-						<tr>
-							<td colspan="5" align="right">
-								<a data-toggle="collapse" data-target="#lyrics">가사 찾아보기</a>
-								<div id="lyrics" class="collapse">
-									제목&nbsp;<input type='text' id="musicSearchText" size="14">
-									<button type="button" id="searchBtn" onclick="searchMusic();">검색 </button>
-									<div></div>
-								</div>
-							</td>
-						</tr>
-					</tbody>
+					      <tbody id="musicTbody" style="display:none">
+                  <tr>
+                     <td>가수</td><td><input type='text' size="14"></td>
+                     <td>제목</td><td><input type='text'></td>
+                  </tr>
+                  <tr>
+                     <td colspan="5" align="right">
+                        <a data-toggle="collapse" data-target="#lyrics">가사 찾아보기</a>
+                        <div id="lyrics" class="collapse">
+                           <div class="div2">
+                           <input type="text" id="musicSearchText" name="keyword" value="${keyword }" placeholder="검 색" 
+                              onkeydown="if(event.keyCode == 13) searchMusic();">
+                           <a href="javascript:searchMusic();">
+                              <img src=images/search.png width="5%" >
+                           </a>
+                           </div>
+                           <div class="searchAll">
+                              <table width="100%" id="musicSearchRes"></table>
+                           </div>
+                           
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
 					<tr>
 							
 				
@@ -880,8 +892,8 @@
 					
 					<tr>
 						<td colspan="5">
-							<input type="radio" name="open" value="">&nbsp;나만보기&nbsp;
-							<input type="radio" name="open" value="">&nbsp;이웃공개 
+							<input type="radio" name="open" value="onlyMe">&nbsp;나만보기&nbsp;
+							<input type="radio" name="open" value="public">&nbsp;이웃공개
 						</td>
 					</tr>
 					<tr>

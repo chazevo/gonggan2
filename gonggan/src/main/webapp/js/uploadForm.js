@@ -91,15 +91,17 @@ function uploadImg(){
 
 
 function recieveMovie(image, title, director , actor, pubDate) {
-	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<table align='center' border='1' width='80%'><tr><td rowspan='4' width='30%'>"
-		+ "<img src='" + image + "' width='100%'></td>"
-		+ "<td>" + title + "</td>"
-		+ "<tr><td>감독 "+ director + "</td></tr>" 
-		+ "<tr><td>출연  "+ actor + "</td></tr>"
-		+"<tr><td> 개봉 "+pubDate+" </td></tr>"
-		+ "</td></tr></table>";
-}
+	   document.getElementById('editor').contentWindow.document.body.innerHTML += 
+	      "<table align='center' width='80%'>" 
+	      + "<tr><td align='center'><h3><b>" + title + "</b><h3></td></tr>"
+	      + "<tr><td width='30%'align='center'>"
+	      + "<img src='" + image + "' width='50%'></td></tr>"
+	      + "<tr><td align='center' style='color:gray;'><b>감독</b> "+ director + "</td></tr>" 
+	      + "<tr><td align='center' style='color:gray;'><b>출연</b>  "+ actor + "</td></tr>"
+	      +"<tr><td align='center' style='color:gray;'><b> 개봉</b> "+pubDate+" </td></tr>"
+	      + "</td></tr></table>";
+	}
+
 function recieveMusic(videoId, title, thumbnail){
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
 		"<center><b><h4>" +title+"</h4></b></center>" +
@@ -571,9 +573,64 @@ function searchMovie() {
 	}
 }
 
-function callbackMovieSearch(data){
+function callbackMovieSearch(data) {
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
 	
+	var tr, td, a;
+	
+	var title, actor, director, pubDate,image;
+	
+	for (var i in jsonArr.list) {
+		
+		title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
+		actor = decodeURIComponent((jsonArr.list[i].actor).replace(Ca, " "));
+		director = decodeURIComponent((jsonArr.list[i].director).replace(Ca, " "));
+		pubDate = jsonArr.list[i].pubDate;
+		image = jsonArr.list[i].image;
+		
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.rowSpan = "3";
+		a = document.createElement("a");
+		a.innerHTML = "<img src=" + image + ">";
+		td.appendChild(a);
+		tr.appendChild(td);
+
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
+		a.innerHTML ="<b>"+ title+"</b>";
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("movieSearchRes").appendChild(tr);
+
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
+		a.innerHTML = pubDate+" 개봉";
+	        
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("movieSearchRes").appendChild(tr);
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
+		a.innerHTML = actor+director;
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("movieSearchRes").appendChild(tr);
+ 
+ 
+		//jsonArr.list.originallink;
+		//jsonArr.list.pubDate;
+	}
+
 }
+
+
 function searchMusic() {
 	
 	$.ajax({
@@ -601,61 +658,62 @@ function searchMusic() {
 	});
 	
 }
-function callbackMusicSearch(data){
-	 var jsonObj = JSON.stringify(data);
-	   var jsonArr = JSON.parse(jsonObj);
+function callbackMusicSearch(data) {
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
 
-	   var tr, td, a;
+	var tr, td, a;
 	   
-	   var title, description, originallink, pubDate;
+	var title, description, originallink, pubDate;
 	   
-	   for (var i in jsonArr.list) {
+	for (var i in jsonArr.list) {
 
 		   
-		   title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
-		   description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
-		   originallink = jsonArr.list[i].originallink;
-		   pubDate = jsonArr.list[i].pubDate;
+		title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
+		description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
+		originallink = jsonArr.list[i].originallink;
+		pubDate = jsonArr.list[i].pubDate;
 		   
-		   tr = document.createElement("tr");
-		   td = document.createElement("td");
-		   a = document.createElement("a");
-		   a.href = "javascript:recieveNews(title, originallink, description, "
-			   + "pubDate); alert(title);";
-		   a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveNews(title, originallink, description, "
+			+ "pubDate); alert(title);";
+		a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
 		   
-		   /*
-		   td.innerHTML = "<a href='javascript:recieveNews("
-			   + title + ", " + originallink + ", " + description + ", "
-			   + pubDate + "); alert(" + title + ");'>"
-			   + (parseInt(i, 10) + 1) + ". "
-		   		+ title + "</a>";
-		   */
-		   td.appendChild(a);
-		   tr.appendChild(td);
-		   document.getElementById("newSearchRes").appendChild(tr);
+		/*
+	   td.innerHTML = "<a href='javascript:recieveNews("
+		   + title + ", " + originallink + ", " + description + ", "
+		   + pubDate + "); alert(" + title + ");'>"
+		   + (parseInt(i, 10) + 1) + ". "
+	   		+ title + "</a>";
+		 */
+		
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("newSearchRes").appendChild(tr);
 
-		   tr = document.createElement("tr");
-		   td = document.createElement("td");
-		   a = document.createElement("a");
-		   a.href = "javascript:recieveNews(title, originallink, description, "
-			   + "pubDate); alert(title);";
-		   a.innerHTML ="<ul><li>"+ description+"</li></ul>";
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		a = document.createElement("a");
+		a.href = "javascript:recieveNews(title, originallink, description, "
+			+ "pubDate); alert(title);";
+		a.innerHTML ="<ul><li>"+ description+"</li></ul>";
 		   
-		   /*
+		/*
 		   td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
 			   + title + "\', \'" + originallink + "\', \'" + description + "\', \'"
 			   + pubDate + "\'); alert(title);'>"
 		   		+ description + "</a></li></ul>";
-		   */
-		   td.appendChild(a);
-		   tr.appendChild(td);
-		   document.getElementById("newSearchRes").appendChild(tr);
+		 */
+		td.appendChild(a);
+		tr.appendChild(td);
+		document.getElementById("newSearchRes").appendChild(tr);
 		   
 		   
-		  //jsonArr.list.originallink;
-		  //jsonArr.list.pubDate;
-	   }
+		//jsonArr.list.originallink;
+		//jsonArr.list.pubDate;
+	}
 }
 
 function searchBook() {
@@ -907,60 +965,58 @@ function newsSearch() {
 
 function callbackNewsSearch(data) {
 
-	   var jsonObj = JSON.stringify(data);
-	   var jsonArr = JSON.parse(jsonObj);
+    var jsonObj = JSON.stringify(data);
+    var jsonArr = JSON.parse(jsonObj);
 
-	   var tr, td, a;
-	   
-	   var title, description, originallink, pubDate;
-	   
-	   for (var i in jsonArr.list) {
+    var tr, td, a;
+    
+    var title, description, originallink, pubDate;
+    
+    for (var i in jsonArr.list) {
 
-		   
-		   title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
-		   description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
-		   originallink = jsonArr.list[i].originallink;
-		   pubDate = jsonArr.list[i].pubDate;
-		   
-		   tr = document.createElement("tr");
-		   td = document.createElement("td");
-		   a = document.createElement("a");
-		   a.href = "javascript:recieveNews(title, originallink, description, "
-			   + "pubDate); alert(title);";
-		   a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
-		   
-		   /*
-		   td.innerHTML = "<a href='javascript:recieveNews("
-			   + title + ", " + originallink + ", " + description + ", "
-			   + pubDate + "); alert(" + title + ");'>"
-			   + (parseInt(i, 10) + 1) + ". "
-		   		+ title + "</a>";
-		   */
-		   td.appendChild(a);
-		   tr.appendChild(td);
-		   document.getElementById("newSearchRes").appendChild(tr);
+       
+       title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
+       description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
+       originallink = jsonArr.list[i].originallink;
+       pubDate = jsonArr.list[i].pubDate;
+       
+       tr = document.createElement("tr");
+       td = document.createElement("td");
+       a = document.createElement("a");
+       a.href = "javascript:recieveNews(\" "+ title +"\", \""+originallink+"\", \" "+description+"\",\" "+pubDate+"\");";
+       a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
+       
+       /*
+       td.innerHTML = "<a href='javascript:recieveNews("
+          + title + ", " + originallink + ", " + description + ", "
+          + pubDate + "); alert(" + title + ");'>"
+          + (parseInt(i, 10) + 1) + ". "
+             + title + "</a>";
+       */
+       td.appendChild(a);
+       tr.appendChild(td);
+       document.getElementById("newSearchRes").appendChild(tr);
 
-		   tr = document.createElement("tr");
-		   td = document.createElement("td");
-		   a = document.createElement("a");
-		   a.href = "javascript:recieveNews(title, originallink, description, "
-			   + "pubDate); alert(title);";
-		   a.innerHTML ="<ul><li>"+ description+"</li></ul>";
-		   
-		   /*
-		   td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
-			   + title + "\', \'" + originallink + "\', \'" + description + "\', \'"
-			   + pubDate + "\'); alert(title);'>"
-		   		+ description + "</a></li></ul>";
-		   */
-		   td.appendChild(a);
-		   tr.appendChild(td);
-		   document.getElementById("newSearchRes").appendChild(tr);
-		   
-		   
-		  //jsonArr.list.originallink;
-		  //jsonArr.list.pubDate;
-	   }
+       tr = document.createElement("tr");
+       td = document.createElement("td");
+       a = document.createElement("a");
+       a.href = "javascript:recieveNews(\" "+ title +"\", \""+originallink+"\", \" "+description+"\",\" "+pubDate+"\");";
+       a.innerHTML ="<ul><li>"+ description+"</li></ul>";
+       
+       /*
+       td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
+          + title + "\', \'" + originallink + "\', \'" + description + "\', \'"
+          + pubDate + "\'); alert(title);'>"
+             + description + "</a></li></ul>";
+       */
+       td.appendChild(a);
+       tr.appendChild(td);
+       document.getElementById("newSearchRes").appendChild(tr);
+       
+       
+      //jsonArr.list.originallink;
+      //jsonArr.list.pubDate;
+    }
 }
 
 function bookSearch() {

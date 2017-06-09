@@ -225,46 +225,87 @@ public class PostDao {
 	}
 	
 
-	public int pinsert(String loginUser, String category, String content,String title) {
+	public int pinsert(String loginUser, String category, String content,String title,String open) {
 		Map<String, String> map = new HashMap<String, String>();
 		int post_id = (int) sqlSession.selectOne("postmapper.postid");
+		int pinsert = 0;
 		map.put("post_id", post_id+"");
 		map.put("loginUser", loginUser);
 		map.put("category",category);
 		map.put("content",content);
 		map.put("title", title);
-
-		int pinsert = sqlSession.insert("postmapper.pinsert",map);
+		map.put("open", open);
 		
-		if("news".equals(category)) {
-			System.out.println(""+category);
-			sqlSession.insert("newsmapper.ninsert",map);
+		System.out.println(open);
+		
+		if("onlyMe".equals(open)){
+			pinsert = sqlSession.insert("postmapper.ponlymeinsert",map);
+			System.out.println(pinsert+"onlyme");
+			if("news".equals(category)) {
+				System.out.println(""+category);
+				sqlSession.insert("newsmapper.ninsert",map);
+			}
+			else if("diary".equals(category)){
+				sqlSession.insert("diarymapper.dinsert",map);
+			}
+			else if("review".equals(category)){
+				sqlSession.insert("reviewmapper.rinsert",map);
+			}
+			else if("book".equals(category)){
+				sqlSession.insert("bookmapper.binsert",map);
+			}
+			else if("movie".equals(category)){
+				sqlSession.insert("moviemapper.movieinsert",map);
+			}
+			else if("music".equals(category)){
+				sqlSession.insert("musicmapper.minsert",map);
+			}
+			else if("place".equals(category)){
+				sqlSession.insert("placemapper.pinsert",map);
+			}
+			else if("default".equals(category)){
+	           
+				System.out.println(""+category);
+				sqlSession.insert("freemapper.finsert",map);
+			}
+		}else if("public".equals(open)){
+			pinsert = sqlSession.insert("postmapper.ppublicinsert",map);
+			System.out.println(pinsert+"public");
+			if("news".equals(category)) {
+				System.out.println(""+category);
+				sqlSession.insert("newsmapper.ninsert",map);
+			}
+			else if("diary".equals(category)){
+				sqlSession.insert("diarymapper.dinsert",map);
+			}
+			else if("review".equals(category)){
+				sqlSession.insert("reviewmapper.rinsert",map);
+			}
+			else if("book".equals(category)){
+				sqlSession.insert("bookmapper.binsert",map);
+			}
+			else if("movie".equals(category)){
+				sqlSession.insert("moviemapper.movieinsert",map);
+			}
+			else if("music".equals(category)){
+				sqlSession.insert("musicmapper.minsert",map);
+			}
+			else if("place".equals(category)){
+				sqlSession.insert("placemapper.pinsert",map);
+			}
+			else if("default".equals(category)){
+	           
+				System.out.println(""+category);
+				sqlSession.insert("freemapper.finsert",map);
+			}
 		}
-		else if("diary".equals(category)){
-			sqlSession.insert("diarymapper.dinsert",map);
-		}
-		else if("review".equals(category)){
-			sqlSession.insert("reviewmapper.rinsert",map);
-		}
-		else if("book".equals(category)){
-			sqlSession.insert("bookmapper.binsert",map);
-		}
-		else if("movie".equals(category)){
-			sqlSession.insert("moviemapper.movieinsert",map);
-		}
-		else if("music".equals(category)){
-			sqlSession.insert("musicmapper.minsert",map);
-		}
-		else if("place".equals(category)){
-			sqlSession.insert("placemapper.pinsert",map);
-		}
-		else if("default".equals(category)){
-           
-			System.out.println(""+category);
-			sqlSession.insert("freemapper.finsert",map);
-		}
+
+		
+		
+		
         
 		return pinsert;
 	}
 	
 }
+

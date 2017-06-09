@@ -104,7 +104,7 @@ public class MovieController {
 		
 		return mv;
 	}
-	@RequestMapping(value="/moviesearch2.do", method=RequestMethod.GET)
+	@RequestMapping(value="/moviesearch2.do",produces={"application/json"} )
 	@ResponseBody
 	public String searchMovie2(ModelAndView mv, @RequestParam String keyword, HttpSession session){
 
@@ -159,8 +159,7 @@ public class MovieController {
 		
 		List<Movie> result = ((PostMovie) gson.fromJson(response_.toString(), type)).getItems();
 		for (Movie m : result)  {
-			m.setDirector(m.getDirector().split("\\|")[0]);
-			//System.out.println(m.getDirector());
+			
 				JSONObject job = new JSONObject();
             
             try {

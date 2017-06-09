@@ -12,12 +12,18 @@ import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kh.gonggan.music.model.vo.Music;
+import com.kh.gonggan.news.model.vo.News;
+import com.kh.gonggan.post.model.vo.PostMusic;
+import com.kh.gonggan.post.model.vo.PostNews;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +34,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -145,11 +153,16 @@ public class MusicController {
 	}
 	@RequestMapping(value="/musicpost2.do", produces="text/plain;charset=UTF-8", method=RequestMethod.GET)
 	@ResponseBody
-	public ModelAndView musicpost2(@RequestParam String keyword,
+	public String musicpost2(@RequestParam String keyword,
 			ModelAndView mv){
 		
-		List<Music> searchMusicList = null;
-		
+		List<Music> searchMusicList = new ArrayList<Music>();
+
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+	      
+		Gson gson = new Gson();
+		Type type = new TypeToken<PostMusic>(){}.getType();  
 		/*
 		Properties properties = new Properties();
 		
@@ -202,7 +215,7 @@ public class MusicController {
 		mv.addObject("keyword", keyword);
 		mv.addObject("category", 2);
 		
-		return mv;
+		return null;
 	}
 
 	

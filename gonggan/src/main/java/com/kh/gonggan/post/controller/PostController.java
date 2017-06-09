@@ -852,9 +852,9 @@ public class PostController {
 	}
 		
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
-	public ModelAndView upload(@RequestParam String loginUser,@RequestParam String category,@RequestParam String content,@RequestParam String title, ModelAndView mv) throws Exception{
+	public ModelAndView upload(@RequestParam String loginUser,@RequestParam String category,@RequestParam String content,@RequestParam String open,@RequestParam String title, ModelAndView mv) throws Exception{
 		
-		int pinsert = postService.pinsert(loginUser,category,content,title);
+		int pinsert = postService.pinsert(loginUser,category,content,title,open);
 		
 		if (pinsert < 0) {
 			System.out.println("안됨");

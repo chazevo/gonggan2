@@ -29,8 +29,11 @@
 	select sequence_post.nextval from dual
 	</select>
 	
-	<insert id="pinsert" parameterType="Map">
+	<insert id="ponlymeinsert" parameterType="Map">
 	insert into post values(${post_id},#{loginUser},#{category},'N','N',default,null,sysdate)
+	</insert>
+	<insert id="ppublicinsert" parameterType="Map">
+	insert into post values(${post_id},#{loginUser},#{category},'Y','Y',default,null,sysdate)
 	</insert>
 	
 	<select id="calplist" parameterType="Map" resultMap="postResult">

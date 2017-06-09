@@ -18,7 +18,7 @@
 </head>
 <body class="gradBg">
 <div>
-	<table width="100%" >
+	<table class="likeTable" width="100%" >
 		<tr>
 			<td colspan="2" class="text-center">
 				<h3><a href="javascript:history.back();" class="back">&lt;</a> like</h3>

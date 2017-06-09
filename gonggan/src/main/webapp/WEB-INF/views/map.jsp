@@ -23,7 +23,7 @@
 <div>
 	<table width="100%">
 		<tr>
-			<td>
+			<th>
 				<div class="div2"  style="margin:auto;">
 					<form id="form" action="locationsearch.do">
 						<input type="text" name="keyword" value="${keyword }" placeholder="search"  onkeydown="if(event.keyCode == 13) selectSubmit();">
@@ -33,7 +33,7 @@
 							</a>
 						</form>
 					</div>
-				</td>
+				</th>
 		</tr>
 		<c:if test="${!empty searchLocationList}">
 		<c:forEach items="${searchLocationList}" var="i" begin="0">
@@ -52,6 +52,9 @@
 		</c:forEach>
 		</c:if>
 	</table>
+	<!-- <a href='javascript:void();'>
+		<div class="moreBtb">+ 더 보 기</div>
+	</a> -->
 </div><div id="map">
 </div>
 <script type="text/javascript">

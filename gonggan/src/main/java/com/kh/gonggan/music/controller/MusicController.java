@@ -262,6 +262,7 @@ public class MusicController {
 			if (rId.getKind().equals("youtube#video")) 
 				thumbnail = singleVideo.getSnippet().getThumbnails().get("default");
 			
+			System.out.println(singleVideo.getSnippet().getThumbnails().keySet());
 			/*
 			System.out.println(" Video Id" + rId.getVideoId());
 			System.out.println(" Title: " + singleVideo.getSnippet().getTitle());

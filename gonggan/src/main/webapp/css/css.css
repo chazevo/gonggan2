@@ -32,7 +32,15 @@ body {
 	width:50%;
 	height:100%;
 	display: inline-block;
-	
+	overflow:scroll;
+}
+
+.mapBd div table th, .mapBd div table td {
+	padding:15px;
+	border-bottom:1px solid white;
+}
+
+.mapBd div table td {
 }
 
 .map {
@@ -52,12 +60,49 @@ body {
 	overflow-x:hidden;
 }
 
-
-
-.searchAll>div {
+body.searchAll>div {
+	height:400px;
 	overflow:scroll;
  	overflow-x:hidden;
 	width:100%;
+}
+
+body.searchAll table table.categorySearch {
+	background: rgba(255, 255, 255, 0.5);
+	margin:15px;
+}
+
+body.searchAll table table.book, body.searchAll table table.movie {
+	height:180px;
+	max-width:45%;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	-moz-binding: url('ellipsis.xml#ellipsis');
+	white-space: nowrap;
+	overflow:hidden;
+}
+
+body.searchAll table table.categorySearch td {
+	color:gray;
+	text-align:left;
+	height:25px;
+}
+
+body.searchAll table table.categorySearch.news td {
+	padding:15px;
+}
+
+.categorySearch.book td, .categorySearch.movie td, .categorySearch.music td {
+	padding-left:15px;
+}
+
+table.categorySearch th {
+	padding: 15px;
+	height:25px;
+}
+
+table.categorySearch th a, table.categorySearch td a {
+	color:black;
 }
 
 .gradBg input {
@@ -86,7 +131,7 @@ body {
 }
 
 
-.gradBg td {
+.gradBg .likeTable td {
 	
 	padding-left:50px;
 	padding-right:50px;
@@ -393,6 +438,11 @@ overflow-x: hidden; } */
 	background:linear-gradient(to right, #DEACC6, #91B2DF);
 	color: white;
 	padding:3px;
+	width:70%;
+	text-align:center;
+	left:0;
+	right:0;
+	margin:auto;
 }
 
 #booksearchBtn, #searchBtn{
@@ -650,7 +700,7 @@ a.loginbox:hover {
 	padding-right:20px ;
 }
 
-.contentDiv>table {
+.contentDiv>table th {
 	color: #E6E6E6;
 	margin-bottom: 100px;
 }
@@ -676,6 +726,7 @@ a.loginbox:hover {
 }
 	
 .contentDiv table table .cal td {
+	color:#E6E6E6;
 	border: 1px solid #E6E6E6;
 	height: 100px;
 	width:14%;
@@ -1770,8 +1821,21 @@ legend {
 	background-size: cover;
 }
 
+.checkbox-wrap .star-icon  { 
+	display: inline-block; 
+	width: 15px; 
+	height: 15px;
+	background: url(../images/notStar.png) left center no-repeat; 
+	background-size: cover;
+	vertical-align: middle;
+}
+.checkbox-wrap input[type=checkbox]:checked + .star-icon { 
+	background: url(../images/star1.png);
+	background-size: cover;
+}
+
 .today {
-	border: 1px solid red;
+	border: 1px solid red!important;
 }
 
 @media (max-width: 200px) {

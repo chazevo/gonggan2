@@ -172,12 +172,13 @@ function callbackList(data) {
 				
 				postId = jsonArr.list[j].postId;
 				
-				str += "<td>"
+				str += "<td class='" + (jsonArr.list[j].date == today ? "today" : "") +  "'>"
 					+ "<a data-fancybox data-src='pdetail.do?postId=" + postId + "&writerId=" + jsonArr.list[j].writerId + "'>"
 					+ ( jsonArr.list[j].photoPath == imgVal ?
 							"<span style='color:pink;font-weght:bold;vertical-align:top;'>" + i + "</span>" : "")
-					+ "<img height='100%' class='" + (jsonArr.list[j].date == today ? "today" : "")
-					+ ( jsonArr.list[j].photoPath == imgVal ? "" : ("' src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath) ) + "'>"
+					+ (jsonArr.list[j].photoPath == imgVal ? "" :
+						"<img height='100%' "
+						+ " src='/gonggan/uploadImages/" + jsonArr.list[j].photoPath + "'>")
 					+ "</a></td>";
 				flag = true;
 				break;

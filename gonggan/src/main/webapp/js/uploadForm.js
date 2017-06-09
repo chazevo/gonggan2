@@ -543,16 +543,19 @@ function content_OK() {
 	console.log(je_doc.body.innerHTML == " ");
 
 	if (je_doc.body.innerHTML != "") {
-	      if (confirm("포스트를 게시하시겠습니까? ") == true) {
-	    	  $("input[name=title]").val(je_doc.getElementById("title").innerText);
-	      		$('#form').submit();
+		if (confirm("포스트를 게시하시겠습니까? ") == true) {
+			if($("select [name=category]").val()=="diary"){
+	            $("input[name=title]").val(je_doc.getElementById("title").innerText);
+	            $('#form').submit();
+	               }else{
+	                  $('#form').submit();
+	               }
+	         }
+	         else return;
 	      }
-	      else return;
+	      else alert("본문 내용을 입력해주세요");
+	         
 	   }
-	   else alert("본문 내용을 입력해주세요");
-	      
-	}
-
 function cancel() {
 	if (confirm("포스팅을 취소하시겠습니까? ") == true)
 		location.href = "myhome.do?writer_id=" + loginUser;

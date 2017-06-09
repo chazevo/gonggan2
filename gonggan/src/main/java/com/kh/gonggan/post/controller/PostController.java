@@ -858,10 +858,12 @@ public class PostController {
 		
 		if (pinsert < 0) {
 			System.out.println("안됨");
-			mv.setViewName("uploadform");
+			mv.setViewName("redirect:uploadform.do?"
+					+ "writer_id=" + loginUser);
 		} else{
 			System.out.println("된거");
-			mv.setViewName("myhome");
+			mv.setViewName("redirect:myhome.do?"
+						+ "writer_id=" + loginUser);
 		}
 		return mv;
 	}

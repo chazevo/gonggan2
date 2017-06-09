@@ -99,92 +99,126 @@
 						</a>
 					</form>
 				</div>
-				
 			</td>
 		</tr>
-		<tr>
-			<th colspan="5"><hr></th>
-		</tr>
-		<tbody id="listbody">
-			<c:if test="${!empty searchMusicList}">
-					<c:forEach items="${searchMusicList}" var="i" begin="0">
-					<tr>
-						<td>
-							<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
-							<img src="${i.thumbnail }"></a>
-						</td>
-						<td colspan="4">
-							<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
-								${i.title}</a>
-						</td>
-					</tr>
-				</c:forEach>
-			</c:if>
-			<c:if test="${!empty searchMovieList}">
-				<c:forEach items="${searchMovieList}" var="i" begin="0">
-					<tr>
-						<td rowspan="3">
-							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
-							<img src="${i.image}"></a>
-						</td>
-						<td colspan="4">
-							<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
-								${i.title}</a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4">${i.director }</td>
-					</tr>
-					<tr>
-						<td colspan="4"><a href="${i.link }"  target="_blank">상세정보</a></td>
-					</tr>
-				</c:forEach>
-			</c:if>
-			<c:if test="${!empty searchNewsList}">
-				<c:forEach items="${searchNewsList}" var="i" begin="0">
-					<tr>
-						<td colspan="5">
-							<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
-								${i.title}</a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="5">
-							<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
-								${i.description}</a>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="5"><a href="${i.originallink }"  target="_blank">상세정보</a></td>
-					</tr>
-				</c:forEach>
-			</c:if>
-			<c:if test="${!empty searchBookList}">
-			<c:forEach items="${searchBookList}" var="i" begin="0">
-			<tr>
-				<td rowspan="4">
-					<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
-					<img src="${i.image}"></a>
-				</td>
-				<td colspan="4">
-					<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
-						${i.title}
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="4">${i.author }</td>
-			</tr>
-			<tr>
-				<td colspan="4">${i.publisher }</td>
-			</tr>
-			<tr>
-				<td colspan="4"><a href="${i.link }"  target="_blank">상세정보</a></td>
-			</tr>
-			</c:forEach>
-			</c:if>
-		</tbody>
 	</table>
+	<table width="100%" >
+		<tbody id="listbody">
+			<tr>
+				<td style="text-align:center;">
+					<c:if test="${!empty searchMusicList}">
+					<c:forEach items="${searchMusicList}" var="i" begin="0">
+					<table class="categorySearch music" width="40%" style="display:inline-block;">
+						<tr>
+							<td>
+								<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
+								<img src="${i.thumbnail }"></a>
+							</td>
+							<td>
+								<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
+									${i.title}</a>
+							</td>
+						</tr>
+					</table>
+					</c:forEach>
+					</c:if>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:center;">
+					<c:if test="${!empty searchMovieList}">
+					<c:forEach items="${searchMovieList}" var="i" begin="0">
+					<table class="categorySearch movie" width="40%" style="display:inline-block;">
+						<tr>
+							<td rowspan="3" style="padding:0;">
+								<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
+								<img src="${i.image}"></a>
+							</td>
+							<th>
+								<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
+									<b style="font-size:140%">${i.title}</b>
+								</a>
+							</th>
+						</tr>
+						<tr>
+							<td>${i.director }</td>
+						</tr>
+						<tr>
+							<td><a href="${i.link }"  target="_blank">상세정보</a></td>
+						</tr>
+					</table>
+					</c:forEach>
+					</c:if>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:center;">
+					<c:if test="${!empty searchNewsList}">
+					<c:forEach items="${searchNewsList}" var="i" begin="0">
+					<table class="categorySearch news" width="40%" style="display:inline-block;">
+						<tr>
+							<td>
+								<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+									${i.title}</a>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+									${i.description}</a>
+							</td>
+						</tr>
+						<tr>
+							<td><a href="${i.originallink }"  target="_blank">상세정보</a></td>
+						</tr>
+					</table>
+					</c:forEach>
+					</c:if>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:center;">
+				<!-- 이미지 100% 안됨, 쩜쩜쩜 안됨 -->
+					<c:if test="${!empty searchBookList}">
+					<c:forEach items="${searchBookList}" var="i" begin="0">
+					<table class="categorySearch book" width="40%" style="display:inline-block;">
+						<colgroup>
+							<col width="36%" />
+							<col  style="width:*;" />
+						</colgroup>
+						<tr>
+							<td rowspan="5">
+								<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
+									<img src="${i.image}" >
+								</a>
+							</td>
+							<th>
+								<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
+									<b style="font-size:140%">${i.title}</b>
+								</a>
+							</th>
+						</tr>
+						<tr>
+							<td><b>저자</b>&nbsp;${i.author }</td>
+						</tr>
+						<tr>
+							<td><b>출판</b>&nbsp;${i.publisher }</td>
+						</tr>
+						<tr>
+							<td><b>발행</b>&nbsp;${i.pubdate }</td>
+						</tr>
+						<tr>
+							<td>
+								<a href="${i.link }"  target="_blank">상세정보</a>
+							</td>
+						</tr>
+					</table>
+					</c:forEach>
+					</c:if>
+				</td>
+			</tr>
+		</tbody>
+		</table>
 	<div class="moreBtb">+ 더 보 기</div>
 </div>
 </body>

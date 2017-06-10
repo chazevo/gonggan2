@@ -466,22 +466,27 @@ public class PostController {
 		String content = null;
 		
 		switch (category) {
+		case "free":
+			break;
 		case "music":
-			content = musicService.musicDetail(postId).getMusic_info();
+			content = musicService.musicDetail(postId).getMusic_content();
 			break;
 		case "movie":
-			content = movieService.movieDetail(postId).getMovie_info();
+			content = movieService.movieDetail(postId).getMovie_content();
 			break;
 		case "diary":
-			content = diaryService.diaryDetail(postId).getDiary_content();
+			content = diaryService.diaryDetail(postId).getTitle();
 			break;
 		case "review":
 			content = reviewService.reviewDetail(postId).getReview_content();
 			break;
 		case "news":
-			content = newsService.newsDetail(postId).getNews_info();
+			content = newsService.newsDetail(postId).getNews_content();
 			break;
 		}
+		
+		content = content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+		System.out.println(content);
 		
 		if (content.length() > 100)
 			content = content.substring(0, 100) + "...";
@@ -866,5 +871,23 @@ public class PostController {
 						+ "writer_id=" + loginUser);
 		}
 		return mv;
+	}
+	
+	@RequestMapping(value="/pdelete.do")
+	@ResponseBody
+	public ModelAndView postDelete(@RequestParam int postId,@RequestParam String loginUser, ModelAndView mv){
+		String msg = "실패";
+    
+		int pdelete = postService.postDelete(postId,loginUser);
+    
+		if(pdelete > 0) {
+			msg="성공";
+			mv.setViewName("redirect:myhome.do?"
+					+ "writer_id=" + loginUser);
+		}
+		System.out.println(pdelete + " post controller run ...");
+    
+		return mv;
+ 
 	}
 }

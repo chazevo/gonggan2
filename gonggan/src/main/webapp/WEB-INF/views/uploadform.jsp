@@ -83,9 +83,9 @@
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
-		colorchart();
-		colorchart2();
-		colorchart3();
+		//colorchart();
+		//colorchart2();
+		//colorchart3();
 
 		$("#editor").click(function() {
 			alert();
@@ -257,17 +257,17 @@
                              });
               });
 */
-	      function readImg(inputId, outputId) {
-	         var file = document.getElementById(inputId).files[0];
-	         var reader = new FileReader();
-	         reader.readAsDataURL(file);
-	      reader.onload = function() {
-	            var output = document.getElementById(outputId);
-	            //output.src = reader.result;
-	            document.getElementById('editor').contentWindow.document.body.innerHTML += 
-	            	"<img src='" + reader.result + "'>";
-	         }
-	      }
+		function readImg(inputId, outputId) {
+			var file = document.getElementById(inputId).files[0];
+			var reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = function() {
+				var output = document.getElementById(outputId);
+				//output.src = reader.result;
+				document.getElementById('editor').contentWindow.document.body.innerHTML += 
+					"<img src='" + reader.result + "'>";
+			}
+		}
 		
 	});
 </script>
@@ -363,7 +363,7 @@
 				<div class="blogOwnerClick hidden">
 					<div>
 						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
-						<hr><a class="hover" a href="">프로필 보기</a>
+						<hr><a class="hover" href="">프로필 보기</a>
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>
@@ -838,36 +838,44 @@
 					<tbody id="reviewTbody" style="display:none">
 						<tr>
 							<td>제품</td><td><input type="text"></td>
-							<td>별점</td><td>✮✮✮✮✮</td>
+							<td>별점</td>
+							<td>
+								<span>
+									<img id="image1" onmouseover="show(1);" onclick="mark(1);" onmouseout="noshow(1);" src="images/notStar.png" width="15px">
+									<img id="image2" onmouseover="show(2);" onclick="mark(2);" onmouseout="noshow(2);" src="images/notStar.png" width="15px">
+									<img id="image3" onmouseover="show(3);" onclick="mark(3);" onmouseout="noshow(3);" src="images/notStar.png" width="15px">
+									<img id="image4" onmouseover="show(4);" onclick="mark(4);" onmouseout="noshow(4);" src="images/notStar.png" width="15px">
+									<img id="image5" onmouseover="show(5);" onclick="mark(5);" onmouseout="noshow(5);" src="images/notStar.png" width="15px">
+								</span>
+								<br>
+								<span id="startext">평가하기</span>
+							</td>
 						</tr>
 					</tbody>
-					      <tbody id="musicTbody" style="display:none">
-                  <tr>
-                     <td>가수</td><td><input type='text' size="14"></td>
-                     <td>제목</td><td><input type='text'></td>
-                  </tr>
-                  <tr>
-                     <td colspan="5" align="right">
-                        <a data-toggle="collapse" data-target="#lyrics">가사 찾아보기</a>
-                        <div id="lyrics" class="collapse">
-                           <div class="div2">
-                           <input type="text" id="musicSearchText" name="keyword" value="${keyword }" placeholder="검 색" 
-                              onkeydown="if(event.keyCode == 13) searchMusic();">
-                           <a href="javascript:searchMusic();">
-                              <img src=images/search.png width="5%" >
-                           </a>
-                           </div>
-                           <div class="searchAll">
-                              <table width="100%" id="musicSearchRes"></table>
-                           </div>
-                           
-                        </div>
-                     </td>
-                  </tr>
-               </tbody>
+					<tbody id="musicTbody" style="display:none">
+						<tr>
+							<td>가수</td><td><input type='text' size="14"></td>
+							<td>제목</td><td><input type='text'></td>
+						</tr>
+						<tr>
+							<td colspan="5" align="right">
+								<a data-toggle="collapse" data-target="#lyrics">가사 찾아보기</a>
+								<div id="lyrics" class="collapse">
+								<div class="div2">
+									<input type="text" id="musicSearchText" name="keyword" value="${keyword }" placeholder="검 색" 
+										onkeydown="if(event.keyCode == 13) searchMusic();">
+									<a href="javascript:searchMusic();">
+										<img src=images/search.png width="5%" >
+									</a>
+								</div>
+								<div class="searchAll">
+									<table width="100%" id="musicSearchRes"></table>
+								</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
 					<tr>
-							
-				
 								
 	   <!-- END다정다정 -->		
 								<!-- <img src="images/efErase_icon.png" id="content_allign_center" width="42px"

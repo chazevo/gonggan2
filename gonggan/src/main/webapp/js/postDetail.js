@@ -181,6 +181,26 @@ function callbackCommentDelete(data, comment_num){
 	alert(data);
 }
 
+
+function postdelete(postId,loginUser) {
+	
+	if (confirm("정말 삭제하시겠습니까? ") == false)
+		return;
+	else
+		$.ajax({
+			url: "/gonggan/pdelete.do",
+			data: {postId:postId,
+				loginUser:loginUser
+			},
+			success: function(data) {
+				alert("삭제 되었습니다.");
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+		});
+}
+
 function dotdotdot() {
 
 	if ($(".dotdotdotDiv").css('display') == "block")

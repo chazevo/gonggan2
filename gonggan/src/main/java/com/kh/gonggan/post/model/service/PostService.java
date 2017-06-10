@@ -38,4 +38,5 @@ public interface PostService {
 	List<Post> commentInOrder(String writer_id);
 	List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2);
 	int pinsert(String loginUser, String category,String content,String title,String open);
+	int postDelete(int post_id, String loginUser);
 }

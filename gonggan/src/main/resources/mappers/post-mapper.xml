@@ -381,4 +381,8 @@
 	WHERE CHECK_YN='Y' AND SENDER =#{loginUser}) order by 1 desc) subquery) where r between #{rownum} and #{rownum2}
 	</select>
 
+	<delete id="postdelete" parameterType="Map">
+	delete from post where post_id=#{post_id} and writer_id=#{loginUser}
+	</delete>
+
 </mapper>

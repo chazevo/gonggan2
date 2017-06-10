@@ -174,4 +174,9 @@ public class PostSericeImpl implements PostService{
 	public int pinsert(String loginUser, String category,String content,String title,String open){
 		return postDao.pinsert(loginUser,category,content,title,open);
 	}
+	
+	@Override
+	public int postDelete(int post_id,String loginUser){
+		return postDao.postDelete(post_id,loginUser);
+	}
 }

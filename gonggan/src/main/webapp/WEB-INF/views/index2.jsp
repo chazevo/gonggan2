@@ -67,7 +67,8 @@ window.onload = function() {
 			requestList(rownum);
 	});
 	*/
-   
+
+	
 	$(window).scroll(function() {
 		//if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3) {
 			//if  ($(window).scrollTop() >= 500) {
@@ -77,12 +78,13 @@ window.onload = function() {
 		initPosition = $(window).scrollTop()
 		
 		if (initPosition > prevPosition) {
-			if  ($(window).scrollTop() > $(window).height() - $(window).height() / 5) {alert();
+			if  ($(document).height() == $(window).scrollTop() + $(window).height()) {
+				
 				if(maxRownum >= rownum) {
+					alert("maxRownum : " + maxRownum + ", rownum : " + rownum);
 					$("#div_Loading").show();
-					//alert(rownum);
-					setTimeout(function() {
-						if (sort == "date") {
+					
+					if (sort == "date") {
 							if (category == "all")
 								requestList(rownum);
 							if (category == "psearch")
@@ -91,13 +93,13 @@ window.onload = function() {
 								requestNeighborPostList(rownum, loginUser);
 							else
 								requestCategoryList(rownum, category);
-						}
-						else if (sort == "like")
-							requestLikeList(rownum, category, loginUser);
-							
+					}
+					else if (sort == "like")
+						requestLikeList(rownum, category, loginUser);
 						
-						$(window).scrollTop($(window).height() / 2);
-					}, 1000);
+					//$(window).scrollTop($(window).height() / 2);
+					
+					//setTimeout(function() {}, 1000);
 				}
 			}
 		}
@@ -113,7 +115,7 @@ window.onload = function() {
 </head>
 <body>
 <!--<nav class="navbar navbar-default">-->
-<div>
+<div><a id="fancy" style="display:none"></a>
 	<!--<div class="container-fluid">--><div>
 	<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
 		<div class="navbar-header">
@@ -733,6 +735,5 @@ window.onload = function() {
 		</div>
 	</section>
 </div>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>

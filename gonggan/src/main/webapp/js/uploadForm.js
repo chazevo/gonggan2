@@ -3,6 +3,7 @@ var Ca = /\+/g;
 var je_doc={};
 var currTimeFormat = 'a/p hh시 mm분 ss초';
 var temperature;
+var locked = 0 ;
 
 $(function() {
 	$( "#toDate" ).datepicker({
@@ -1100,4 +1101,74 @@ function callbackBookSearch(data) {
 		//jsonArr.list.originallink;
 		//jsonArr.list.pubDate;
 	}
+}
+
+function show(star) {
+	
+	var i;
+	var image;
+	var el;
+	var stateMsg;
+	var e = document.getElementById('startext');
+	
+	if(locked) return;
+   
+	for(i=1 ; i<= star; i++) {
+		image="image"+i;
+		el = document.getElementById(image);
+		el.src="images/star1.png";
+	}
+   
+	switch(star){
+	case 1 :
+		stateMsg = "괜히봤어요.";
+		break;
+	case 2 :
+		stateMsg = "기대하진 말아요";
+		break;
+	case 3 :
+		stateMsg = "무난했어요";
+		break;
+	case 4 :
+		stateMsg = "기대해도 좋아요!";
+		break;
+	case 5 : 
+		stateMsg = "너무 멋져요!";
+		break;
+	default :
+		stateMsg = "";
+	}
+   
+	e.innerHTML = stateMsg;
+   
+}
+
+function noshow(star) {
+	
+	var i;
+	var image;
+	var el;
+
+	if(locked) return;
+	
+	for(i=1; i <= star; i++) {
+		image="image"+i;
+		el = document.getElementById(image);
+		el.src="images/notStar.png";
+	}
+}
+
+function lock(star) {
+	show(star);
+	locked = 1;
+}
+
+function mark(star) {
+	lock(star);
+	alert("선택2"+star);
+	
+	for(var i=1; i<=star; i++)
+		je_doc.body.innerHTML += "<img src='images/star1.png' width='50px;'>";
+	
+	je_doc.body.innerHTML += stateMsg;
 }

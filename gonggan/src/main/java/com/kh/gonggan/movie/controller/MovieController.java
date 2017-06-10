@@ -58,7 +58,8 @@ public class MovieController {
 		try {
 			
 			String text = URLEncoder.encode(keyword, "UTF-8");
-			String apiURL = "https://openapi.naver.com/v1/search/movie?query="+ text; // json 결과
+			String apiURL = "https://openapi.naver.com/v1/search/movie?query="+ text + "&display=2&start=6"; // json 결과
+			// display 안먹는 이유?
 			//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
 			
 			URL url = new URL(apiURL);
@@ -138,7 +139,7 @@ public class MovieController {
 			
 			BufferedReader br;
 			
-			if(responseCode==200) { // 정상 호출
+			if (responseCode==200) { // 정상 호출
 			    br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			} else {  // 에러 발생
 			    br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
@@ -161,25 +162,26 @@ public class MovieController {
 		for (Movie m : result)  {
 			
 				JSONObject job = new JSONObject();
-            
-            try {
 
-                job.put("title", URLEncoder.encode(
-                	m.getTitle(), "UTF-8"));
-                job.put("actor", URLEncoder.encode(
-                    	m.getActor(), "UTF-8"));
-                job.put("director", URLEncoder.encode(
-                    	m.getDirector(), "UTF-8"));
-                job.put("image", m.getImage());
-                job.put("pubDate", m.getpubDate());
+				try {
+
+					job.put("title", URLEncoder.encode(
+							m.getTitle(), "UTF-8"));
+					job.put("actor", URLEncoder.encode(
+							m.getActor(), "UTF-8"));
+					job.put("director", URLEncoder.encode(
+							m.getDirector(), "UTF-8"));
+					job.put("image", m.getImage());
+					job.put("pubDate", m.getpubDate());
+					job.put("link", m.getpubDate());
                 
-            } catch (UnsupportedEncodingException e) {
-               // TODO Auto-generated catch block
-               e.printStackTrace();
-            }
-            jarr.add(job);
-         }
-         json.put("list", jarr);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				jarr.add(job);
+		}
+		json.put("list", jarr);
          
 		return json.toJSONString();
 	}

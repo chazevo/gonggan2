@@ -51,7 +51,7 @@ body {
 	padding:0;
 	height:500px;
 	color:white;
-	background:linear-gradient(to bottom, rgb(145, 156, 178), rgb(207,167 ,168 ));
+	background:linear-gradient(to right, #e1b2c8, #8abee4);
 }
 
 #bookTbody .searchAll {
@@ -69,36 +69,72 @@ body.searchAll>div {
 
 body.searchAll table table.categorySearch {
 	background: rgba(255, 255, 255, 0.5);
-	margin:15px;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:10px;
+	margin-right:10px;
+	font-weight:lighter;
+	width:40%;
+	display:inline-block;
+	/*height:150px;*/
+	/*이렇게 테이블 높이 지정하면 td높이가 table과 딱맞게 맞추기 어려움*/
 }
 
-body.searchAll table table.book, body.searchAll table table.movie {
-	height:180px;
-	max-width:45%;
+body.searchAll table table tbody:not(.except) th span {
+	color:black;
+	width: 250px;
+	display:inline-block;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+body.searchAll table table tbody.except th span {
+	color:black;
+	/*width: 370px;*/
+	display:inline-block;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+body.searchAll table table tbody:not(.except) tr:first-child td {
+	height:140px;
+	position:relative;
+	padding:5px;
+}
+
+body.searchAll table table>tbody tr:first-child td img {
+	max-height:140px;
+}
+
+body.searchAll table table>tbody:not(.except) td {
+	max-width:0px;
 	text-overflow: ellipsis;
 	-o-text-overflow: ellipsis;
 	-moz-binding: url('ellipsis.xml#ellipsis');
 	white-space: nowrap;
 	overflow:hidden;
+	/*height:15px;*/
+	/*이거 안하면 사진 없을 시 테이블 크기 줆 */
 }
 
 body.searchAll table table.categorySearch td {
 	color:gray;
 	text-align:left;
-	height:25px;
+	position:relative;
 }
 
 body.searchAll table table.categorySearch.news td {
 	padding:15px;
 }
 
-.categorySearch.book td, .categorySearch.movie td, .categorySearch.music td {
-	padding-left:15px;
+.categorySearch.book td, .categorySearch td, .categorySearch.music td {
+	padding-left:10px;
 }
 
 table.categorySearch th {
-	padding: 15px;
-	height:25px;
+	padding: 10px;
 }
 
 table.categorySearch th a, table.categorySearch td a {
@@ -120,8 +156,8 @@ table.categorySearch th a, table.categorySearch td a {
 	padding-left: 15px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	border: 1px solid #E6E6E6;
-	border-radius:20px;
+	border: 1px solid white;
+	border-radius:30px;
 	width: 80%;
 }
 
@@ -137,22 +173,29 @@ table.categorySearch th a, table.categorySearch td a {
 	padding-right:50px;
 }
 
-.gradBg tbody td {
-	height:50px;
-}
-
 .gradBg th div {
-	position:relative;
-	height:50px;
+	display:table;
+	width:100%;
+}
+.gradBg th div a {
+	height:40px;
+	display:table-cell;
+	vertical-align:middle;
 }
 
 .gradBg th div hr {
 	position:absolute;
-	left:0px;
-	right:0px;
-	bottom:0px;
 	margin-left:auto;
 	margin-right:auto;
+	margin-top:0;
+	margin-bottom:5px;
+	/*margin-top과 margin-bottom은 
+	부트스트랩 css때문에 vertical-align이 middle이 됨 
+	따라서 마진 top과 bottom을 명시해줌 
+	*/
+	left:0px;
+	right:0px;
+	bottom:0;
 	width:80%;
 	border-width:4px;
 }
@@ -188,14 +231,24 @@ table.categorySearch th a, table.categorySearch td a {
 }
 
 .gradBg hr{
-	border-color:rgb(172,174,184);
+	border-color:rgba(255,255,255,0.3);
 }
-.gradBg .searchAllTable {
-	margin:10px;
+.gradBg .searchAllTable, .gradBg .searchAllTable td, .gradBg .searchAllTable th{
+
+	border:1px solid white;
+	position:relative;
 }
 
-.gradBg .searchAllTable th{
-	margin:10px;
+.searchAllTable, .searchAllTable td, .searchAllTable th:first-child, .searchAllTable th:last-child {
+	border-left-width:0px!important;
+	border-right-width:0px!important;
+}
+
+.gradBg .searchAllTable {
+	margin-bottom:20px;
+}
+.gradBg .searchAllTable td {
+	padding: 10px;
 }
 
 .back {
@@ -435,14 +488,16 @@ overflow-x: hidden; } */
 }
 
 .moreBtb {
-	background:linear-gradient(to right, #DEACC6, #91B2DF);
+	background:linear-gradient(to right, #d592b2, #5fa3da);
 	color: white;
 	padding:3px;
 	width:70%;
 	text-align:center;
 	left:0;
 	right:0;
-	margin:auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:25px;
 }
 
 #booksearchBtn, #searchBtn{
@@ -920,12 +975,12 @@ div div.gray {
 	padding:5px;
 }
 
-.blogHomeContentDiv div, div #div div {
-	/*margin:10px;*/
+.blogHomeContentDiv>div, div #div div {
+	margin:10px;
 	display: inline-block;
 	border: 1px solid #E6E6E6;
 	height: 200px;
-	width: 25%;
+	width: 22%;
 }
 
 .blogHomeContentDiv div table, div #div table {
@@ -1101,7 +1156,6 @@ img {
 
 
 .blogHomeHeader .table1st {
-	border:1px solid blue;
 	width:80%;
 	height:100%!important;
 	display:inline-block;
@@ -1114,12 +1168,10 @@ img {
 .blogHomeHeader .table1st .table2nd>table {
 	width:100%;
 	margin:0;
-	border:1px solid pink;
 }
 
 .blogHomeHeader .table1st .table2nd tbody {
 	width:100%;
-	border: 1px solid brown;
 }
 
 .blogHomeHeader .table2nd>table #listbody_newPost td, #listbody_neighbor td {
@@ -1189,7 +1241,6 @@ img {
 }
 
 .blogHomeHeader .myDiv {
-	border: 1px solid white;
 	display: inline-block;
 	width:17%;
 	height:100%;
@@ -1869,7 +1920,6 @@ legend {
 	}
 	
 	.blogHomeHeader .table2nd {
-		border:1px solid skyblue;
 		width: 100%!important;
 	}
 	
@@ -1904,10 +1954,19 @@ legend {
 		display: none !important;
 	}
 	
-	.blogHomeContentDiv div, div #div div {
+	.blogHomeContentDiv>div, div #div div {
 		width:100%;
 		margin-left:0;
 		margin-right:0;
+	}
+	
+	
+	.blogHomeContentDiv .childDiv {
+		position:absolue;
+		left:0;
+		top:0;
+		height:100%;
+		background-color:#E6E6E6;
 	}
 	
 /*

@@ -15,7 +15,6 @@
 	var categoryval = ('${category}'=='' ? 0 : '${category}');
 
 	window.onload = function() {
-		
 		$("input[name=keyword]").focus();
 		
 		$("th a").click(function() {
@@ -104,122 +103,151 @@
 	</table>
 	<table width="100%" >
 		<tbody id="listbody">
+			<c:if test="${!empty searchNewsList}">
+			<!-- tbody가 없는데 왜 css가 적용되는가? -->
 			<tr>
 				<td style="text-align:center;">
-					<c:if test="${!empty searchMusicList}">
-					<c:forEach items="${searchMusicList}" var="i" begin="0">
-					<table class="categorySearch music" width="40%" style="display:inline-block;">
-						<tr>
-							<td>
-								<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
-								<img src="${i.thumbnail }"></a>
-							</td>
-							<td>
-								<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail }');">
-									${i.title}</a>
-							</td>
-						</tr>
-					</table>
-					</c:forEach>
-					</c:if>
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align:center;">
-					<c:if test="${!empty searchMovieList}">
-					<c:forEach items="${searchMovieList}" var="i" begin="0">
-					<table class="categorySearch movie" width="40%" style="display:inline-block;">
-						<tr>
-							<td rowspan="3" style="padding:0;">
-								<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
-								<img src="${i.image}"></a>
-							</td>
-							<th>
-								<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
-									<b style="font-size:140%">${i.title}</b>
-								</a>
-							</th>
-						</tr>
-						<tr>
-							<td>${i.director }</td>
-						</tr>
-						<tr>
-							<td><a href="${i.link }"  target="_blank">상세정보</a></td>
-						</tr>
-					</table>
-					</c:forEach>
-					</c:if>
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align:center;">
-					<c:if test="${!empty searchNewsList}">
 					<c:forEach items="${searchNewsList}" var="i" begin="0">
-					<table class="categorySearch news" width="40%" style="display:inline-block;">
-						<tr>
-							<td>
-								<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
-									${i.title}</a>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
-									${i.description}</a>
-							</td>
-						</tr>
-						<tr>
-							<td><a href="${i.originallink }"  target="_blank">상세정보</a></td>
-						</tr>
+					<table class="categorySearch news">
+						<tbody class="except">
+							<tr>
+								<th>
+									<span>
+										<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+											${i.title}</a>
+									</span>
+								</th>
+							</tr>
+							<tr>
+								<td style="height:110px;">
+									<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+										${i.description}</a>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="${i.originallink }"  target="_blank">상세정보</a></td>
+							</tr>
+						</tbody>
 					</table>
 					</c:forEach>
-					</c:if>
 				</td>
 			</tr>
+			</c:if>
+			<c:if test="${!empty searchMusicList}">
 			<tr>
 				<td style="text-align:center;">
-				<!-- 이미지 100% 안됨, 쩜쩜쩜 안됨 -->
-					<c:if test="${!empty searchBookList}">
-					<c:forEach items="${searchBookList}" var="i" begin="0">
-					<table class="categorySearch book" width="40%" style="display:inline-block;">
+					<c:forEach items="${searchMusicList}" var="i" begin="0">
+					<table class="categorySearch music">
 						<colgroup>
-							<col width="36%" />
+							<col width="30%" />
 							<col  style="width:*;" />
 						</colgroup>
-						<tr>
-							<td rowspan="5">
-								<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
-									<img src="${i.image}" >
-								</a>
-							</td>
-							<th>
-								<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
-									<b style="font-size:140%">${i.title}</b>
-								</a>
-							</th>
-						</tr>
-						<tr>
-							<td><b>저자</b>&nbsp;${i.author }</td>
-						</tr>
-						<tr>
-							<td><b>출판</b>&nbsp;${i.publisher }</td>
-						</tr>
-						<tr>
-							<td><b>발행</b>&nbsp;${i.pubdate }</td>
-						</tr>
-						<tr>
-							<td>
-								<a href="${i.link }"  target="_blank">상세정보</a>
-							</td>
-						</tr>
+						<tbody>
+							<tr>
+								<td style="height:100px;">
+									<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail_high }');">
+										<img src="${i.thumbnail_default }">
+									</a>
+								</td>
+								<th>
+								<span>
+									<a href="javascript:selectMusic('${i.videoId}', '${i.title}', '${i.thumbnail_high }');">
+										${i.title}</a>
+								</span>
+								</th>
+							</tr>
+						</tbody>
 					</table>
 					</c:forEach>
-					</c:if>
 				</td>
 			</tr>
-		</tbody>
+			</c:if>
+			<c:if test="${!empty searchMovieList}">
+			<tr>
+				<td style="text-align:center;">
+					<c:forEach items="${searchMovieList}" var="i" begin="0">
+					<table class="categorySearch movie">
+						<colgroup>
+							<col width="30%" />
+							<col  style="width:*;" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<td rowspan="5">
+								<!-- rowspan을 5로 해야 균형이 안깨짐 -->
+									<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
+										<img height="100%" width="100%" src="${i.image}">
+									</a>
+								</td>
+								<th>
+									<span>
+										<a href="javascript:selectMovie('${i.image}', '${i.title}', '${i.director }', '${i.actor }', '${i.pubDate }');">
+											<b style="font-size:140%">${i.title}</b>
+										</a>
+									</span>
+								</th>
+							</tr>
+							<tr>
+								<td>${i.director }&nbsp;</td>
+							</tr>
+							<tr>
+								<td>${i.actor }&nbsp;</td>
+							</tr>
+							<tr>
+								<td><a href="${i.link }"  target="_blank">상세정보</a></td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+						</tbody>
+					</table>
+					</c:forEach>
+				</td>
+			</tr>
+			</c:if>
+			<c:if test="${!empty searchBookList}">
+			<tr>
+				<td style="text-align:center;">
+					<c:forEach items="${searchBookList}" var="i" begin="0">
+					<table class="categorySearch book" style="">
+						<colgroup>
+							<col width="30%" />
+							<col  style="width:*;" />
+						</colgroup>
+						<tbody>
+							<tr>
+								<td rowspan="5">
+									<a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
+										<img height="100%" src="${i.image}" >&nbsp;
+									</a>
+								</td>
+								<th>
+									<span><a href="javascript:selectBook('${i.image}', '${i.title}', '${i.author }', '${i.publisher }', '${i.pubdate }');">
+											<b style="font-size:140%">${i.title}</b>
+									</a></span>
+								</th>
+							</tr>
+							<tr>
+								<td><b>저자</b>&nbsp;${i.author }</td>
+							</tr>
+							<tr>
+								<td><b>출판</b>&nbsp;${i.publisher }</td>
+							</tr>
+							<tr>
+								<td><b>발행</b>&nbsp;${i.pubdate }</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom:10px;">
+									<a href="${i.link }"  target="_blank">상세정보</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</c:forEach>
+				</td>
+			</tr>
+			</c:if>
+			</tbody>
 		</table>
-	<div class="moreBtb">+ 더 보 기</div>
+	<a href=""><div class="moreBtb">+ 더 보 기</div></a>
 </div>
 </body>
 </html>

@@ -175,6 +175,12 @@
 					쪽지 보내기
 				</a>
 				</c:if>
+				<c:if test="${sessionScope.loginUser.getMember_id() eq writerId}">
+				<a class="hover dotdotdot"
+					onclick="javascript:postdelete(${postId},'${sessionScope.loginUser.getMember_id()}');">
+					게시글 삭제하기
+				</a>
+				</c:if>
 			</div></td></tr>
 	<tr id="comm" class='commentArea'>
 		<td>

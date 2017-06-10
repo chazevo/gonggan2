@@ -320,6 +320,7 @@ function callbackCommentList(data, postId){
 	+ "<div class='dotdotdotDiv right'>"
 	+ "<a class='hover dotdotdot' href=''>부적절한 컨텐츠 신고</a>"
 	+ "<a class='hover dotdotdot' href='' >공유</a>"
+	+"<a class='hover dotdotdot' onclick='javascript:postdelete(postId,loginUser);'>게시글 삭제하기</a>"
 	+ "<a data-fancybox data-src='messageList.do?"
 	+ "memberId1=" + loginUser + "&memberId2=" + writer_id
 	+ "' class='hover dotdotdot fb'>"
@@ -359,6 +360,24 @@ function moreComment(postId, obj) {
     tr.appendChild(td);
     obj.after("<tr><td colspan='7' class='commentArea'>" + postId + "의 댓글 더 보기</td></tr>");
 	
+}
+
+function postdelete(postId, loginUser) {
+	if (confirm("정말 삭제하시겠습니까?") == false)
+		return;
+	else
+		$.ajax({
+			url: "/gonggan/pdelete.do",
+			data: {postId:postId,
+				loginUser:loginUser
+			},
+			success: function(data) {
+				alert("삭제 되었습니다.");
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+		});
 }
 
 function lastMonth() {

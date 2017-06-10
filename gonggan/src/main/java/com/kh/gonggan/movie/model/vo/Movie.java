@@ -4,6 +4,7 @@ public class Movie {
 	private int post_id;
 	private int movie_num;
 	private String movie_info;
+	private String movie_content;
 	private String title;
 	private String link;
 	private String image;
@@ -14,12 +15,14 @@ public class Movie {
 	
 	public Movie(){}
 
-	public Movie(int post_id, int movie_num, String movie_info, String title, String link, String image,
+	public Movie(int post_id, int movie_num, String movie_info, String movie_content,
+			String title, String link, String image,
 			String subtitle, String pubDate, String director, String actor) {
 		super();
 		this.post_id = post_id;
 		this.movie_num = movie_num;
 		this.movie_info = movie_info;
+		this.movie_content = movie_content;
 		this.title = title;
 		this.link = link;
 		this.image = image;
@@ -44,7 +47,7 @@ public class Movie {
 	public void setMovie_num(int movie_num) {
 		this.movie_num = movie_num;
 	}
-
+	
 	public String getMovie_info() {
 		return movie_info;
 	}
@@ -53,6 +56,14 @@ public class Movie {
 		this.movie_info = movie_info;
 	}
 
+	public String getMovie_content() {
+		return movie_content;
+	}
+
+	public void setMovie_content(String movie_content) {
+		this.movie_content = movie_content;
+	}
+	
 	public String getTitle() {
 		return title;
 	}

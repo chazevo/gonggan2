@@ -299,12 +299,17 @@ public class PostDao {
 				sqlSession.insert("freemapper.finsert",map);
 			}
 		}
-
-		
-		
-		
-        
 		return pinsert;
+	}
+	
+	public int postDelete(int post_id, String loginUser) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("post_id", post_id+"");
+		map.put("loginUser", loginUser);
+		System.out.println("post_id :" +post_id);
+		int delete = sqlSession.delete("postmapper.postdelete",map);
+		System.out.println(delete+"mmmm");
+		return delete;
 	}
 	
 }

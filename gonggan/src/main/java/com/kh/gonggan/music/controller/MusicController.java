@@ -125,7 +125,8 @@ public class MusicController {
 			search.setKey(apiKey);
 			search.setQ(queryTerm);
 			search.setType("video");
-			search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+			search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/high/url"
+					+ ",snippet/thumbnails/default/url)");
 			search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
 			SearchListResponse searchResponse = search.execute();
 			List<SearchResult> searchResultList = searchResponse.getItems();
@@ -239,7 +240,8 @@ public class MusicController {
 			String query) {
 
 		List<Music> searchMusicList = new ArrayList<Music>();
-		Thumbnail thumbnail = null;
+		Thumbnail thumbnail_default = null;
+		Thumbnail thumbnail_high = null;
 		
 		/*
 		System.out.println("\n=============================================================");
@@ -257,12 +259,13 @@ public class MusicController {
 
 			SearchResult singleVideo = iteratorSearchResults.next();
 			ResourceId rId = singleVideo.getId();
-			
+
 			// Double checks the kind is video.
-			if (rId.getKind().equals("youtube#video")) 
-				thumbnail = singleVideo.getSnippet().getThumbnails().get("default");
+			if (rId.getKind().equals("youtube#video")) {
+				thumbnail_default = singleVideo.getSnippet().getThumbnails().get("default");
+				thumbnail_high = singleVideo.getSnippet().getThumbnails().get("high");
+			}
 			
-			System.out.println(singleVideo.getSnippet().getThumbnails().keySet());
 			/*
 			System.out.println(" Video Id" + rId.getVideoId());
 			System.out.println(" Title: " + singleVideo.getSnippet().getTitle());
@@ -271,7 +274,8 @@ public class MusicController {
 			 */
 			
 			searchMusicList.add(new Music(rId.getVideoId(), 
-					singleVideo.getSnippet().getTitle(), thumbnail.getUrl()));
+					singleVideo.getSnippet().getTitle(),
+					thumbnail_default.getUrl(), thumbnail_high.getUrl()));
 			
 		}
 		

@@ -4,14 +4,47 @@ public class Music {
 
 	private String videoId;
 	private String title;
-	private String thumbnail;
+	private String thumbnail_default;
+	private String thumbnail_high;
 	private int post_id;
 	private int music_num;
 	private String music_info;
 	private String singer;
+
+	private String music_content;
+	
+
+	public Music(){}
+	
+	public Music(String videoId, String title, String thumbnail_default, String thumbnail_high) {
+		super();
+		this.videoId = videoId;
+		this.title = title;
+		this.thumbnail_default = thumbnail_default;
+		this.thumbnail_high = thumbnail_high;
+	}
+
+	public Music(String videoId, String title, String thumbnail_default, String thumbnail_high,
+			int post_id, int music_num, String music_info,
+			String singer, String music_content) {
+		super();
+		this.videoId = videoId;
+		this.title = title;
+		this.thumbnail_default = thumbnail_default;
+		this.thumbnail_high = thumbnail_high;
+		this.post_id = post_id;
+		this.music_num = music_num;
+		this.music_info = music_info;
+		this.singer = singer;
+		this.music_content = music_content;
+	}
+	
 	@Override
 	public String toString() {
-		return "Music [videoId=" + videoId + ", title=" + title + ", thumbnail=" + thumbnail + ", post_id=" + post_id
+		return "Music [videoId=" + videoId + ", title=" + title
+				+ ", thumbnail_default=" + thumbnail_default
+				+ ", thumbnail_high=" + thumbnail_high
+				+ ", post_id=" + post_id
 				+ ", music_num=" + music_num + ", music_info=" + music_info + ", singer=" + singer + ", music_content="
 				+ music_content + "]";
 	}
@@ -56,30 +89,6 @@ public class Music {
 		this.music_content = music_content;
 	}
 
-	public Music(String videoId, String title, String thumbnail, int post_id, int music_num, String music_info,
-			String singer, String music_content) {
-		super();
-		this.videoId = videoId;
-		this.title = title;
-		this.thumbnail = thumbnail;
-		this.post_id = post_id;
-		this.music_num = music_num;
-		this.music_info = music_info;
-		this.singer = singer;
-		this.music_content = music_content;
-	}
-
-	private String music_content;
-	
-	public Music(){}
-	
-	public Music(String videoId, String title, String thumbnail) {
-		super();
-		this.videoId = videoId;
-		this.title = title;
-		this.thumbnail = thumbnail;
-	}
-
 	public String getVideoId() {
 		return videoId;
 	}
@@ -96,12 +105,20 @@ public class Music {
 		this.title = title;
 	}
 
-	public String getThumbnail() {
-		return thumbnail;
+	public String getThumbnail_default() {
+		return thumbnail_default;
 	}
 
-	public void setThumbnail(String thumbnail) {
-		this.thumbnail = thumbnail;
+	public void setThumbnail_default(String thumbnail_default) {
+		this.thumbnail_default = thumbnail_default;
+	}
+
+	public String getThumbnail_high() {
+		return thumbnail_high;
+	}
+
+	public void setThumbnail_high(String thumbnail_high) {
+		this.thumbnail_high = thumbnail_high;
 	}
 	
 }

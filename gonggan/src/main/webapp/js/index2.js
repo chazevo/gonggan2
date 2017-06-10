@@ -170,7 +170,7 @@ function callbackList(data) {
 	var jsonObj = JSON.stringify(data);
 	var jsonArr = JSON.parse(jsonObj);
 	
-	var div, table, tr, td;
+	var div, childDiv, childchildDiv, addMark, table, tr, td;
 	
 	var postId, content, writerId, goodCnt, photoPath;
 	
@@ -179,6 +179,36 @@ function callbackList(data) {
 		photoPath = jsonArr.list[i].photoPath;
 		
 		div = document.createElement("div");
+		
+		childDiv = document.createElement("div");
+		childDiv.className = "childDiv";
+		// css 안먹는이유?
+		childDiv.style.position = "absolute";
+		// display:table-cell은 absolute일 때 안먹음 
+		childDiv.style.left = "0";
+		childDiv.style.top = "0";
+		childDiv.style.width = "100%";
+		childDiv.style.height = "100%";
+		
+		childchildDiv = document.createElement("div");
+		
+		childchildDiv.style.position = "relative";
+		childchildDiv.style.display = "table";
+		childchildDiv.style.width = "100%";
+		childchildDiv.style.height = "100%";
+		childchildDiv.style.backgroundColor = "#E6E6E6";
+		childchildDiv.style.opacity = "0.9";
+		
+		addMark = document.createElement("div");
+
+		addMark.style.display = "table-cell";
+		addMark.style.verticalAlign = "middle";
+		addMark.style.textAlign = "center";
+		addMark.style.border = "1px solid red"
+		addMark.style.color = "white";
+		addMark.style.fontSize = "400%";
+		addMark.innerHTML = "<b>+</b>";
+		
 		table = document.createElement("table");
       
 		postId = jsonArr.list[i].postId;
@@ -189,6 +219,7 @@ function callbackList(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		td.colSpan = "2";
+		td.style.position = "relative";
 		td.className = "blogHomeContent";
 
 		if (photoPath != imgVal) {
@@ -200,19 +231,29 @@ function callbackList(data) {
 			+ "postId=" + postId
 			+ "&writerId=" + writerId + "'>"
 			+ decodeURIComponent(content.replace(Ca, " "))
-			+ "</a>"
-			tr.appendChild(td);
+			+ "</a>";
+		
+		addMark.onclick = function() { 
+			openFancybox("/gonggan/pdetail.do?postId=" + postId
+						+ "&writerId=" + writerId);
+			};
+		
+		childchildDiv.appendChild(addMark);
+		childDiv.appendChild(childchildDiv);
+		td.appendChild(childDiv);
+		
+		tr.appendChild(td);
 		table.appendChild(tr);
-      
+		
 		tr = document.createElement("tr");
 		tr.className = "trBottom";
 		td = document.createElement("td");
 		td.innerHTML = "<a href='myhome.do?writer_id=" + writerId + "'>"
-		+ writerId + "</a>";
+				+ writerId + "</a>";
 		tr.appendChild(td);
 		td = document.createElement("td");
 		td.className = "rightAlign";
-		td.innerHTML = "<label class='checkbox-wrap'>"	
+		td.innerHTML = "<label style='' class='checkbox-wrap'>"	
 			+ "<input type='checkbox' id='' "
 			+ (checkGood(loginUser, postId) ? "checked " : "")
 			+ "onclick='like($(this), loginUser, " + postId + ");'>"
@@ -220,20 +261,31 @@ function callbackList(data) {
 			+ (goodCnt == 0? goodCnt
 					: "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
 					+ goodCnt + "</a></span>");
+		
 		tr.appendChild(td);
 		table.appendChild(tr);
-      
+
 		div.appendChild(table);
-      
 		document.getElementById("blogHomeContentDiv").appendChild(div);
 	}
-   
+
+	$('#blogHomeContentDiv>div .childDiv').hide();
+	
+	$('#blogHomeContentDiv>div td:first-child').hover(function() {
+		$(this).css("cursor", "pointer");
+		$(this).children(".childDiv").fadeIn(300);
+	}, function() {
+		$(this).children(".childDiv").fadeOut(300);
+	}); 
+	
 	if (rownum >= maxRownum) {
 		$("#div_Loading").html("더이상 포스트가 존재하지 않습니다.");
 		$("#div_Loading").show();
 		return;
 	}
 	$("#div_Loading").fadeOut(100);
+	
+
 }
 
 function checkGood(loginUser, postId){
@@ -610,4 +662,10 @@ function goSubmit() {
 	}
 	else
 		$("#login").submit();
+}
+
+function openFancybox(url) {
+	document.getElementById("fancy").href = url;
+	$("#fancy").fancybox().trigger('click');
+	
 }

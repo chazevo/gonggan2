@@ -204,7 +204,6 @@ function callbackList(data) {
 		addMark.style.display = "table-cell";
 		addMark.style.verticalAlign = "middle";
 		addMark.style.textAlign = "center";
-		addMark.style.border = "1px solid red"
 		addMark.style.color = "white";
 		addMark.style.fontSize = "400%";
 		addMark.innerHTML = "<b>+</b>";

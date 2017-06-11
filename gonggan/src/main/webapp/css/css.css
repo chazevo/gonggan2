@@ -979,7 +979,7 @@ div div.gray {
 	margin:10px;
 	display: inline-block;
 	border: 1px solid #E6E6E6;
-	height: 200px;
+	height: 230px;
 	width: 22%;
 }
 
@@ -999,6 +999,7 @@ div div.gray {
 
 .blogHomeContentDiv table .trBottom td, div #div .trBottom td {
 	border-top:1px solid #E6E6E6!important;
+	height:30px;
 }
 
 .blogHomeContentDiv table td.rightAlign, div #div table td.rightAlign {

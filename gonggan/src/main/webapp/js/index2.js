@@ -172,7 +172,8 @@ function callbackList(data) {
 	
 	var div, childDiv, childchildDiv, addMark, table, tr, td;
 	
-	var postId, content, writerId, goodCnt, photoPath;
+	var category, postId, content, writerId, goodCnt, photoPath;
+	var str;
 	
 	for (var i in jsonArr.list) {
 		
@@ -214,6 +215,31 @@ function callbackList(data) {
 		content = reqPostDetail(postId, jsonArr.list[i].category);
 		writerId = jsonArr.list[i].writerId;
 		goodCnt = jsonArr.list[i].goodCnt;
+		
+		switch(category = jsonArr.list[i].category) {
+		case "music":
+			str = "music";
+			break;
+		case "movie":
+			str = "movie";
+			break;
+		case "review":
+			str = "review";
+			break;
+		case "news":
+			str = "news";
+			break;
+		}
+		
+		if (category != "diary") {
+			tr = document.createElement("tr");
+			td = document.createElement("td");
+			td.colSpan = "2";
+			td.style.textAlign = "left";
+			td.innerHTML = str;
+			tr.appendChild(td);
+			table.appendChild(tr);
+		}
       
 		tr = document.createElement("tr");
 		td = document.createElement("td");
@@ -232,10 +258,16 @@ function callbackList(data) {
 			+ decodeURIComponent(content.replace(Ca, " "))
 			+ "</a>";
 		
+		addMark.setAttribute("onclick", 
+				"openFancybox('/gonggan/pdetail.do?postId=" + postId
+						+ "&writerId=" + writerId + "');");
+		
+		/*
 		addMark.onclick = function() { 
 			openFancybox("/gonggan/pdetail.do?postId=" + postId
 						+ "&writerId=" + writerId);
-			};
+		};
+		*/
 		
 		childchildDiv.appendChild(addMark);
 		childDiv.appendChild(childchildDiv);
@@ -249,6 +281,11 @@ function callbackList(data) {
 		td = document.createElement("td");
 		td.innerHTML = "<a href='myhome.do?writer_id=" + writerId + "'>"
 				+ writerId + "</a>";
+
+		if (category == "diary") {
+			td.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+			td.childNodes[0].style.color = "white";
+		}
 		tr.appendChild(td);
 		td = document.createElement("td");
 		td.className = "rightAlign";
@@ -260,7 +297,15 @@ function callbackList(data) {
 			+ (goodCnt == 0? goodCnt
 					: "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
 					+ goodCnt + "</a></span>");
-		
+
+		if (category == "diary") {
+			td.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+			td.childNodes[2].style.color = "white";
+			if (goodCnt > 0)
+				td.childNodes[2].childNodes[0].style.color = "white";
+			else
+				td.childNodes[2].style.color = "white";
+		}
 		tr.appendChild(td);
 		table.appendChild(tr);
 
@@ -664,6 +709,7 @@ function goSubmit() {
 }
 
 function openFancybox(url) {
+	alert(url);
 	document.getElementById("fancy").href = url;
 	$("#fancy").fancybox().trigger('click');
 	

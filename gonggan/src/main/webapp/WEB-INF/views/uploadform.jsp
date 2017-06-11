@@ -586,9 +586,16 @@
 										
 										var mapOptions = {
 												center: new naver.maps.LatLng(35.7995704, 127.925399),
-												level: 1,
-												maxZoom: 1, //지도의 최대 줌 레벨
-												minZoom: 1,
+												level: 0,
+												maxZoom: 0, //지도의 최대 줌 레벨
+												minZoom: 0,
+												mapTypeId: "normal",
+												mapTypes: new naver.maps.MapTypeRegistry({
+											        normal: naver.maps.NaverMapTypeOption.getNormalMap({
+											            hd: true,
+											            tileSize: [256 * 2, 256 * 2] // 512
+											        })
+											    }),
 												logoControl: false,
 												mapDataControl: false,
 												scaleControl: false,

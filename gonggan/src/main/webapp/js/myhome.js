@@ -256,6 +256,11 @@ function callbackList2(data) {
 }
 
 function reqCommentList(postId) {
+	 var rownum2;
+
+	   if (maxRownum - val < 8)
+	      var rownum2 = maxRownum;
+	   else rownum2 = rownum + 7;
 
 	$.ajax({
 		async: false,
@@ -343,24 +348,52 @@ function callbackCommentList(data, postId){
 	
 }
 
-function sendComment(postId, parent) {
+function sendComment(postId, parent, loginUser) {
+
 	if (parent.children("input").val() == "") {
 		alert("내용을 입력해주세요 ");
 	}
-	else 
-		alert(postId + " 코멘트");
+	else {
+		
+		
+		$.ajax({
+		      url: "/gonggan/coinsert.do",
+		  data: {writer_id:loginUser,
+			  	 postId:postId,
+			  	comment_content:parent.children("input").val()
+			  	},
+		  success: function(data) {
+			  parent.parent().before("<tr><td class='commentArea'><a href='myhome.do?writer_id="+loginUser+"'><b>"
+					  +loginUser+"</b></a>&nbsp;"+ parent.children("input").val()+"&nbsp;</td></tr>");
+			  alert(postId);
+		
+		  },
+		  error: function(data,status,error){
+		     console.log("error : " + error);
+		  }
+		});
+
+	}
 }
 
-function moreComment(postId, obj) {
+function moreComment(postId, obj, data) {
+	
+	var jsonObj = JSON.stringify(data);
+	var jsonArr = JSON.parse(jsonObj);
 	
 	var tr = document.createElement("tr");
 	var td = document.createElement("td");
-	td.colSpan = "7";
 
+	for(var i=0; i< 4; i++){
+		if (j > jsonArr.list.length - 1) break;
     tr.appendChild(td);
-    obj.after("<tr><td colspan='7' class='commentArea'>" + postId + "의 댓글 더 보기</td></tr>");
+    obj.after("<tr><td colspan='7' class='commentArea'><a href='myhome.do?writer_id=" + jsonArr.list[j].writerId + "'><b>"
+    		+ decodeURIComponent((jsonArr.list[j].commentContent).replace(Ca, " "))+
+    		"&nbsp;<abbr class='timeago' title='" + jsonArr.list[j].commentDate + "'>"+ jsonArr.list[j].commentDate + "</abbr></td></tr>");
+	}
 	
 }
+
 
 function postdelete(postId, loginUser) {
 	if (confirm("정말 삭제하시겠습니까?") == false)

@@ -12,8 +12,8 @@
 	</resultMap>
 
 	<select id="neigList" parameterType="Map" resultMap="neighborResult">
-	select * from neighbor where (sender=#{loginUser} and receiver=#{writer_id}and CHECK_YN='N') 
-	or (receiver=#{loginUser} and sender=#{writer_id}and CHECK_YN='N')
+	select * from neighbor where (sender=#{loginUser} and receiver=#{writer_id}and CHECK_YN='Y') 
+	or (receiver=#{loginUser} and sender=#{writer_id}and CHECK_YN='Y')
 	</select>
    
 	<delete id="ndelete" parameterType="neighbor" >

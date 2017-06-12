@@ -53,15 +53,44 @@ function callbackSearchGood(data){
 		document.getElementById("listbody").deleteRow(0);
 	
 	for (var j in jsonArr.list) {
-		tr = document.createElement("tr");
-		td = document.createElement("td");
-		td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
-		tr.appendChild(td);
-		td = document.createElement("td");
-		td.innerHTML = '<button id="neighborBtn" class="neighborN" onclick="likeNeigh(\''
-			+jsonArr.list[j].member_id + '\');">'
-			+ '이웃친구</button></td>';
-		tr.appendChild(td);
-		document.getElementById("listbody").appendChild(tr);
+
+		alert(jsonArr.list[j].member_id);
+		if(jsonArr.list[j].member_id == loginUser){
+			tr = document.createElement("tr");
+			td = document.createElement("td");
+
+			td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
+			tr.appendChild(td);
+			td = document.createElement("td");
+			td.innerHTML = " ";
+			tr.appendChild(td);
+			document.getElementById("listbody").appendChild(tr);
+		}else if(jsonArr.list[j].member_id != loginUser ){
+			alert(jsonArr.list[j].member_id);
+			tr = document.createElement("tr");
+			td = document.createElement("td");
+
+			td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
+			tr.appendChild(td);
+			td = document.createElement("td");
+			td.innerHTML = '<button id="neighborBtn" class="neighborY">이웃친구</button></td>';
+			tr.appendChild(td);
+			document.getElementById("listbody").appendChild(tr);
+		}else if(jsonArr.list[j].member_id == " " ){
+			tr = document.createElement("tr");
+			td = document.createElement("td");
+
+			td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
+			tr.appendChild(td);
+			td = document.createElement("td");
+			td.innerHTML = '<button id="neighborBtn" class="neighborN" onclick="likeNeigh(\''
+				+jsonArr.list[j].member_id + '\');">'
+				+ '이웃친구zz</button></td>';
+			tr.appendChild(td);
+			document.getElementById("listbody").appendChild(tr);
+		}
+		
+
+        
 	}
 }

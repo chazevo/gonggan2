@@ -54,7 +54,6 @@ function callbackSearchGood(data){
 	
 	for (var j in jsonArr.list) {
 
-		alert(jsonArr.list[j].member_id);
 		if(jsonArr.list[j].member_id == loginUser){
 			tr = document.createElement("tr");
 			td = document.createElement("td");
@@ -65,8 +64,7 @@ function callbackSearchGood(data){
 			td.innerHTML = " ";
 			tr.appendChild(td);
 			document.getElementById("listbody").appendChild(tr);
-		}else if(jsonArr.list[j].member_id != loginUser ){
-			alert(jsonArr.list[j].member_id);
+		}else if(jsonArr.list[j].member_id != loginUser ) {
 			tr = document.createElement("tr");
 			td = document.createElement("td");
 

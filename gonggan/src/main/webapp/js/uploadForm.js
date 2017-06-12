@@ -4,8 +4,13 @@ var je_doc={};
 var currTimeFormat = 'a/p hh시 mm분 ss초';
 var temperature;
 var locked = 0 ;
+var prev_val;
 
 $(function() {
+	dateFunc();
+});
+
+function dateFunc() {
 	$( "#toDate" ).datepicker({
 		inline: true,
 		prevText: 'prev',
@@ -17,7 +22,7 @@ $(function() {
 		selectOtherMonths: true,    /* 이전/다음 달 일 선택하기 */
 		showOn: "button",
 		buttonImage: "images/calendar_icon.png",
-		buttonImageOnly: true,
+		buttonImageOnly: false,
 		minDate: '-30y',
 		closeText: '닫기',
 		currentText: '오늘',
@@ -36,12 +41,12 @@ $(function() {
 			$('#fromDate').datepicker("option","minDate", selectedDate);
 		}
 	});
-});
-
+}
 
 function viewSearchTime() {
 	var nowTime = new Date().currTime(currTimeFormat);
-	$("#weatherDiv").html($("#weatherDiv").html() + nowTime + " 기준");
+	$("#wmapDiv").next().html("<div style='font-size:90%;text-align:right'>"
+			+ nowTime + " 기준</div>");
 }
 
 
@@ -113,28 +118,32 @@ function recieveMusic(videoId, title, thumbnail){
 
 function recieveNews(title, originallink, description, pubDate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<div style='border:1px solid gray; color:gray;'><table align='center' width='80%'><tr>"
-	      + "<td><h3><b>" + title+"<b></h3></td></tr>"
-	      + "<tr><td>" + description + "</td>"
-	      +"</tr></table></div>";
+		"<div style='border:1px solid gray; color:gray;margin-bottom:20px;'>"
+			+ "<table align='center' width='80%'><tr>"
+			+ "<td><h3><b>" + title+"<b></h3></td></tr>"
+			+ "<tr><td>" + description + "</td>"
+			+ "</tr></table></div>내용을 입력해주세요.";
 }
 
 function recieveBook(image, title, author, publisher, pubdate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<table style='border:1px solid gray; color:gray;'align='center' width='50%'><tr><td rowspan='4' width='30%'>"
+		"<table style='background-color:#fdfdfd;border:1px solid #E6E6E6; color:gray;' align='center' width='50%'>"
+		+ "<colgroup><col width='30%'><col style='width:*'></colgroup>"
+		+ "<tr><td rowspan='4'>"
 		+ "<img src='" + image + "' width='100%'></td>"
-		+ "<td><b><h3>" + title + "</h3></b></td>"
-		+ "<tr><td><b>저자</b> "+ author + "</td></tr>" 
-		+ "<tr><td><b>출판</b>  "+ publisher + "</td></tr>"
-		+"<tr><td><b> 발매</b> "+pubdate+" </td></tr>"
+		+ "<td style='max-width:0px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;'>"
+		+ "<h3>" + title + "</h3></td>"
+		+ "<tr><td style='font-weight:lighter'><b>저자</b> "+ author + "</td></tr>" 
+		+ "<tr><td style='font-weight:lighter'><b>출판</b>  "+ publisher + "</td></tr>"
+		+"<tr><td style='font-weight:lighter'><b> 발매</b> "+pubdate+" </td></tr>"
 		+ "</td></tr></table>" +
 				"<center><div sytle='margin: 0 auto;'><img src='images/bookicon.png' width='100px'><div></center>" +
-				"<center><h3><b>"+ title +"</b></h3></center>" +
-						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:80%;height:2px; border:0px'>" +
+				"<center><h3 style='margin-bottom:10px;'><b>"+ title +"를 읽고나서</b></h3></center>" +
+						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:90%;height:2px; border:0px'>" +
 						"내용을 입력해주세요.<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>" +
 						"<center><div sytle='margin: 0 auto;'><img src='images/star.png' width='100px'><div></center>" +
-						"<center><b><h3>추천해요!</h3></b></center>" +
-						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:80%;height:2px; border:0px'>" +
+						"<center><b><h3 style='margin-bottom:10px;'>추천해요!</h3></b></center>" +
+						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:90%;height:2px; border:0px'>" +
 						"내용을 입력해주세요.";
 }
 
@@ -229,7 +238,21 @@ function run(){
 	je_doc = document.getElementById('editor').contentWindow.document;
 	je_doc.designMode="on";
 	je_doc.addEventListener("keydown", showDeleteImgPath, false);
-	
+
+	$('#category').focus(
+			function() {
+				prev_val = $(this).val();
+			}).change(function() {
+				$(this).blur() // Firefox fix as suggested by AgDude
+				if($(this).val() != 'default') {
+					if (je_doc.body.innerHTML != "")
+						changeForm();
+					else if (confirm('현재 작성 내역을 임시 저장하고 폼을 바꾸시겠습니까?'))
+							changeForm();
+					else
+						$(this).val(prev_val);
+				}
+			});
 }
 
 function imagesInsertThis(){
@@ -382,9 +405,19 @@ function bgcolor(color) {
 /* */
 
 /*-------------------------------------------------------- */
-function changeTitle() {
-	document.getElementById("title").value = document.getElementById("toDate").value;
-	alert(document.getElementById("title").value);
+function changeDate() {
+	var diaryyear = $("#toDate").val().split("/")[2];
+	var diarymonth = $("#toDate").val().split("/")[0];
+	var diarydate = $("#toDate").val().split("/")[1];
+	
+	var dateObj = new Date();
+	
+	dateObj.setYear(diaryyear);
+	dateObj.setMonth(diarymonth - 1);
+	dateObj.setDate(diarydate);
+	
+	je_doc.getElementById("diarydateTd").innerText = diarydate;
+	je_doc.getElementById("diarydayTd").innerHTML = dateToday(dateObj);
 }
 
 function temp() {
@@ -398,7 +431,7 @@ function changeForm() {
 	$("#temp").val(je_doc.body.innerHTML);
 	je_doc.body.innerHTML = "";
 	$("#textarea").focus();
-	
+
 	if (document.getElementById("category").value == "review") {
 		$("#reviewTbody").css("display", "table-row-group");
 	}
@@ -416,15 +449,14 @@ function changeForm() {
 	if (document.getElementById("category").value == "diary") {
 		document.getElementById("dateTd").innerHTML = "날짜";
 		document.getElementById("dateTd2").innerHTML =
-			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
-		document.getElementById("dateTd2").innerHTML =
-			"<input type='text' name='toDate' id='toDate' onchange='javascript:changeTitle()'>";
+			"<input type='text' name='toDate' id='toDate' size='15' onchange='javascript:changeDate()'>";
+		dateFunc();
 		je_doc.body.innerHTML += "<table style='border-collapse:collapse;width:100%;'>"
 				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='62%'/><col width='8%'/><col width='10%'/></colgroup>"
-				+ "<tr><td id='datetd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
+				+ "<tr><td id='diarydateTd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
 				+ (today.getDate() <10 ? "0"+ today.getDate() : today.getDate() )
 				+"</td>"
-				+"<td id='daytd' style='font-family: \"Francois One\", sans-serif; font-size:200%; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; border-right:1px solid #E6E6E6;padding:5px; -webkit-transform:rotate(270deg);' rowspan='2'>"
+				+"<td id='diarydayTd' style='font-family: \"Francois One\", sans-serif; font-size:200%; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; border-right:1px solid #E6E6E6;padding:5px; -webkit-transform:rotate(270deg);' rowspan='2'>"
 				+ dateToday(today) + "</td>"
 				+"<td style='border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;'>제목</td>"
 				+ "<td id='title' style='border-top:1px solid #E6E6E6;color:#E6E6E6;'>"
@@ -452,16 +484,15 @@ function changeForm() {
 
 	if (document.getElementById("category").value == "movie") {
 		$("#movieTbody").css("display", "table-row-group");
-		je_doc.body.innerHTML += "<div style='border:1px solid red; position;display:table;'>"
-				+ "<img src='images/template/getout.jpg'>"
-				+ "<h2 style='display:block;position:absolute; top:0;bottom:0;right:0;left:0; margin:auto;width:300px;height:50px;'>"
+		je_doc.body.innerHTML += "<div style='border:1px solid red;display:table;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-40_56.jpeg);background-size:100% 100%;width:100%;height:170px'>"
+				+ "<h2 style='display:table-cell;height:100%;width:100%;vertical-align:middle;text-align:center'>"
 				+ "<b><span style='color:black'>GET</span>"
 				+ "<span style='color:white'>OUT</span></b></h2>"
 				+"</div><br>흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기<br>"
 				+ "<hr><table><tr><td><img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg'>"
 				+ "</td></tr><tr><td>GETOUT 2017</td></tr></table>"
-				+ "<table><tr><td text-align='center'>"
-				+ "<h2><b><span style='color:black'>SYNO</span>"
+				+ "<table><tr><td style='background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
+				+ "<h2 style='text-align:center'><b><span style='color:black'>SYNO</span>"
 				+ "<span style='color:white'>PSIS</span></h2></td></tr>"
 				+ "<tr><td>ABOUT MOVIE <br>"
 				+ "공개 6일 만에 메인 예고편 조회수 1,000만 뷰 돌파! 개봉 요청 쇄도! <br>"
@@ -481,7 +512,8 @@ function changeForm() {
 				+ "메인 예고편을 공개한지 6일 만에 누적 조회수 약 1,143만 뷰를 돌파, 상반기 최고 화제작으로 등극했다. "
 				+ "이렇듯 관객들의 폭발적 반응이 개봉시킨 영화 <겟 아웃>은 지금껏 본 적 없는 새로움과 신선한 충격으로 "
 				+ "관객들을 사로잡을 예정이다. <br></td></tr>"
-				+ "<tr><td><h2><b><span style='color:black'>REV</span>"
+				+ "<tr><td style='background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
+				+ "<h2 style='text-align:center'><b><span style='color:black'>REV</span>"
 				+ "<span style='color:white'>IEW</span></h2></td></tr>"
 				+ "<tr><td>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>"
 				+ "2. 영화 처음 안드레가 납치되는 장면범인이 뒤에서 목을 졸라서 납치하는데 "
@@ -541,22 +573,19 @@ function dateToday(date) {
 
 function content_OK() {
 
-	console.log(je_doc.body.innerHTML == " ");
-
 	if (je_doc.body.innerHTML != "") {
 		if (confirm("포스트를 게시하시겠습니까? ") == true) {
-			if($("select [name=category]").val()=="diary"){
-	            $("input[name=title]").val(je_doc.getElementById("title").innerText);
-	            $('#form').submit();
-	               }else{
-	                  $('#form').submit();
-	               }
-	         }
-	         else return;
-	      }
-	      else alert("본문 내용을 입력해주세요");
-	         
-	   }
+			if($("select [name=category]").val()=="diary") {
+				$("input[name=title]").val(je_doc.getElementById("title").innerText);
+				$("#dhtmlText").val(je_doc.body.innerHTML);
+				$('#form').submit();
+			} else 
+				$('#form').submit();
+		} else return;
+	}
+	else alert("본문 내용을 입력해주세요");
+}
+
 function cancel() {
 	if (confirm("포스팅을 취소하시겠습니까? ") == true)
 		location.href = "myhome.do?writer_id=" + loginUser;
@@ -972,7 +1001,7 @@ function callbackNewsSearch(data) {
     var jsonObj = JSON.stringify(data);
     var jsonArr = JSON.parse(jsonObj);
 
-    var tr, td, a;
+    var tr, td, div, a;
     
     var title, description, originallink, pubDate;
     
@@ -983,37 +1012,28 @@ function callbackNewsSearch(data) {
        description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
        originallink = jsonArr.list[i].originallink;
        pubDate = jsonArr.list[i].pubDate;
-       
+    
        tr = document.createElement("tr");
        td = document.createElement("td");
+       
+       div = document.createElement("div");
+       div.style.border = "1px solid #E6E6E6";
+       div.style.margin = "5px";
+       div.style.padding = "7px";
+       
        a = document.createElement("a");
+       a.style.display = 'block';
+       a.style.marginBottom = '5px';
        a.href = "javascript:recieveNews(\" "+ title +"\", \""+originallink+"\", \" "+description+"\",\" "+pubDate+"\");";
        a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
+       div.appendChild(a);
        
-       /*
-       td.innerHTML = "<a href='javascript:recieveNews("
-          + title + ", " + originallink + ", " + description + ", "
-          + pubDate + "); alert(" + title + ");'>"
-          + (parseInt(i, 10) + 1) + ". "
-             + title + "</a>";
-       */
-       td.appendChild(a);
-       tr.appendChild(td);
-       document.getElementById("newSearchRes").appendChild(tr);
-
-       tr = document.createElement("tr");
-       td = document.createElement("td");
        a = document.createElement("a");
        a.href = "javascript:recieveNews(\" "+ title +"\", \""+originallink+"\", \" "+description+"\",\" "+pubDate+"\");";
        a.innerHTML ="<ul><li>"+ description+"</li></ul>";
+       div.appendChild(a);
        
-       /*
-       td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
-          + title + "\', \'" + originallink + "\', \'" + description + "\', \'"
-          + pubDate + "\'); alert(title);'>"
-             + description + "</a></li></ul>";
-       */
-       td.appendChild(a);
+       td.appendChild(div);
        tr.appendChild(td);
        document.getElementById("newSearchRes").appendChild(tr);
        
@@ -1056,7 +1076,7 @@ function callbackBookSearch(data) {
 		td.rowSpan="4";
 		a = document.createElement("a");
 		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
-		a.innerHTML = (parseInt(i, 10) + 1) + ". " + "<img src='" + image + "'>";
+		a.innerHTML = "<img src='" + image + "'>";
      
 		td.appendChild(a);
 		tr.appendChild(td);

@@ -83,9 +83,9 @@
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
-		//colorchart();
+		colorchart();
 		//colorchart2();
-		//colorchart3();
+		colorchart3();
 
 		$("#editor").click(function() {
 			alert();
@@ -273,7 +273,7 @@
 </script>
 </head>
 <body onload='run();' id="aa">
-<form id="form" action="upload.do" method="post">
+<form id="form" action="upload.do" method="post" onsubmit="return false;">
 <input type="hidden" name="loginUser" value="${sessionScope.loginUser.getMember_id() }">
 	<c:if test="${empty param || param.writer_id ne sessionScope.loginUser.getMember_id() }">
 		<jsp:forward page="error.jsp"></jsp:forward>
@@ -408,7 +408,7 @@
 					<tr>
 						<td align="center">분류</td>
 						<td colspan="4">
-							<select name="category" id="category" onchange="changeForm();">
+							<select name="category" id="category">
 								<option value="default" selected>자유</option>
 								<option value="diary" >일기</option>
 								<option value="news">뉴스</option>
@@ -449,7 +449,53 @@
 							<div id="colorchart" class="hidden"></div>
 							<img alt="" src="images/highlighter.jpg" width="7%"  id="colorChoice3">
 							<div id="colorchart3" class="hidden"></div>
-							<select id="fontsize" onchange="je_doc.execCommand('FontSize', 'false', this.value)">
+							<ul>
+								<li>
+									<a href="javascript:void(0);">
+										<img src="images/65988-200.png" width="30px">
+									</a>
+									<ul>
+										<li style="font-size:70%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 1);">
+												가나다
+											</a>
+										</li>
+										<li style="font-size:80%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 2);">
+												가나다
+											</a>
+										</li>
+										<li style="font-size:100%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 3);">
+												가나다
+											</a>
+										</li>
+										<li style="font-size:120%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 4);">
+												가나다
+											</a>
+										</li>
+										<li style="font-size:150%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 5);">
+												가나다
+											</a>
+										</li>
+										<li style="font-size:240%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 6);">
+												가나다
+											</a>
+										</li>
+										<li style="font-size:310%;">
+											<a href="javascript:je_doc.execCommand('FontSize', 'false', 7);">
+												가나다
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<!--
+							<select id="fontsize"
+								onchange="je_doc.execCommand('FontSize', 'false', this.value)">
 								<option value="">글자크기 </option>
 								<option value="1" style="font-size:1;">가나다</option>
 								<option value="2" style="font-size:2;">가나다</option>
@@ -459,6 +505,7 @@
 								<option value="6" style="font-size:6;">가나다</option>
 								<option value="7" style="font-size:7;">가나다</option>
 							</select>
+							 -->
 
 							<select id=contenttextcolor2 onchange='contenttextcolor2()'>
 								<option class='imageOp'  selected  >글자색상 선택</option>
@@ -540,7 +587,7 @@
 							</td>
 						<td align="center">
 							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
-							<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');" data-target="#layerpop" data-toggle="modal">
+							&nbsp;<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');" data-target="#layerpop" data-toggle="modal">
 								테이블 삽입
 							</a>
 							<div class="modal fade" id="layerpop">
@@ -658,11 +705,13 @@
 										
 									</script>
 								</div>
+								<div></div>
 							</div>
 						</td>
 						<td align="center" id="dateTd">날짜 </td>
 						<td id="dateTd2">
-							<input type="text" name="toDate" id="toDate" size="10" onchange="javascript:changeTitle()">
+							<input type="text" name="toDate" id="toDate" size="15"
+								onchange="javascript:changeTitle()">
 						</td>
 					<tr>
 						<!-- <td>
@@ -719,7 +768,9 @@
 									<!-- <h4>도서 검색 </h4> --><br>
 									<c:if test="${! empty bestSellerList }">
 									<c:forEach items="${bestSellerList}" var="i" begin="0" end="4">
-									<a href=""><img src="${i.coverSmallUrl}" style="display:inline-block;"></a>
+									<a href="javascript:recieveBook('${i.coverSmallUrl}', '${i.title }', '${i.author }', '.', ${i.pubDate });">
+										<img src="${i.coverSmallUrl}" style="display:inline-block;">
+									</a>
 									</c:forEach>
 									</c:if>
 									<br>
@@ -727,6 +778,10 @@
 										onkeydown="if(event.keyCode == 13) bookSearch();">
 									<a href="javascript:bookSearch();">
 										<img src=images/search.png width="5%" >
+									</a>
+									<a href="javascript:je_doc.execCommand('undo', false, null)">
+										선택취소
+										<!-- 이거는 execCommand로 한 명령만 취소 가능 -->
 									</a>
 									<br><br>
 									<div class="searchAll">
@@ -769,8 +824,10 @@
                                     </a><br>
                                  </c:forEach>
                               </td>
-                              <td width="65%" class="footerDiv">
-                                 <table id="movieSearchRes"></table>
+                              <td width="65%">
+                              	<div style="height:300px;overflow:scroll;">
+                                 	<table id="movieSearchRes"></table>
+                              	</div>
                               </td>
                            </tr>
                            </table>
@@ -787,9 +844,10 @@
 								<div id="news" class="collapse">
 									<table width="100%" border="1">
 										<tr>
-											<td width="25%" align="center">인기검색어</td>
+											<td width="25%" align="center">실시간 인기검색어</td>
 											<td>
-												<input type="text" id="newsSearchText" name="keyword" value="${keyword }" placeholder="기 사 검 색" 
+												<input type="text" id="newsSearchText" name="keyword" style="color:#E6E6E6"
+													value="${keyword }" placeholder="기 사 검 색" 
 													onkeydown="if(event.keyCode == 13) newsSearch();">
 												<a href="javascript:newsSearch();">
 													<img src=images/search.png width="5%" >
@@ -797,7 +855,7 @@
 											</td>
 										</tr>
 										<tr>
-											<td align="center" >
+											<td align="center"  style="vertical-align:top;padding:10px">
 												<!--대선후보<br>아이유 컴백<br> -->
 												<c:set var="cnt" value="0" />
 												<c:forEach items="${popKeyword}" var="i" begin="0">
@@ -807,34 +865,36 @@
 												</a><br>
 												</c:forEach>
 											</td>
-											<td width="65%" class="footerDiv" >
-												<table id="newSearchRes">
-													<%--
-													<c:if test="${!empty searchNewsList}">
-													<c:forEach items="${searchNewsList}" var="i" begin="0">
-													<tr>
-														<td>
-															<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
-																${i.title}
-															</a>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
-																${i.description}
-															</a>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<a href="${i.originallink }"  target="_blank">상세정보</a>
-														</td>
-													</tr>
-													</c:forEach>
-													</c:if>
-													--%>
-												</table>
+											<td width="65%">
+												<div style="height:300px;overflow:scroll;border:1px solid red">
+													<table id="newSearchRes">
+														<%--
+														<c:if test="${!empty searchNewsList}">
+														<c:forEach items="${searchNewsList}" var="i" begin="0">
+														<tr>
+															<td>
+																<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+																	${i.title}
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:selectNews('${i.title}', '${i.originallink}', '${i.description }', '${i.pubDate }');">
+																	${i.description}
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="${i.originallink }"  target="_blank">상세정보</a>
+															</td>
+														</tr>
+														</c:forEach>
+														</c:if>
+														--%>
+													</table>
+												</div>
 											</td>
 										</tr>
 								</table>
@@ -907,8 +967,9 @@
 					
 					<tr>
 						<td colspan="5">
+							<input type="radio" name="open" value="public" checked>&nbsp;전체공개&nbsp;
 							<input type="radio" name="open" value="onlyMe">&nbsp;나만보기&nbsp;
-							<input type="radio" name="open" value="public">&nbsp;이웃공개
+							<input type="radio" name="open" value="neighbor">&nbsp;이웃공개
 						</td>
 					</tr>
 					<tr>

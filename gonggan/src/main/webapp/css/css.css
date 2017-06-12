@@ -356,11 +356,12 @@ input.error {
 
 #weatherDiv {
 	position:absolute;
-	width:58%;
+	width:60%;
 	background-color:white;
 }
 
 #wmapDiv {
+	z-index:99;
 	width:100%;
 	height:300px;
 }
@@ -424,6 +425,41 @@ overflow-x: hidden; } */
 #uploadFormDiv{
 	padding:10px;
 }
+
+.uploadFormDiv ul {
+	z-index:99;
+	display:inline-block;
+	position:relative;
+	list-style:none;
+}
+
+.uploadFormDiv ul ul {
+	display:none;
+}
+
+.uploadFormDiv td>ul>li:hover ul {
+	display:block;
+	position:absolute;
+	left:0;
+	border: 1px solid gray;
+	background-color:white;
+	padding:5px;
+}
+
+.uploadFormDiv li li:not(:last-child) {
+	width:150px;
+	padding:3px;
+	border-bottom:1px solid #E6E6E6;
+}
+
+.uploadFormDiv li li a {
+	display:block;
+}
+
+.uploadFormDiv li li a:hover {
+	text-decoration:none;
+}
+
 
 #imgUploadDiv {
 	border:1px solid pink;
@@ -821,9 +857,13 @@ a.loginbox:hover {
 	vertical-align: top;
 }
 
+.uploadFormDiv #dateTd2 button {
+	background:transparent;
+	border:0px solid red;
+}
+
 .uploadFormDiv #dateTd2 img {
 	width: 20px;
-	border: 1px solid red;
 }
 
 .footerDiv>div {

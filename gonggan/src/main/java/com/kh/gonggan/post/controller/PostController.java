@@ -875,19 +875,17 @@ public class PostController {
 	
 	@RequestMapping(value="/pdelete.do")
 	@ResponseBody
-	public ModelAndView postDelete(@RequestParam int postId,@RequestParam String loginUser, ModelAndView mv){
+	public String postDelete(@RequestParam int postId,@RequestParam String loginUser){
 		String msg = "실패";
     
 		int pdelete = postService.postDelete(postId,loginUser);
     
 		if(pdelete > 0) {
 			msg="성공";
-			mv.setViewName("redirect:myhome.do?"
-					+ "writer_id=" + loginUser);
 		}
 		System.out.println(pdelete + " post controller run ...");
     
-		return mv;
+		return msg;
  
 	}
 }

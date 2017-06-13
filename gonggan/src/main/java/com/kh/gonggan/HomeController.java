@@ -40,7 +40,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.kh.gonggan.blog.model.service.BlogService;
 import com.kh.gonggan.blog.model.vo.Blog;
+import com.kh.gonggan.book.model.service.BookService;
 import com.kh.gonggan.book.model.vo.BestSeller;
+import com.kh.gonggan.book.model.vo.Book;
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.diary.model.service.DiaryService;
@@ -98,6 +100,8 @@ public class HomeController {
 	private MovieService movieService;
 	@Autowired
 	private NewsService newsService;
+	@Autowired
+	private BookService bookService;
    
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
    
@@ -116,6 +120,7 @@ public class HomeController {
 		//mv.addObject("placeMaxRownum", postService.maxRownum("place"));
 		mv.addObject("newsMaxRownum", postService.maxRownum("news"));
 		mv.addObject("diaryMaxRownum", postService.maxRownum("diary"));
+		mv.addObject("bookMaxRownum", postService.maxRownum("book"));
 		mv.setViewName("home");
       
 		return mv;
@@ -136,6 +141,7 @@ public class HomeController {
 		List<Music> musiclist = musicService.selectAll_index2();
 		List<News> newslist = newsService.selectAll_index2();
 		List<Review> reviewlist = reviewService.selectAll_index2();
+		List<Book> booklist = bookService.selectAll_index2();
 		
 		List<Member> neighborReqList = null;
 		List<Comment> commentReqList = null;
@@ -163,12 +169,14 @@ public class HomeController {
 		mv.addObject("newslist", newslist);
 		mv.addObject("musiclist", musiclist);
 		mv.addObject("diarylist", diarylist);
+		mv.addObject("booklist", booklist);
 		
 		mv.addObject("reviewlistSize",reviewlist.size());
 		mv.addObject("movielistSize",movielist.size());
 		mv.addObject("newslistSize",newslist.size());
 		mv.addObject("musiclistSize",musiclist.size());
 		mv.addObject("diarylistSize",diarylist.size());
+		mv.addObject("booklistSize",booklist.size());
 		
 		mv.addObject("neighborReqList", neighborReqList);
 		
@@ -188,6 +196,7 @@ public class HomeController {
 		List<Comment> commentAll = commentService.commentAll(writer_id);
 		List<Music> musiclist = new ArrayList<Music>();
 		List<Diary> diarylist = new ArrayList<Diary>();
+		List<Book> booklist = new ArrayList<Book>();
 		List<Review> reviewlist =  new ArrayList<Review>();
 		List<Movie> movielist =  new ArrayList<Movie>();
 		List<News> newslist =  new ArrayList<News>();
@@ -209,6 +218,8 @@ public class HomeController {
 				newslist.add(newsService.newsDetail(postId));
 			} else if (category.equals("movie")) {
 				movielist.add(movieService.movieDetail(postId));
+			} else if (category.equals("book")) {
+				booklist.add(bookService.bookDetail(postId));
 			}
 		}
         
@@ -226,6 +237,8 @@ public class HomeController {
 				newslist.add(newsService.newsDetail(postId));
 			} else if (category.equals("movie")) {
 				movielist.add(movieService.movieDetail(postId));
+			} else if (category.equals("book")) {
+				booklist.add(bookService.bookDetail(postId));
 			}
 		}
 		mv.addObject("likeInOrder", likeInOrder);
@@ -235,6 +248,7 @@ public class HomeController {
 		mv.addObject("reviewlist", reviewlist);
 		mv.addObject("newslist", newslist);
 		mv.addObject("movielist", movielist);
+		mv.addObject("booklist", booklist);
 		mv.addObject("blog", blog);
 		mv.addObject("commentAll",commentAll);
 		mv.setViewName("controll");
@@ -243,18 +257,25 @@ public class HomeController {
 	}
    
 	@RequestMapping("myhome.do")
-	public ModelAndView selectBlog(String writer_id, ModelAndView mv, HttpSession session) {
+	public ModelAndView selectBlog(String writer_id,
+			ModelAndView mv, HttpSession session) {
 		
 		Blog blog = new Blog();
 		Member member = new Member();
+		String neighYn = null;
 		
 		if (writer_id != null) {
 			blog = blogService.selectBlog(writer_id);
 			member = memberService.selectMember(writer_id);
 		}
 		
+		if (session.getAttribute("loginUser") != null)
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+		
 		mv.addObject("blog", blog);
 		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
 		mv.setViewName("myhome");
 		
 		return mv;

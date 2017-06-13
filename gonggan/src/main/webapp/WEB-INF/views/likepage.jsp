@@ -46,34 +46,34 @@
 			<col width="60%">
 		</colgroup>
 		<tbody id="listbody">
-         <c:if test="${!empty goodList}">
-            <c:forEach items="${goodList}" var="i" begin="0">
-               <tr>
-                  <td style="height:50px;">
-                  	<a href="myhome.do?writer_id=${i.member_id}" target="_blank">
-                  		<img src="images/default.png" height="40px" class="img-circle">
-                  		&nbsp;${i.member_id}
-                  	</a>
-                  </td>
-                  <c:if test="${i.member_id eq sessionScope.loginUser.getMember_id()}">
-                     <td></td>
-                  </c:if>
-                  <c:if test="${empty neigList}">
-                  <c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
-                     <td>
-                        <button id="neighborBtn" class="neighborY">이웃친구</button>
-                     </td>
-                  </c:if>
-                  </c:if>
-                  <c:if test="${!empty neigList}">
-                     <td>
-                        <button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
-                     </td>
-                  </c:if>
-               </tr>
-            </c:forEach>
-         </c:if>
-      </tbody>
+		<c:if test="${!empty goodList}">
+			<c:forEach items="${goodList}" var="i" begin="0">
+				<tr>
+					<td style="height:50px;">
+						<a href="myhome.do?writer_id=${i.member_id}" target="_blank">
+							<img src="images/default.png" height="40px" class="img-circle">
+							&nbsp;${i.member_id}
+						</a>
+					</td>
+					<c:if test="${i.member_id eq sessionScope.loginUser.getMember_id()}">
+					<td></td>
+					</c:if>
+					<c:if test='${neighYn =="Y"}'>
+					<c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
+					<td>
+						<button id="neighborBtn" class="neighborY" onclick="rejectNeig('${i.member_id}')">이웃친구</button>
+					</td>
+					</c:if>
+					</c:if>
+					<c:if test='${neighYn =="N"}'>
+					<td>
+						<button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
+					</td>
+					</c:if>
+				</tr>
+			</c:forEach>
+		</c:if>
+	</tbody>
 	</table>
 </div>
 </body>

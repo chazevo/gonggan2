@@ -4,6 +4,8 @@ package com.kh.gonggan.good.controller;
 import java.sql.Connection;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
 import com.kh.gonggan.member.model.vo.Member;
+import com.kh.gonggan.neighbor.model.service.NeighborService;
 
 
 @Controller
@@ -24,6 +27,8 @@ public class GoodController {
 	
 	@Autowired
 	private GoodService goodService;
+	@Autowired
+	private NeighborService neighborService;
 	
 /*	@RequestMapping(value="/good.do", method=RequestMethod.POST)
 	public ModelAndView goodCount(@RequestParam int postId){
@@ -57,13 +62,21 @@ public class GoodController {
 		}
 	
 	@RequestMapping("goodList.do")
-		public ModelAndView goodList(@RequestParam int postId, ModelAndView mv){
-			
-			List<Good> goodList = goodService.goodList(postId);
-			mv.addObject("goodList",goodList);
-			mv.setViewName("likepage");
-			return mv;
+	public ModelAndView goodList(@RequestParam int postId,
+			ModelAndView mv, HttpSession session) {
+		String neighYn = null;
+		List<Good> goodList = goodService.goodList(postId);
+		
+		for(int i = 0 ; i < goodList.size(); i++) {
+			neighYn = neighborService.neighYn(((Member)session.getAttribute("loginUser")).getMember_id(),goodList.get(i).getMember_id());
 		}
+		mv.addObject("goodList",goodList);
+		mv.addObject("neighYn",neighYn);
+		mv.setViewName("likepage");
+		
+		return mv;
+	}
+	
 	@RequestMapping(value = "/gsearch.do", produces = { "application/json" }, method = RequestMethod.GET)
 		@ResponseBody
 			public String goodSearch(@RequestParam String member_id, @RequestParam int post_id){

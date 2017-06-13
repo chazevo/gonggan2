@@ -246,11 +246,15 @@ public class HomeController {
 	public ModelAndView selectBlog(String writer_id, ModelAndView mv, HttpSession session) {
 		
 		Blog blog = new Blog();
+		Member member = new Member();
 		
-		if (writer_id != null)
+		if (writer_id != null) {
 			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
 		
 		mv.addObject("blog", blog);
+		mv.addObject("member", member);
 		mv.setViewName("myhome");
 		
 		return mv;
@@ -291,9 +295,12 @@ public class HomeController {
 		logger.info("Welcome uploadform! ");
 
 		Blog blog = new Blog();
+		Member member = new Member();
 		
-		if (writer_id != null)
+		if (writer_id != null) {
 			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyymmdd");
       
@@ -379,6 +386,7 @@ public class HomeController {
 		mv.addObject("popKeyword", popKeyword);
 		mv.addObject("bestSellerList", bestSellerList);
 		mv.addObject("blog", blog);
+		mv.addObject("member", member);
       
 		return mv;
 	}

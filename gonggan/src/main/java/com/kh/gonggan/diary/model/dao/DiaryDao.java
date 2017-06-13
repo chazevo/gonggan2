@@ -11,10 +11,10 @@ import com.kh.gonggan.news.model.vo.News;
 
 @Repository("diaryDao")
 public class DiaryDao {
-   @Autowired
-   private SqlSessionTemplate sqlSession;
-   
-   public DiaryDao(){}
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+
+	public DiaryDao(){}
    
    public List<Diary> selectAll_index2(){
       return (List<Diary>) sqlSession.selectList("diarymapper.diarylist_index2");

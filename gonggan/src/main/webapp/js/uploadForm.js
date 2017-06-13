@@ -108,29 +108,32 @@ function recieveMovie(image, title, director , actor, pubDate) {
 	      + "</td></tr></table>";
 	}
 
-function recieveMusic(videoId, title, thumbnail){
+function recieveMusic(videoId, title, thumbnail) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<center><b><h4>" +title+"</h4></b></center>" +
-		"<table align='center' width='60%' style='border:1px solid gray; color:gray;'>" +
-			"<tr><td><img src='" + thumbnail + "' width='100%' height='280px'></td></tr>"
-		+ "<tr><td>" + title + "</td></tr></table>";
+		"<center><b><h4>" +title+"</h4></b></center>"
+				+ "<table align='center' width='60%' style='border:1px solid #E6E6E6; color:gray;'>"
+				+ "<tr><td><img src='" + thumbnail + "' width='100%' height='280px'></td></tr>"
+				+ "<tr><td style='padding:20px'>" + title + "</td></tr></table>";
 }
 
 function recieveNews(title, originallink, description, pubDate) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<div style='border:1px solid gray; color:gray;margin-bottom:20px;'>"
-			+ "<table align='center' width='80%'><tr>"
-			+ "<td><h3><b>" + title+"<b></h3></td></tr>"
-			+ "<tr><td>" + description + "</td>"
-			+ "</tr></table></div>내용을 입력해주세요.";
+		"<div style='margin:auto;width:80%;background-color:#fdfdfd;border:1px solid #E6E6E6; color:gray;margin-bottom:20px;'>"
+			+ "<table style='background-color:#fdfdfd' align='center' width='90%'><tr>"
+			+ "<td><a href='" + originallink + "' target='_blank' style='color:gray;text-decoration:none'>"
+			+ "<h3><b>" + title+"<b></h3></a></td></tr>"
+			+ "<tr><td style='padding-bottom:30px'>"
+			+ "<a href='" + originallink + "' target='_blank' style='color:gray;text-decoration:none;font-weight:lighter'>" + description + "</a></td>"
+			+ "</tr></table></div><p style='text-align:center'><br>내용을 입력해주세요.<br></p>";
 }
 
-function recieveBook(image, title, author, publisher, pubdate) {
+function recieveBook(image, title, author, publisher, pubdate, link) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
 		"<table style='background-color:#fdfdfd;border:1px solid #E6E6E6; color:gray;' align='center' width='50%'>"
 		+ "<colgroup><col width='30%'><col style='width:*'></colgroup>"
 		+ "<tr><td rowspan='4'>"
-		+ "<img src='" + image + "' width='100%'></td>"
+		+ "<a href='" + link + "' target='_blank'>"
+		+ "<img src='" + image + "' width='100%'></a></td>"
 		+ "<td style='max-width:0px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;'>"
 		+ "<h3>" + title + "</h3></td>"
 		+ "<tr><td style='font-weight:lighter'><b>저자</b> "+ author + "</td></tr>" 
@@ -416,8 +419,12 @@ function changeDate() {
 	dateObj.setMonth(diarymonth - 1);
 	dateObj.setDate(diarydate);
 	
-	je_doc.getElementById("diarydateTd").innerText = diarydate;
-	je_doc.getElementById("diarydayTd").innerHTML = dateToday(dateObj);
+	if ($("#category").val() == 'diary') {
+		je_doc.getElementById("diarydateTd").innerText = diarydate;
+		je_doc.getElementById("diarydayTd").innerHTML = dateToday(dateObj);
+	}
+	else
+		je_doc.body.innerHTML = diaryyear + "년 " + diarymonth + "월 " + diarydate + "일";
 }
 
 function temp() {
@@ -452,7 +459,7 @@ function changeForm() {
 			"<input type='text' name='toDate' id='toDate' size='15' onchange='javascript:changeDate()'>";
 		dateFunc();
 		je_doc.body.innerHTML += "<table style='border-collapse:collapse;width:100%;'>"
-				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='62%'/><col width='8%'/><col width='10%'/></colgroup>"
+				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='62%'/><col width='12%'/><col width='6%'/></colgroup>"
 				+ "<tr><td id='diarydateTd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
 				+ (today.getDate() <10 ? "0"+ today.getDate() : today.getDate() )
 				+"</td>"
@@ -484,17 +491,23 @@ function changeForm() {
 
 	if (document.getElementById("category").value == "movie") {
 		$("#movieTbody").css("display", "table-row-group");
-		je_doc.body.innerHTML += "<div style='border:1px solid red;display:table;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-40_56.jpeg);background-size:100% 100%;width:100%;height:170px'>"
-				+ "<h2 style='display:table-cell;height:100%;width:100%;vertical-align:middle;text-align:center'>"
+		je_doc.body.innerHTML += "<div style='position:relative;display:table;'>"
+			+ "<img src='images/template/KakaoTalk_Photo_2017-06-12-09-43-40_56.jpeg' width='100%'>"
+			+ "<h1 style='display:block;position:absolute; top:0;bottom:0;right:0;left:0; margin:auto;width:120px;height:50px;'>"
 				+ "<b><span style='color:black'>GET</span>"
-				+ "<span style='color:white'>OUT</span></b></h2>"
-				+"</div><br>흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기<br>"
-				+ "<hr><table><tr><td><img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg'>"
-				+ "</td></tr><tr><td>GETOUT 2017</td></tr></table>"
-				+ "<table><tr><td style='background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
-				+ "<h2 style='text-align:center'><b><span style='color:black'>SYNO</span>"
-				+ "<span style='color:white'>PSIS</span></h2></td></tr>"
-				+ "<tr><td>ABOUT MOVIE <br>"
+				+ "<span style='color:white'>OUT</span></b></h1>"
+				+"</div><div style='text-align:center;height:100px;width:100%'>"
+				+ "흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기</div><br>"
+				+ "<hr style='border:1px solid #E6E6E6'>"
+				+ "<div style='position:relative;height:800px;'>"
+				+ "<div style='padding-bottom:20px;position:absolute;left:0;right:0;margin:auto;border:1px solid #E6E6E6;text-align:center;color:gray;width:70%'>"
+				+ "<img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg' width='100%' height='100%' style='margin-bottom:20px;'><br>"
+				+ "GETOUT 2017"
+				+ "</div></div>"
+				+ "<table style='position:relative'><tr><td style='height:130px;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
+				+ "<h1 style='text-align:center'><b><span style='color:black'>SYNO</span>"
+				+ "<span style='color:white'>PSIS</span></h1></td></tr>"
+				+ "<tr><td style='text-align:center'>ABOUT MOVIE <br>"
 				+ "공개 6일 만에 메인 예고편 조회수 1,000만 뷰 돌파! 개봉 요청 쇄도! <br>"
 				+ "관객들의 폭발적 반응이 개봉시킨 영화! <br>"
 				+ "영화 <겟 아웃>은 흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기로 북미 개봉 직후 박스오피스 1위를 차지한 바 있다."
@@ -512,13 +525,13 @@ function changeForm() {
 				+ "메인 예고편을 공개한지 6일 만에 누적 조회수 약 1,143만 뷰를 돌파, 상반기 최고 화제작으로 등극했다. "
 				+ "이렇듯 관객들의 폭발적 반응이 개봉시킨 영화 <겟 아웃>은 지금껏 본 적 없는 새로움과 신선한 충격으로 "
 				+ "관객들을 사로잡을 예정이다. <br></td></tr>"
-				+ "<tr><td style='background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
-				+ "<h2 style='text-align:center'><b><span style='color:black'>REV</span>"
-				+ "<span style='color:white'>IEW</span></h2></td></tr>"
-				+ "<tr><td>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>"
+				+ "<tr><td style='height:130px;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
+				+ "<h1 style='text-align:center'><b><span style='color:black'>REV</span>"
+				+ "<span style='color:white'>IEW</span></h1></td></tr>"
+				+ "<tr><td style='text-align:center'>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>"
 				+ "2. 영화 처음 안드레가 납치되는 장면범인이 뒤에서 목을 졸라서 납치하는데 "
 				+ "로즈의 남동생이 식사시간에 주짓수를 말하고 헤드락을 걸려고 헀던 것과 일치하고 영화 ...<br>"
-				+ "</td></tr></table>";
+				+ "</td></tr></table><br><br><br><br><br>";
 	}
 	else
 		$("#movieTbody").css("display", "none");
@@ -575,12 +588,16 @@ function content_OK() {
 
 	if (je_doc.body.innerHTML != "") {
 		if (confirm("포스트를 게시하시겠습니까? ") == true) {
+			
 			if($("select [name=category]").val()=="diary") {
 				$("input[name=title]").val(je_doc.getElementById("title").innerText);
-				$("#dhtmlText").val(je_doc.body.innerHTML);
-				$('#form').submit();
-			} else 
-				$('#form').submit();
+			}
+			
+			document.getElementById("#form").onsubmit = "";
+			
+			$("#dhtmlText").val(je_doc.body.innerHTML);
+			$('#form').submit();
+			
 		} else return;
 	}
 	else alert("본문 내용을 입력해주세요");
@@ -624,39 +641,27 @@ function callbackMovieSearch(data) {
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
-		td.rowSpan = "3";
+		td.style.height = "150px";
+		td.style.paddingTop = "20px";
+		td.style.paddingBottom = "20px";
 		a = document.createElement("a");
-		a.innerHTML = "<img src=" + image + ">";
+		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
+		a.innerHTML = "<img src='" + image + "' height='100%' width='100%'>";
 		td.appendChild(a);
 		tr.appendChild(td);
 
 		td = document.createElement("td");
+		td.style.paddingLeft = "15px";
 		a = document.createElement("a");
 		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
-		a.innerHTML ="<b>"+ title+"</b>";
+		a.innerHTML ="<b>"+ title+"</b><br><br>"
+				+ pubDate + " 개봉<br>"
+				+ director + "<br>"
+				+ actor + "<br>";
 		td.appendChild(a);
 		tr.appendChild(td);
 		document.getElementById("movieSearchRes").appendChild(tr);
 
-		tr = document.createElement("tr");
-		td = document.createElement("td");
-		a = document.createElement("a");
-		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
-		a.innerHTML = pubDate+" 개봉";
-	        
-		td.appendChild(a);
-		tr.appendChild(td);
-		document.getElementById("movieSearchRes").appendChild(tr);
-		tr = document.createElement("tr");
-		td = document.createElement("td");
-		a = document.createElement("a");
-		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
-		a.innerHTML = actor+director;
-		td.appendChild(a);
-		tr.appendChild(td);
-		document.getElementById("movieSearchRes").appendChild(tr);
- 
- 
 		//jsonArr.list.originallink;
 		//jsonArr.list.pubDate;
 	}
@@ -665,7 +670,7 @@ function callbackMovieSearch(data) {
 
 
 function searchMusic() {
-	
+	/*
 	$.ajax({
 		url: "lyrics.do",
 		data: { title: $("#musicSearchText").val() },
@@ -677,10 +682,11 @@ function searchMusic() {
 			console.log("error : " + error);
 		}
 	});
+	*/
 	
 	$.ajax({
 		url: "musicpost2.do",
-		data: { title: $("#musicSearchText2").val() },
+		data: { keyword: $("#musicSearchText").val() },
 		success: function(data) {
 			callbackMusicSearch(data);
 			
@@ -702,17 +708,17 @@ function callbackMusicSearch(data) {
 	for (var i in jsonArr.list) {
 
 		   
-		title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " "));
-		description = decodeURIComponent((jsonArr.list[i].description).replace(Ca, " "));
-		originallink = jsonArr.list[i].originallink;
-		pubDate = jsonArr.list[i].pubDate;
-		   
+		title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " ")).replace(/\'/g,"&#39;");
+		videoId = jsonArr.list[i].videoId;
+		thumbnail_default = jsonArr.list[i].thumbnail_default;
+		thumbnail_high = jsonArr.list[i].thumbnail_high;
+		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
+		td.style.paddingRight = '20px';
 		a = document.createElement("a");
-		a.href = "javascript:recieveNews(title, originallink, description, "
-			+ "pubDate); alert(title);";
-		a.innerHTML = (parseInt(i, 10) + 1) + ". " + title;
+		a.href = "javascript:openFancybox('" + "https://www.youtube.com/watch?v=" + videoId + "');";
+		a.innerHTML = "<img src='" + thumbnail_default + "'>";
 		   
 		/*
 	   td.innerHTML = "<a href='javascript:recieveNews("
@@ -724,14 +730,16 @@ function callbackMusicSearch(data) {
 		
 		td.appendChild(a);
 		tr.appendChild(td);
-		document.getElementById("newSearchRes").appendChild(tr);
+		document.getElementById("musicSearchRes").appendChild(tr);
 
-		tr = document.createElement("tr");
+		if (thumbnail_high == "")
+		
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveNews(title, originallink, description, "
-			+ "pubDate); alert(title);";
-		a.innerHTML ="<ul><li>"+ description+"</li></ul>";
+		a.href = "javascript:recieveMusic('" + videoId +"', '" + title + "', '"
+				+ (thumbnail_high == "" ? thumbnail_default : thumbnail_high)
+				+ "');";
+		a.innerHTML = title;
 		   
 		/*
 		   td.innerHTML = "<ul><li><a href='javascript:recieveNews(\'"
@@ -741,12 +749,18 @@ function callbackMusicSearch(data) {
 		 */
 		td.appendChild(a);
 		tr.appendChild(td);
-		document.getElementById("newSearchRes").appendChild(tr);
+		document.getElementById("musicSearchRes").appendChild(tr);
 		   
 		   
 		//jsonArr.list.originallink;
 		//jsonArr.list.pubDate;
 	}
+}
+
+function openFancybox(url) {
+	document.getElementById("fancy").href = url;
+	$("#fancy").fancybox().trigger('click');
+	
 }
 
 function searchBook() {
@@ -823,9 +837,12 @@ function callbackWlocationList(data) {
 }
 
 function  wiconInnerHTML(icon) {
-	je_doc.getElementById('weathertd').innerHTML = "<img src='images/weatherIcons/" + icon +"' width='50%'>";
-
-			$("#weatherDiv").hide();
+	if ($("#category").val() == "diary")
+		je_doc.getElementById('weathertd').innerHTML = "<img src='images/weatherIcons/" + icon +"' width='50%'>";
+	else
+		je_doc.body.innerHTML += "<img src='images/weatherIcons/" + icon +"' width='50%'>";
+	
+	$("#weatherDiv").hide();
 
 	
 }
@@ -1070,12 +1087,13 @@ function callbackBookSearch(data) {
 		author = decodeURIComponent((jsonArr.list[i].author).replace(Ca, " "));
 		publisher = decodeURIComponent((jsonArr.list[i].publisher).replace(Ca, " "));
 		pubdate = jsonArr.list[i].pubdate;
-
+		link = jsonArr.list[i].link;
+		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		td.rowSpan="4";
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "', '" + link + "');";
 		a.innerHTML = "<img src='" + image + "'>";
      
 		td.appendChild(a);
@@ -1083,7 +1101,7 @@ function callbackBookSearch(data) {
      
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "', '" + link + "');";
 		a.innerHTML = title;
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -1092,7 +1110,7 @@ function callbackBookSearch(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "', '" + link + "');";
 		a.innerHTML =author;
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -1101,7 +1119,7 @@ function callbackBookSearch(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "', '" + link + "');";
 		
 		a.innerHTML =publisher;
 		td.appendChild(a);
@@ -1111,7 +1129,7 @@ function callbackBookSearch(data) {
 		tr = document.createElement("tr");
 		td = document.createElement("td");
 		a = document.createElement("a");
-		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "');";
+		a.href = "javascript:recieveBook('" + image + "','" + title + "', '" + author + "','" + publisher + "','" +  pubdate + "', '" + link + "');";
 		a.text =pubdate;
 		td.appendChild(a);
 		tr.appendChild(td);

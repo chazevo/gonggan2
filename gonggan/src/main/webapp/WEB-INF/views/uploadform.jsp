@@ -289,8 +289,13 @@
 				</div>
 				<div class="navbar-right">
 					<a id="loginUser" class="navbar-brand" href="#" >
-						<img src="images/default.png" height="40px"
-									class="img-circle">&nbsp;${sessionScope.loginUser.getMember_id() } 님 </a>
+						<c:if test='${empty sessionScope.loginUser.getProfile_photo() }'>
+						<img src="images/default.png" height="40px" class="img-circle">&nbsp;
+						</c:if>
+						<c:if test='${!empty sessionScope.loginUser.getProfile_photo() }'>
+						<img src="images/profileImages/${sessionScope.loginUser.getProfile_photo()}" height="40px" class="img-circle">&nbsp;
+						</c:if>
+						&nbsp;${sessionScope.loginUser.getMember_id() } 님 </a>
 				</div>
 			</nav>
 			<div id="loginUserDetail" class="hidden">
@@ -357,8 +362,13 @@
 				<!-- sr-only : 숨김 -->
 				</button>
 				<a href="javascript:void(0);" id="blogOwnerClick" style="display:inline-block" >
-					<img src="images/default.png" height="40px"
-						class="img-circle">&nbsp;${param.writer_id } 님
+					<c:if test='${empty member.getProfile_photo() }'>
+					<img src="images/default.png" height="40px" class="img-circle">
+					</c:if>
+					<c:if test='${!empty member.getProfile_photo() }'>
+					<img src="images/profileImages/${ member.getProfile_photo()}" height="40px" class="img-circle">
+					</c:if>
+					${param.writer_id } 님
 				</a>&nbsp;
 				<div class="blogOwnerClick hidden">
 					<div>
@@ -397,10 +407,10 @@
 		
 		<section>	
 			<div class="uploadFormDiv" > <!-- style="border:1px;"  -->
-				<table border="1" width="100%"  id="uploadtable" align="center"> 
+				<table width="100%"  id="uploadtable" align="center"> 
 					<colgroup>
-						<col width="20%" />
-						<col width="20%" />
+						<col width="12%" />
+						<col width="28%" />
 						<col width="15%" />
 						<col width="15%" />
 						<col width="30%" />
@@ -424,6 +434,7 @@
 					</tr>
 					<tr>
 						<td>
+						<!--
 							<select onchange="je_doc.execCommand('fontname', false, this.value)">
 								<option value="">선택</option>
 								<option value="nanumbarungothic">나눔고딕</option>
@@ -432,6 +443,7 @@
 								<option value="Georgia">Georgia</option>
 								<option value="Dotum">돋움체</option>
 							</select>
+							-->
 						</td> 	
 						<td colspan="2" style="padding:5px;">
 							<img src="images/bold_icon.png" width="12px"
@@ -506,7 +518,7 @@
 								<option value="7" style="font-size:7;">가나다</option>
 							</select>
 							 -->
-
+							<!--
 							<select id=contenttextcolor2 onchange='contenttextcolor2()'>
 								<option class='imageOp'  selected  >글자색상 선택</option>
 								<option class='imageOp'  value='black'  style="background-color:black; color:white;">검정색</option>
@@ -518,6 +530,7 @@
 								<option class='imageOp'  value='green' style="background-color:green; color:white"> 초록색 </option>
 								<option class='imageOp'  value='orange' style="background-color:orange; color:white">주황색</option>
 							</select> 
+							-->
 						</td>
 						<td align="center">
 							<img src="images/align_left_icon.png" id="content_allign_left"  width="18px" 
@@ -566,29 +579,34 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td style="text-align:center">
 								<!-- <select onchange="imageChange();">
 									<option class="imageOp"  value="diary" selected>배경이미지 </option>
 									<option class="imageOp"  value="news">이미지 삽입</option>
 									</select>
 									<div id="content_backgound" ></div> -->
 								<img  src="images/pickture_icon.png" id="imgUploadIcon" width="18px"
-											onclick="je_doc.execCommand('removeformat', 'false', 'null')">&nbsp; &nbsp;이미지	
-							 <form action="imgupload.do" method="post" enctype="multipart/form-data" id="imgUpload"> 
-								<div id="imgUploadDiv" class="hidden">	
-									<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
-									<div class="fileInputDiv">
-										<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-										<input type="file" name="file" id="file" onchange="javascript:$('#filename').val($(this).val());">
+									onclick="je_doc.execCommand('removeformat', 'false', 'null')">
+									<!--&nbsp; &nbsp;이미지-->
+								 <form action="imgupload.do" method="post" enctype="multipart/form-data" id="imgUpload"> 
+									<div id="imgUploadDiv" class="hidden">	
+										<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
+										<div class="fileInputDiv">
+											<input type="button" value="첨 부 파 일" class="fileInputBtn" >
+											<input type="file" name="file" id="file" onchange="javascript:$('#filename').val($(this).val());">
+										</div>
+										<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
 									</div>
-									<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;
-								</div>
-							 </form> 
+								 </form> 
 							</td>
 						<td align="center">
-							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');"><img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="24%" ></a>
-							&nbsp;<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');" data-target="#layerpop" data-toggle="modal">
-								테이블 삽입
+							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');">
+								<img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="25px" >
+							</a>&nbsp;
+							<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');"
+								data-target="#layerpop" data-toggle="modal">
+								<img src="images/table_presentation_powerpoint_keynote_speech_business-512.png"
+									height="25px">
 							</a>
 							<div class="modal fade" id="layerpop">
 							<!--
@@ -626,7 +644,10 @@
 							</div>
 						</td>
 						<td align="center">
-							<a id="weatherLink" href="javascript:void(0);">날씨</a>
+							<a id="weatherLink" href="javascript:void(0);">
+								<img src="images/weathericon.png"
+									height="32px">
+							</a>
 							<div id="weatherDiv" class="hidden" >
 								<div id="wmapDiv">
 									<script>
@@ -708,10 +729,10 @@
 								<div></div>
 							</div>
 						</td>
-						<td align="center" id="dateTd">날짜 </td>
+						<td align="center" id="dateTd"><!--날짜--></td>
 						<td id="dateTd2">
 							<input type="text" name="toDate" id="toDate" size="15"
-								onchange="javascript:changeTitle()">
+								onchange="javascript:changeDate()">
 						</td>
 					<tr>
 						<!-- <td>
@@ -737,11 +758,11 @@
 							<a id="colorChoice2" href="javascript:void(0);"><img  src="images/fill_color-512.png" width="8%" ></a>
 							<div id="colorchart2" class="hidden"></div>
 						</td> -->
-						<td >
-							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="12%"></a>
+						<td>
 						</td>
 						<td>
-							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="10%"></a>
+							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="25px"></a>
+							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="20px"></a>
 						</td>
 						<td>
 							<input type="button" data-toggle="collapse" id="tagadddbtn" value="태그">
@@ -760,7 +781,7 @@
 
 					<tbody id="bookTbody" style="display:none">
 						<tr>
-							<td colspan="5" align="center">
+							<td colspan="5" align="right">
 								<a data-toggle="collapse" data-target="#book" id="bookSearchLink">
 									책 찾아보기
 								</a>
@@ -785,7 +806,9 @@
 									</a>
 									<br><br>
 									<div class="searchAll">
-										<table width="100%" id="bookSearchRes"></table>
+										<table align='center' width="70%" id="bookSearchRes"
+											style='border-spacing: 15px;border-collapse: separate;'>
+										</table>
 									</div>
 								</div>
 							</td>
@@ -807,42 +830,50 @@
 							<td colspan="5" align="right">
 								<a data-toggle="collapse" data-target="#movie" id="movieSearchLink">영화 찾아보기</a>
 								<div id="movie" class="collapse">
-									<table width="100%" border="1">
+									<table width="100%" style='border:1px solid #E6E6E6'>
 										<tr>
-											<td width="25%" align="center">주간 박스오피스 </td>
-											<td>
-												<input type="text" id="movieSearchText" name="keyword" value="${keyword }" placeholder="기 사 검 색" 
+											<td width="25%" align="center" style='color:gray'>주간 박스오피스 </td>
+											<td style='padding-left:15px;'>
+												<input type="text" id="movieSearchText" name="keyword" value="${keyword }"
+													placeholder="영 화 검 색" 
 													onkeydown="if(event.keyCode == 13) searchMovie();">
-												<a href="javascript:searchMovie();">
+												<a href="javascript: $('#movieSearchRes').html(''); searchMovie();">
 													<img src=images/search.png width="5%" >
 												</a>
 											</td>
-                           <tr>
-                              <td align="center">
-                                 <c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
-                                    <a href="javascript:$('#movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">${i.rank} ${i.movieNm } (${i.audiAcc }명)
-                                    </a><br>
-                                 </c:forEach>
-                              </td>
-                              <td width="65%">
-                              	<div style="height:300px;overflow:scroll;">
-                                 	<table id="movieSearchRes"></table>
-                              	</div>
-                              </td>
-                           </tr>
-                           </table>
-                        </div>
-                     </td>
-                  </tr>
-               </tbody>
+										<tr>
+											<td align="center">
+												<c:forEach items="${weeklyResult.boxOfficeResult.weeklyBoxOfficeList}" var="i" begin="0">
+												<a href="javascript:$('#movieSearchText').val('${i.movieNm }'); $('#movieSearchText').focus();">
+													${i.rank} ${i.movieNm } (${i.audiAcc }명)
+												</a><br>
+												</c:forEach>
+											</td>
+											<td width="65%" style='padding-left:15px;'>
+												<div style="height:300px;overflow:scroll;">
+													<table width='100%'>
+														<colgroup>
+															<col width='20%'>
+															<col width='90%'>
+														</colgroup>
+														<tbody id='movieSearchRes'></tbody>
+													</table>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+					</tbody>
 					<tbody id="newsTbody" style="display:none">
 						<tr>
-							<td colspan="5" align="center">
+							<td colspan="5" align="right">
 								<a data-toggle="collapse" data-target="#news" id="newSearchLink">
 									기사 찾아보기<img>
 								</a>
 								<div id="news" class="collapse">
-									<table width="100%" border="1">
+									<table width="100%">
 										<tr>
 											<td width="25%" align="center">실시간 인기검색어</td>
 											<td>
@@ -866,7 +897,7 @@
 												</c:forEach>
 											</td>
 											<td width="65%">
-												<div style="height:300px;overflow:scroll;border:1px solid red">
+												<div style="height:300px;overflow:scroll;">
 													<table id="newSearchRes">
 														<%--
 														<c:if test="${!empty searchNewsList}">
@@ -920,23 +951,29 @@
 						</tr>
 					</tbody>
 					<tbody id="musicTbody" style="display:none">
+					<!--
 						<tr>
 							<td>가수</td><td><input type='text' size="14"></td>
 							<td>제목</td><td><input type='text'></td>
 						</tr>
+					-->
 						<tr>
 							<td colspan="5" align="right">
-								<a data-toggle="collapse" data-target="#lyrics">가사 찾아보기</a>
+								<a data-toggle="collapse" data-target="#lyrics">음악 찾아보기</a>
 								<div id="lyrics" class="collapse">
 								<div class="div2">
 									<input type="text" id="musicSearchText" name="keyword" value="${keyword }" placeholder="검 색" 
-										onkeydown="if(event.keyCode == 13) searchMusic();">
-									<a href="javascript:searchMusic();">
+										onkeydown="if(event.keyCode == 13) { $('#musicSearchRes').html(''); searchMusic(); }">
+									<a href="javascript:$('#musicSearchRes').html(''); searchMusic();">
 										<img src=images/search.png width="5%" >
 									</a>
 								</div>
-								<div class="searchAll">
-									<table width="100%" id="musicSearchRes"></table>
+								<div class="searchAll" style="height:300px;overflow:scroll;">
+									<a id="fancy" style="display:none"></a>
+									<>
+									<table width="70%" align='center'>
+										<tbody id="musicSearchRes"></tbody>
+									</table>
 								</div>
 								</div>
 							</td>
@@ -982,10 +1019,14 @@
 						</td>
 					</tr>
 				</table>
+				<!--
 				<input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>
-				<textarea id="dhtmlText" name="content"></textarea>
+				-->
+				<textarea id="dhtmlText" name="content" style="width:0"></textarea>
+				<!--
 				<img src="images/marker.png" id="kae" draggable="true" ondragstart="drag(event);">
 				<iframe src="clipboard.do" id="clipboard"></iframe>
+				-->
 				<br><br><br><br><br><br><br><br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br>
 				<br><br><br><br><br><br><br><br><br><br><br>

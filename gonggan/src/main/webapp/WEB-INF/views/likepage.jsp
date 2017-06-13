@@ -16,16 +16,16 @@
 	var post_id = '${param.postId }';
 </script>
 </head>
-<body class="gradBg">
+<body class="gradBg" style="width:600px;">
 <div>
 	<table class="likeTable" width="100%" >
 		<tr>
-			<td colspan="2" class="text-center">
+			<td class="text-center">
 				<h3><a href="javascript:history.back();" class="back">&lt;</a> like</h3>
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" class="text-center">
+			<td class="text-center">
 				<div class="div2"  style="margin:auto;">
 					<input type="text" id="searchPost" onkeyup="searchGood();" placeholder="search" >
 					<a href="javascript:searchGood();">
@@ -35,15 +35,26 @@
 			</td>
 		</tr>
 		<tr>
-			<th colspan="2">
+			<th>
 				<hr>
 			</th>
 		</tr>
+	</table>
+	<table width="60%" align="center">
+		<colgroup>
+			<col width="40%">
+			<col width="60%">
+		</colgroup>
 		<tbody id="listbody">
          <c:if test="${!empty goodList}">
             <c:forEach items="${goodList}" var="i" begin="0">
                <tr>
-                  <td><a href="myhome.do?writer_id=${i.member_id}" target="_blank">${i.member_id}</a></td>
+                  <td style="height:50px;">
+                  	<a href="myhome.do?writer_id=${i.member_id}" target="_blank">
+                  		<img src="images/default.png" height="40px" class="img-circle">
+                  		&nbsp;${i.member_id}
+                  	</a>
+                  </td>
                   <c:if test="${i.member_id eq sessionScope.loginUser.getMember_id()}">
                      <td></td>
                   </c:if>

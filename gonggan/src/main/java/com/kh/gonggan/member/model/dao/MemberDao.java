@@ -54,6 +54,10 @@ public class MemberDao {
 		return sqlSession.update("membermapper.mupdate", mem);
 	}//회원 정보 수정
 	
+	public int updateProfile(Member mem) {
+		return sqlSession.update("membermapper.profileupdate", mem);
+	}
+	
 	public String selectIdbyEmail(String email){
 		return (String) sqlSession.selectOne("membermapper.selectIdbyEmail", email);
 	} //아이디 찾기

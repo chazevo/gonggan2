@@ -39,14 +39,19 @@ public class MemberServiceImpl implements MemberService{
 	}//회원 정보 상세 조회
 	
 	@Override
-	public int deleteMember(String memberId){
+	public int deleteMember(String memberId) {
 		return memberDao.deleteMember(memberId);
 	}//회원 삭제
 	
 	@Override
-	public int updateMember(Member mem){
+	public int updateMember(Member mem) {
 		return memberDao.updateMember(mem);
 	}//회원 수정
+	
+	@Override
+	public int updateProfile(Member mem) {
+		return memberDao.updateProfile(mem);
+	}
 	
 	@Override
 	public String selectIdByEmail(String email) {

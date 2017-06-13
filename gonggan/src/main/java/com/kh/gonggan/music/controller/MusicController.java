@@ -23,12 +23,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 //import java.util.Properties;
-
+import java.util.Map;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -152,31 +154,14 @@ public class MusicController {
 		
 		return mv;
 	}
-	@RequestMapping(value="/musicpost2.do", produces="text/plain;charset=UTF-8", method=RequestMethod.GET)
+	@RequestMapping(value="/musicpost2.do", produces="application/json")
 	@ResponseBody
-	public String musicpost2(@RequestParam String keyword,
-			ModelAndView mv){
+	public String musicpost2(@RequestParam String keyword){
 		
 		List<Music> searchMusicList = new ArrayList<Music>();
 
-		JSONObject json = new JSONObject();
-		JSONArray jarr = new JSONArray();
-	      
-		Gson gson = new Gson();
-		Type type = new TypeToken<PostMusic>(){}.getType();  
-		/*
-		Properties properties = new Properties();
+		Map<String, Object> dataMap = new HashMap<String, Object>();
 		
-		try {
-			InputStream in = MusicController.class.getResourceAsStream(
-					"/" + PROPERTIES_FILENAME);
-			properties.load(in);
-		} catch (IOException e) {
-			System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
-	          + " : " + e.getMessage());
-			System.exit(1);
-		}
-		*/
 		try {
 			
 			youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
@@ -211,12 +196,9 @@ public class MusicController {
 	    }
 		System.out.println(searchMusicList);
 		
-		mv.setViewName("searchAll");
-		mv.addObject("searchMusicList", searchMusicList);
-		mv.addObject("keyword", keyword);
-		mv.addObject("category", 2);
+		dataMap.put("list", searchMusicList); 
 		
-		return null;
+		return new Gson().toJson(dataMap);
 	}
 
 	
@@ -273,9 +255,18 @@ public class MusicController {
 			System.out.println("\n-------------------------------------------------------------\n");
 			 */
 			
-			searchMusicList.add(new Music(rId.getVideoId(), 
-					singleVideo.getSnippet().getTitle(),
-					thumbnail_default.getUrl(), thumbnail_high.getUrl()));
+			try {
+				
+				searchMusicList.add(new Music(rId.getVideoId(), 
+						URLEncoder.encode(
+								singleVideo.getSnippet().getTitle(), "UTF-8"),
+						thumbnail_default.getUrl(), 
+						(thumbnail_high != null ? thumbnail_high.getUrl() : "")));
+				
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		

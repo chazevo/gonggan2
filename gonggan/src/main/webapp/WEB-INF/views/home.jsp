@@ -31,12 +31,12 @@
 	var initPosition;
 	var prevPosition;
 	var maxRownum;
-	var movieMaxRownum = ${movieMaxRownum};
-	var musicMaxRownum = ${musicMaxRownum};
-	var reviewMaxRownum = ${reviewMaxRownum};
+	var movieMaxRownum = '${movieMaxRownum}';
+	var musicMaxRownum = '${musicMaxRownum}';
+	var reviewMaxRownum = '${reviewMaxRownum}';
 	var placeMaxRownum = 0;
-	var newsMaxRownum = ${newsMaxRownum};
-	var diaryMaxRownum = ${diaryMaxRownum};
+	var newsMaxRownum = '${newsMaxRownum}';
+	var diaryMaxRownum = '${diaryMaxRownum}';
 	var category = "main";
 	
 	window.onload = function() {
@@ -197,11 +197,11 @@
 				<input type="password" class=" login" placeholder="PASS" name="member_pw" id="pass" onkeypress="if( event.keyCode==13 ){javascript:goSubmit();}">
 				</td></tr>
 				<tr><td>
-				<a href="javascript:goSubmit();"><div id="startBtn" class="divisionMargin2">S T A R T</div></a>
+				<a href="javascript:goSubmit();">
+					<div id="startBtn" class="divisionMargin2">S T A R T</div>
+				</a>
 				<c:if test="${logmsg == 'failure'}">
-					<div style="color: white">
-						아이디 또는 비밀번호가 일치하지 않습니다.
-					</div>
+				<script>alert("아이디 또는 비밀번호가 일치하지 않습니다.");</script>
 				</c:if>
 				</form>
 				</td></tr>

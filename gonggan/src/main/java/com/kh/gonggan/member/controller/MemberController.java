@@ -2,9 +2,12 @@ package com.kh.gonggan.member.controller;
 
 import javax.servlet.http.HttpSession;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
@@ -168,6 +173,61 @@ public class MemberController {
 		return mv;
 	}
 
+	@RequestMapping(value="/profileupdate.do", method=RequestMethod.POST)
+	public ModelAndView updateProfile(MultipartHttpServletRequest request,
+			ModelAndView mv) {
+		
+		String member_id = request.getParameter("member_id");
+		long current = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		MultipartFile file = request.getFile("file");
+		String originalFileName = memberService.selectMember(member_id).getProfile_photo();
+		String[] originalFileNameSplit;
+		File existFile;
+		
+		if (file.isEmpty()) {
+			
+			if (originalFileName != null) {
+				existFile = new File(
+						"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/"
+						+ originalFileName);
+				if(existFile.exists())
+					if(existFile.delete())
+		                System.out.println("파일삭제 성공");
+			
+				memberService.updateProfile(new Member(
+						member_id, request.getParameter("profile"), ""));
+			}
+		}
+		
+		else {
+			originalFileName = file.getOriginalFilename();
+			
+			File copy = new File(
+					"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/"
+					+ "profile" + sdf.format(new Date(current))
+					+ ("." + (originalFileNameSplit =
+					originalFileName.split("\\."))[originalFileNameSplit.length-1]));
+			
+			try {
+				
+				file.transferTo(copy);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			memberService.updateProfile(new Member(
+					member_id = request.getParameter("member_id"), 
+					request.getParameter("profile"),
+					copy.getName()));
+		}
+		
+		mv.setViewName("redirect:mypage.do?writer_id=" + member_id);
+		
+		return mv;
+	}
+	
 	@RequestMapping("updateform.do")
 	public String updateform(HttpSession session){
 		return "updateform";

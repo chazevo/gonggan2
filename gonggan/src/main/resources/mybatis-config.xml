@@ -19,9 +19,9 @@
       	<typeAlias type="com.kh.gonggan.review.model.vo.Review" alias="review"/>
       	<typeAlias type="com.kh.gonggan.neighbor.model.vo.Neighbor" alias="neighbor"/>
       	<typeAlias type="com.kh.gonggan.location.model.vo.Wlocation" alias="wlocation"/>
-      	<!-- <typeAlias type="com.kh.gonggan.book.model.vo.Book" alias="book"/>
+      	<typeAlias type="com.kh.gonggan.book.model.vo.Book" alias="book"/>
          <typeAlias type="com.kh.gonggan.place.model.vo.Place" alias="place"/>
-         <typeAlias type="com.kh.gonggan.free.model.vo.Free" alias="free"/> -->
+         <typeAlias type="com.kh.gonggan.free.model.vo.Free" alias="free"/>
 	</typeAliases>
 
  <!-- Sql Mapper 설정 -->
@@ -39,9 +39,9 @@
 		<mapper resource="mappers/review-mapper.xml"/>
        <mapper resource="mappers/neighbor-mapper.xml"/>
        <mapper resource="mappers/wlocation-mapper.xml"/>
-       <!-- <mapper resource="mappers/book-mapper.xml"/>
+       <mapper resource="mappers/book-mapper.xml"/>
        <mapper resource="mappers/place-mapper.xml"/>
-       <mapper resource="mappers/free-mapper.xml"/> -->
+       <mapper resource="mappers/free-mapper.xml"/>
 	 </mappers>
 	 
 </configuration>

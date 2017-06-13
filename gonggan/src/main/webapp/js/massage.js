@@ -21,6 +21,10 @@ function send() {
 
 function onOpen(evt) {
 	alert("연결되었습니다! ");
+	websocket.send("memberId1:" + loginUser + " "
+			+ "memberId2:" + memberId2 + " : " + "open");
+	$("#chatArea").append("<div class='infomsg'>"
+			+ new Date() + "</div>");
 }
 
 function onMessage(evt) {

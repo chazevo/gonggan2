@@ -1,3 +1,5 @@
+var profilePhotoDeleteYn;
+
 function cancel(member_id, member_id2, obj) {
 	
 	if (obj.children(".neighborYN").text() == '취소')
@@ -38,15 +40,52 @@ function cancel(member_id, member_id2, obj) {
 
 }
 
+function changeProfileImg(/*obj, inputId, outputId*/) {
+	
+	var file = document.getElementById('file').files[0];
+	var reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = function() {
+		//var output = document.getElementById(outputId);
+		//output.src = reader.result;
+		$(".modal-body>img").attr('src' , reader.result);
+	}
+}
+
+function changeProfileImg2() {
+	var file = document.getElementById('file').files[0];
+	var reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = function() {
+		//var output = document.getElementById(outputId);
+		//output.src = reader.result;
+		$("#profileImg").attr('src', reader.result);
+	}
+	$(".x").text("X");
+}
+
 function editProfile() {
 	if ($("#editProfile").text() == "수정") {
 		$(".x").css("display", "block");
 		document.getElementById("introducingArea").readOnly = false;
 		$("#introducingArea").focus();
 		$("#editProfile").text("완료");
-		$("#editProfileCancel").css("display", "block");
+		$("#editProfileCancel").css("display", "inline-block");
 	} else if ($("#editProfile").text() == "완료") {
-	if (confirm("변경 내용을 반영하시겠습니까?") == true) ;
+	if (confirm("변경 내용을 반영하시겠습니까?") == true) 
+		/*
+		$("#profileForm").ajaxSubmit({
+			url: "profileupdate.do",
+			type: 'POST',
+			success: function(data) {
+				alert(data);
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+		});
+		*/
+		$("#profileForm").submit();
 	else return;
 	
 	$(".x").css("display", "none");
@@ -57,11 +96,12 @@ function editProfile() {
 }
 
 function editProfile2() {
-	if(confirm("취소하시겠습니까?")== true){
+	if(confirm("취소하시겠습니까?")== true) {
 		$(".x").css("display", "none");
 		document.getElementById("introducingArea").readOnly = true;
 		$("#editProfile").text("수정");
 		$("#editProfileCancel").css("display", "none");
+		location.reload();
 	} else return;
 }
 
@@ -150,9 +190,28 @@ function editInfo2() {
 	} else return;
 }
 
+function refreshFilediv() {
+	profilePhotoDeleteYn = true;
+	$(".fileInputDiv").html("<input type='button' value='첨 부 파 일' class='fileInputBtn'>"
+			+ "<input type='file' id='file' name='file' accept='.gif,.jpeg,.jpg,.png'>");
+	$('#filename').val("");
+	$('#layerpop img').attr("src", "images/myproimg_default.png");
+	document.getElementById("file").onchange = function() {
+		$('#filename').val($(this).val());
+		changeProfileImg();
+	};
+}
 
-function profileImgDelete() {
-	if (confirm("현재 프로필 사진을 삭제하시겠습니까? ") == true) ;
+function profileImgDelete(obj) {
+	if (obj.text() == "X") {
+		if (confirm("현재 프로필 사진을 삭제하시겠습니까? ") == true) {
+			$("#profileImg").attr('src' , "images/myproimg_default.png");
+			$('.x').text('╋');
+			refreshFilediv();
+		}
+	}
+	else
+		$("#layerpop").modal('show');
 }
 
 function deleteMem() {

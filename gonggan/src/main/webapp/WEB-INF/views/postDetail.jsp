@@ -51,7 +51,7 @@
     },
 			'overlayShow':false,
 			'overlayOpacity':0,
-			'autoSize':false,
+			//'autoSize':false,
 			'closeBtn' : false,
 			'fullScreen' : false
 		});
@@ -82,7 +82,7 @@
 	
 </script>
 </head>
-<body style="">
+<body style="width:700px;">
 <div style="overflow:auto;width:100%;height:500px;">
 <table width="100%" align="center" class="postDetail">
 	<colgroup>
@@ -112,6 +112,9 @@
 				</c:if>
 				<c:if test='${postDetail.getCategory() eq "music"}'>
 					${postDetail.getMusic_content()}
+				</c:if>
+				<c:if test='${postDetail.getCategory() eq "book"}'>
+					${postDetail.getBook_content()}
 				</c:if>
 				<c:if test='${postDetail.getCategory() eq "movie"}'>
 					${postDetail.getMovie_content()}

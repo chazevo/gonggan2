@@ -217,8 +217,14 @@ function callbackList(data) {
 		goodCnt = jsonArr.list[i].goodCnt;
 		
 		switch(category = jsonArr.list[i].category) {
+		case "default":
+			str = "";
+			break;
 		case "music":
 			str = "music";
+			break;
+		case "book":
+			str = "book";
 			break;
 		case "movie":
 			str = "movie";
@@ -246,6 +252,9 @@ function callbackList(data) {
 		td.colSpan = "2";
 		td.style.position = "relative";
 		td.className = "blogHomeContent";
+		td.style.height = "170px";
+		td.style.overflow = "hidden";
+		td.style.textOverflow = "ellipsis";
 
 		if (photoPath != imgVal) {
 			td.style.backgroundImage = "url(uploadImages/" + photoPath + ")";

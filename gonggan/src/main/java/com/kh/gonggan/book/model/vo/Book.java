@@ -11,7 +11,24 @@ public class Book {
 	private String pubdate;
 	private String isbn;
 	private String description;
+	private String book_content;
+	private String book_num;
 	
+	public Book(String title, String link, String image, String author, String price, String publisher, String pubdate,
+			String isbn, String description, String book_content, String book_num) {
+		super();
+		this.title = title;
+		this.link = link;
+		this.image = image;
+		this.author = author;
+		this.price = price;
+		this.publisher = publisher;
+		this.pubdate = pubdate;
+		this.isbn = isbn;
+		this.description = description;
+		this.book_content = book_content;
+		this.book_num = book_num;
+	}
 	public Book(){}
 	public Book(String title, String link, String image, String author, String price, String publisher, String pubdate,
 			String isbn, String description) {
@@ -80,6 +97,21 @@ public class Book {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getBook_content() {
+		return book_content;
+	}
+	public void setBook_content(String book_content) {
+		this.book_content = book_content;
+	}
+
+	public String getBook_num() {
+		return book_num;
+	}
+	public void setBook_num(String book_num) {
+		this.book_num = book_num;
+	}
+	
 	@Override
 	public String toString() {
 		return "Book [title=" + title + ", link=" + link + ", image=" + image + ", author=" + author + ", price="

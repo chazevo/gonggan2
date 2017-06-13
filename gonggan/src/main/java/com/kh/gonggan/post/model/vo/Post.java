@@ -11,11 +11,42 @@ public class Post {
 	private int post_id;
 	private int music_num;
 	private int diary_num;
+	private int book_num;
+	
+	public Post(int post_id, int music_num, int diary_num, int book_num, int movie_num, int news_num, int review_num,
+			String writer_id, String diary_content, String book_content, String movie_content, String music_content,
+			String news_content, String review_content, String category, String shar_yn, String open_yn, int goodCnt,
+			String photo_path, Date post_date, int comment_cnt) {
+		super();
+		this.post_id = post_id;
+		this.music_num = music_num;
+		this.diary_num = diary_num;
+		this.book_num = book_num;
+		this.movie_num = movie_num;
+		this.news_num = news_num;
+		this.review_num = review_num;
+		this.writer_id = writer_id;
+		this.diary_content = diary_content;
+		this.book_content = book_content;
+		this.movie_content = movie_content;
+		this.music_content = music_content;
+		this.news_content = news_content;
+		this.review_content = review_content;
+		this.category = category;
+		this.shar_yn = shar_yn;
+		this.open_yn = open_yn;
+		this.goodCnt = goodCnt;
+		this.photo_path = photo_path;
+		this.post_date = post_date;
+		this.comment_cnt = comment_cnt;
+	}
+
 	private int movie_num;
 	private int news_num;
 	private int review_num;
 	private String writer_id;
 	private String diary_content;
+	private String book_content;
 	private String movie_content;
 	private String music_content;
 	private String news_content;
@@ -37,7 +68,7 @@ public class Post {
 	}
 
 	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num,
-			String writer_id, String diary_content, String movie_content, String music_content, String news_content,
+			String writer_id, String diary_content, String book_content, String movie_content, String music_content, String news_content,
 			String review_content, String category, String shar_yn, String open_yn, int goodCnt, String photo_path,
 			Date post_date, int comment_cnt) {
 		super();
@@ -49,6 +80,7 @@ public class Post {
 		this.review_num = review_num;
 		this.writer_id = writer_id;
 		this.diary_content = diary_content;
+		this.book_content = book_content;
 		this.movie_content = movie_content;
 		this.music_content = music_content;
 		this.news_content = news_content;
@@ -65,7 +97,7 @@ public class Post {
 	public Post(){}
 
 	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num,
-			String writer_id, String diary_content, String movie_content, String music_content, String news_content,
+			String writer_id, String diary_content, String book_content, String movie_content, String music_content, String news_content,
 			String review_content, String category, String shar_yn, String open_yn, int goodCnt, String photo_path,
 			Date post_date) {
 		super();
@@ -77,6 +109,7 @@ public class Post {
 		this.review_num = review_num;
 		this.writer_id = writer_id;
 		this.diary_content = diary_content;
+		this.book_content = book_content;
 		this.movie_content = movie_content;
 		this.music_content = music_content;
 		this.news_content = news_content;
@@ -151,6 +184,14 @@ public class Post {
 
 	public void setDiary_content(String diary_content) {
 		this.diary_content = diary_content;
+	}
+
+	public String getBook_content() {
+		return book_content;
+	}
+
+	public void setBook_content(String book_content) {
+		this.book_content = book_content;
 	}
 
 	public String getMovie_content() {
@@ -233,6 +274,15 @@ public class Post {
 		this.post_date = post_date;
 	}
 
+	public int getBook_num() {
+		return book_num;
+	}
+
+	public void setBook_num(int book_num) {
+		this.book_num = book_num;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Post [post_id=" + post_id + ", music_num=" + music_num + ", diary_num=" + diary_num + ", movie_num="

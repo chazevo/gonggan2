@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.gonggan.book.model.service.BookService;
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.diary.model.service.DiaryService;
@@ -78,6 +79,8 @@ public class PostController {
 	private MovieService movieService;
 	@Autowired
 	private DiaryService diaryService;
+	@Autowired
+	private BookService bookService;
 	@Autowired
 	private MusicService musicService;
 	@Autowired
@@ -277,6 +280,7 @@ public class PostController {
 			content = p.getMovie_content();
 			break;
 		case "book":
+			content = p.getBook_content();
 			break;
 		case "diary":
 			content = p.getDiary_content();
@@ -470,6 +474,9 @@ public class PostController {
 			break;
 		case "music":
 			content = musicService.musicDetail(postId).getMusic_content();
+			break;
+		case "book":
+			content = bookService.bookDetail(postId).getBook_content();
 			break;
 		case "movie":
 			content = movieService.movieDetail(postId).getMovie_content();
@@ -809,7 +816,7 @@ public class PostController {
 			for(int i=0 ; i<roots.length-3; i++)
 				marger += roots[i] + "\\";
 	         
-			
+			marger = "/Users/jiseung/git/gonggan2/gonggan/";
 			System.out.println("marger : " + marger);
 			String savePath = marger + "src/main/webapp/uploadImages/";
 			System.out.println("savepath : " + savePath);

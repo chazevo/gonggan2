@@ -8,8 +8,18 @@
 		<result property="book_id" column="book_id"/>
 		<result property="book_content" column="book_content"/>
 	</resultMap>
+	
 	<insert id="binsert" parameterType="Map">
-		insert into music values(#{post_id},nvl((select max(book_num) from book),0) + 1,#{content})
+		insert into book values(#{post_id},nvl((select max(book_num) from book),0) + 1,#{content})
 	</insert>
+	
+	<select id="booklist_index2" resultMap="bookResult">
+		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, BOOK_NUM, BOOK_CONTENT
+		FROM (SELECT * FROM BOOK ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+	
+	<select id="bookdetail" resultMap="bookResult" parameterType="int">
+	select * from book where post_id = #{postId}
+	</select>
 	
 </mapper>

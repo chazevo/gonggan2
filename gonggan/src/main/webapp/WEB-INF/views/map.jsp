@@ -15,6 +15,7 @@
 <script type="text/javascript" >
 	window.onload = function() {
 		$("input[name=keyword]").focus();
+		if ('${searchLocationList}' == "") $("#map").hide();
 	}
 </script>
 </head>
@@ -26,10 +27,11 @@
 			<th>
 				<div class="div2"  style="margin:auto;">
 					<form id="form" action="locationsearch.do">
-						<input type="text" name="keyword" value="${keyword }" placeholder="search"  onkeydown="if(event.keyCode == 13) selectSubmit();">
+						<input type="text" name="keyword" value="${keyword }" placeholder="search" 
+							onkeydown="if(event.keyCode == 13) selectSubmit();">
 						<!-- <input type="submit" value="건물명으로 주소 검색"> -->
 							<a href="javascript:selectSubmit();">
-								<img src=images/search.png width="5%" >
+								<img src=images/search.png width="10%" >
 							</a>
 						</form>
 					</div>
@@ -98,7 +100,9 @@
 	    });
 	    // 마크 클릭시 인포윈도우 오픈
 	    var infowindow = new naver.maps.InfoWindow({
-	        content: '<button type="button" id="searchBtn" style="display:block;float:right;" onclick="selectMap(image);">추 가 하 기</button>'
+	        content: '<button type="button" id="searchBtn" '
+	        + 'style="display:block;float:right;margin:10px" '
+	        + 'onclick="selectMap(image);">추 가 하 기</button>'
 	    });
 	});
 

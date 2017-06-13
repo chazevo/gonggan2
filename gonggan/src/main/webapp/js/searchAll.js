@@ -47,8 +47,8 @@ function selectSubmit(){
 	}
 	
 	if(categoryval == 0)
-		//url = "booksearch.do";
-		url = "booksearch2.do";
+		url = "booksearch.do";
+		//url = "booksearch2.do";
 	else if(categoryval == 1)
 		url = "moviesearch.do";
 		//url = "moviesearch2.do";

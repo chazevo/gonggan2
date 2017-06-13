@@ -169,7 +169,12 @@ System.out.println(str);
 				</c:if>
 				<c:if test="${!empty sessionScope.loginUser }">
 					<a id="loginUser" class="navbar-brand" >
+						<c:if test='${empty sessionScope.loginUser.getProfile_photo() }'>
 						<img src="images/default.png" height="40px" class="img-circle">&nbsp;
+						</c:if>
+						<c:if test='${!empty sessionScope.loginUser.getProfile_photo() }'>
+						<img src="images/profileImages/${sessionScope.loginUser.getProfile_photo()}" height="40px" class="img-circle">&nbsp;
+						</c:if>&nbsp;
 						${sessionScope.loginUser.getMember_id() } 님
 					</a>
 				</c:if>
@@ -246,13 +251,18 @@ System.out.println(str);
 				</button>
 				</c:if>
 				<a href="javascript:void(0);" id="blogOwnerClick" style="display:inline-block">
+					<c:if test='${empty member.getProfile_photo() }'>
 					<img src="images/default.png" height="40px" class="img-circle">
+					</c:if>
+					<c:if test='${!empty member.getProfile_photo() }'>
+					<img src="images/profileImages/${ member.getProfile_photo()}" height="40px" class="img-circle">
+					</c:if>
 					&nbsp;${param.writer_id }
 				</a> &nbsp;
 				<div class="blogOwnerClick hidden">
 					<div>
 						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
-						<hr><a class="hover" a href="">프로필 보기</a>
+						<hr><a class="hover" href="">프로필 보기</a>
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>

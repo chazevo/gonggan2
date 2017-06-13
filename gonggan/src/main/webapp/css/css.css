@@ -462,8 +462,9 @@ overflow-x: hidden; } */
 
 
 #imgUploadDiv {
-	border:1px solid pink;
 	position:absolute;
+	background-color:white;
+	z-index:99;
 }
 
 #colorChoice:hover {
@@ -969,6 +970,14 @@ a.loginbox:hover {
 	border-radius:10px;
 }
 
+.massage .infomsg {
+	clear: both;
+	text-align:center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color:#E6E6E6;
+}
+
 div div.grad {
 	display: inline-block;
 	background:linear-gradient(to right, #DEACC6, #91B2DF);
@@ -1099,6 +1108,7 @@ pre {
 	position:absolute;
 	width:15%;
 	height:7%;
+	z-index:99;
 }
 
 .idView .blogOwnerClick div {
@@ -1513,6 +1523,7 @@ hr {
 
 .mypage .td {
 	height: 200px;
+	overflow:scroll;
 	padding: 10px;
 	background-color: white;
 }
@@ -1557,6 +1568,7 @@ hr {
 }
 
 .mypage>table td a div.grayBorder {
+	display:inline-block;
 	border: 2px solid #E6E6E6;
 	border-radius:10px;
 	padding-top:1px;
@@ -1566,9 +1578,6 @@ hr {
 	width: 40px;
 	font-size: 8px;
 	text-align: center;
-	left:0;
-	right:0;
-	margin: auto;
 }
 
 #editProfile, #editInfo, #editProfileCancel, #editInfoCancel {
@@ -1673,13 +1682,11 @@ hr {
 	border: 1px solid gray;
 }
 
-
-
-
 .fileInputTextbox {
 	width:60%;
 	float:left;
 }
+
 
 input[disabled=true] {
 	background-color:white;

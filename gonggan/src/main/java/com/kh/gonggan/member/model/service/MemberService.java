@@ -18,6 +18,8 @@ public interface MemberService {
 	int deleteMember(String memberId);
 
 	int updateMember(Member mem);
+	
+	int updateProfile(Member mem);
 
 	String selectIdByEmail(String email);
 	/*

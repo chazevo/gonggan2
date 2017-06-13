@@ -174,8 +174,13 @@ int today = cal.get(Calendar.DATE);
 			<div class="navbar-right">
 				<c:if test="${!empty sessionScope.loginUser }">
 				<a id="loginUser" class="navbar-brand" href="#" >
-					<img src="images/default.png" height="40px"
-						class="img-circle"> &nbsp; ${sessionScope.loginUser.getMember_id() } 님
+					<c:if test='${empty sessionScope.loginUser.getProfile_photo() }'>
+					<img src="images/default.png" height="40px" class="img-circle">&nbsp;
+					</c:if>
+					<c:if test='${!empty sessionScope.loginUser.getProfile_photo() }'>
+					<img src="images/profileImages/${sessionScope.loginUser.getProfile_photo()}" height="40px" class="img-circle">&nbsp;
+					</c:if>
+					&nbsp; ${sessionScope.loginUser.getMember_id() } 님
 				</a>
 				</c:if>
 				<c:if test="${empty sessionScope.loginUser }">
@@ -281,8 +286,8 @@ int today = cal.get(Calendar.DATE);
 									<input type="file" id="file" name="file" accept=".gif,.jpeg,.jpg,.png"
 										onchange="$('#filename').val($(this).val()); changeBgImg(this);">
 								</div>
-								<input type="button" value="삭제" button onclick="$('input[name=file]').val(''); $('.bannerEdit').css('background', 'none');">&nbsp;&nbsp;
-								<input type="button" value="취소">
+								<input type="button" value="삭제" onclick="$('input[name=file]').val(''); $('.bannerEdit').css('background', 'none');">&nbsp;&nbsp;
+								<input type="button" value="취소" onclick="$('.bannerEdit').css('background', 'url(backgroundImages/${blog.getBackground()})')">
 								<!-- button누르면 submit 되는 이유?, 배경이미지, 배경색 선택적 적용 구현 안됨 -->
 							</td>
 						</tr>
@@ -319,6 +324,14 @@ int today = cal.get(Calendar.DATE);
 				</fieldset>
 				<hr class="grayHr">
 				<fieldset>
+					<legend>블로그 공개 관리</legend>
+					<input type="radio" name="blogOpenYn" value="Y"
+						<c:if test='${blog.blog_open_yn eq "Y" }'>checked</c:if>>공개&nbsp;
+					<input type="radio" name="blogOpenYn" value="N"
+						<c:if test='${blog.blog_open_yn eq "N" }'>checked</c:if>>비공개
+				</fieldset>
+				<hr class="grayHr">
+				<fieldset>
 					<legend>메뉴사용 관리</legend>
 					<table width='100%'  class="divisionMargin">
 						<colgroup>
@@ -337,11 +350,11 @@ int today = cal.get(Calendar.DATE);
 							<td>자신의 느낌과 일상을 기록하는 기본메뉴</td>
 							<td>
 								<input type="radio" name="diaryOpenYn" value="Y"
-									checked="<c:if test='${blog.diary_open_yn eq "Y" }'>true</c:if>">
+									<c:if test='${blog.diary_open_yn eq "Y" }'>checked</c:if>>
 									&nbsp;공개
 							</td>
 							<td><input type="radio" name="diaryOpenYn" value="N"
-									checked="<c:if test='${blog.diary_open_yn eq "N" }'>true</c:if>">
+									<c:if test='${blog.diary_open_yn eq "N" }'>checked</c:if>>
 									&nbsp;비공개
 							</td>
 						</tr>
@@ -351,11 +364,11 @@ int today = cal.get(Calendar.DATE);
 							<td>위치정보가 첨부된 포스트를 작성할 수 있는 메뉴</td>
 							<td>
 								<input type="radio" name="placeOpenYn" value="Y"
-									checked="<c:if test='${blog.place_open_yn eq "Y" }'>true</c:if>">
+									<c:if test='${blog.place_open_yn eq "Y" }'>checked</c:if>>
 									&nbsp;공개
 							</td>
 							<td><input type="radio" name="placeOpenYn" value="N"
-									checked="<c:if test='${blog.place_open_yn eq "N" }'>true</c:if>">
+									<c:if test='${blog.place_open_yn eq "N" }'>checked</c:if>>
 									&nbsp;비공개
 							</td>
 						</tr>
@@ -365,11 +378,11 @@ int today = cal.get(Calendar.DATE);
 							<td>사용후기, 방문후기 등 여러 후기들을 작성할 수 있는 메뉴</td>
 							<td>
 								<input type="radio" name="reviewOpenYn" value="Y"
-									checked="<c:if test='${blog.review_open_yn eq "Y" }'>true</c:if>">
+									<c:if test='${blog.review_open_yn eq "Y" }'>checked</c:if>>
 									&nbsp;공개
 							</td>
 							<td><input type="radio" name="reviewOpenYn" value="N"
-									checked="<c:if test='${blog.review_open_yn eq "N" }'>true</c:if>">
+									<c:if test='${blog.review_open_yn eq "N" }'>checked</c:if>>
 									&nbsp;비공개
 							</td>
 						</tr>
@@ -379,11 +392,11 @@ int today = cal.get(Calendar.DATE);
 							<td>해당 음악을 유튜브로 연결이 가능하며 글을 작성할 수 있는 메뉴</td>
 							<td>
 								<input type="radio" name="musicOpenYn" value="Y"
-									checked="<c:if test='${blog.music_open_yn eq "Y" }'>true</c:if>">
+									<c:if test='${blog.music_open_yn eq "Y" }'>checked</c:if>>
 									&nbsp;공개
 							</td>
 							<td><input type="radio" name="musicOpenYn" value="N"
-									checked="<c:if test='${blog.music_open_yn eq "N" }'>true</c:if>">
+									<c:if test='${blog.music_open_yn eq "N" }'>checked</c:if>>
 									&nbsp;비공개
 							</td>
 						</tr>
@@ -393,11 +406,11 @@ int today = cal.get(Calendar.DATE);
 							<td>영화를 첨부할 수 있고 글을 작성할 수 있는 메뉴</td>
 							<td>
 								<input type="radio" name="movieOpenYn" value="Y"
-									checked="<c:if test='${blog.movie_open_yn eq "Y" }'>true</c:if>">
+									<c:if test='${blog.movie_open_yn eq "Y" }'>checked</c:if>>
 									&nbsp;공개
 							</td>
 							<td><input type="radio" name="movieOpenYn" value="N"
-									checked="<c:if test='${blog.movie_open_yn eq "N" }'>true</c:if>">
+									<c:if test='${blog.movie_open_yn eq "N" }'>checked</c:if>>
 									&nbsp;비공개
 							</td>
 						</tr>
@@ -407,11 +420,11 @@ int today = cal.get(Calendar.DATE);
 							<td>뉴스기사를 첨부할 수 있고 글을 작성할 수 있는 메뉴</td>
 							<td>
 								<input type="radio" name="newsOpenYn" value="Y"
-									checked="<c:if test='${blog.news_open_yn eq "Y" }'>true</c:if>">
+									<c:if test='${blog.news_open_yn eq "Y" }'>checked</c:if>>
 									&nbsp;공개
 							</td>
 							<td><input type="radio" name="newsOpenYn" value="N"
-									checked="<c:if test='${blog.news_open_yn eq "N" }'>true</c:if>">
+									<c:if test='${blog.news_open_yn eq "N" }'>checked</c:if>>
 									&nbsp;비공개
 							</td>
 						</tr>

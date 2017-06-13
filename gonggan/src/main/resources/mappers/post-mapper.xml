@@ -9,10 +9,12 @@
 		<result property="writer_id" column="writer_id" />
 		<result property="music_num" column="music_num" />
 		<result property="diary_num" column="diary_num" />
+		<result property="book_num" column="book_num" />
 		<result property="movie_num" column="movie_num" />
 		<result property="news_num" column="news_num" />
 		<result property="review_num" column="review_num" />
 		<result property="diary_content" column="diary_content" />
+		<result property="book_content" column="book_content" />
 		<result property="movie_content" column="movie_content" />
 		<result property="music_content" column="music_content" />
 		<result property="news_content" column="news_content" />
@@ -40,6 +42,7 @@
 	select *
 	from post left join movie using (post_id)
 	left join diary using(post_id)
+	left join book using(post_id)
 	left join music using(post_id)
 	left join news using(post_id)
 	left join review using(post_id)
@@ -57,6 +60,7 @@
 				from (select *
 						from post left join movie using (post_id)
 						left join diary using(post_id)
+						left join book using(post_id)
 						left join music using(post_id)
 						left join news using(post_id)
 						left join review using(post_id) order by 1 desc) subquery)
@@ -83,6 +87,7 @@
 				from (select *
 						from post left join movie using (post_id)
 						left join diary using(post_id)
+						left join book using(post_id)
 						left join music using(post_id)
 						left join news using(post_id)
 						left join review using(post_id)
@@ -108,6 +113,7 @@
 	select *
 	from post left join movie using (post_id)
 	left join diary using(post_id)
+	left join book using(post_id)
 	left join music using(post_id)
 	left join news using(post_id)
 	left join review using(post_id)
@@ -278,6 +284,7 @@
 	select *
 	from post left join movie using (post_id)
 	left join diary using(post_id)
+	left join book using(post_id)
 	left join music using(post_id)
 	left join news using(post_id)
 	left join review using(post_id)
@@ -349,6 +356,7 @@
                   from (select *
                         from post left join movie using (post_id)
                         left join diary using(post_id)
+                        left join book using(post_id)
                         left join music using(post_id)
                         left join news using(post_id)
                         left join review using(post_id)
@@ -361,6 +369,7 @@
 		select * from (select *
 						from post left join movie using (post_id)
 						left join diary using(post_id)
+						left join book using(post_id)
 						left join music using(post_id)
 						left join news using(post_id)
 						left join review using(post_id)) sub
@@ -374,6 +383,7 @@
 	<select id="neighborpost" parameterType="Map" resultMap="postResult">
 	select * from (select rownum r, subquery.* from ( select * from post left join movie using (post_id) 
 		left join diary using(post_id)
+		left join book using(post_id)
 		left join music using(post_id)
 		left join news using(post_id)
 		left join review using(post_id) where writer_id in (SELECT SENDER FROM NEIGHBOR

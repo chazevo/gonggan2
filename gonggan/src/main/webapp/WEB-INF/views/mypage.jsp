@@ -364,16 +364,18 @@
 				<!-- 이웃새글부분 -->
 				<tr>
 					<td colspan="2" class="td notTableList">
-						<b>내 포스트 알람 _ 댓글 </b><br>
-						<c:if test="${!empty commentMyList }">
-						<c:forEach items="${ commentMyList}" var="i"  begin ="0">
-						<font>
-							<a href="myhome.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이
-						</font> |
-						<a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
-						게시글에 <b>댓글</b>을 남기셨습니다.<br>
-						</c:forEach>
-						</c:if>
+						<div>
+							<b>내 포스트 알람 _ 댓글 </b><br>
+							<c:if test="${!empty commentMyList }">
+							<c:forEach items="${ commentMyList}" var="i"  begin ="0">
+							<font>
+								<a href="myhome.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이
+							</font> |
+							<a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
+							게시글에 <b>댓글</b>을 남기셨습니다.<br>
+							</c:forEach>
+							</c:if>
+						</div>
 					</td>
 					<!-- 댓글 좋아요 알림부분 -->
 					<td class="td notTableList">

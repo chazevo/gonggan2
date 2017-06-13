@@ -33,4 +33,8 @@ public class NeighborServiceImpl implements NeighborService{
 	public List<Member> neighborSearch(String member_id, String member_id2) {
 		return neighborDao.neighborSearch(member_id, member_id2);
 	}
+	@Override
+	public String neighYn(String loginUser, String writer_id) {
+		return neighborDao.neighYn(loginUser, writer_id);
+	}
 }

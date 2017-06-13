@@ -261,7 +261,7 @@ System.out.println(str);
 				</a> &nbsp;
 				<div class="blogOwnerClick hidden">
 					<div>
-						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
+						<a class="hover" href="javascript:Neig();">이웃 신청</a>
 						<hr><a class="hover" href="">프로필 보기</a>
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">

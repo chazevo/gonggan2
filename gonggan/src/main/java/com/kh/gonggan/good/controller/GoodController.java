@@ -58,6 +58,7 @@ public class GoodController {
 	
 	@RequestMapping("goodList.do")
 		public ModelAndView goodList(@RequestParam int postId, ModelAndView mv){
+			
 			List<Good> goodList = goodService.goodList(postId);
 			mv.addObject("goodList",goodList);
 			mv.setViewName("likepage");

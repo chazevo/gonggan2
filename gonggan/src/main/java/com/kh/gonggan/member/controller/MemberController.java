@@ -139,6 +139,15 @@ public class MemberController {
 	
 	} //이웃 신청
 	
+	@RequestMapping(value="neighyn.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	   public String requestNeig(@RequestParam String loginUser,@RequestParam String writer_id){
+		
+		String neighYn =neighborService.neighYn(loginUser,writer_id);
+		return neighYn;
+	
+	} //이웃 신청
+	
 	@RequestMapping(value="/joinemailcheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String joinEmailCheck(@RequestParam String email){

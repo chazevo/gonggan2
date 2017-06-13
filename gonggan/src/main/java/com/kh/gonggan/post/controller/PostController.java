@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.gonggan.blog.model.service.BlogService;
 import com.kh.gonggan.book.model.service.BookService;
 import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
@@ -87,6 +88,8 @@ public class PostController {
 	private NewsService newsService;
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private BlogService blogService;
 	
 	@RequestMapping("pdetail.do")
 		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
@@ -101,6 +104,8 @@ public class PostController {
 			mv.addObject("writerId", writerId);
 			mv.addObject("commentList", commentList);
 			mv.addObject("goodCnt", goodCnt);
+			mv.addObject("HideComment", 
+					blogService.selectBlog(writerId).getHide_comment());
 			mv.setViewName("postDetail");
 			return mv;
 	}
@@ -398,6 +403,43 @@ public class PostController {
 		return json.toJSONString();
 	}
 
+	@RequestMapping(value="/pcontentSearchLikelist.do", produces={"application/json"})
+	@ResponseBody
+	public String selectSearchLikeList(@RequestParam int rownum,
+			@RequestParam int rownum2, @RequestParam String keyword){
+
+		List<Post> plist  = postService.selectSearchLikeList(rownum, rownum2, keyword);
+		
+		JSONObject json = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		for(Post p : plist) {
+			
+			JSONObject job = new JSONObject();
+			
+			job.put("postId", p.getPost_id() + "");
+			job.put("writerId", p.getWriter_id());
+			try {
+				job.put("category", URLEncoder.encode(
+						p.getCategory(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			job.put("postId", p.getPost_id() + "");
+			job.put("sharYn", p.getShar_yn());
+			job.put("openYn", p.getOpen_yn());
+			job.put("writerId", p.getWriter_id());
+			job.put("goodCnt", p.getGoodCnt() + "");
+			job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+
+			jarr.add(job);
+		}
+		json.put("list", jarr);
+		
+		return json.toJSONString();
+	}
+	
 	@RequestMapping(value="psearchmax.do", produces={"application/json"})
 	@ResponseBody
 	public int postSearchMaxRnum(@RequestParam int option,
@@ -493,7 +535,6 @@ public class PostController {
 		}
 		
 		content = content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-		System.out.println(content);
 		
 		if (content.length() > 100)
 			content = content.substring(0, 100) + "...";

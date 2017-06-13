@@ -72,6 +72,7 @@ System.out.println(str);
 	var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	var writer_id = "${blog.getWriter_id()}";
 	var blog_open_yn = '${blog.blog_open_yn}';
+	var hide_comment = '${blog.hide_comment}';
 	var blog_id = '${blog.blog_id}';
 	var year = <%= year %>;
 	var month = <%= month %>;
@@ -261,21 +262,26 @@ System.out.println(str);
 				</a> &nbsp;
 				<div class="blogOwnerClick hidden">
 					<div>
-						<a class="hover" href="javascript:Neig();">이웃 신청</a>
-						<hr><a class="hover" href="">프로필 보기</a>
+						<c:if test='${sessionScope.loginUser.getMember_id() ne param.writer_id}'>
+							<c:if test='${neighYn=="N" }'>
+							<a class="hover" href="javascript:Neig();">이웃 신청</a>
+							</c:if>
+							<c:if test='${neighYn=="Y" }'>
+							<a class="hover" href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id()}','${param.writer_id}');">이웃 취소</a>
+							</c:if>
+						</c:if>
+						<hr>
+						<a class="hover" href="">프로필 보기</a>
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>
-				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writer_id}">
-					<img src="images/chat_icon.png" height="28px"  id="chat_icon">
-				</a>
-			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 				<ul class="nav navbar-nav navbar-right">
 					<c:if test='${blog.diary_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('diary');">
+						<a href="javascript:rownum=1; requestCategoryList('diary');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>일기</c:if>
 							<c:if test='${blog.languages eq "eng" }'>diary</c:if>
 							<c:if test='${blog.languages eq "jp" }'>日記</c:if>
@@ -284,7 +290,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.place_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('place');">
+						<a href="javascript:rownum=1; requestCategoryList('place');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>장소</c:if>
 							<c:if test='${blog.languages eq "eng" }'>place</c:if>
 							<c:if test='${blog.languages eq "jp" }'>場所</c:if>
@@ -293,7 +300,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.review_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('review');">
+						<a href="javascript:rownum=1; requestCategoryList('review');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>리뷰</c:if>
 							<c:if test='${blog.languages eq "eng" }'>review</c:if>
 							<c:if test='${blog.languages eq "jp" }'>レビュー</c:if>
@@ -302,7 +310,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.music_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('music');">
+						<a href="javascript:rownum=1; requestCategoryList('music');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>음악</c:if>
 							<c:if test='${blog.languages eq "eng" }'>music</c:if>
 							<c:if test='${blog.languages eq "jp" }'>音楽</c:if>
@@ -311,7 +320,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.movie_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('movie');">
+						<a href="javascript:rownum=1; requestCategoryList('movie');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>영화</c:if>
 							<c:if test='${blog.languages eq "eng" }'>movie</c:if>
 							<c:if test='${blog.languages eq "jp" }'>映画</c:if>
@@ -320,7 +330,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.news_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('news');">
+						<a href="javascript:rownum=1; requestCategoryList('news');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>뉴스</c:if>
 							<c:if test='${blog.languages eq "eng" }'>news</c:if>
 							<c:if test='${blog.languages eq "jp" }'>ニュース</c:if>
@@ -328,7 +339,8 @@ System.out.println(str);
 					</li>
 					</c:if>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('news');">
+						<a href="javascript:rownum=1; requestCategoryList('news');"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 							<c:if test='${blog.languages eq "kor" }'>책</c:if>
 							<c:if test='${blog.languages eq "eng" }'>book</c:if>
 							<c:if test='${blog.languages eq "jp" }'>本</c:if>

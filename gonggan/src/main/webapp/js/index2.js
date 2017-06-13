@@ -69,49 +69,66 @@ function requestNeighborPostList(val, loginUser) {
 }
 
 function requestCategoryList(val, category) {
-   
-   var rownum2;
-   
-   if (maxRownum - val < 8)
-      var rownum2 = maxRownum;
-   else rownum2 = rownum + 7;
-   
-   $.ajax({
-            url: "/gonggan/postlist.do",
-            //url: "/gonggan/userpostlist.do",
-            data: { writer_id : "",
-               rownum: rownum, rownum2: rownum2,
-               category: category
-            },
-            success: function(data) {
-               callbackList(data);
-            },
-            error: function(data,status,error){
-               console.log("error : " + error);
-            }
-      });
+	
+	var rownum2;
+	
+	if (maxRownum - val < 8)
+		var rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
+
+	alert(val + ", " + rownum2);
+	
+	$.ajax({
+		url: "/gonggan/postlist.do",
+		//url: "/gonggan/userpostlist.do",
+		data: { writer_id : "",
+			rownum: val, rownum2: rownum2,
+			category: category
+		},
+		success: function(data) {
+			callbackList(data);
+		},
+		error: function(data,status,error) {
+			console.log("error : " + error);
+		}
+	});
 }
 
 function requestLikeList(val, category) {
 
-   var rownum2;
+	var rownum2;
+	
+	if (maxRownum - val < 8)
+		rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
 
-   if (maxRownum - val < 8)
-      var rownum2 = maxRownum;
-   else rownum2 = rownum + 7;
-   
-   $.ajax({
-      url: "plikelist.do",
-      data: { rownum: rownum,
-         rownum2: rownum2, category:category, writer_id:loginUser },
-      success: function(data) {
-         rownum = rownum2 + 1;
-         callbackList(data);
-      },
-      error: function(data,status,error){
-         console.log("error : " + error);
-      }
-   });
+	if (category == "psearch"){
+		alert(rownum + ", " + rownum2);
+		$.ajax({
+			url:"pcontentSearchLikelist.do",
+			data: { rownum: rownum, rownum2: rownum2,
+				keyword:$("#searchPost").val()
+			},
+			success: function(data) {
+				rownum = rownum2 + 1;
+				callbackList(data);
+			}
+		});
+	}
+
+	else
+		$.ajax({
+			url: "plikelist.do",
+			data: { rownum: rownum, rownum2: rownum2,
+				category:category, writer_id:loginUser },
+			success: function(data) {
+				rownum = rownum2 + 1;
+				callbackList(data);
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+		});
 }
 
 function addCount() {

@@ -139,6 +139,7 @@
 		</td>
 	</tr>
 	<tbody id="listbody">
+	<c:if test='${HideComment eq "N" }'>
 	<c:if test="${!empty commentList}">
 	<c:forEach items="${commentList}" var="i" begin="0">
 	<tr id="co${i.comment_num }">
@@ -160,6 +161,7 @@
 		</td>
 	</tr>
 	</c:forEach>
+	</c:if>
 	</c:if>
 	</tbody>
 	<tr><td colspan="3" class='commentArea'>
@@ -193,13 +195,17 @@
 			</label>&nbsp;
 		</td>
 		<td>
+			<c:if test='${HideComment eq "N" }'>
 			<input id='comment_content' type='text' placeholder='댓글 달기' style="width:100%"
 				onkeydown="if(event.keyCode==13) sendComment();">&nbsp;
+			</c:if>
 		</td>
 		<td>
+			<c:if test='${HideComment eq "N" }'>
 			<a href='javascript:sendComment();'>
 				<img  src='images/dettext_icon.png' width='45px' >
 			</a>
+			</c:if>
 			&nbsp;<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
 				<img width="15%" src='images/thesee_icon.png'>
 			</a>

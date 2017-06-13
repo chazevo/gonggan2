@@ -128,44 +128,44 @@ function recieveNews(title, originallink, description, pubDate) {
 }
 
 function recieveBook(image, title, author, publisher, pubdate, link) {
-	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<table style='background-color:#fdfdfd;border:1px solid #E6E6E6; color:gray;' align='center' width='50%'>"
-		+ "<colgroup><col width='30%'><col style='width:*'></colgroup>"
-		+ "<tr><td rowspan='4'>"
-		+ "<a href='" + link + "' target='_blank'>"
-		+ "<img src='" + image + "' width='100%'></a></td>"
-		+ "<td style='max-width:0px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;'>"
-		+ "<h3>" + title + "</h3></td>"
-		+ "<tr><td style='font-weight:lighter'><b>저자</b> "+ author + "</td></tr>" 
-		+ "<tr><td style='font-weight:lighter'><b>출판</b>  "+ publisher + "</td></tr>"
-		+"<tr><td style='font-weight:lighter'><b> 발매</b> "+pubdate+" </td></tr>"
-		+ "</td></tr></table>" +
-				"<center><div sytle='margin: 0 auto;'><img src='images/bookicon.png' width='100px'><div></center>" +
-				"<center><h3 style='margin-bottom:10px;'><b>"+ title +"를 읽고나서</b></h3></center>" +
-						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:90%;height:2px; border:0px'>" +
-						"내용을 입력해주세요.<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>" +
-						"<center><div sytle='margin: 0 auto;'><img src='images/star.png' width='100px'><div></center>" +
-						"<center><b><h3 style='margin-bottom:10px;'>추천해요!</h3></b></center>" +
-						"<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:90%;height:2px; border:0px'>" +
-						"내용을 입력해주세요.";
+	document.getElementById('editor').contentWindow.document.body.innerHTML +=
+			 "<table style='margin-bottom: 20px;background-color:#fdfdfd;border:1px solid #E6E6E6; color:gray;' align='center' width='50%'>"
+			+ "<colgroup><col width='30%'><col style='width:*'></colgroup>"
+			+ "<tr><td rowspan='4'>"
+			+ "<a href='" + link + "' target='_blank'>"
+			+ "<img src='" + image + "' width='100%'></a></td>"
+			+ "<td style='max-width:0px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;'>"
+			+ "<h3>" + title + "</h3></td>"
+			+ "<tr><td style='font-weight:lighter'><b>저자</b> "+ author + "</td></tr>" 
+			+ "<tr><td style='font-weight:lighter'><b>출판</b>  "+ publisher + "</td></tr>"
+			+"<tr><td style='font-weight:lighter'><b> 발매</b> "+pubdate+" </td></tr>"
+			+ "</td></tr></table>"
+			+ "<center><div sytle=''><img src='images/11.png' width='100px'></div></center>"
+			+ "<center><h3 style='margin-bottom:10px;'><b>"+ title +"를 읽고나서</b></h3></center>"
+			+ "<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:90%;height:2px; border:0px'>"
+			+ "<center>내용을 입력해주세요.<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></center>"
+			+ "<center><div sytle='margin: 0 auto;'><img src='images/12.png' width='70px'><div></center>"
+			+ "<center><b><h3 style='margin-bottom:10px;'>추천해요!</h3></b></center>"
+			+ "<hr style='background:linear-gradient(to right, #DEACC6, #91B2DF);width:90%;height:2px; border:0px'>"
+			+ "<center>내용을 입력해주세요.</center>";
 }
 
 function recieveMap(image) {
 	je_doc.body.focus();
 	je_doc.execCommand('justifycenter', 'false', 'null');
 	je_doc.execCommand('InsertImage', 'false', '/gonggan/uploadImages/' + image);
-	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-					"<br><br><br><br><br><br><br>"
-					+ "<table width='80%' align='center'><tr><td>"
-					+ "<div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);" +
-					" color:white; border-radius:20px;'><b>어떤곳?</b></div></td></tr>" +
-					"<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>" +
-					"<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);" +
-					" color:white; border-radius:20px;'><b>무슨 일로?</b></div><br></td></tr>" +
-					"<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>" +
-					"<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF); color:white;" +
-					"border-radius:20px;'><b>무엇을 했나요?</b></div><br></td></tr>" +
-					"<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr></table>";
+	document.getElementById('editor').contentWindow.document.body.innerHTML +=
+			"<br><br><br><br><br><br><br>"
+			+ "<table width='80%' align='center'><tr><td>"
+			+ "<div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);"
+			+ " color:white; border-radius:20px;'><b>어떤곳?</b></div></td></tr>"
+			+ "<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>"
+			+ "<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);"
+			+ " color:white; border-radius:20px;'><b>무슨 일로?</b></div><br></td></tr>"
+			+ "<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>"
+			+ "<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF); color:white;"
+			+ "border-radius:20px;'><b>무엇을 했나요?</b></div><br></td></tr>"
+			+ "<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr></table>";
 }
 
 function tagaddfunc(){

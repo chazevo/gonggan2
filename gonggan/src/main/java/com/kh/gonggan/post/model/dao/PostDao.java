@@ -49,6 +49,15 @@ public class PostDao {
 		return (List<Post>) sqlSession.selectList("postmapper.categoryplikelist", map);
 	}
 	
+	public List<Post> selectSearchLikeList(int rownum, int rownum2, String keyword) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		map.put("keyword", keyword);
+		return (List<Post>) sqlSession.selectList("postmapper.pcontentSearchLikelist", map);
+		
+	}
+	
 	public List<Post> selectUserMusic(String writer_id, int rownum, int rownum2) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("writer_id", writer_id);

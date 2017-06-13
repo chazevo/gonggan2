@@ -44,7 +44,7 @@ var musiclistSize = ${musiclistSize};
 var reviewlistSize = ${reviewlistSize};
 var diarylistSize = ${diarylistSize};
 var movielistSize = ${movielistSize};
-var booklistSize = 0;
+var booklistSize = ${booklistSize};
 var placelistSize = 0;
 var psearchSize = 0;
 
@@ -134,28 +134,35 @@ window.onload = function() {
 			<!-- navbar-collapse 제거-> 메뉴 사라짐  -->
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = diarylistSize; sort = 'date'; requestCategoryList(rownum = 1, category = 'diary'); diarycount = 0;">
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = diarylistSize; sort = 'date'; requestCategoryList(rownum = 1, category = 'diary'); diarycount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 					일기</a>
 				</li>
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = placelistSize; sort = 'date'; requestCategoryList(rownum = 1, category = 'place'); placecount = 0;">
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = placelistSize; sort = 'date'; requestCategoryList(rownum = 1, category = 'place'); placecount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 					장소</a>
 				</li>
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = reviewlistSize; requestCategoryList(rownum = 1, category = 'review'); reviewcount = 0;">
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = reviewlistSize; requestCategoryList(rownum = 1, category = 'review'); reviewcount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
 						리뷰</a>
 				</li>
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = musiclistSize; requestCategoryList(rownum = 1, category = 'music'); musiccount = 0;">음악</a>
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = musiclistSize; requestCategoryList(rownum = 1, category = 'music'); musiccount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">음악</a>
 				</li>
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = movielistSize; requestCategoryList(rownum = 1, category = 'movie'); moviecount = 0;">영화</a>
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = movielistSize; requestCategoryList(rownum = 1, category = 'movie'); moviecount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">영화</a>
 				</li>
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = newslistSize; requestCategoryList(rownum = 1, category = 'news'); newscount = 0;">뉴스</a>
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = newslistSize; requestCategoryList(rownum = 1, category = 'news'); newscount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">뉴스</a>
 				</li>
 				<li>
-					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = booklistSize; requestCategoryList(rownum = 1, category = 'book'); bookscount = 0;">책</a>
+					<a href="javascript:$('#blogHomeContentDiv').html(''); $('select').val('date'); maxRownum = booklistSize; requestCategoryList(rownum = 1, category = 'book'); bookscount = 0;"
+						onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">책</a>
 				</li>
 			</ul>
 		</div>
@@ -339,8 +346,8 @@ window.onload = function() {
 							<td>
 								<div class="div2">
 									<input type="text" id="searchPost" placeholder="검색" size="12"
-										onkeydown="if (event.keyCode == 13) { searchPost(rownum = 1); psearchRownum(); category = 'psearch'; }">
-									<a href="javascript:searchPost(rownum = 1); psearchRownum(); category = 'psearch';">
+										onkeydown="if (event.keyCode == 13) {  $('#select').val('date'); searchPost(rownum = 1); psearchRownum(); category = 'psearch'; }">
+									<a href="javascript: $('#select').val('date'); searchPost(rownum = 1); psearchRownum(); category = 'psearch';">
 										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
 											width="10%">
 									</a>

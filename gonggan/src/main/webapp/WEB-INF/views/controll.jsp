@@ -551,6 +551,7 @@ int today = cal.get(Calendar.DATE);
 						<c:set var="reviewcount" value="0" />
 						<c:set var="moviecount" value="0" />
 						<c:set var="newscount" value="0" />
+						<c:set var="bookcount" value="0" />
 						<c:forEach items="${likeInOrder}" var="i"  begin ="0" varStatus="status">
 						<c:if test="${i.category eq 'music'}">
 						<c:set var="musiccount" value="${musiccount + 1}" />
@@ -559,6 +560,25 @@ int today = cal.get(Calendar.DATE);
 							<th>${count}</th>
 							<td>
 								<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${musiclist[musiccount-1].title}</a>
+							</td>
+							<td>
+								<label class='checkbox-wrap'>
+									<input type='checkbox' id='' onclick='like();'>
+									<i class='like-icon'></i>
+								</label>
+								<a data-fancybox data-src="goodList.do?postId=${i.post_id }">
+									${i.goodCnt }
+								</a>
+							</td>
+						</tr>
+						</c:if>
+						<c:if test="${i.category eq 'book'}">
+						<c:set var="bookcount" value="${bookcount + 1}" />
+						<tr>
+							<c:set var="count" value="${count + 1}" />
+							<th>${count}</th>
+							<td>
+								<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${booklist[bookcount-1].title}</a>
 							</td>
 							<td>
 								<label class='checkbox-wrap'>

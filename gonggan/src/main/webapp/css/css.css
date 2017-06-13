@@ -1674,6 +1674,11 @@ hr {
 	font-size:140%;
 	color:#b5b5b5;
 }
+
+.postDetail {
+	margin-bottom: 25px;
+}
+
 .postDetail a{
 	color:black;
 }

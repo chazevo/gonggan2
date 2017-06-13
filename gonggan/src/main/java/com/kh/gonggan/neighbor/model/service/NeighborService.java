@@ -11,4 +11,5 @@ public interface NeighborService {
 	List<Member> neighborSearch(String member_id, String member_id2);
 	List<Neighbor> neigList(String loginUser, String writer_id);
 	int requestNeig(String member_id1, String member_id2);
+	String neighYn(String loginUser, String writer_id);
 }

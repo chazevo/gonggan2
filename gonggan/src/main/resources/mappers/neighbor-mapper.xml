@@ -23,4 +23,8 @@
 	<insert id="nrequest" parameterType="neighbor">
    insert into neighbor values(#{member_id1},#{member_id2},'N','N',sysdate)
    </insert>
+	<select id="neighyn" parameterType="Map" resultMap="neighborResult">
+	select * from neighbor where (sender=#{loginUser} and receiver=#{writer_id}and CHECK_YN='Y') 
+	or (receiver=#{loginUser} and sender=#{writer_id}and CHECK_YN='Y')
+	</select>
 </mapper>

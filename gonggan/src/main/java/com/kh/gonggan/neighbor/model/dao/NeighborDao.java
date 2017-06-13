@@ -43,4 +43,13 @@ public class NeighborDao {
 		return (List<Member>) sqlSession.selectList("membermapper.nsearch", map);
 		
 	}
+
+	public String neighYn(String loginUser, String writer_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("loginUser", loginUser);
+		map.put("writer_id", writer_id);
+		return (sqlSession.selectOne(
+				"neighbormapper.neighyn", map) == null ?
+				"N" : "Y");
+	}
 }

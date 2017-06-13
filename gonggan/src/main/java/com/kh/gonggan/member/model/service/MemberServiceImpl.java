@@ -129,4 +129,5 @@ public class MemberServiceImpl implements MemberService{
 	public Member joinEmailCheck (String email) {
 		return memberDao.joinEmailCheck(email);
 	}
+
 }

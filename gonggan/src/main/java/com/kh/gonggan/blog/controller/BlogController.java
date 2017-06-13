@@ -153,7 +153,10 @@ public class BlogController {
 		String  renameFileName = null;
 		String originalFileName = blogService.selectBlog(writer_id).getBackground();
 		String[] originalFileNameSplit;
-		File existFile;
+		File copy, existFile;
+
+		long current = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		
 		String root = req.getSession().getServletContext().getRealPath("/");
 
@@ -163,13 +166,26 @@ public class BlogController {
 						"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/backgroundImages/"
 						+ originalFileName);
 				if(existFile.exists())
-					if(existFile.delete())
+					if(existFile.delete()) {
 		                System.out.println("파일삭제 성공");
+		                renameFileName = "";
+					}
 			}
 		}
 		
 		else {
 		
+			if (originalFileName != null) {
+				existFile = new File(
+						"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/backgroundImages/"
+						+ originalFileName);
+				if(existFile.exists())
+					if(existFile.delete()) {
+		                System.out.println("파일삭제 성공");
+		                renameFileName = "";
+					}
+			}
+			
 			System.out.println("root : " + root);
 			String[] roots = root.split("\\\\");
 			String marger="";
@@ -181,106 +197,158 @@ public class BlogController {
 			System.out.println("marger : " + marger);
 			String savePath = marger + "src/main/webapp/backgroundImages/";
 			System.out.println("savepath : " + savePath);
-	
-			if(ServletFileUpload.isMultipartContent(req)) {
+			
+			originalFileName = file.getOriginalFilename();
+
+			try {
 				
-				try {
+				if (req.getParameter("bgmode").equals("img")) {
 					
-					multiRequest  = new MultipartRequest(
-							req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-					originalFileName = multiRequest.getFilesystemName("file");
+					if (req.getParameter("bgchanged").equals("Y")) {
 					
-					System.out.println("originalFileName : " + originalFileName);
+						copy = new File(
+								
+								"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/backgroundImages/"
+										+ "bg" + sdf.format(new Date(current))
+										+ ("." + (originalFileNameSplit =
+										originalFileName.split("\\."))[originalFileNameSplit.length-1]));
+						
+						file.transferTo(copy);
 					
-					long current = System.currentTimeMillis();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					
-					if (originalFileName != null)
-						renameFileName = "bbg" + sdf.format(new Date(current))
-								+ ("." + (originalFileNameSplit = originalFileName.split("\\."))[originalFileNameSplit.length-1]);
-	
-					int input = 0;
-					int cnt = 0;
-					byte[] data = new byte[1024];
-		            
-					in = req.getInputStream();
-					fos = new FileOutputStream(renameFile = new File(savePath + renameFileName));
-					while((input = in.read(data)) != -1) {
-						fos.write(data, 0, input);
-						cnt += input;
-						fos.flush();
+						renameFileName = copy.getName();
+						
+						if (blogService.blogSetting_background(new Blog(req.getParameter("blogTitle"),
+								writer_id,
+								req.getParameter("blogComment"), renameFileName,
+								req.getParameter("color"),
+								req.getParameter("background_color"),
+								req.getParameter("contents_color"),
+								req.getParameter("languages"),
+								req.getParameter("blogOpenYn"),
+								req.getParameter("diaryOpenYn"),
+								req.getParameter("placeOpenYn"),
+								req.getParameter("reviewOpenYn"),
+								req.getParameter("musicOpenYn"),
+								req.getParameter("movieOpenYn"),
+								req.getParameter("newsOpenYn"),
+								req.getParameter("hideComment"))) > 0)
+							System.out.println("성공");
 					}
-					
-					System.out.println(multiRequest.getParameter("background_color"));
-					System.out.println(renameFileName);
-					System.out.println(multiRequest.getParameter("bgmode"));
-		            
-					if(multiRequest.getParameter("bgmode").equals("color")){
-						blogService.blogSetting_color(
-								new Blog(multiRequest.getParameter("blogTitle"),
-										((Member) session.getAttribute("loginUser")).getMember_id(),
-										multiRequest.getParameter("blogComment"),
-										renameFileName,
-										multiRequest.getParameter("color"),
-										multiRequest.getParameter("background_color"),
-										multiRequest.getParameter("contents_color"),
-										multiRequest.getParameter("languages"),
-										multiRequest.getParameter("blogOpenYn"),
-										multiRequest.getParameter("diaryOpenYn"),
-										multiRequest.getParameter("placeOpenYn"),
-										multiRequest.getParameter("reviewOpenYn"),
-										multiRequest.getParameter("musicOpenYn"),
-										multiRequest.getParameter("movieOpenYn"),
-										multiRequest.getParameter("newsOpenYn")));
-					}
-					else {
-						blogService.blogSetting_background(
-								new Blog(multiRequest.getParameter("blogTitle"),
-										writer_id,
-										multiRequest.getParameter("blogComment"),
-										renameFileName,
-										multiRequest.getParameter("color"),
-										multiRequest.getParameter("background_color"),
-										multiRequest.getParameter("contents_color"),
-										multiRequest.getParameter("languages"),
-										multiRequest.getParameter("blogOpenYn"),
-										multiRequest.getParameter("diaryOpenYn"),
-										multiRequest.getParameter("placeOpenYn"),
-										multiRequest.getParameter("reviewOpenYn"),
-										multiRequest.getParameter("musicOpenYn"),
-										multiRequest.getParameter("movieOpenYn"),
-										multiRequest.getParameter("newsOpenYn")));
-						System.out.println("asdftest");
-					}
-					/*if (blogService.blogSetting(
-						new Blog(multiRequest.getParameter("blogTitle"),
-						((Member) session.getAttribute("loginUser")).getMember_id(),
-		                 multiRequest.getParameter("blogComment"), renameFileName,
-		                 multiRequest.getParameter("color"),
-		                 multiRequest.getParameter("background_color"),
-		                        multiRequest.getParameter("contents_color"),
-		                        multiRequest.getParameter("languages"),
-		                        multiRequest.getParameter("blogOpenYn"),
-		                        multiRequest.getParameter("diaryOpenYn"),
-		                        multiRequest.getParameter("placeOpenYn"),
-		                        multiRequest.getParameter("reviewOpenYn"),
-		                        multiRequest.getParameter("musicOpenYn"),
-		                        multiRequest.getParameter("movieOpenYn"),
-		                        multiRequest.getParameter("newsOpenYn"))) > 0)
-		               
-		               System.out.println("성공");
-					 */
-					in.close();
-					fos.close();
-		            
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+				else if (req.getParameter("bgmode").equals("color"))
+					if (blogService.blogSetting_color(new Blog(req.getParameter("blogTitle"),
+							writer_id,
+							req.getParameter("blogComment"), renameFileName,
+							req.getParameter("color"),
+							req.getParameter("background_color"),
+							req.getParameter("contents_color"),
+							req.getParameter("languages"),
+							req.getParameter("blogOpenYn"),
+							req.getParameter("diaryOpenYn"),
+							req.getParameter("placeOpenYn"),
+							req.getParameter("reviewOpenYn"),
+							req.getParameter("musicOpenYn"),
+							req.getParameter("movieOpenYn"),
+							req.getParameter("newsOpenYn"),
+							req.getParameter("hideComment"))) > 0)
+						System.out.println("성공");
+				
+				/*
+				multiRequest  = new MultipartRequest(
+						req, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
+				originalFileName = multiRequest.getFilesystemName("file");
+				
+				System.out.println("originalFileName : " + originalFileName);
+				
+				if (originalFileName != null)
+					renameFileName = "bbg" + sdf.format(new Date(current))
+							+ ("." + (originalFileNameSplit = originalFileName.split("\\."))[originalFileNameSplit.length-1]);
+
+				int input = 0;
+				int cnt = 0;
+				byte[] data = new byte[1024];
+	            
+				in = req.getInputStream();
+				fos = new FileOutputStream(renameFile = new File(savePath + renameFileName));
+				while((input = in.read(data)) != -1) {
+					fos.write(data, 0, input);
+					cnt += input;
+					fos.flush();
+				}
+				
+				
+				System.out.println(multiRequest.getParameter("background_color"));
+				System.out.println(renameFileName);
+				System.out.println(multiRequest.getParameter("bgmode"));
+	            
+				if(multiRequest.getParameter("bgmode").equals("color")){
+					blogService.blogSetting_color(
+							new Blog(multiRequest.getParameter("blogTitle"),
+									((Member) session.getAttribute("loginUser")).getMember_id(),
+									multiRequest.getParameter("blogComment"),
+									renameFileName,
+									multiRequest.getParameter("color"),
+									multiRequest.getParameter("background_color"),
+									multiRequest.getParameter("contents_color"),
+									multiRequest.getParameter("languages"),
+									multiRequest.getParameter("blogOpenYn"),
+									multiRequest.getParameter("diaryOpenYn"),
+									multiRequest.getParameter("placeOpenYn"),
+									multiRequest.getParameter("reviewOpenYn"),
+									multiRequest.getParameter("musicOpenYn"),
+									multiRequest.getParameter("movieOpenYn"),
+									multiRequest.getParameter("newsOpenYn")));
+				}
+				else {
+					blogService.blogSetting_background(
+							new Blog(multiRequest.getParameter("blogTitle"),
+									writer_id,
+									multiRequest.getParameter("blogComment"),
+									renameFileName,
+									multiRequest.getParameter("color"),
+									multiRequest.getParameter("background_color"),
+									multiRequest.getParameter("contents_color"),
+									multiRequest.getParameter("languages"),
+									multiRequest.getParameter("blogOpenYn"),
+									multiRequest.getParameter("diaryOpenYn"),
+									multiRequest.getParameter("placeOpenYn"),
+									multiRequest.getParameter("reviewOpenYn"),
+									multiRequest.getParameter("musicOpenYn"),
+									multiRequest.getParameter("movieOpenYn"),
+									multiRequest.getParameter("newsOpenYn")));
+					System.out.println("asdftest");
+				}
+				*/
+				/*if (blogService.blogSetting(
+					new Blog(multiRequest.getParameter("blogTitle"),
+					((Member) session.getAttribute("loginUser")).getMember_id(),
+	                 multiRequest.getParameter("blogComment"), renameFileName,
+	                 multiRequest.getParameter("color"),
+	                 multiRequest.getParameter("background_color"),
+	                        multiRequest.getParameter("contents_color"),
+	                        multiRequest.getParameter("languages"),
+	                        multiRequest.getParameter("blogOpenYn"),
+	                        multiRequest.getParameter("diaryOpenYn"),
+	                        multiRequest.getParameter("placeOpenYn"),
+	                        multiRequest.getParameter("reviewOpenYn"),
+	                        multiRequest.getParameter("musicOpenYn"),
+	                        multiRequest.getParameter("movieOpenYn"),
+	                        multiRequest.getParameter("newsOpenYn"))) > 0)
+	               
+	               System.out.println("성공");
+				 */
+				
+				//in.close();
+				//fos.close();
+	            
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			
 		}
 			
-		mv.setViewName("index2");
+		mv.setViewName("redirect:controll.do?writer_id=" + writer_id);
 		return mv;
 		
 	}

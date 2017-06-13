@@ -1439,7 +1439,7 @@ hr {
 	background:linear-gradient(to right, #CE729B, #2D86C9);
 	font-size: 9px;
 	color: #8C8C8C;
-	height:1500px;
+	height:auto;
 	padding: 10px;
 }
 
@@ -1523,13 +1523,13 @@ hr {
 
 .mypage .td {
 	height: 200px;
-	overflow:scroll;
 	padding: 10px;
 	background-color: white;
 }
 
 .td>div {
 	height:100%;
+	overflow:scroll;
 }
 
 .td>div table {
@@ -1682,11 +1682,15 @@ hr {
 	border: 1px solid gray;
 }
 
-.fileInputTextbox {
+#blogControll .fileInputTextbox {
 	width:60%;
 	float:left;
 }
 
+.modal .fileInputTextbox {
+	width:70%;
+	float:left;
+}
 
 input[disabled=true] {
 	background-color:white;
@@ -1700,6 +1704,16 @@ input[disabled=true] {
 	background-color:#C7D5E5;
 	color:white;
 	position:absolute;
+}
+
+.mypage .fileInputBtn {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #97A1AD;
+	background-color:#C7D5E5;
+	color:white;
+	position:absolute;
+	left:0;
 }
 
 .fileInputDiv {

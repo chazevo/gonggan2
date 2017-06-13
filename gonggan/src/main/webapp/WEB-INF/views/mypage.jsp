@@ -171,22 +171,27 @@
 											<h4 class="modal-title">프로필 이미지 변경</h4>
 										</div>
 										<div class="modal-body text-center">
-											프로필 사진을 업로드 해주세요<br>
+											프로필 사진을 업로드 해주세요<br><br>
 											<c:if test='${ empty sessionScope.loginUser.getProfile_photo()}'>
-											<img class="img-circle" width="20%"
+											<img class="img-circle" width="15%"
 												src='images/myproimg_default.png'>
 											</c:if>
 											<c:if test='${ !empty sessionScope.loginUser.getProfile_photo()}'>
 											<img class="img-circle" width="20%"
 												src='images/profileImages/${sessionScope.loginUser.getProfile_photo() }'>
 											</c:if>
-											<br><input type="text" id="filename"
-												name="background" class="fileInputTextbox"
-												readonly="readonly" disabled="true">
-											<div class="fileInputDiv">
-												<input type="button" value="첨 부 파 일" class="fileInputBtn">
-												<input type="file" id="file" name="file" accept=".gif,.jpeg,.jpg,.png"
-													onchange="$('#filename').val($(this).val()); changeProfileImg();">
+											<br>
+											<div style="position:relative;height:30px;">
+												<div style="width:50%;position:absolute;margin:auto;left:0;right:0">
+													<input type="text" id="filename"
+														name="background" class="fileInputTextbox"
+														readonly="readonly" disabled="true">
+													<div class="fileInputDiv">
+														<input type="button" value="첨 부 파 일" class="fileInputBtn">
+														<input type="file" id="file" name="file" accept=".gif,.jpeg,.jpg,.png"
+															onchange="$('#filename').val($(this).val()); changeProfileImg();">
+													</div>
+												</div>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default"
@@ -356,134 +361,144 @@
 						</div>
 					</td>
 				</tr>
-            <!-- 이웃새글부분 -->
-            <tr>
-               <td colspan="2" class="td notTableList">
-                  <b>내 포스트 알람 _ 댓글 </b><br>
-                  <c:if test="${!empty commentMyList }">
-                     <c:forEach items="${ commentMyList}" var="i"  begin ="0">
-                     <font><a href="myhome.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이</font> |
-                     <a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
-                                 게시글에 <b>댓글</b>을 남기셨습니다.<br>
-                     </c:forEach>
-                  </c:if>
-                  </td>
-                  <!-- 댓글 좋아요 알림부분 -->
-                     <td class="td notTableList">
-                     <div>
-                        <table>
-                        <tr>
-                           <td colspan="2" align="center">
-                              <img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>
-                               <b>내 포스트 알람_좋아요</b><br>
-                                  게시글을 작성하고 이웃을 만들어보세요!!<br>
-                               <c:if test="${!empty (goodMyList)}">
-                                <c:forEach items="${ goodMyList}" var="i"  begin ="0">
-                                   <font><a href="myhome.do?writer_id=${i.member_id} ">${ i.member_id }</a> 님이</font> | 
-                                     게시글에 <b>좋아요</b>을 누르셨습니다.<br>
-                                </c:forEach>
-                               </c:if>
-                           </td>
-                        </tr>
-                     </table>
-                    </div>
-                  </td>
-               </tr>
-            </table >
-            <table class="tbl2" width="100%">
-               <colgroup>
-                  <col width="25%" />
-                  <col width="35%" />
-                  <col width="40%" />
-               </colgroup>
-               <tr>
-                  <td class="td">
-                 	<div>
-                     <table>
-                        <colgroup>
-                           <col width="60%" />
-                           <col width="20%" />
-                           <col width="20%" />
-                        </colgroup>
-                        <tr><td colspan="3">서로이웃신청</td></tr>
-                        <tr>
-                        <c:if test="${!empty (neighborReqList) }">
-                        <c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
-                        
-                        <td>
-                           <a href="myhome.do?writer_id=${i.member_id }">${i.member_id }</a>
-                        </td>
-                        <td>
-                           <a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
-                              <div class="neighborYN">수락</div>
-                           </a>
-                        </td>
-                        <td>
-                           <a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
-                              <div class="neighborYN">거절</div>
-                           </a>
-                        </td>
-                        </c:forEach>
-                        </c:if>
-                     </table>
-                     </div>
-                  </td>
-                  <td class="td">
-                  	<div>
-                     <table>
-                        <colgroup>
-                           <col width="20%" />
-                           <col width="50%" />
-                           <col width="30%" />
-                        </colgroup>
-                        <tr ><td colspan="3">서로이웃 목록</td></tr>
-                        <c:if test="${!empty neighborlist }">
-                           <c:forEach items="${ neighborlist}" var="i"  begin ="0" >
-                           <tr>
-                              <td> ${i.member_id }</td>
-                              <td class="text-left"><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
-                              <td><a href="javascript:cancel('${sessionScope.loginUser.getMember_id() }', '${i.member_id }', $(this));"><div class="neighborYN">취소</div></a></td>
-                           </tr>
-                           </c:forEach>
-                        </c:if>
-                     </table>
-                     </div>
-                  </td>
-                  <td class="td">
-                  	<div>
-                     <table>
-                        <tr><td><b>내가 남긴글</b></td></tr>
-                        <c:if test="${empty mylist }">
-                        <tr>
-                           <td>게시글을 작성하고 이웃을 만들어보세요!! </td>
-                        </tr>
-                        </c:if>
-                        <tbody id="listbody">   
-                        
-                           <c:if test="${!empty mylist }">
-                           <c:forEach items="${ mylist}" var="i"  begin ="0" >
-                              <tr>
-                                 <td>
-                                    <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${i.writer_id} '>
-                                       ${i.getComment_content()}
-                                    </a> 
-                                 </td>
-                              </tr>
-                           </c:forEach>
-                           </c:if>
-                           
-                        </tbody>
-                     </table>
-                     </div>
-                  </td>
-               </tr>
-            </table>
-         </div>
-      </section>
-   </div>
+				<!-- 이웃새글부분 -->
+				<tr>
+					<td colspan="2" class="td notTableList">
+						<b>내 포스트 알람 _ 댓글 </b><br>
+						<c:if test="${!empty commentMyList }">
+						<c:forEach items="${ commentMyList}" var="i"  begin ="0">
+						<font>
+							<a href="myhome.do?writer_id=${i.writer_id}">${i.writer_id }</a> 님이
+						</font> |
+						<a href="">동갑내기 부부의 세계로 가는 자전거 여행!</a>
+						게시글에 <b>댓글</b>을 남기셨습니다.<br>
+						</c:forEach>
+						</c:if>
+					</td>
+					<!-- 댓글 좋아요 알림부분 -->
+					<td class="td notTableList">
+						<div>
+							<table>
+								<tr>
+									<td colspan="2" align="center">
+										<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<b>내 포스트 알람_좋아요</b><br>
+										게시글을 작성하고 이웃을 만들어보세요!!<br>
+										<c:if test="${!empty (goodMyList)}">
+										<c:forEach items="${ goodMyList}" var="i"  begin ="0">
+										<font>
+											<a href="myhome.do?writer_id=${i.member_id} ">
+												${ i.member_id }
+											</a> 님이
+										</font> | 
+										게시글에 <b>좋아요</b>을 누르셨습니다.<br>
+										</c:forEach>
+										</c:if>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table >
+			<table class="tbl2" width="100%">
+				<colgroup>
+					<col width="25%" />
+					<col width="35%" />
+					<col width="40%" />
+				</colgroup>
+				<tr>
+					<td class="td">
+						<div>
+							<table>
+								<colgroup>
+									<col width="60%" />
+									<col width="20%" />
+									<col width="20%" />
+								</colgroup>
+								<tr><td colspan="3">서로이웃신청</td></tr>
+								<tr>
+									<c:if test="${!empty (neighborReqList) }">
+									<c:forEach items="${ neighborReqList}" var="i"  begin ="0" >
+									<td>
+										<a href="myhome.do?writer_id=${i.member_id }">
+											${i.member_id }
+										</a>
+									</td>
+									<td>
+										<a href="javascript:acceptNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+											<div class="neighborYN">수락</div>
+										</a>
+									</td>
+									<td>
+										<a href="javascript:rejectNeig('${sessionScope.loginUser.getMember_id() }', '${i.member_id }');">
+											<div class="neighborYN">거절</div>
+										</a>
+									</td>
+									</c:forEach>
+									</c:if>
+								</tr>
+							</table>
+						</div>
+					</td>
+					<td class="td">
+						<div>
+							<table>
+								<colgroup>
+									<col width="20%" />
+									<col width="50%" />
+									<col width="30%" />
+								</colgroup>
+								<tr ><td colspan="3">서로이웃 목록</td></tr>
+								<c:if test="${!empty neighborlist }">
+								<c:forEach items="${ neighborlist}" var="i"  begin ="0" >
+								<tr>
+									<td> ${i.member_id }</td>
+									<td class="text-left"><a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${i.member_id }"><img src="images/chat_icon.png" width="15px" ></a></td>
+									<td>
+										<a href="javascript:cancel('${sessionScope.loginUser.getMember_id() }', '${i.member_id }', $(this));">
+											<div class="neighborYN">취소</div>
+										</a>
+									</td>
+								</tr>
+								</c:forEach>
+								</c:if>
+							</table>
+						</div>
+					</td>
+					<td class="td">
+						<div>
+							<table>
+								<tr><td><b>내가 남긴글</b></td></tr>
+								<c:if test="${empty mylist }">
+								<tr>
+									<td>게시글을 작성하고 이웃을 만들어보세요!! </td>
+								</tr>
+								</c:if>
+								<tbody id="listbody">
+									<c:if test="${!empty mylist }">
+									<c:forEach items="${ mylist}" var="i"  begin ="0" >
+									<tr>
+										<td>
+											<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${i.writer_id} '>
+												${i.getComment_content()}
+											</a>
+										</td>
+									</tr>
+									</c:forEach>
+									</c:if>
+								</tbody>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</section>
+</div>
 </body>
 </html>

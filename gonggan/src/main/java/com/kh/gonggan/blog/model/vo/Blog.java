@@ -18,6 +18,7 @@ public class Blog {
 	private String music_open_yn;
 	private String movie_open_yn;
 	private String news_open_yn;
+	private String hide_comment;
 	
 
 	public Blog(){}
@@ -30,7 +31,8 @@ public class Blog {
 			String  color, String background_color, String contents_color,
 			String languages, String blog_open_yn,
 			String diary_open_yn, String place_open_yn, String review_open_yn,
-			String music_open_yn, String movie_open_yn, String news_open_yn) {
+			String music_open_yn, String movie_open_yn, String news_open_yn,
+			String hide_comment) {
 		super();
 		this.title = title;
 		this.writer_id = writer_id;
@@ -47,6 +49,7 @@ public class Blog {
 		this.music_open_yn = music_open_yn;
 		this.movie_open_yn = movie_open_yn;
 		this.news_open_yn = news_open_yn;
+		this.hide_comment = hide_comment;
 	}
 
 	public int getBlog_id() {
@@ -206,6 +209,13 @@ public class Blog {
 		this.news_open_yn = news_open_yn;
 	}
 
+	public String getHide_comment() {
+		return hide_comment;
+	}
+
+	public void setHide_comment(String hide_comment) {
+		this.hide_comment = hide_comment;
+	}
 
 	@Override
 	public String toString() {

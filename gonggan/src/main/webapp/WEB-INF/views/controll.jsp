@@ -277,22 +277,32 @@ int today = cal.get(Calendar.DATE);
 							<col width="85%" />
 						</colgroup>
 						<tr>
-							<td>배경 이미지&nbsp;<input type="radio" name="bgmode" value="img"></td>
+							<td>
+								배경 이미지&nbsp;
+								<input type="radio" name="bgmode" value="img"
+									<c:if test='${!empty blog.background }'>checked</c:if>>
+							</td>
 							<td>
 								<input type="text" id="filename" name="background" class="fileInputTextbox"
 									readonly="readonly" disabled="true">
 								<div class="fileInputDiv">
 									<input type="button" value="첨 부 파 일" class="fileInputBtn">
 									<input type="file" id="file" name="file" accept=".gif,.jpeg,.jpg,.png"
-										onchange="$('#filename').val($(this).val()); changeBgImg(this);">
+										onchange="$('#filename').val($(this).val()); changeBgImg(this); $('input[name=bgchanged]').val('N');">
 								</div>
-								<input type="button" value="삭제" onclick="$('input[name=file]').val(''); $('.bannerEdit').css('background', 'none');">&nbsp;&nbsp;
-								<input type="button" value="취소" onclick="$('.bannerEdit').css('background', 'url(backgroundImages/${blog.getBackground()})')">
+								<input type="button" value="삭제"
+									onclick="$('input[name=file]').val(''); $('.bannerEdit').css('background', 'none');">&nbsp;&nbsp;
+								<input type="button" value="취소"
+									onclick="$('.bannerEdit').css('background', 'url(backgroundImages/${blog.getBackground()})'); $('input[name=bgchanged]').val('N');">
 								<!-- button누르면 submit 되는 이유?, 배경이미지, 배경색 선택적 적용 구현 안됨 -->
 							</td>
 						</tr>
 						<tr>
-							<td>배경색&nbsp;<input type="radio" name="bgmode" value="color"></td>
+							<td>
+								배경색&nbsp;
+								<input type="radio" name="bgmode" value="color"
+									<c:if test='${!empty blog.background_color }'>checked</c:if>>
+							</td>
 							<td>
 								<input type="color" name="background_color" onchange="changeBgColor(this);">&nbsp;
 								<input type="button" onclick="$('input[name=background_color]').val('${blog.background_color}');" value="취소">&nbsp;
@@ -326,9 +336,17 @@ int today = cal.get(Calendar.DATE);
 				<fieldset>
 					<legend>블로그 공개 관리</legend>
 					<input type="radio" name="blogOpenYn" value="Y"
-						<c:if test='${blog.blog_open_yn eq "Y" }'>checked</c:if>>공개&nbsp;
+						<c:if test='${blog.blog_open_yn eq "Y" }'>checked</c:if>>&nbsp;공개&nbsp;
 					<input type="radio" name="blogOpenYn" value="N"
-						<c:if test='${blog.blog_open_yn eq "N" }'>checked</c:if>>비공개
+						<c:if test='${blog.blog_open_yn eq "N" }'>checked</c:if>>&nbsp;비공개
+				</fieldset>
+				<hr class="grayHr">
+				<fieldset>
+					<legend>댓글 달기 관리</legend>
+					<input type="radio" name="hideComment" value="Y"
+						<c:if test='${blog.hide_comment eq "N" }'>checked</c:if>>&nbsp;댓글기능 활성화&nbsp;
+					<input type="radio" name="hideComment" value="N"
+						<c:if test='${blog.hide_comment eq "Y" }'>checked</c:if>>&nbsp;댓글기능 해제
 				</fieldset>
 				<hr class="grayHr">
 				<fieldset>
@@ -723,5 +741,6 @@ int today = cal.get(Calendar.DATE);
 				<hr class="grayHr">
 			</div>
 		</div>
+	<input type="hidden" name="bgchanged" value="N">
 	</form>
 </body>

@@ -21,6 +21,7 @@
 		<result property="music_open_yn" column="music_open_yn" />
 		<result property="movie_open_yn" column="movie_open_yn" />
 		<result property="news_open_yn" column="news_open_yn" />
+		<result property="hide_comment" column="hide_comment" />
 	</resultMap>
 	
 	<insert id="binsert" parameterType="blog">
@@ -52,20 +53,24 @@
 	<insert id="bsetting_background" parameterType="blog">
 		update blog set
 		title = #{title}, contents = #{contents}, background = #{background},
+		background_color = null,
 		languages=#{languages}, blog_open_yn = #{blog_open_yn}, color = #{color},
-		background_color = '', contents_color = #{contents_color},
+		contents_color = #{contents_color},
 		diary_open_yn = #{diary_open_yn}, place_open_yn = #{place_open_yn}, review_open_yn=#{review_open_yn},
-		music_open_yn=#{music_open_yn}, movie_open_yn=#{movie_open_yn}, news_open_yn=#{news_open_yn}
+		music_open_yn=#{music_open_yn}, movie_open_yn=#{movie_open_yn}, news_open_yn=#{news_open_yn},
+		hide_comment = #{hide_comment}
 		where writer_id = #{writer_id}
 	</insert>
 	
 	<insert id="bsetting_color" parameterType="blog">
 		update blog set
-		title = #{title}, contents = #{contents}, background = '',
+		title = #{title}, contents = #{contents},
 		blog_open_yn = #{blog_open_yn}, languages=#{languages},color=#{color},
+		background = null,
 		background_color = #{background_color}, contents_color = #{contents_color},
 		diary_open_yn = #{diary_open_yn}, place_open_yn = #{place_open_yn}, review_open_yn=#{review_open_yn},
-		music_open_yn=#{music_open_yn}, movie_open_yn=#{movie_open_yn}, news_open_yn=#{news_open_yn}
+		music_open_yn=#{music_open_yn}, movie_open_yn=#{movie_open_yn}, news_open_yn=#{news_open_yn},
+		hide_comment = #{hide_comment}
 		where writer_id = #{writer_id}
 	</insert>
    

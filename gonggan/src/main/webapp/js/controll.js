@@ -327,12 +327,18 @@ function cancelBgcolorChange() {
 }
 
 function settingComplete() {
-	if (confirm("수정사항을 반영하시겠습니까?") == true) {
-		if ($("input[name=bgmode]").val() == "img")
-			;
-		else if ($("input[name=bgmode]").val() == "color")
-			; // 기존 파일 삭제 
+	if ($("input[name=bgmode]").val() == null) {
+		alert("배경이미지와 배경색 중 선택해주세요!");
+		return;
+	}
+	else {
+		if (confirm("수정사항을 반영하시겠습니까?") == true) {
+			if ($("input[name=bgmode]").val() == "img")
+				;
+			else if ($("input[name=bgmode]").val() == "color")
+				; // 기존 파일 삭제 
 		
-		$("#form").submit();
+			$("#form").submit();
+		}
 	}
 }

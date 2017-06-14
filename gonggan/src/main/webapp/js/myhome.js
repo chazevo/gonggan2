@@ -2,6 +2,7 @@ var postId;
 var category = "all";
 var Ca = /\+/g;
 var str = "";
+var rownum = 1;
 
 /*function trace(loginUser) {
 	$.ajax({

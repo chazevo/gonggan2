@@ -282,15 +282,15 @@ function callbackList(data) {
          td.style.backgroundImage = "url(uploadImages/" + photoPath + ")";
          td.style.backgroundSize = "100% 100%";
       }
-      
-      td.innerHTML = "<div style='position:relative;display:table;border:1px solid red;height:100%;width:100%'><div style='height:150px;display:table-cell;text-align:center;vertical-align:middle;'>"
-    	  + "<a style='"
+      // overflow:hidden 하니까 안됨 
+      td.innerHTML = "<div style='height:100%;border:1px solid red;overflow:scroll'>"
+    	  + "<a style='display:block;border:1px solid blue;"
     	  + (category == "diary" && jsonArr.list[i].bg != "" ? "color:white " : "")
     	  	+ "' data-fancybox data-src='pdetail.do?"
          + "postId=" + postId
          + "&writerId=" + writerId + "'>"
          + decodeURIComponent(content.replace(Ca, " "))
-         + "</a></div></div>";
+         + "</a></div>";
       
       addMark.setAttribute("onclick", 
             "openFancybox('/gonggan/pdetail.do?postId=" + postId

@@ -427,11 +427,11 @@ System.out.println(str);
 								</c:if>
 								<label class='radio-wrap'>
 									<input type='radio' name='listType' id='calendar'  
-										onclick=' category = "all requestCalList(year, month);' checked>
+										onclick=' category = "all"; requestCalList(year, month);' checked>
 									<i class='calendar-icon'></i>
 								</label>
 								<label class='radio-wrap'>
-									<input type='radio'  name='listType' id='list' onclick=' category = "all"; requestList();'>
+									<input type='radio'  name='listType' id='list' onclick='$("#listbody").html(""); rownum = 1; category = "all"; requestList();'>
 									<i class='list-icon'></i>
 								</label>
 							</th>

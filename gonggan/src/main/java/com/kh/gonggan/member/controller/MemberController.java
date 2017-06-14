@@ -194,12 +194,27 @@ public class MemberController {
 		String[] originalFileNameSplit;
 		File existFile;
 		
+		String root = request.getSession().getServletContext().getRealPath("/");
+
+		System.out.println("root : " + root);
+		String[] roots = root.split("\\\\");
+		String marger="";
+		
+		for(int i=0 ; i<roots.length-3; i++)
+         marger += roots[i] + "\\";
+         
+		
+		System.out.println("marger : " + marger);
+		String savePath = marger + "src/main/webapp/images/profileImages";
+		System.out.println("savepath : " + savePath);
+		savePath = "/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/";
+
+		
 		if (file.isEmpty()) {
 			
 			if (originalFileName != null) {
 				existFile = new File(
-						"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/"
-						+ originalFileName);
+						savePath + originalFileName);
 				if(existFile.exists())
 					if(existFile.delete())
 		                System.out.println("파일삭제 성공");
@@ -213,8 +228,7 @@ public class MemberController {
 			originalFileName = file.getOriginalFilename();
 			
 			File copy = new File(
-					"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/"
-					+ "profile" + sdf.format(new Date(current))
+					savePath + "profile" + sdf.format(new Date(current))
 					+ ("." + (originalFileNameSplit =
 					originalFileName.split("\\."))[originalFileNameSplit.length-1]));
 			

@@ -5,6 +5,7 @@ var currTimeFormat = 'a/p hh시 mm분 ss초';
 var temperature;
 var locked = 0 ;
 var prev_val;
+var diaryBgImg;
 
 $(function() {
 	dateFunc();
@@ -200,7 +201,11 @@ function imageChange(){
 	
 }
 
-function diaryBg(){
+function diaryBg() {
+	
+	je_doc.getElementById("contentArea").style.backgroundImage
+			= "images/diaryBackgroundImages" + diaryBgImg;
+	/*
 	je_doc = document.getElementById('editor').contentWindow.document;
 	if($(".imagess").val()==0){
 		je_doc.body.background="transparent";
@@ -211,17 +216,39 @@ function diaryBg(){
 		je_doc.body.style.backgroundSize="contain";
 	
 	}
+	*/
 }
 
-function imgBB(obj){
-	je_doc = document.getElementById('editor').contentWindow.document;
+function refreshFilediv() {
+	$("#frm .fileInputDiv").html("<input type='button' value='첨 부 파 일' class='fileInputBtn'>"
+			+ "<input type='file' id='file2' name='file2' accept='.gif,.jpeg,.jpg,.png'>");
+	$('#frm #filename').val("");
+	$('#bgpreview').css("background", "");
+	document.getElementById("file2").onchange = function() {
+		$('#frm #filename').val($(this).val());
+	};
+	$("#frm").ajaxForm({
+		url: "deldiarybg.do",
+		data: {diaryBgImg: diaryBgImg},
+		success: function(data) {
+			diaryBgImg = "";
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	
+	$("#frm").submit();
+}
+
+function imgBB(obj) {
 	
 	if (obj.value=="auto")
-		je_doc.body.style.backgroundSize="auto";
+		je_doc.getElementById("contentArea").style.backgroundSize="auto";
 	else if (obj.value=="contain")
-		je_doc.body.style.backgroundSize="contain";
+		je_doc.getElementById("contentArea").style.backgroundSize="contain";
 	else if (obj.value=="cover")
-		je_doc.body.style.backgroundSize="cover";
+		je_doc.getElementById("contentArea").style.backgroundSize="cover";
 }
 
 
@@ -362,7 +389,7 @@ function colorchart2(){
 			table.appendChild(tr);
 		}
 		
-		//document.getElementById("colorchart2").appendChild(table);
+		document.getElementById("colorchart2").appendChild(table);
 	}
 
 }
@@ -401,7 +428,8 @@ function bgcolor3(color) {
 }
 
 function bgcolor(color) {
-	//je_doc.execCommand('Backcolor', color);
+	je_doc.getElementById('contentArea').style.backgroundColor
+			= color;
 }
 
 
@@ -458,6 +486,7 @@ function changeForm() {
 		document.getElementById("dateTd2").innerHTML =
 			"<input type='text' name='toDate' id='toDate' size='15' onchange='javascript:changeDate()'>";
 		dateFunc();
+		$("#imageOp_selected>a").show();
 		je_doc.body.innerHTML += "<table style='border-collapse:collapse;width:100%;'>"
 				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='62%'/><col width='12%'/><col width='6%'/></colgroup>"
 				+ "<tr><td id='diarydateTd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
@@ -474,13 +503,14 @@ function changeForm() {
 				+ "<span style='color:#E6E6E6'></span></td></tr>"
 				+"<tr><td style='padding:5px;border-bottom:1px solid #E6E6E6;'></td>"
 				+ "<td style='border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; border-right:1px solid #E6E6E6;' colspan='3'>"
-				+ "<span style='color:#E6E6E6'>기분을 입력해주세요..</span></td>" +
-						"</tr></table>" +
-						"<div id='contentArea' style='padding:10px;'>내용을 입력해주세요.</div>";
+				+ "<span style='color:#E6E6E6'>기분을 입력해주세요..</span></td>"
+				+ "</tr></table>"
+				+ "<div id='contentArea' style='padding:10px;height:600px'>내용을 입력해주세요.</div>";
 	}
 	else {
 		document.getElementById("dateTd").innerHTML = "";
 		document.getElementById("dateTd2").innerHTML = "";
+		$("#imageOp_selected>a").hide();
 	}
 	
 	if (document.getElementById("category").value == "news") {
@@ -554,6 +584,11 @@ function changeForm() {
 	}
 	*/
 	
+}
+
+function uploadDiaryBg() {
+	$('#loading').show();
+	$("#frm").submit();
 }
 
 function dateToday(date) {

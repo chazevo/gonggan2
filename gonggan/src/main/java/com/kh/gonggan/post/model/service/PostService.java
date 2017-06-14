@@ -27,6 +27,7 @@ public interface PostService {
 	List<Post> selectLikeCategoryPost(int rownum, int rownum2, String category);
 	List<Post> selectSearchLikeList(int rownum, int rownum2, String keyword);
 	List<Post> selectAll_index2();
+	List<Post> selectAll_myhome(String writer_id);
 	List<Post> selectNeighborAll_index2(String member_id);
 	List<Post> selectMusic(int rownum, int rownum2);
 	List<Post> selectMovie(int rownum, int rownum2);

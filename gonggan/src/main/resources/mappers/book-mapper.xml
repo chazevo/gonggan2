@@ -18,6 +18,11 @@
 		FROM (SELECT * FROM BOOK ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
 	</select>
 	
+	
+	<select id="booklist_myhome" parameterType="String" resultMap="bookResult">
+	select * from post right join book using (post_id) where writer_id = #{writer_id}
+	</select>
+	
 	<select id="bookdetail" resultMap="bookResult" parameterType="int">
 	select * from book where post_id = #{postId}
 	</select>

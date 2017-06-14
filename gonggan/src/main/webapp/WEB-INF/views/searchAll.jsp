@@ -12,9 +12,35 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 <script type="text/javascript" src="js/searchAll.js"></script>
 <script type="text/javascript">
-	var categoryval = ('${category}'=='' ? 0 : '${category}');
-
+	var categoryval = ('${category}'== '' ? 0 : '${category}');
+	var initPosition, prevPosition;
+	
 	window.onload = function() {
+
+		$(".moreBtb").hide();
+		
+		$(".moreBtb").click(function() {
+			if (start <= 100)
+				requestList(start);
+		});
+
+		$(window).scroll(function() {
+		
+			initPosition = $(window).scrollTop()
+		
+			if (initPosition > prevPosition) {
+				if  ($(window).scrollTop() >= $(window).height() - $(window).height() / 3) {
+					alert();
+					if(start <= 100) {
+						$(".moreBtb").show();
+						//requestList(start);
+					}
+				}
+			}
+		
+			prevPosition = initPosition;
+		});
+		
 		$("input[name=keyword]").focus();
 		
 		$("th a").click(function() {

@@ -20,8 +20,13 @@ public class MusicServiceImpl implements MusicService{
 	}
 	
 	@Override
-	public List<Music> selectAll_index2(){
+	public List<Music> selectAll_index2() {
 		return musicDao.selectAll_index2();
+	}
+	
+	@Override
+	public List<Music> selectAll_myhome(String writer_id) {
+		return musicDao.selectAll_myhome(writer_id);
 	}
 	
 	@Override

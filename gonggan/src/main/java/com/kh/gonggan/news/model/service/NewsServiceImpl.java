@@ -22,7 +22,12 @@ public class NewsServiceImpl implements NewsService{
 	public List<News> selectAll_index2() {
 		return newsDao.selectAll_index2();
    }
-
+	
+	@Override
+	public List<News> selectAll_myhome(String writer_id) {
+		return newsDao.selectAll_myhome(writer_id);
+	}
+	
 	@Override
 	public News newsDetail(int postId) {
 		return newsDao.newsDetail(postId);

@@ -263,6 +263,14 @@ public class HomeController {
 		Blog blog = new Blog();
 		Member member = new Member();
 		String neighYn = null;
+
+		List<Post> plist = postService.selectAll_myhome(writer_id); 
+		List<Movie> movielist = movieService.selectAll_myhome(writer_id);
+		List<Diary> diarylist = diaryService.selectAll_myhome(writer_id);
+		List<Music> musiclist = musicService.selectAll_myhome(writer_id);
+		List<News> newslist = newsService.selectAll_myhome(writer_id);
+		List<Review> reviewlist = reviewService.selectAll_myhome(writer_id);
+		List<Book> booklist = bookService.selectAll_myhome(writer_id);
 		
 		if (writer_id != null) {
 			blog = blogService.selectBlog(writer_id);
@@ -272,6 +280,14 @@ public class HomeController {
 		if (session.getAttribute("loginUser") != null)
 			neighYn = neighborService.neighYn(
 					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+
+		mv.addObject("plistSize", plist.size());
+		mv.addObject("reviewlistSize",reviewlist.size());
+		mv.addObject("movielistSize",movielist.size());
+		mv.addObject("newslistSize",newslist.size());
+		mv.addObject("musiclistSize",musiclist.size());
+		mv.addObject("diarylistSize",diarylist.size());
+		mv.addObject("booklistSize",booklist.size());
 		
 		mv.addObject("blog", blog);
 		mv.addObject("member", member);

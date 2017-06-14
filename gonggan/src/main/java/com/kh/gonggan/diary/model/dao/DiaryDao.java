@@ -15,10 +15,16 @@ public class DiaryDao {
 	private SqlSessionTemplate sqlSession;
 
 	public DiaryDao(){}
+
+	public List<Diary> selectAll_index2() {
+		return (List<Diary>) sqlSession.selectList("diarymapper.diarylist_index2");
+	}
+
+	public List<Diary> selectAll_myhome(String writer_id) {
+		return (List<Diary>) sqlSession.selectList(
+				"diarymapper.diarylist_myhome", writer_id);
+	}
    
-   public List<Diary> selectAll_index2(){
-      return (List<Diary>) sqlSession.selectList("diarymapper.diarylist_index2");
-   }
    public Diary diaryDetail(int postId) {
 	   return (Diary) sqlSession.selectOne("diarymapper.diarydetail", postId);
    }

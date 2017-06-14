@@ -80,11 +80,26 @@
 	
 	$(document).ready(function() {
 
+		
+		 $("#frm").ajaxForm({
+				url: "updiarybg.do",
+				success: function(data) {
+					$('#loading').hide();
+					diaryBgImg = data;
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
+			});
+		
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
+		$("#imageOp_selected>a").hide();
+		$("#loading").hide();
+		
 		colorchart();
-		//colorchart2();
+		colorchart2();
 		colorchart3();
 
 		$("#editor").click(function() {
@@ -585,7 +600,7 @@
 									<option class="imageOp"  value="news">이미지 삽입</option>
 									</select>
 									<div id="content_backgound" ></div> -->
-								<img  src="images/pickture_icon.png" id="imgUploadIcon" width="18px"
+								<img  src="images/photo-video-slr-camera-icon-512x512-pixel-12.png" id="imgUploadIcon" width="18px"
 									onclick="je_doc.execCommand('removeformat', 'false', 'null')">
 									<!--&nbsp; &nbsp;이미지-->
 								 <form action="imgupload.do" method="post" enctype="multipart/form-data" id="imgUpload"> 
@@ -729,40 +744,91 @@
 								<div></div>
 							</div>
 						</td>
-						<td align="center" id="dateTd"><!--날짜--></td>
+						<td align="center" id="dateTd">
+							<!--날짜-->
+						</td>
 						<td id="dateTd2">
 							<input type="text" name="toDate" id="toDate" size="15"
 								onchange="javascript:changeDate()">
 						</td>
 					<tr>
-						<!-- <td>
-							<img  src="images/backgroundIMG_icon.png" id="content_allign_center" width="18px"
-										onclick="imageChange();">&nbsp; &nbsp;배경
-						</td>
-						<td colspan="2" id="imageOp_selected" >
-							<select class="imagess"  onchange="diaryBg();">
-								<option value="0" >선택 </option>
-								<option value="1" >하트 </option>
-								<option value="2">별</option>
-							</select>
-							&nbsp;
-							<input type="radio" name="imgBB" value="auto" onchange="imgBB(this);" checked>&nbsp;기본
-							<label class='radio-wrap'>
-								<input type='radio' name='imgBB'  value='cover'  onchange="imgBB(this);" >
-								<i class='cover-icon'></i>
-							</label>
-							<label class='radio-wrap'>
-								<input type='radio' name='imgBB'  value='contain'  onchange="imgBB(this);">
-								<i class='contain-icon'></i>
-							</label>
-							<a id="colorChoice2" href="javascript:void(0);"><img  src="images/fill_color-512.png" width="8%" ></a>
-							<div id="colorchart2" class="hidden"></div>
-						</td> -->
-						<td>
-						</td>
-						<td>
-							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="25px"></a>
+						<td style="text-align:center">
+							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="25px"></a>&nbsp;
 							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="20px"></a>
+						</td>
+						<td id='imageOp_selected'>
+							<a href="javascript:void(0)"
+								data-target="#layerpop2" data-toggle="modal">
+								<img src="images/pickture_icon.png"
+									height="20px">
+							</a>&nbsp;
+							<a id="colorChoice2" href="javascript:void(0);">
+								<img  src="images/fill_color-512.png" width="25px;" >
+							</a>
+							<div id="colorchart2" class="hidden"></div>
+							<div class="modal fade" id="layerpop2">
+							<!--
+							$('#modal_id').modal({backdrop: 'static'});
+							modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
+							(닫기버튼을 눌러야만 닫힌다)
+							-->
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<!-- header -->
+										<div class="modal-header">
+											<!-- 닫기(x) 버튼 -->
+											<button type="button" class="close" data-dismiss="modal">×</button>
+											<!-- header title -->
+											<h4 class="modal-title">배경 이미지 삽입 </h4>
+										</div>
+										<!-- body -->
+										<div class="modal-body text-center">
+											<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
+												style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
+											<div id='bgpreview' style='width:40%;height:150px'></div>
+											<br>
+											배경 이미지를 선택해주세요<br>
+											<form id='frm' name="frm" method="post" enctype="multipart/form-data">
+												<input type="text" id="filename2" class="fileInputTextbox" readonly="readonly" disabled>
+												<div class="fileInputDiv">
+													<input type="button" value="첨 부 파 일" class="fileInputBtn" >
+													<input type="file" name="file2" id="file2" onchange="javascript:$('#filename2').val($(this).val());"
+														onclick="uploadDiaryBg();">
+												</div>
+											</form>
+											<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
+		
+											<div>
+												<input type="radio" name="imgBB" value="auto" onchange="imgBB(this);" checked>
+												&nbsp;기본
+												<label class='radio-wrap'>
+													<input type='radio' name='imgBB'  value='cover'  onchange="imgBB(this);" >
+													<i class='cover-icon'></i>
+												</label>
+												<label class='radio-wrap'>
+													<input type='radio' name='imgBB'  value='contain'  onchange="imgBB(this);">
+													<i class='contain-icon'></i>
+												</label>
+											</div>
+										</div>
+										<!-- Footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												onclick="$('#bgpreview').css('background', 'images/diaryBackgroundImages/' + diaryBgImg)">
+												미리보기
+											</button>
+											<button type="button" class="btn btn-default"
+												onclick="diaryBg(); $('#layerpop').modal('hide');">
+												OK
+											</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal"
+												onclick="refreshFilediv();">
+												취소
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</td>
 						<td>
 							<input type="button" data-toggle="collapse" id="tagadddbtn" value="태그">
@@ -1019,10 +1085,10 @@
 						</td>
 					</tr>
 				</table>
-				<!--
+				
 				<input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>
-				-->
-				<textarea id="dhtmlText" name="content" style="width:0"></textarea>
+				
+				<textarea id="dhtmlText" name="content" ></textarea>style="width:0"
 				<!--
 				<img src="images/marker.png" id="kae" draggable="true" ondragstart="drag(event);">
 				<iframe src="clipboard.do" id="clipboard"></iframe>

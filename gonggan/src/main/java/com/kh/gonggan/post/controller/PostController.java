@@ -39,6 +39,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.blog.model.service.BlogService;
@@ -936,4 +938,66 @@ public class PostController {
 		return msg;
  
 	}
+	
+	@RequestMapping(value="/updiarybg.do", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String uploadDiarybg(MultipartHttpServletRequest request) {
+		
+		String msg = "실패";
+
+		MultipartFile multipartFile = request.getFile("file2");
+		
+		long current = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		File  renameFile;
+		String originalFileName = multipartFile.getName();
+		String[] originalFileNameSplit;
+		
+		try {
+			
+			multipartFile.transferTo(renameFile = new File(
+					"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/diaryBackgroundImages/"
+							+ "diarybg" + sdf.format(new Date(current))
+							+ ("." + (originalFileNameSplit =
+							originalFileName.split("\\."))[originalFileNameSplit.length-1])));
+			
+			msg = renameFile.getName();
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return msg;
+	}
+	
+	@RequestMapping(value="/deldiarybg.do", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String deleteDiarybg(@RequestParam String diaryBgImg) {
+		
+		String msg = "";
+		File existFile;
+		
+		File  renameFile;
+		
+		try {
+			
+			existFile = new File(
+					"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/diaryBackgroundImages/"
+					+ diaryBgImg);
+			if(existFile.exists())
+				if(existFile.delete())
+	                System.out.println("파일삭제 성공");
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return msg;
+	}
+	
 }

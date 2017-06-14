@@ -200,9 +200,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join book using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>
 	
 	<select id="usermovie" parameterType="Map" resultMap="postResult">
@@ -210,9 +210,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join movie using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>
 	
 	<select id="usermusic" parameterType="Map" resultMap="postResult">
@@ -220,9 +220,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join music using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>
 	
 	<select id="userreview" parameterType="Map" resultMap="postResult">
@@ -230,9 +230,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join review using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>
 	
 	<select id="userplace" parameterType="Map" resultMap="postResult">
@@ -240,9 +240,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join place using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>
 	
 	<select id="usernews" parameterType="Map" resultMap="postResult">
@@ -250,9 +250,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join news using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>
 	
 	<select id="userdiary" parameterType="Map" resultMap="postResult">
@@ -260,9 +260,9 @@
 				(select rownum r, subquery.*
 				from (select *
 						from post right join diary using(post_id)
+						where writer_id = #{writer_id}
 						) subquery)
-				where (r between to_number(#{rownum}) and to_number(#{rownum2}))
-				and writer_id = #{writer_id}
+				where r between to_number(#{rownum}) and to_number(#{rownum2})
 	</select>	
 	
 	<select id="pcontentsearch" parameterType="Map" resultMap="postResult">
@@ -352,6 +352,10 @@
 	SELECT * FROM ( SELECT ROWNUM AS RNUM, GOOD_COUNT, POST_ID, CATEGORY, WRITER_ID, POST_DATE
 	FROM (SELECT * FROM POST ORDER BY POST_ID DESC) )
    <!-- <![CDATA[ WHERE RNUM<=8 ]]> -->
+   </select>
+   
+   <select id="plist_myhome" parameterType="String" resultMap="postResult">
+	SELECT * FROM post where writer_id = #{writer_id}
    </select>
 
 	<select id="nplist_index2" parameterType="String" resultMap="postResult">

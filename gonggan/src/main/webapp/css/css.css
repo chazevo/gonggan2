@@ -91,7 +91,7 @@ body.searchAll table table tbody:not(.except) th span {
 
 body.searchAll table table tbody.except th span {
 	color:black;
-	/*width: 370px;*/
+	width: 370px;
 	display:inline-block;
 	text-overflow:ellipsis;
 	overflow:hidden;
@@ -769,10 +769,10 @@ a.loginbox:hover {
 }
 
 .contentArea {
-	padding-top:80px;
-	padding-bottom:80px;
-	padding-left:20px;
-	padding-right:20px;
+	padding-top:200px;
+	padding-bottom:200px;
+	padding-left:100px;
+	padding-right:100px;
 	border:1px solid #ebebeb;
 }
 
@@ -1687,7 +1687,7 @@ hr {
 	border: 1px solid gray;
 }
 
-#blogControll .fileInputTextbox {
+#blogControll .fileInputTextbox, #imgUploadDiv .fileInputTextbox {
 	width:60%;
 	float:left;
 }
@@ -1702,7 +1702,7 @@ input[disabled=true] {
 }
 
 
-.fileInputBtn {
+#blogControll .fileInputBtn {
 	width: 100%;
 	height: 100%;
 	border: 1px solid #97A1AD;
@@ -1711,7 +1711,7 @@ input[disabled=true] {
 	position:absolute;
 }
 
-.mypage .fileInputBtn {
+.mypage .fileInputBtn, #imgUploadDiv .fileInputBtn, #layerpop2 .fileInputBtn {
 	width: 100%;
 	height: 100%;
 	border: 1px solid #97A1AD;

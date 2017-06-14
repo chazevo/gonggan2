@@ -20,6 +20,11 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public List<Book> selectAll_myhome(String writer_id) {
+		return bookDao.selectAll_myhome(writer_id);
+	}
+	
+	@Override
 	public Book bookDetail(int postId) {
 		return bookDao.bookDetail(postId);
 	}

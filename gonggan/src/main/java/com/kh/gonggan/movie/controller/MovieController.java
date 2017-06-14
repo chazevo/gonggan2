@@ -95,7 +95,6 @@ public class MovieController {
 		List<Movie> result = ((PostMovie) gson.fromJson(response_.toString(), type)).getItems();
 		for (Movie m : result)  {
 			m.setDirector(m.getDirector().split("\\|")[0]);
-			//System.out.println(m.getDirector());
 		}
 		
 		mv.setViewName("searchAll");
@@ -105,9 +104,12 @@ public class MovieController {
 		
 		return mv;
 	}
+	
 	@RequestMapping(value="/moviesearch2.do",produces={"application/json"} )
 	@ResponseBody
-	public String searchMovie2(ModelAndView mv, @RequestParam String keyword, HttpSession session){
+	public String searchMovie2(ModelAndView mv, HttpSession session,
+			@RequestParam int start, @RequestParam int display,
+			@RequestParam String keyword) {
 
 		List<Movie> searchMovieList = new ArrayList<Movie>();
 		
@@ -125,7 +127,8 @@ public class MovieController {
 		try {
 			
 			String text = URLEncoder.encode(keyword, "UTF-8");
-			String apiURL = "https://openapi.naver.com/v1/search/movie?query="+ text; // json 결과
+			String apiURL = "https://openapi.naver.com/v1/search/movie?query="+ text
+					+ "&start=" + start + "&display=" + display; // json 결과
 			//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
 			
 			URL url = new URL(apiURL);

@@ -122,6 +122,11 @@ public class PostSericeImpl implements PostService{
 	   }
 	
 	@Override
+	public List<Post> selectAll_myhome(String writer_id) {
+	      return postDao.selectAll_myhome(writer_id);
+	}
+	
+	@Override
 	public List<Post> selectNeighborAll_index2(String member_id) {
 	      return postDao.selectNeighborAll_index2(member_id);
 	}

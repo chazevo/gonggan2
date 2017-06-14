@@ -1,4 +1,5 @@
-var rownum = 1;
+var start = 1;
+var display = 8;
 var maxRownum;
 var Ca = /\+/g;
 
@@ -37,14 +38,25 @@ function selectMusic(videoId, title, thumbnail) {
 }
 
 function selectSubmit(){
-
-	while(document.getElementById("listbody").rows.length > 0)
-		document.getElementById("listbody").deleteRow(0);
 	
 	if ($("input[name=keyword]").val() == "") {
 		alert("키워드를 입력해주세요! ");
 		return;
 	}
+	
+	while(document.getElementById("listbody").rows.length > 0)
+		document.getElementById("listbody").deleteRow(0);
+
+	document.getElementById('submit').action = assignUrl();
+	document.getElementById('submit').submit();
+
+	requestList(start = 1);
+	
+}
+
+function assignUrl() {
+
+	var url;
 	
 	if(categoryval == 0)
 		url = "booksearch.do";
@@ -55,37 +67,24 @@ function selectSubmit(){
 	else if(categoryval == 2)
 		url = "musicpost.do";
 	else if(categoryval == 3)
-		document.getElementById('submit').action = "넘길 주소";
+		url = "넘길 주소";
 	else if(categoryval == 4)
 		url = "newssearch.do";
 	
-	document.getElementById('submit').action = url;
-	document.getElementById('submit').submit();
-
-	//requestList(url);
-	
+	return url;
 }
 
-function requestList(url) {
+function requestList(start) {
 	
-	var url;
-	var rownum2;
-
-	/*
-	if (maxRownum - val < 8)
-		var rownum2 = maxRownum;
-	else rownum2 = rownum + 7;
-	*/
-
 	$.ajax({
-		url: url,
+		url: assignUrl(),
 		data: {
-			rownum: rownum,
-			rownum2: rownum2,
+			start: start,
+			display: display,
 			keyword:$("input[name=keyword]").val()
 		},
 		success: function(data) {
-			rownum = rownum2 + 1;
+			start = start + display;
 			callbackList(data);
 		},
 		error: function(data,status,error) {
@@ -181,5 +180,11 @@ function callbackList(data) {
 				+ "</colgroup>");
 		
 	}
+	if (start >= 100) {
+		$(".moreBtb").text("더이상 데이터가 존재하지 않습니다.");
+		return;
+	}
+		
+	$(".moreBtb").fadeOut(1000);
 		
 }

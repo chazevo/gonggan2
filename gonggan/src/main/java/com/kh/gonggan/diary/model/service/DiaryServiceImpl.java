@@ -13,8 +13,13 @@ public class DiaryServiceImpl implements DiaryService{
 	DiaryDao diaryDao;
 
 	@Override
-	public List<Diary> selectAll_index2(){
+	public List<Diary> selectAll_index2() {
 		return diaryDao.selectAll_index2();
+	}
+	
+	@Override
+	public List<Diary> selectAll_myhome(String writer_id) {
+		return diaryDao.selectAll_myhome(writer_id);
 	}
 	
 	@Override

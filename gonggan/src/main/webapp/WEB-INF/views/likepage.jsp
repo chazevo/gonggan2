@@ -55,21 +55,20 @@
 							&nbsp;${i.member_id}
 						</a>
 					</td>
-					<c:if test="${i.member_id eq sessionScope.loginUser.getMember_id()}">
-					<td></td>
-					</c:if>
-					<c:if test='${neighYn =="Y"}'>
 					<c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
-					<td>
-						<button id="neighborBtn" class="neighborY" onclick="rejectNeig('${i.member_id}')">이웃친구</button>
-					</td>
-					</c:if>
-					</c:if>
-					<c:if test='${neighYn =="N"}'>
-					<td>
-						<button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
-					</td>
-					</c:if>
+               <c:if test='${neighYn =="Y"}'>
+               <c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
+               <td>
+                  <button id="neighborBtn" class="neighborY" onclick="rejectNeig('${i.member_id}')">이웃친구</button>
+               </td>
+               </c:if>
+               </c:if>
+               <c:if test='${neighYn =="N"}'>
+               <td>
+                  <button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
+               </td>
+               </c:if>
+               </c:if>
 				</tr>
 			</c:forEach>
 		</c:if>

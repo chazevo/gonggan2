@@ -21,6 +21,10 @@
 		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, MUSIC_NUM, TITLE FROM (SELECT * FROM MUSIC ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
 	</select>
 	
+   <select id="musiclist_myhome" parameterType="String" resultMap="musicResult">
+	SELECT * FROM post right join music using (post_id) where writer_id = #{writer_id}
+   </select>
+   
 	<select id="musicdetail" resultMap="musicResult" parameterType="int">
 	select * from music where post_id = #{postId}
 	</select>

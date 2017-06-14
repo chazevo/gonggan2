@@ -20,7 +20,7 @@ function requestList(val) {
 	
 	//if (maxRownum - val < 20)
 	if (maxRownum - val < 8)
-		var rownum2 = maxRownum;
+		rownum2 = maxRownum;
 	//else rownum2 = rownum + 19;
 	else rownum2 = rownum + 7;
 
@@ -238,19 +238,19 @@ function callbackList(data) {
 			str = "";
 			break;
 		case "music":
-			str = "music";
+			str = "<img src='images/music_icon.png' width='15px'>";
 			break;
 		case "book":
 			str = "book";
 			break;
 		case "movie":
-			str = "movie";
+			str = "<img src='images/video_icon.png' width='20px'>";
 			break;
 		case "review":
-			str = "review";
+			str = "<img src='images/review_icon.png' width='40px'>";
 			break;
 		case "news":
-			str = "news";
+			str = "<img src='images/news_icon.png' width='30px'>";
 			break;
 		}
 		
@@ -259,6 +259,7 @@ function callbackList(data) {
 			td = document.createElement("td");
 			td.colSpan = "2";
 			td.style.textAlign = "left";
+			td.style.padding = "3px";
 			td.innerHTML = str;
 			tr.appendChild(td);
 			table.appendChild(tr);
@@ -269,20 +270,19 @@ function callbackList(data) {
 		td.colSpan = "2";
 		td.style.position = "relative";
 		td.className = "blogHomeContent";
-		td.style.height = "170px";
-		td.style.overflow = "hidden";
-		td.style.textOverflow = "ellipsis";
+		td.style.height = "160px";
 
 		if (photoPath != imgVal) {
 			td.style.backgroundImage = "url(uploadImages/" + photoPath + ")";
 			td.style.backgroundSize = "100% 100%";
 		}
-		
-		td.innerHTML = "<a data-fancybox data-src='pdetail.do?"
-			+ "postId=" + postId
-			+ "&writerId=" + writerId + "'>"
-			+ decodeURIComponent(content.replace(Ca, " "))
-			+ "</a>";
+
+		td.innerHTML = "<div style='overflow:hidden;text-overflow:ellipsis'>"
+				+ "<a data-fancybox data-src='pdetail.do?"
+				+ "postId=" + postId
+				+ "&writerId=" + writerId + "'>"
+				+ decodeURIComponent(content.replace(Ca, " "))
+				+ "</a>";
 		
 		addMark.setAttribute("onclick", 
 				"openFancybox('/gonggan/pdetail.do?postId=" + postId

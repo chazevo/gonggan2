@@ -32,10 +32,15 @@ public class MovieDao {
 		return (List<Movie>) sqlSession.selectList("moviemapper.movielist", map);
 	}
 	
-	public List<Movie> selectAll_index2(){
+	public List<Movie> selectAll_index2() {
 		      return (List<Movie>) sqlSession.selectList("moviemapper.movielist_index2");
 	}
 
+	public List<Movie> selectAll_myhome(String writer_id) {
+	      return (List<Movie>) sqlSession.selectList(
+	    		  "moviemapper.movielist_myhome", writer_id);
+}
+	
 	public Movie movieDetail(int postId) {
 		return (Movie) sqlSession.selectOne("moviemapper.moviedetail", postId);
 	}

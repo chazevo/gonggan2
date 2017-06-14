@@ -1,4 +1,5 @@
 var postId;
+var category = "all";
 var Ca = /\+/g;
 var str = "";
 
@@ -91,13 +92,20 @@ function requestList() {
 	});
 }
 
-function requestCategoryList(category) {
-
+function requestCategoryList(category, val) {
+	
+	var rownum2;
+	
+	if (maxRownum - val < 8)
+		rownum2 = maxRownum;
+	else rownum2 = rownum + 7;
+	
+	alert(val + ", " + rownum2);
 	$.ajax({
 				url: "/gonggan/postlist.do",
 				//url: "/gonggan/userpostlist.do",
 				data: { writer_id : writer_id,
-					rownum: 1, rownum2: 1,
+					rownum: val, rownum2: rownum2,
 					category: category
 				},
 				success: function(data) {
@@ -223,8 +231,10 @@ function callbackList2(data) {
 	$('.CalendarHeader').hide();
 	$('#listbody').removeClass("cal");
 	
+	/*
 	while (document.getElementById("listbody").rows.length > 0 )
 		document.getElementById("listbody").deleteRow(0);
+	*/
 	
 	for (var j in jsonArr.list){
 		
@@ -254,6 +264,12 @@ function callbackList2(data) {
 			reqCommentList(postId);
 		
 	}
+	if (rownum >= maxRownum) {
+		$("#div_Loading").html("더이상 포스트가 존재하지 않습니다.");
+		$("#div_Loading").show();
+		return;
+	}
+	$("#div_Loading").fadeOut(100);
 }
 
 function reqCommentList(postId) {

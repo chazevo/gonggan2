@@ -26,10 +26,14 @@ public class MusicDao {
 		return (List<Music>) sqlSession.selectList("musicmapper.musiclist", map);
 	}
 	
-	public List<Music> selectAll_index2(){
+	public List<Music> selectAll_index2() {
 		return (List<Music>) sqlSession.selectList("musicmapper.musiclist_index2");
 	}
-	
+
+	public List<Music> selectAll_myhome(String writer_id) {
+		return (List<Music>) sqlSession.selectList(
+				"musicmapper.musiclist_myhome", writer_id);
+	}
 
 	public Music musicDetail(int postId) {
 		return (Music) sqlSession.selectOne("musicmapper.musicdetail", postId);

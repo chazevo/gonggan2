@@ -8,5 +8,6 @@ public interface NewsService {
 	
 	List<News> selectAll(int rownum, int rownum2);
 	List<News> selectAll_index2();
+	List<News> selectAll_myhome(String writer_id);
 	News newsDetail(int postId);
 }

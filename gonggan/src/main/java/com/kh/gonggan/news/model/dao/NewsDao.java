@@ -34,6 +34,11 @@ public class NewsDao {
 	public List<News> selectAll_index2(){
 		return (List<News>) sqlSession.selectList("newsmapper.newslist_index2");
 	}
+	
+	public List<News> selectAll_myhome(String writer_id) {
+		return (List<News>) sqlSession.selectList(
+				"newsmapper.newslist_myhome", writer_id);
+	}
 
 	public News newsDetail(int postId) {
 		return (News) sqlSession.selectOne("newsmapper.newsdetail", postId);

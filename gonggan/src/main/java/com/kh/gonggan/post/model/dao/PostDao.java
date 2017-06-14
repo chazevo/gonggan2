@@ -165,6 +165,11 @@ public class PostDao {
 	      return (List<Post>) sqlSession.selectList("postmapper.plist_index2");
 	}
 
+	public List<Post> selectAll_myhome(String writer_id) {
+	      return (List<Post>) sqlSession.selectList(
+	    		  "postmapper.plist_myhome", writer_id);
+	}
+	
 	public List<Post> selectNeighborAll_index2(String member_id) {
 		return (List<Post>) sqlSession.selectList("postmapper.nplist_index2", member_id);
 	}

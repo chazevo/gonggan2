@@ -20,11 +20,13 @@
 <script type="text/javascript">
 	var loginUser = '${sessionScope.loginUser.getMember_id()}';
 	var postId = '${postId}';
+	var hideComment = '${HideComment}';
 	
 	window.onload = function() {
 		//visit();
 		
-		document.getElementById("comment_content").focus();
+		if (hideComment != 'Y')
+			document.getElementById("comment_content").focus();
 		
 		if (loginUser != "")
 			checkGood(loginUser, postId);

@@ -81,6 +81,20 @@ System.out.println(str);
 	var lastdate = <%= lastdate %>;
 	var imgVal = <%= imgVal %>;
 
+	var maxRownum;
+	var plistSize = ${plistSize};
+	var reviewlistSize = ${reviewlistSize};
+	var newslistSize = ${newslistSize}; 
+	var musiclistSize = ${musiclistSize};
+	var reviewlistSize = ${reviewlistSize};
+	var diarylistSize = ${diarylistSize};
+	var movielistSize = ${movielistSize};
+	var booklistSize = ${booklistSize};
+	var placelistSize = 0;
+
+	var initPosition;
+	var prevPosition;
+	
 	jQuery.timeago.settings.strings = {
 			suffixAgo: "전",
 			suffixFromNow: "후",
@@ -142,6 +156,30 @@ System.out.println(str);
 			}
 		});
 		
+		$("#div_Loading").hide();
+
+		$(window).scroll(function() {
+			
+			initPosition = $(window).scrollTop()
+			
+			if (initPosition > prevPosition) {
+				if  ($(document).height() == $(window).scrollTop() + $(window).height()) {
+					
+					if(maxRownum >= rownum) {
+						alert("maxRownum : " + maxRownum + ", rownum : " + rownum);
+						$("#div_Loading").show();
+						
+						if (category == "all")
+							//requestList();
+							;
+						else
+							requestCategoryList(category, rownum);
+					}
+				}
+			}
+			
+			prevPosition = initPosition;
+		});
 		
 		/*
 		$(".hover").onblur(function(){
@@ -280,8 +318,8 @@ System.out.println(str);
 				<ul class="nav navbar-nav navbar-right">
 					<c:if test='${blog.diary_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('diary');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript: maxRownum = diarylistSize; $('#listbody').html(''); requestCategoryList(category = 'diary', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>일기</c:if>
 							<c:if test='${blog.languages eq "eng" }'>diary</c:if>
 							<c:if test='${blog.languages eq "jp" }'>日記</c:if>
@@ -290,8 +328,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.place_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('place');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript: maxRownum = placelistSize; $('#listbody').html(''); requestCategoryList(category = 'place', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>장소</c:if>
 							<c:if test='${blog.languages eq "eng" }'>place</c:if>
 							<c:if test='${blog.languages eq "jp" }'>場所</c:if>
@@ -300,8 +338,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.review_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('review');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript: maxRownum = reviewlistSize; $('#listbody').html(''); requestCategoryList(category = 'review', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>리뷰</c:if>
 							<c:if test='${blog.languages eq "eng" }'>review</c:if>
 							<c:if test='${blog.languages eq "jp" }'>レビュー</c:if>
@@ -310,8 +348,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.music_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('music');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript: maxRownum = musiclistSize; $('#listbody').html(''); requestCategoryList(category = 'music', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>음악</c:if>
 							<c:if test='${blog.languages eq "eng" }'>music</c:if>
 							<c:if test='${blog.languages eq "jp" }'>音楽</c:if>
@@ -320,8 +358,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.movie_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('movie');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript:maxRownum = movielistSize; $('#listbody').html(''); requestCategoryList(category = 'movie', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>영화</c:if>
 							<c:if test='${blog.languages eq "eng" }'>movie</c:if>
 							<c:if test='${blog.languages eq "jp" }'>映画</c:if>
@@ -330,8 +368,8 @@ System.out.println(str);
 					</c:if>
 					<c:if test='${blog.news_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('news');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript:maxRownum = newslistSize; $('#listbody').html(''); requestCategoryList(category = 'news', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>뉴스</c:if>
 							<c:if test='${blog.languages eq "eng" }'>news</c:if>
 							<c:if test='${blog.languages eq "jp" }'>ニュース</c:if>
@@ -339,8 +377,8 @@ System.out.println(str);
 					</li>
 					</c:if>
 					<li>
-						<a href="javascript:rownum=1; requestCategoryList('news');"
-							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6');">
+						<a href="javascript:maxRownum = booklistSize; $('#listbody').html(''); requestCategoryList(category = 'book', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
 							<c:if test='${blog.languages eq "kor" }'>책</c:if>
 							<c:if test='${blog.languages eq "eng" }'>book</c:if>
 							<c:if test='${blog.languages eq "jp" }'>本</c:if>
@@ -369,11 +407,12 @@ System.out.println(str);
 									<a href="uploadform.do?writer_id=${param.writer_id}">포스트 쓰기 </a>
 								</c:if>
 								<label class='radio-wrap'>
-									<input type='radio' name='listType' id='calendar'  onclick='requestCalList(year, month);' checked>
+									<input type='radio' name='listType' id='calendar'  
+										onclick=' category = "all requestCalList(year, month);' checked>
 									<i class='calendar-icon'></i>
 								</label>
 								<label class='radio-wrap'>
-									<input type='radio'  name='listType' id='list' onclick='requestList();'>
+									<input type='radio'  name='listType' id='list' onclick=' category = "all"; requestList();'>
 									<i class='list-icon'></i>
 								</label>
 							</th>
@@ -423,6 +462,9 @@ System.out.println(str);
 				</div>
 			</div>
 		</section>
+		<div id="div_Loading" style="font-size:11pt; width:100%;text-align:center">
+			<img height='70px' src="images/InternetSlowdown_Day.gif">
+		</div>
 	</div>
 </body>
 </html>

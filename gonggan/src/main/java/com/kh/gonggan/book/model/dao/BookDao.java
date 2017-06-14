@@ -20,6 +20,11 @@ public class BookDao {
 		return (List<Book>) sqlSession.selectList("bookmapper.booklist_index2");
 	}
 
+	public List<Book> selectAll_myhome(String writer_id) {
+		return (List<Book>) sqlSession.selectList(
+				"bookmapper.booklist_myhome", writer_id);
+	}
+	
 	public Book bookDetail(int postId) {
 		return (Book) sqlSession.selectOne("bookmapper.bookdetail", postId);
 	}

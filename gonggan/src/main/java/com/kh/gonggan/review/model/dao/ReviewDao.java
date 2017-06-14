@@ -25,10 +25,15 @@ public class ReviewDao {
 		return (List<Review>) sqlSession.selectList("reviewmapper.Reviewlist");
 	}
 	
-	public List<Review> selectAll_index2(){
+	public List<Review> selectAll_index2() {
 		return (List<Review>) sqlSession.selectList("reviewmapper.reviewlist_index2");
 	}
 
+	public List<Review> selectAll_myhome(String writer_id) {
+		return (List<Review>) sqlSession.selectList(
+				"reviewmapper.reviewlist_myhome", writer_id);
+	}
+	
 	public Review reviewDetail(int postId) {
 		return (Review) sqlSession.selectOne("reviewmapper.reviewdetail", postId);
 	}

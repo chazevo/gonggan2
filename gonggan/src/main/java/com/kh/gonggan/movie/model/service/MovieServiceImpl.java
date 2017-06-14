@@ -25,8 +25,12 @@ public class MovieServiceImpl implements MovieService{
 	}
 	
 	@Override
-	public List<Movie> selectAll_index2(){
+	public List<Movie> selectAll_index2() {
 		return movieDao.selectAll_index2();
+	}
+	@Override
+	public List<Movie> selectAll_myhome(String writer_id) {
+		return movieDao.selectAll_myhome(writer_id);
 	}
 	
 	@Override

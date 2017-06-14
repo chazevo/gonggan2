@@ -14,9 +14,15 @@
 				order by 5 desc) subquery "
 				where rownum between #{rownum} and #{rownum2}
 	</select>
+	
 	<select id="reviewlist_index2" resultMap="reviewResult">
 		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, REVIEW_NUM, REVIEW_CONTENT FROM (SELECT * FROM REVIEW ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
 	</select>
+	
+	<select id="reviewlist_myhome" parameterType="review" resultMap="reviewResult">
+	select * from post right join review using (post_id) where writer_id = #{writer_id}
+	</select>
+	
 	
 	<select id="reviewdetail" resultMap="reviewResult" parameterType="int">
 	select * from review where post_id = #{postId}

@@ -20,10 +20,14 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 	@Override
-	public List<Review> selectAll_index2(){
+	public List<Review> selectAll_index2() {
 		return reviewDao.selectAll_index2();
 	}
-	
+
+	@Override
+	public List<Review> selectAll_myhome(String writer_id) {
+		return reviewDao.selectAll_myhome(writer_id);
+	}
 	@Override
 	public Review reviewDetail(int postId) {
 		return reviewDao.reviewDetail(postId);

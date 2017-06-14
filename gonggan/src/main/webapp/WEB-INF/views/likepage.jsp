@@ -50,12 +50,20 @@
       <c:set var="index" value='0'></c:set>
          <c:forEach items="${goodList}" var="i" begin="0">
             <tr>
-               <td style="height:50px;">
-                  <a href="myhome.do?writer_id=${i.member_id}" target="_blank">
-                     <img src="images/default.png" height="40px" class="img-circle">
-                     &nbsp;${i.member_id}
-                  </a>
-               </td>
+               <td>
+	               	<c:if test='${empty memberList[index].getProfile_photo() }'>
+	               		<a href="myhome.do?writer_id=${i.member_id}" target="_blank">
+							<img src="images/default.png" height="40px" class="img-circle">
+							&nbsp;${i.member_id}
+						</a>
+					</c:if>
+					<c:if test='${!empty memberList[index].getProfile_photo() }'>
+						<a href="myhome.do?writer_id=${i.member_id}" target="_blank">
+							<img src="images/profileImages/${ memberList[index].getProfile_photo()}" height="40px" class="img-circle">
+							&nbsp;${i.member_id}
+						</a>
+					</c:if>
+				</td>
                <c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
                   <c:if test='${neighYn[index]=="Y"}'>
                      <td>

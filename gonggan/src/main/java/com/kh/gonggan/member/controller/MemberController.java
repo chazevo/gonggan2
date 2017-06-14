@@ -147,6 +147,7 @@ public class MemberController {
 		return neighYn;
 	
 	} //이웃 신청
+
 	
 	@RequestMapping(value="/joinemailcheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
@@ -205,9 +206,9 @@ public class MemberController {
          
 		
 		System.out.println("marger : " + marger);
-		String savePath = marger + "src/main/webapp/images/profileImages";
+		String savePath = marger + "src/main/webapp/images/profileImages/";
 		System.out.println("savepath : " + savePath);
-		savePath = "/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/";
+		//savePath = "/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/";
 
 		
 		if (file.isEmpty()) {
@@ -361,7 +362,19 @@ public class MemberController {
 	@RequestMapping("selectMember.do")
 	public Member selectMember(@RequestParam String member_id, Model model){
 		Member selectMember = memberService.selectMember(member_id);
-		return null;
+		return selectMember;
+	}//회원 정보 상제 조회
+	@RequestMapping(value="selectMemberphoto.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String selectPhoto(@RequestParam String writer_id){
+		String result="없음";
+		Member selectMember = memberService.selectMember(writer_id);
+		System.out.println("selectmember .. :" +selectMember.getProfile_photo()+"member_id"+selectMember.getMember_id());
+		if(selectMember.getProfile_photo()!=null){
+			result=selectMember.getProfile_photo();
+		}
+		
+		return result;
 	}//회원 정보 상제 조회
 	
 	@RequestMapping("request.do")

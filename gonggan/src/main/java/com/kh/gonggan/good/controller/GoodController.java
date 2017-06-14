@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
+import com.kh.gonggan.member.model.service.MemberService;
 import com.kh.gonggan.member.model.vo.Member;
 import com.kh.gonggan.neighbor.model.service.NeighborService;
 
@@ -30,6 +31,8 @@ public class GoodController {
 	private GoodService goodService;
 	@Autowired
 	private NeighborService neighborService;
+	@Autowired
+	private MemberService memberService;
 	
 /*	@RequestMapping(value="/good.do", method=RequestMethod.POST)
 	public ModelAndView goodCount(@RequestParam int postId){
@@ -68,14 +71,19 @@ public class GoodController {
 		List<Good> goodList = goodService.goodList(postId);
 		String nlist = null;
 		ArrayList<String> neighYn = new ArrayList<String>();
+		Member mlist = null;
+		ArrayList<Member> memberList = new ArrayList<Member>();
 
 		for(int i = 0 ; i < goodList.size(); i++) {
 			nlist = neighborService.neighYn(((Member)session.getAttribute("loginUser")).getMember_id(),goodList.get(i).getMember_id());
+			mlist = memberService.selectMember(goodList.get(i).getMember_id());
 			neighYn.add(nlist); 
+			memberList.add(mlist);
 		}
 	      
 		mv.addObject("goodList",goodList);
 		mv.addObject("neighYn",neighYn);
+		mv.addObject("memberList",memberList);
 		mv.setViewName("likepage");
 	      
 		return mv;

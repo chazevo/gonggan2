@@ -79,6 +79,25 @@ function Neig(id){
 	
 	return returnValue;
 }
+function selectPhoto(id){
+
+	var returnValue;
+
+	$.ajax({
+		async:false,
+		url: "/gonggan/selectMemberphoto.do",
+		data: {
+			writer_id: id
+		},
+		success: function(data) {
+			returnValue = data;
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+	return returnValue;
+}
 
 
 function callbackSearchGood(data){
@@ -92,43 +111,52 @@ function callbackSearchGood(data){
 		document.getElementById("listbody").deleteRow(0);
 
 	for (var j in jsonArr.list) {
+		var result = selectPhoto(jsonArr.list[j].member_id);
+		alert(selectPhoto(jsonArr.list[j].member_id));
+		if(result != "없음"){
 
-		if(jsonArr.list[j].member_id == loginUser) {
+		tr = document.createElement("tr");
+		td = document.createElement("td");
+		td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">'
+			+'<img src="images/profileImages/'+result+'" height="40px" class="img-circle">'
+			+ jsonArr.list[j].member_id+'</a>';
+		tr.appendChild(td);
+		}else if(result == "없음"){
 			tr = document.createElement("tr");
 			td = document.createElement("td");
-
-			td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
+			td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">'
+				+'<img src="images/default.png" height="40px" class="img-circle">'
+				+ jsonArr.list[j].member_id+'</a>';
 			tr.appendChild(td);
+			
+		}
+		
+
+		if(jsonArr.list[j].member_id == loginUser) {
+
+			
 			td = document.createElement("td");
 			td.innerHTML = " ";
 			tr.appendChild(td);
-			document.getElementById("listbody").appendChild(tr);
 		}
 		else if(jsonArr.list[j].member_id != loginUser) {
 			if(Neig(jsonArr.list[j].member_id) == "Y") {
-				tr = document.createElement("tr");
-				td = document.createElement("td");
-
-				td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
-				tr.appendChild(td);
+				
 				td = document.createElement("td");
 				td.innerHTML = '<button id="neighborBtn" class="neighborY" onclick="rejectNeig(\''
 					+jsonArr.list[j].member_id + '\');">이웃친구</button></td>';
 				tr.appendChild(td);
-				document.getElementById("listbody").appendChild(tr);
 			} else if(Neig(jsonArr.list[j].member_id)=="N") {
-				tr = document.createElement("tr");
-				td = document.createElement("td");
 
-				td.innerHTML ='<a href="myhome.do?writer_id=${i.member_id}" target="_blank">' + jsonArr.list[j].member_id+'</a>';
-				tr.appendChild(td);
+
 				td = document.createElement("td");
 				td.innerHTML = '<button id="neighborBtn" class="neighborN" onclick="likeNeigh(\''
 					+ jsonArr.list[j].member_id + '\');">'
 					+ '이웃친구</button></td>';
 				tr.appendChild(td);
-				document.getElementById("listbody").appendChild(tr);
 			}
 		}
+
+		document.getElementById("listbody").appendChild(tr);
 	}
 }

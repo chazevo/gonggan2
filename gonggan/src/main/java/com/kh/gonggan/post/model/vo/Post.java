@@ -12,11 +12,30 @@ public class Post {
 	private int music_num;
 	private int diary_num;
 	private int book_num;
+	private int movie_num;
+	private int news_num;
+	private int review_num;
+	private String writer_id;
+	private String diary_content;
+	private String book_content;
+	private String movie_content;
+	private String music_content;
+	private String news_content;
+	private String review_content;
+	private String category;
+	private String shar_yn;
+	private String open_yn;
+	private int goodCnt;
+	private String photo_path;
+	private Date post_date;
+	private int comment_cnt;
+	private String bg_image;
+	
 	
 	public Post(int post_id, int music_num, int diary_num, int book_num, int movie_num, int news_num, int review_num,
 			String writer_id, String diary_content, String book_content, String movie_content, String music_content,
 			String news_content, String review_content, String category, String shar_yn, String open_yn, int goodCnt,
-			String photo_path, Date post_date, int comment_cnt) {
+			String photo_path, Date post_date, int comment_cnt, String bg_image) {
 		super();
 		this.post_id = post_id;
 		this.music_num = music_num;
@@ -39,26 +58,9 @@ public class Post {
 		this.photo_path = photo_path;
 		this.post_date = post_date;
 		this.comment_cnt = comment_cnt;
+		this.bg_image = bg_image;
 	}
 
-	private int movie_num;
-	private int news_num;
-	private int review_num;
-	private String writer_id;
-	private String diary_content;
-	private String book_content;
-	private String movie_content;
-	private String music_content;
-	private String news_content;
-	private String review_content;
-	private String category;
-	private String shar_yn;
-	private String open_yn;
-	private int goodCnt;
-	private String photo_path;
-	private Date post_date;
-	private int comment_cnt;
-	
 	public int getComment_cnt() {
 		return comment_cnt;
 	}
@@ -283,6 +285,14 @@ public class Post {
 	}
 
 	
+	public String getBg_image() {
+		return bg_image;
+	}
+
+	public void setBg_image(String bg_image) {
+		this.bg_image = bg_image;
+	}
+
 	@Override
 	public String toString() {
 		return "Post [post_id=" + post_id + ", music_num=" + music_num + ", diary_num=" + diary_num + ", movie_num="

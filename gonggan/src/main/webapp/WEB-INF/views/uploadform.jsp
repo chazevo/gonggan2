@@ -30,7 +30,7 @@
 <script>
 
 	var loginUser = "${sessionScope.loginUser.getMember_id()}";
-
+	
 	Date.prototype.currTime = function(f) {
 		
 		if (!this.valueOf()) return " ";
@@ -79,18 +79,6 @@
 	*/
 	
 	$(document).ready(function() {
-
-		
-		 $("#frm").ajaxForm({
-				url: "updiarybg.do",
-				success: function(data) {
-					$('#loading').hide();
-					diaryBgImg = data;
-				},
-				error: function(data,status,error){
-					console.log("error : " + error);
-				}
-			});
 		
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
@@ -359,7 +347,7 @@
 							${blog.getTitle() }
 						</a>
 					</h2>
-					<h4>${blog.getContents() }</h4>
+					<h4 style="color:${blog.contents_color}">${blog.getContents() }</h4>
 				</div>
 				<div class="header-content-inner2">
 					<c:if test="${ param.writer_id eq sessionScope.loginUser.getMember_id()}">
@@ -618,7 +606,7 @@
 							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');">
 								<img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="25px" >
 							</a>&nbsp;
-							<a href="javascript:void(0)" onclick="$('#nrow').val('1'); $('#ncol').val('1');"
+							<a href="javascript:void(0);" onclick="$('#nrow').val('1'); $('#ncol').val('1');"
 								data-target="#layerpop" data-toggle="modal">
 								<img src="images/table_presentation_powerpoint_keynote_speech_business-512.png"
 									height="25px">
@@ -785,28 +773,31 @@
 										<div class="modal-body text-center">
 											<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
 												style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
-											<div id='bgpreview' style='width:40%;height:150px'></div>
+											<div style="height:150px;position:relative">
+												<div id='bgpreview' style='width:40%;height:150px;position:absolute;left:0;right:0;margin:auto'></div>
+											</div>
 											<br>
 											배경 이미지를 선택해주세요<br>
 											<form id='frm' name="frm" method="post" enctype="multipart/form-data">
 												<input type="text" id="filename2" class="fileInputTextbox" readonly="readonly" disabled>
 												<div class="fileInputDiv">
 													<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-													<input type="file" name="file2" id="file2" onchange="javascript:$('#filename2').val($(this).val());"
-														onclick="uploadDiaryBg();">
+													<input type="file" name="file2" id="file2"
+														onchange="javascript:$('#filename2').val($(this).val()); uploadDiaryBg();">
 												</div>
 											</form>
+											<input type="hidden" name="bg">
 											<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
 		
 											<div>
-												<input type="radio" name="imgBB" value="auto" onchange="imgBB(this);" checked>
+												<input type="radio" name="imgBB" value="auto" onchange="imgBBchange(this);" checked>
 												&nbsp;기본
 												<label class='radio-wrap'>
-													<input type='radio' name='imgBB'  value='cover'  onchange="imgBB(this);" >
+													<input type='radio' name='imgBB'  value='cover'  onchange="imgBBchange(this);" >
 													<i class='cover-icon'></i>
 												</label>
 												<label class='radio-wrap'>
-													<input type='radio' name='imgBB'  value='contain'  onchange="imgBB(this);">
+													<input type='radio' name='imgBB'  value='contain'  onchange="imgBBchange(this);">
 													<i class='contain-icon'></i>
 												</label>
 											</div>
@@ -814,11 +805,11 @@
 										<!-- Footer -->
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default"
-												onclick="$('#bgpreview').css('background', 'images/diaryBackgroundImages/' + diaryBgImg)">
+												onclick="preview();">
 												미리보기
 											</button>
 											<button type="button" class="btn btn-default"
-												onclick="diaryBg(); $('#layerpop').modal('hide');">
+												onclick="diaryBg(); $('#layerpop2').modal('hide');">
 												OK
 											</button>
 											<button type="button" class="btn btn-default" data-dismiss="modal"
@@ -1086,9 +1077,9 @@
 					</tr>
 				</table>
 				
-				<input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>
+				<!-- <input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>-->
 				
-				<textarea id="dhtmlText" name="content" ></textarea>style="width:0"
+				<textarea id="dhtmlText" name="content" style="width:0" ></textarea>
 				<!--
 				<img src="images/marker.png" id="kae" draggable="true" ondragstart="drag(event);">
 				<iframe src="clipboard.do" id="clipboard"></iframe>

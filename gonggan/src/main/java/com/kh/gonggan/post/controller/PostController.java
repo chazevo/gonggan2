@@ -252,6 +252,8 @@ public class PostController {
 					job.put("sharYn", p.getShar_yn());
 					job.put("openYn", p.getOpen_yn());
 					job.put("writerId", p.getWriter_id());
+					if (p.getCategory().equals("diary"))
+					job.put("bg", (p.getBg_image()==null ? "" : p.getBg_image()));
 					job.put("goodCnt", p.getGoodCnt() + "");
 					job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
 					job.put("year", cal.get(Calendar.YEAR) + "");
@@ -907,9 +909,12 @@ public class PostController {
 	}
 		
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
-	public ModelAndView upload(@RequestParam String loginUser,@RequestParam String category,@RequestParam String content,@RequestParam String open,@RequestParam String title, ModelAndView mv) throws Exception{
+	public ModelAndView upload(@RequestParam String loginUser,
+			@RequestParam String category,@RequestParam String content,
+			@RequestParam String open,@RequestParam String title, @RequestParam String bg,
+			ModelAndView mv) throws Exception{
 		
-		int pinsert = postService.pinsert(loginUser,category,content,title,open);
+		int pinsert = postService.pinsert(loginUser,category,content,title,open, bg);
 		
 		if (pinsert < 0) {
 			System.out.println("안됨");
@@ -950,7 +955,7 @@ public class PostController {
 		long current = System.currentTimeMillis();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		File  renameFile;
-		String originalFileName = multipartFile.getName();
+		String originalFileName = multipartFile.getOriginalFilename();
 		String[] originalFileNameSplit;
 		
 		try {

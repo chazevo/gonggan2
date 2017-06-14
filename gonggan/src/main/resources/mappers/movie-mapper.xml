@@ -32,6 +32,11 @@
 	FROM (SELECT * FROM MOVIE ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
 	</select>
 	
+   <select id="movielist_myhome" parameterType="String" resultMap="movieResult">
+	SELECT * FROM post right join movie using (post_id) where writer_id = #{writer_id}
+
+   </select>
+	
 	<select id="moviedetail" resultMap="movieResult" parameterType="int">
 	select * from movie where post_id = #{postId}
 	</select>

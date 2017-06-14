@@ -39,6 +39,6 @@ public interface PostService {
 	int maxRownum(String category);
 	List<Post> commentInOrder(String writer_id);
 	List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2);
-	int pinsert(String loginUser, String category,String content,String title,String open);
+	int pinsert(String loginUser, String category,String content,String title,String open, String bg);
 	int postDelete(int post_id, String loginUser);
 }

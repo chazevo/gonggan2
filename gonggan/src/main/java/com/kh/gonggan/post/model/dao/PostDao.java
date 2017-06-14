@@ -239,7 +239,7 @@ public class PostDao {
 	}
 	
 
-	public int pinsert(String loginUser, String category, String content,String title,String open) {
+	public int pinsert(String loginUser, String category, String content,String title,String open, String bg) {
 		Map<String, String> map = new HashMap<String, String>();
 		int post_id = (int) sqlSession.selectOne("postmapper.postid");
 		int pinsert = 0;
@@ -249,6 +249,7 @@ public class PostDao {
 		map.put("content",content);
 		map.put("title", title);
 		map.put("open", open);
+		map.put("bg", bg);
 		
 		System.out.println(open);
 		

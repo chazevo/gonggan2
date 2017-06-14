@@ -7,6 +7,10 @@ var locked = 0 ;
 var prev_val;
 var diaryBgImg;
 
+//var form = $("#frm")[0];
+//var formData = new FormData(form);
+var formData = new FormData();
+
 $(function() {
 	dateFunc();
 });
@@ -204,7 +208,8 @@ function imageChange(){
 function diaryBg() {
 	
 	je_doc.getElementById("contentArea").style.backgroundImage
-			= "images/diaryBackgroundImages" + diaryBgImg;
+			= "url('images/diaryBackgroundImages/" + diaryBgImg + "')";
+
 	/*
 	je_doc = document.getElementById('editor').contentWindow.document;
 	if($(".imagess").val()==0){
@@ -220,35 +225,36 @@ function diaryBg() {
 }
 
 function refreshFilediv() {
-	$("#frm .fileInputDiv").html("<input type='button' value='첨 부 파 일' class='fileInputBtn'>"
-			+ "<input type='file' id='file2' name='file2' accept='.gif,.jpeg,.jpg,.png'>");
-	$('#frm #filename').val("");
-	$('#bgpreview').css("background", "");
-	document.getElementById("file2").onchange = function() {
-		$('#frm #filename').val($(this).val());
-	};
-	$("#frm").ajaxForm({
-		url: "deldiarybg.do",
-		data: {diaryBgImg: diaryBgImg},
-		success: function(data) {
-			diaryBgImg = "";
-		},
-		error: function(data,status,error){
-			console.log("error : " + error);
-		}
-	});
+	
+	if ($('#frm #filename').val() != "") {
+		
+		$("#frm .fileInputDiv").html("<input type='button' value='첨 부 파 일' class='fileInputBtn'>"
+				+ "<input type='file' id='file2' name='file2' accept='.gif,.jpeg,.jpg,.png'>");
+		$('#frm #filename').val("");
+		$('#bgpreview').css("background", "");
+		document.getElementById("file2").onchange = function() {
+			$('#frm #filename').val($(this).val());
+		};
+		
+		$.ajax({
+			url: "deldiarybg.do",
+			data: {diaryBgImg: diaryBgImg},
+			success: function(data) {
+				diaryBgImg = data;
+				alert(data);
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+		});
+	}
 	
 	$("#frm").submit();
 }
 
-function imgBB(obj) {
-	
-	if (obj.value=="auto")
-		je_doc.getElementById("contentArea").style.backgroundSize="auto";
-	else if (obj.value=="contain")
-		je_doc.getElementById("contentArea").style.backgroundSize="contain";
-	else if (obj.value=="cover")
-		je_doc.getElementById("contentArea").style.backgroundSize="cover";
+function imgBBchange(obj) {
+	document.getElementById("bgpreview").style.backgroundSize=obj.value;
+	je_doc.getElementById("contentArea").style.backgroundSize=obj.value;
 }
 
 
@@ -588,7 +594,36 @@ function changeForm() {
 
 function uploadDiaryBg() {
 	$('#loading').show();
-	$("#frm").submit();
+	
+	formData.append("file2", $("#file2")[0].files[0]);
+	
+	$.ajax({
+		url: "updiarybg.do",
+		data: formData,
+		contentType: false,
+		processData: false,
+		method:"post",
+		/* 위에 세개 꼭 명시해줘야 함 */
+		success: function(data) {
+			$('#loading').hide();
+			diaryBgImg = data;
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+		 
+}
+
+function preview() {
+	var file = document.getElementById('file2').files[0];
+	var reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onload = function() {
+		//var output = document.getElementById(outputId);
+		//output.src = reader.result;
+		$("#bgpreview").css('backgroundImage', 'url(' + reader.result + ')');
+	}
 }
 
 function dateToday(date) {
@@ -628,9 +663,10 @@ function content_OK() {
 				$("input[name=title]").val(je_doc.getElementById("title").innerText);
 			}
 			
-			document.getElementById("#form").onsubmit = "";
+			document.getElementById("form").onsubmit = "";
 			
 			$("#dhtmlText").val(je_doc.body.innerHTML);
+			$("input[name=bg]").val(diaryBgImg);
 			$('#form').submit();
 			
 		} else return;
@@ -873,7 +909,7 @@ function callbackWlocationList(data) {
 
 function  wiconInnerHTML(icon) {
 	if ($("#category").val() == "diary")
-		je_doc.getElementById('weathertd').innerHTML = "<img src='images/weatherIcons/" + icon +"' width='50%'>";
+		je_doc.getElementById('weathertd').innerHTML = "<img src='images/weatherIcons/" + icon +"' width='40px'>";
 	else
 		je_doc.body.innerHTML += "<img src='images/weatherIcons/" + icon +"' width='50%'>";
 	

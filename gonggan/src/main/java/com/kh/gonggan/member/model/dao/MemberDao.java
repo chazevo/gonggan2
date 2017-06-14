@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.gonggan.alarm.model.vo.Alarm;
 import com.kh.gonggan.member.model.vo.Member;
 
 @Repository("memberDao")
@@ -104,6 +105,11 @@ public class MemberDao {
 		
 		return pw;
 	}
+	
+	public List<Alarm>  alarmCheck(String writer_id) {
+		return  (List<Alarm>) sqlSession.selectList("membermapper.alarmCheck", writer_id);
+     }
+	
 	public Member naverIdCheck(Member mem) {
 	      // TODO Auto-generated method stub
 	      System.out.println("memberdao");

@@ -8,10 +8,13 @@
 		<result property="post_id" column="post_id"/>
 		<result property="diary_content" column="diary_content"/>
 		<result property="title" column="title"/>
+		<result property="bg_image" column="bg_image"/>
 	</resultMap>
 	
 	<insert id="dinsert" parameterType="Map">
-		insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content},#{title})
+		insert into diary values(#{post_id},nvl((select max(diary_num) from diary),0) + 1,#{content},#{title},
+		#{bg}
+		)
 	</insert>
 	
 	<select id="diarylist" resultMap="diaryResult" parameterType="Map">
@@ -21,7 +24,10 @@
 				where rownum between #{rownum} and #{rownum2}
 	</select>
 	<select id="diarylist_index2" resultMap="diaryResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, DIARY_NUM, DIARY_CONTENT FROM (SELECT * FROM DIARY ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+		SELECT * FROM ( SELECT ROWNUM AS RNUM,
+		POST_ID, DIARY_NUM, DIARY_CONTENT, bg_image
+		FROM (SELECT * FROM DIARY ORDER BY POST_ID DESC)  )
+		<![CDATA[ WHERE RNUM<=8]]>
 	</select>
 	
    <select id="diarylist_myhome" parameterType="String" resultMap="diaryResult">

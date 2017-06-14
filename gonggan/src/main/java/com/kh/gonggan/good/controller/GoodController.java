@@ -2,6 +2,7 @@ package com.kh.gonggan.good.controller;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -64,16 +65,19 @@ public class GoodController {
 	@RequestMapping("goodList.do")
 	public ModelAndView goodList(@RequestParam int postId,
 			ModelAndView mv, HttpSession session) {
-		String neighYn = null;
 		List<Good> goodList = goodService.goodList(postId);
-		
+		String nlist = null;
+		ArrayList<String> neighYn = new ArrayList<String>();
+
 		for(int i = 0 ; i < goodList.size(); i++) {
-			neighYn = neighborService.neighYn(((Member)session.getAttribute("loginUser")).getMember_id(),goodList.get(i).getMember_id());
+			nlist = neighborService.neighYn(((Member)session.getAttribute("loginUser")).getMember_id(),goodList.get(i).getMember_id());
+			neighYn.add(nlist); 
 		}
+	      
 		mv.addObject("goodList",goodList);
 		mv.addObject("neighYn",neighYn);
 		mv.setViewName("likepage");
-		
+	      
 		return mv;
 	}
 	

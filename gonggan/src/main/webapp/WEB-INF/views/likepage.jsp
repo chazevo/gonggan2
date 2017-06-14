@@ -22,14 +22,14 @@
 		<tr>
 			<td class="text-center">
 				<h3><a href="javascript:history.back();" class="back">&lt;</a> like</h3>
-			</td>
+			</td>	
 		</tr>
 		<tr>
 			<td class="text-center">
 				<div class="div2"  style="margin:auto;">
 					<input type="text" id="searchPost" onkeyup="searchGood();" placeholder="search" >
 					<a href="javascript:searchGood();">
-					<img src=images/search.png width="5%" >
+						<img src=images/search.png width="5%" >
 					</a>
 				</div>
 			</td>
@@ -41,39 +41,39 @@
 		</tr>
 	</table>
 	<table width="60%" align="center">
-		<colgroup>
-			<col width="40%">
-			<col width="60%">
-		</colgroup>
-		<tbody id="listbody">
-		<c:if test="${!empty goodList}">
-			<c:forEach items="${goodList}" var="i" begin="0">
-				<tr>
-					<td style="height:50px;">
-						<a href="myhome.do?writer_id=${i.member_id}" target="_blank">
-							<img src="images/default.png" height="40px" class="img-circle">
-							&nbsp;${i.member_id}
-						</a>
-					</td>
-					<c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
-               <c:if test='${neighYn =="Y"}'>
+      <colgroup>
+         <col width="40%">
+         <col width="60%">
+      </colgroup>
+      <tbody id="listbody">
+      <c:if test="${!empty goodList}">
+      <c:set var="index" value='0'></c:set>
+         <c:forEach items="${goodList}" var="i" begin="0">
+            <tr>
+               <td style="height:50px;">
+                  <a href="myhome.do?writer_id=${i.member_id}" target="_blank">
+                     <img src="images/default.png" height="40px" class="img-circle">
+                     &nbsp;${i.member_id}
+                  </a>
+               </td>
                <c:if test="${i.member_id ne sessionScope.loginUser.getMember_id()}">
-               <td>
-                  <button id="neighborBtn" class="neighborY" onclick="rejectNeig('${i.member_id}')">이웃친구</button>
-               </td>
+                  <c:if test='${neighYn[index]=="Y"}'>
+                     <td>
+                        <button id="neighborBtn" class="neighborY" onclick="rejectNeig('${i.member_id}')">이웃친구</button>
+                     </td>
+                  </c:if>
+                  <c:if test='${neighYn[index]=="N"}'>
+                     <td>
+                        <button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
+                     </td>
+                  </c:if>
                </c:if>
-               </c:if>
-               <c:if test='${neighYn =="N"}'>
-               <td>
-                  <button id="neighborBtn" class="neighborN" onclick="likeNeigh('${i.member_id}');">이웃친구</button>
-               </td>
-               </c:if>
-               </c:if>
-				</tr>
-			</c:forEach>
-		</c:if>
-	</tbody>
-	</table>
+            </tr>
+         <c:set var="index" value='${index+1 }'></c:set>
+         </c:forEach>
+      </c:if>
+   </tbody>
+   </table>
 </div>
 </body>
 </html>

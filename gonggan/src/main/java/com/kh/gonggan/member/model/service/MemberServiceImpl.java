@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.gonggan.alarm.model.vo.Alarm;
 import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.member.model.dao.MemberDao;
 import com.kh.gonggan.member.model.vo.Member;
@@ -85,6 +86,11 @@ public class MemberServiceImpl implements MemberService{
 	public List<Member> neigList(){
 		return memberDao.neigList();
 	}//이웃 신청 목록 조회 여기서 하는게 맞는건지 잘모르겟어여,,,ㅠㅠ
+	
+	@Override
+	public List<Alarm>  alarmCheck(String writer_id) {
+		return (List<Alarm>) memberDao.alarmCheck(writer_id);
+	}
 	
 	@Override
 	public int naverConnect(Member mem){

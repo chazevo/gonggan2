@@ -18,6 +18,13 @@
 		<result property="member_facebook_id"	column="member_facebook_id"/>
 	</resultMap>
 	
+	<resultMap id="alarmResult" type="alarm">
+		<id property="alarm_num" column="alarm_num" />
+		<result property="writer_id" column="writer_id" />
+		<result property="type_cg" column="type_cg" />
+		<result property="post_id" column="post_id" />
+	</resultMap>
+	
 	<resultMap id="memberNameResult" type="member">
 		<id property="member_id" column="sender" />
 	</resultMap>
@@ -176,6 +183,15 @@
       or member_id  in(   SELECT receiver FROM NEIGHBOR
       WHERE CHECK_YN='Y' AND SENDER = #{member_id} and receiver like '%'||#{member_id2}||'%' )
 	</select>
+	
+	<select id="alarmCheck" parameterType="String"  resultMap="alarmResult">
+	 select writer_id, alarm_num, type_cg,alarm.POST_ID from comments left join alarm using (alarm_num) where alarm_num
+	in (select alarm_num from alarm where post_id in(select post_id from post where writer_id=#{writer_id}))
+	UNION all
+	select MEMBER_ID, alarm_num, type_cg,alarm.POST_ID from good left join alarm using (alarm_num) where alarm_num 
+	in (select alarm_num from alarm where post_id
+	in(select post_id from post where writer_id=#{writer_id})) order by alarm_num desc
+</select>
 	
 	<select id="naverIdCheck" parameterType="member" resultMap="memberResult">
       SELECT * FROM MEMBER

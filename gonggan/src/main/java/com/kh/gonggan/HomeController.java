@@ -38,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kh.gonggan.alarm.model.vo.Alarm;
 import com.kh.gonggan.blog.model.service.BlogService;
 import com.kh.gonggan.blog.model.vo.Blog;
 import com.kh.gonggan.book.model.service.BookService;
@@ -263,6 +264,7 @@ public class HomeController {
 		Blog blog = new Blog();
 		Member member = new Member();
 		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
 
 		List<Post> plist = postService.selectAll_myhome(writer_id); 
 		List<Movie> movielist = movieService.selectAll_myhome(writer_id);
@@ -277,9 +279,11 @@ public class HomeController {
 			member = memberService.selectMember(writer_id);
 		}
 		
-		if (session.getAttribute("loginUser") != null)
+		if (session.getAttribute("loginUser") != null) {
 			neighYn = neighborService.neighYn(
 					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
 
 		mv.addObject("plistSize", plist.size());
 		mv.addObject("reviewlistSize",reviewlist.size());
@@ -292,11 +296,12 @@ public class HomeController {
 		mv.addObject("blog", blog);
 		mv.addObject("member", member);
 		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
 		mv.setViewName("myhome");
 		
 		return mv;
 	}
-   
+
 	@RequestMapping("mypage.do")
 	public ModelAndView mypage(Locale locale, Model model,String writer_id , ModelAndView mv) {
       

@@ -14,6 +14,7 @@
 		<result property="news_num" column="news_num" />
 		<result property="review_num" column="review_num" />
 		<result property="diary_content" column="diary_content" />
+		<result property="bg_image" column="bg_image" />
 		<result property="book_content" column="book_content" />
 		<result property="movie_content" column="movie_content" />
 		<result property="music_content" column="music_content" />

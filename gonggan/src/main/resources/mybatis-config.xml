@@ -22,6 +22,7 @@
       	<typeAlias type="com.kh.gonggan.book.model.vo.Book" alias="book"/>
          <typeAlias type="com.kh.gonggan.place.model.vo.Place" alias="place"/>
          <typeAlias type="com.kh.gonggan.free.model.vo.Free" alias="free"/>
+         <typeAlias type="com.kh.gonggan.alarm.model.vo.Alarm" alias="alarm"/>
 	</typeAliases>
 
  <!-- Sql Mapper 설정 -->

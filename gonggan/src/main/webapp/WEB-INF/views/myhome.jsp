@@ -249,10 +249,29 @@ System.out.println(str);
 				      </td>
 				</tr> -->
          		<tr>
-					<td class="hover">
-						${sessionScope.loginUser.getMember_id() }님의 알림이 없습니다.
-					</td>
-				</tr>
+               <td class="hover">
+               <c:if test='${!empty mAlarmList}'>
+                  <c:forEach  items="${mAlarmList}" var="i" begin="0">
+                     <tr>
+                        <td>
+                           <c:if test='${i.type_cg eq "C"}' >
+                              <font><a href="myhome.do?writer_id=${i.writer_id} ">${i.writer_id }</a>님이 </font>
+                              <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '><b>댓글</b></a>을 남기셨습니다.
+                           </c:if>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <c:if test='${i.type_cg eq "G"}' >
+                              <font><a href="myhome.do?writer_id=${i.writer_id} ">${i.writer_id }</a>님이</font> 
+                              <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '><b>좋아요</b></a>을 남기셨습니다.
+                           </c:if>
+                        </td>
+                        </tr>
+                  </c:forEach>
+               </c:if>
+               </td>
+            </tr>
 			</table>
 		</div>
    

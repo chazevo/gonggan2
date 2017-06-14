@@ -3,6 +3,7 @@ package com.kh.gonggan.member.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.kh.gonggan.alarm.model.vo.Alarm;
 import com.kh.gonggan.member.model.vo.Member;
 
 public interface MemberService {
@@ -38,6 +39,8 @@ public interface MemberService {
 
 	List<Member> neigList();
 
+	List<Alarm> alarmCheck(String writer_id);
+	
 	int naverConnect(Member mem);
 
 	int kakaoConnect(Member mem);

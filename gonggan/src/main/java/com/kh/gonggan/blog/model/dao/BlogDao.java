@@ -98,5 +98,16 @@ public class BlogDao {
 		System.out.println("blogDao_background : " + blog);
 		return sqlSession.insert("blogmapper.bsetting_background", blog);
 	}
+	public List<Member> selectMonVisitorList(String wirter_id) {
+
+		Object obj = sqlSession.selectOne("blogmapper.selectBlogId", wirter_id);
+		int blog_id = -1;
+		
+		if (obj != null)
+			blog_id =((Blog)obj).getBlog_id();
+		return (List<Member>) sqlSession.selectList("membermapper.selectMonVisitorList", blog_id);
+	}//한달 방문자 수
+	
+	
 	
 }

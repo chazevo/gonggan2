@@ -148,7 +148,15 @@
 		member_id in(select sender from NEIGHBOR
 		where receiver
 		= #{writer_id} and CHECK_YN='Y'))
-	</select><!-- 한달 방문 수 -->
+	</select><!-- 한달 방문 이웃 수 -->
+	
+	<select id="selectMonVisitorList" parameterType="int" resultMap="memberResult">
+		select * from member
+		where member_id in (select visitor_id from visitor
+		where blog_id = #{blog_id} AND extract(month
+		from VISITED_DATE) = extract(month from sysdate))
+	</select>
+	
 
 	<select id="selectMonNeiList" parameterType="String"
 		resultMap="memberResult">

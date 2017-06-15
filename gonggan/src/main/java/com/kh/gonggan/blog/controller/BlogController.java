@@ -69,6 +69,29 @@ public class BlogController {
 				return json.toJSONString();
 
 			}
+	@RequestMapping(value = "/selectMonVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
+ 	@ResponseBody
+		public String selectMonVisitorList(@RequestParam String writer_id) {
+	
+			List<Member> VisitorList = blogService.selectMonVisitorList(writer_id);
+
+			JSONObject json = new JSONObject();
+			JSONArray jarr = new JSONArray();
+	
+			for (Member m : VisitorList) {
+	
+				JSONObject job = new JSONObject();
+				job.put("member_id", m.getMember_id());
+				job.put("gender", m.getMember_gender());
+				job.put("birth", m.getMember_birth()+"");
+				
+				jarr.add(job);
+			}
+			json.put("list", jarr);
+	
+			return json.toJSONString();
+
+		}
 	
 	@RequestMapping(value = "/selectNeigborVisitorList.do", produces = { "application/json" }, method = RequestMethod.GET)
 	 	@ResponseBody

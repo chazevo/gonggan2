@@ -171,8 +171,7 @@ System.out.println(str);
 						$("#div_Loading").show();
 						
 						if (category == "all")
-							//requestList();
-							;
+							requestList();
 						else
 							requestCategoryList(category, rownum);
 					}

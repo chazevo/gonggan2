@@ -92,12 +92,15 @@ function callbackList2(data) {
 
 
 function reqCommentList(postId) {
-	 var rownum2;
+	
+	var rownum2;
 
+	/*
 	   if (maxRownum - val < 8)
 	      var rownum2 = maxRownum;
 	   else rownum2 = rownum + 7;
-
+	 */
+	 
 	$.ajax({
 		async: false,
 		//Ajax를 통해 서버측에 데이터를 요청하고, 이 데이터의 결과를 모두 수신 받은 다음 단계로 진행하도록

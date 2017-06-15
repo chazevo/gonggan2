@@ -111,6 +111,7 @@ function requestCategoryList(category, val) {
 				},
 				success: function(data) {
 					callbackList2(data);
+					rownum = rownum2+1;
 				},
 				error: function(data,status,error){
 					console.log("error : " + error);
@@ -276,9 +277,11 @@ function callbackList2(data) {
 function reqCommentList(postId) {
 	 var rownum2;
 
+	 /*
 	   if (maxRownum - val < 8)
 	      var rownum2 = maxRownum;
 	   else rownum2 = rownum + 7;
+	   */
 
 	$.ajax({
 		async: false,

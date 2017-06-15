@@ -1090,7 +1090,7 @@
 					</tbody>
 					<tbody id="reviewTbody" style="display:none">
 						<tr>
-							<td>제품</td><td><input type="text"></td>
+							<td></td>
 							<td>별점</td>
 							<td>
 								<span>

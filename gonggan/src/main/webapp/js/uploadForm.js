@@ -504,6 +504,18 @@ function changeForm() {
 
 	if (document.getElementById("category").value == "review") {
 		$("#reviewTbody").css("display", "table-row-group");
+		je_doc.body.innerHTML += 
+				"<br><br><br>"
+				+ "<table width='80%' align='center'><tr><td>"
+				+ "<div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);"
+				+ " color:white; border-radius:20px;'><b>별점을 준다면?<span id='star1'>&nbsp;</span></b></div></td></tr>"
+				+ "<tr><td style='padding-left:20px;'id='star'>내용을 입력해주세요.<br><br><br></td></tr>"
+				+ "<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);"
+				+ " color:white; border-radius:20px;'><b>제품의 이름은?</b></div><br></td></tr>"
+				+ "<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>"
+				+ "<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF); color:white;"
+				+ "border-radius:20px;'><b>제품의 후기는 어떤가요?</b></div><br></td></tr>"
+				+ "<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr></table>";
 	}
 	else
 		$("#reviewTbody").css("display", "none");
@@ -1386,8 +1398,7 @@ function mark(star) {
 
 	var stateMsg;
 	
-	for(var i=1; i<=star; i++)
-		je_doc.body.innerHTML += "<img src='images/star1.png' width='50px;'>";
+
 	
 	switch(star){
 	case 1 :
@@ -1408,6 +1419,9 @@ function mark(star) {
 	default :
 		stateMsg = "";
 	}
+	for(var i=1; i<=star; i++){
+		je_doc.getElementById('star1').innerHTML +=  "<img src='images/star1.png' width='30px;'>";
+	}
+	je_doc.getElementById('star').innerHTML = stateMsg;
 	
-	je_doc.body.innerHTML += stateMsg;
 }

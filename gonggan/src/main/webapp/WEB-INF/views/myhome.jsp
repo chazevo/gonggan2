@@ -321,6 +321,9 @@ System.out.println(str);
 					</c:if>
 					&nbsp;${param.writer_id }
 				</a> &nbsp;
+				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${member.getMember_id() }">
+					<img src="images/chat_icon.png" height="28px"  id="chat_icon">
+				</a>
 				<div class="blogOwnerClick hidden">
 					<div>
 						<c:if test='${sessionScope.loginUser.getMember_id() ne param.writer_id}'>
@@ -336,6 +339,7 @@ System.out.println(str);
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>
+			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 				<ul class="nav navbar-nav navbar-right">

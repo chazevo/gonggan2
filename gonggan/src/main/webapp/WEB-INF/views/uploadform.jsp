@@ -25,10 +25,10 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/uploadForm.js"></script>
 <script src="js/jquery.fancybox.js"></script>
+<script src="js/jquery-timeago.js" type="text/javascript"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=JVmBHBSdqNcd5JKBkRhO"></script>
 <title>uploadform.jsp</title>
 <script>
-
 	var loginUser = "${sessionScope.loginUser.getMember_id()}";
 	
 	Date.prototype.currTime = function(f) {
@@ -85,6 +85,7 @@
 		
 		$("#imageOp_selected>a:not(:first-child)").hide();
 		$("#loading").hide();
+		$("#div_Loading").hide();
 		
 		colorchart();
 		colorchart2();
@@ -362,6 +363,9 @@
 					</c:if>
 					${param.writer_id } 님
 				</a>&nbsp;
+				<a data-fancybox data-src="/gonggan/messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${member.getMember_id() }">
+					<img src="images/chat_icon.png" height="28px"  id="chat_icon">
+				</a>
 				<div class="blogOwnerClick hidden">
 					<div>
 						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
@@ -371,35 +375,97 @@
 				</div>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
+				<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 				<ul class="nav navbar-nav navbar-right">
+					<c:if test='${blog.diary_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="">일기</a>
+						<a href="myhome_diary.do?writer_id=${param.writer_id }">
+							<c:if test='${blog.languages eq "kor" }'>일기</c:if>
+							<c:if test='${blog.languages eq "eng" }'>diary</c:if>
+							<c:if test='${blog.languages eq "jp" }'>日記</c:if>
+						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.place_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="">장소</a>
+						<a href="myhome_place.do?writer_id=${param.writer_id }">
+							<c:if test='${blog.languages eq "kor" }'>장소</c:if>
+							<c:if test='${blog.languages eq "eng" }'>place</c:if>
+							<c:if test='${blog.languages eq "jp" }'>場所</c:if>
+						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.review_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="#">리뷰</a>
+						<a href="javascript: maxRownum = reviewlistSize; $('#listbody').html(''); requestCategoryList(category = 'review', rownum=1);"
+							onclick="$('li a').css('background-color', 'transparent'); $(this).css('background-color', '#E6E6E6'); $('#list').attr('checked', 'checked');">
+							<c:if test='${blog.languages eq "kor" }'>리뷰</c:if>
+							<c:if test='${blog.languages eq "eng" }'>review</c:if>
+							<c:if test='${blog.languages eq "jp" }'>レビュー</c:if>
+						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.music_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="#">음악</a>
+						<a href="myhome_music.do?writer_id=${param.writer_id }">
+							<c:if test='${blog.languages eq "kor" }'>음악</c:if>
+							<c:if test='${blog.languages eq "eng" }'>music</c:if>
+							<c:if test='${blog.languages eq "jp" }'>音楽</c:if>
+						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.movie_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="">영화</a>
+						<a href="myhome_movie.do?writer_id=${param.writer_id }">
+						<c:if test='${blog.languages eq "kor" }'>영화</c:if>
+							<c:if test='${blog.languages eq "eng" }'>movie</c:if>
+							<c:if test='${blog.languages eq "jp" }'>映画</c:if>
+						</a>
 					</li>
+					</c:if>
+					<c:if test='${blog.news_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
 					<li>
-						<a href="">뉴스</a>
+						<a href="myhome_news.do?writer_id=${param.writer_id }">
+							<c:if test='${blog.languages eq "kor" }'>뉴스</c:if>
+							<c:if test='${blog.languages eq "eng" }'>news</c:if>
+							<c:if test='${blog.languages eq "jp" }'>ニュース</c:if>
+						</a>
 					</li>
+					</c:if>
 					<li>
-						<a href="">책</a>
+						<a href="myhome_book.do?writer_id=${param.writer_id }"><c:if test='${blog.languages eq "kor" }'>책</c:if>
+							<c:if test='${blog.languages eq "eng" }'>book</c:if>
+							<c:if test='${blog.languages eq "jp" }'>本</c:if>
+						</a>
 					</li>
 				</ul>
+				</c:if>
 			</div>
 		</div>
-		
+		<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>
+			<table width="100%">
+			<tr>
+				<th class="th">
+					<c:if test="${sessionScope.loginUser.getMember_id() eq param.writer_id}">
+						<a href="uploadform.do?writer_id=${param.writer_id}">포스트 쓰기 </a>
+					</c:if>
+					<label class='radio-wrap'>
+						<input type='radio' name='listType' id='calendar'  
+							onclick=' category = "all"; requestCalList(year, month);' checked>
+						<i class='calendar-icon'></i>
+					</label>
+					<label class='radio-wrap'>
+						<input type='radio'  name='listType' id='list' onclick='$("#listbody").html(""); rownum = 1; category = "all"; requestList();'>
+						<i class='list-icon'></i>
+					</label>
+				</th>
+			</tr>
+		</table>
+		</c:if>
 		<section>	
 			<div class="uploadFormDiv" > <!-- style="border:1px;"  -->
 				<table width="100%"  id="uploadtable" align="center"> 
+					<tbody id="listbody">
 					<colgroup>
 						<col width="12%" />
 						<col width="28%" />
@@ -533,95 +599,95 @@
 										onclick="je_doc.execCommand('justifyright', 'false', 'null')"> &nbsp;
 						</td>
 						<td align="center">
-								<img  src="images/link_icon.png" width="42px"
-											onclick='var s=prompt();if(s!="") je_doc.execCommand("createlink",false,s);'> &nbsp;&nbsp;
+							<img  src="images/link_icon.png" width="42px"
+										onclick='var s=prompt();if(s!="") je_doc.execCommand("createlink",false,s);'> &nbsp;&nbsp;
+						
+							<img  src="images/urlErase_icon.png" width="42px"
+										onclick='je_doc.execCommand("unlink",false, null);'>&nbsp; &nbsp;
 							
-								<img  src="images/urlErase_icon.png" width="42px"
-											onclick='je_doc.execCommand("unlink",false, null);'>&nbsp; &nbsp;
-								
-								<img  src="images/efErase_icon.png" width="42px"
-											onclick="je_doc.execCommand('removeformat', 'false', 'null')"> &nbsp;	
+							<img  src="images/efErase_icon.png" width="42px"
+										onclick="je_doc.execCommand('removeformat', 'false', 'null')"> &nbsp;	
 
-												
-								<img  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
-								<!-- 이모티콘 -->
-								<div id="imo_icon_area" class="hidden">
-									<table id="idclick_table">
-										<tr>
-											<th>이모티콘 선택</th>
-										</tr>
-										<tr id="center_align">
-											<td >
-												<img  src="images/emoticon/1.png" width="20px" id="imo_icon"
-													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
-												<img  src="images/emoticon/2.png" width="20px" id="imo_icon"
-													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
-												<img  src="images/emoticon/3.png" width="20px" id="imo_icon"
-													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
-												<img  src="images/emoticon/4.png" width="20px" id="imo_icon"
-													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
-												<img  src="images/emoticon/5.png" width="20px" id="imo_icon"
-													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
-												<img  src="images/emoticon/6.png" width="20px" id="imo_icon"
-													onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
-											</td>
-										</tr> 
-									</table>
-								</div>
-							</td>
-						</tr>
-						<tr>
+											
+							<img  src="images/imo_icon.png" width="18px" id="imo_icon">&nbsp; 
+							<!-- 이모티콘 -->
+							<div id="imo_icon_area" class="hidden">
+								<table id="idclick_table">
+									<tr>
+										<th>이모티콘 선택</th>
+									</tr>
+									<tr id="center_align">
+										<td >
+											<img  src="images/emoticon/1.png" width="20px" id="imo_icon"
+												onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/1.png')">&nbsp; &nbsp;
+											<img  src="images/emoticon/2.png" width="20px" id="imo_icon"
+												onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/2.png')">&nbsp; &nbsp;
+											<img  src="images/emoticon/3.png" width="20px" id="imo_icon"
+												onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/3.png')">&nbsp; &nbsp;
+											<img  src="images/emoticon/4.png" width="20px" id="imo_icon"
+												onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/4.png')">&nbsp; &nbsp;
+											<img  src="images/emoticon/5.png" width="20px" id="imo_icon"
+												onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/5.png')">&nbsp; &nbsp;	
+											<img  src="images/emoticon/6.png" width="20px" id="imo_icon"
+												onclick="je_doc.execCommand('InsertImage', 'false', '/gonggan/images/emoticon/6.png')">&nbsp; &nbsp;	
+										</td>
+									</tr> 
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
 							<td style="text-align:center">
 								<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');">
-								<img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="25px" >
-							</a>&nbsp;
-							<a href="javascript:void(0);" onclick="$('#nrow').val('1'); $('#ncol').val('1');"
-								data-target="#layerpop" data-toggle="modal">
-								<img src="images/table_presentation_powerpoint_keynote_speech_business-512.png"
-									height="25px">
-							</a>
-							<div class="modal fade" id="layerpop">
-							<!--
-							$('#modal_id').modal({backdrop: 'static'});
-							modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
-							(닫기버튼을 눌러야만 닫힌다)
-							-->
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<!-- header -->
-										<div class="modal-header">
-											<!-- 닫기(x) 버튼 -->
-											<button type="button" class="close" data-dismiss="modal">×</button>
-											<!-- header title -->
-											<h4 class="modal-title">테이블 삽입 </h4>
-										</div>
-										<!-- body -->
-										<div class="modal-body text-center">
-											테이블 행과 열 갯수를 입력해주세요<br>
-											행 :&nbsp;<input class="text-center" type="number" id="nrow" value="1" style="width:8%"><br>
-											열 :&nbsp;
-											<input class="text-center" type="number" id="ncol" value="1" style="width:8%"
-											onkeydown="if (event.keyCode == 13) {if (insertTable($('#nrow').val(), $('#ncol').val())) $('#layerpop').modal('hide');}">
-										</div>
-										<!-- Footer -->
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												onclick="if (insertTable($('#nrow').val(), $('#ncol').val())) $('#layerpop').modal('hide');">
-												OK
-											</button>
-											<button type="button" class="btn btn-default" data-dismiss="modal">취소  </button>
+									<img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="25px" >
+								</a>&nbsp;
+								<a href="javascript:void(0);" onclick="$('#nrow').val('1'); $('#ncol').val('1');"
+									data-target="#layerpop" data-toggle="modal">
+									<img src="images/table_presentation_powerpoint_keynote_speech_business-512.png"
+										height="25px">
+								</a>
+								<div class="modal fade" id="layerpop">
+								<!--
+								$('#modal_id').modal({backdrop: 'static'});
+								modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
+								(닫기버튼을 눌러야만 닫힌다)
+								-->
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<!-- header -->
+											<div class="modal-header">
+												<!-- 닫기(x) 버튼 -->
+												<button type="button" class="close" data-dismiss="modal">×</button>
+												<!-- header title -->
+												<h4 class="modal-title">테이블 삽입 </h4>
+											</div>
+											<!-- body -->
+											<div class="modal-body text-center">
+												테이블 행과 열 갯수를 입력해주세요<br>
+												행 :&nbsp;<input class="text-center" type="number" id="nrow" value="1" style="width:8%"><br>
+												열 :&nbsp;
+												<input class="text-center" type="number" id="ncol" value="1" style="width:8%"
+													onkeydown="if (event.keyCode == 13) {if (insertTable($('#nrow').val(), $('#ncol').val())) $('#layerpop').modal('hide');}">
+											</div>
+											<!-- Footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													onclick="if (insertTable($('#nrow').val(), $('#ncol').val())) $('#layerpop').modal('hide');">
+													OK
+												</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal">취소  </button>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 								
 							</td>
-						<td id="imageOp_selected">
-							<!-- <select onchange="imageChange();">
+							<td id="imageOp_selected">
+								<!-- <select onchange="imageChange();">
 									<option class="imageOp"  value="diary" selected>배경이미지 </option>
 									<option class="imageOp"  value="news">이미지 삽입</option>
-									</select>
-									<div id="content_backgound" ></div> -->
+								</select>
+								<div id="content_backgound" ></div> -->
 								<a href='javascript:void(0);' data-target="#layerpop3" data-toggle="modal">
 									<img  src="images/photo-video-slr-camera-icon-512x512-pixel-12.png" width="20px">
 								</a>
@@ -654,102 +720,102 @@
 												</form>
 												<br><br>
 												<input type="hidden" name="pimg">
+												<!-- Footer -->
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														onclick="uploadPostImg(); $('#layerpop2').modal('hide');">
+														OK
+													</button>
+													<button type="button" class="btn btn-default" data-dismiss="modal"
+														onclick="refreshImgFilediv();">
+														취소
+													</button>
+												</div>
+										</div>
+										</div>
+									</div>
+								</div>
+								<a href="javascript:void(0)"
+									data-target="#layerpop2" data-toggle="modal">
+									<img src="images/pickture_icon.png"
+										height="20px">
+								</a>&nbsp;
+								<a id="colorChoice2" href="javascript:void(0);">
+									<img  src="images/fill_color-512.png" width="25px;" >
+								</a>
+								<div id="colorchart2" class="hidden"></div>
+								<div class="modal fade" id="layerpop2">
+								<!--
+								$('#modal_id').modal({backdrop: 'static'});
+								modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
+								(닫기버튼을 눌러야만 닫힌다)
+								-->
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<!-- header -->
+											<div class="modal-header">
+												<!-- 닫기(x) 버튼 -->
+												<button type="button" class="close" data-dismiss="modal">×</button>
+												<!-- header title -->
+												<h4 class="modal-title">배경 이미지 삽입 </h4>
+											</div>
+											<!-- body -->
+											<div class="modal-body text-center">
+												<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
+													style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
+												<div style="height:150px;position:relative">
+													<div id='bgpreview' style='width:40%;height:150px;position:absolute;left:0;right:0;margin:auto'></div>
+												</div>
+												<br>
+												배경 이미지를 선택해주세요<br>
+												<form id='frm' name="frm" method="post" enctype="multipart/form-data">
+													<input type="text" id="filename2" class="fileInputTextbox" readonly="readonly" disabled>
+													<div class="fileInputDiv">
+														<input type="button" value="첨 부 파 일" class="fileInputBtn" >
+														<input type="file" name="file2" id="file2"
+															onchange="javascript:$('#filename2').val($(this).val()); uploadDiaryBg();">
+													</div>
+												</form>
+												<input type="hidden" name="bg">
+												<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
+			
+												<div>
+													<input type="radio" name="imgBB" value="auto" onchange="imgBBchange(this);" checked>
+													&nbsp;기본
+													<label class='radio-wrap'>
+														<input type='radio' name='imgBB'  value='cover'  onchange="imgBBchange(this);" >
+														<i class='cover-icon'></i>
+													</label>
+													<label class='radio-wrap'>
+														<input type='radio' name='imgBB'  value='contain'  onchange="imgBBchange(this);">
+														<i class='contain-icon'></i>
+													</label>
+												</div>
+											</div>
 											<!-- Footer -->
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default"
-													onclick="uploadPostImg(); $('#layerpop2').modal('hide');">
+													onclick="preview('file2');">
+													미리보기
+												</button>
+												<button type="button" class="btn btn-default"
+													onclick="diaryBg(); $('#layerpop2').modal('hide');">
 													OK
 												</button>
 												<button type="button" class="btn btn-default" data-dismiss="modal"
-													onclick="refreshImgFilediv();">
+													onclick="refreshDiaryFilediv();">
 													취소
 												</button>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<a href="javascript:void(0)"
-								data-target="#layerpop2" data-toggle="modal">
-								<img src="images/pickture_icon.png"
-									height="20px">
-							</a>&nbsp;
-							<a id="colorChoice2" href="javascript:void(0);">
-								<img  src="images/fill_color-512.png" width="25px;" >
-							</a>
-							<div id="colorchart2" class="hidden"></div>
-							<div class="modal fade" id="layerpop2">
-							<!--
-							$('#modal_id').modal({backdrop: 'static'});
-							modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
-							(닫기버튼을 눌러야만 닫힌다)
-							-->
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<!-- header -->
-										<div class="modal-header">
-											<!-- 닫기(x) 버튼 -->
-											<button type="button" class="close" data-dismiss="modal">×</button>
-											<!-- header title -->
-											<h4 class="modal-title">배경 이미지 삽입 </h4>
-										</div>
-										<!-- body -->
-										<div class="modal-body text-center">
-											<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
-												style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
-											<div style="height:150px;position:relative">
-												<div id='bgpreview' style='width:40%;height:150px;position:absolute;left:0;right:0;margin:auto'></div>
-											</div>
-											<br>
-											배경 이미지를 선택해주세요<br>
-											<form id='frm' name="frm" method="post" enctype="multipart/form-data">
-												<input type="text" id="filename2" class="fileInputTextbox" readonly="readonly" disabled>
-												<div class="fileInputDiv">
-													<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-													<input type="file" name="file2" id="file2"
-														onchange="javascript:$('#filename2').val($(this).val()); uploadDiaryBg();">
-												</div>
-											</form>
-											<input type="hidden" name="bg">
-											<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
-		
-											<div>
-												<input type="radio" name="imgBB" value="auto" onchange="imgBBchange(this);" checked>
-												&nbsp;기본
-												<label class='radio-wrap'>
-													<input type='radio' name='imgBB'  value='cover'  onchange="imgBBchange(this);" >
-													<i class='cover-icon'></i>
-												</label>
-												<label class='radio-wrap'>
-													<input type='radio' name='imgBB'  value='contain'  onchange="imgBBchange(this);">
-													<i class='contain-icon'></i>
-												</label>
-											</div>
-										</div>
-										<!-- Footer -->
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												onclick="preview('file2');">
-												미리보기
-											</button>
-											<button type="button" class="btn btn-default"
-												onclick="diaryBg(); $('#layerpop2').modal('hide');">
-												OK
-											</button>
-											<button type="button" class="btn btn-default" data-dismiss="modal"
-												onclick="refreshDiaryFilediv();">
-												취소
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</td>
-						<td align="center">
-							<a id="weatherLink" href="javascript:void(0);">
-								<img src="images/weathericon.png"
-									height="32px">
-							</a>
+							</td>
+							<td align="center">
+								<a id="weatherLink" href="javascript:void(0);">
+									<img src="images/weathericon.png"
+										height="32px">
+								</a>
 							<div id="weatherDiv" class="hidden" >
 								<div id="wmapDiv">
 									<script>
@@ -855,11 +921,7 @@
 						</td>
 						<td colspan="4" id="tagview"></td>
 					</tr>
-					<tr>
-						
-					</tr>
-		
-
+					<tr></tr>
 					<tbody id="bookTbody" style="display:none">
 						<tr>
 							<td colspan="5" align="right">
@@ -1009,10 +1071,10 @@
 												</div>
 											</td>
 										</tr>
-								</table>
-							</div>
-						</td>
-					</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
 					</tbody>
 					<tbody id="reviewTbody" style="display:none">
 						<tr>
@@ -1031,77 +1093,78 @@
 							</td>
 						</tr>
 					</tbody>
-					<tbody id="musicTbody" style="display:none">
-					<!--
+						<tbody id="musicTbody" style="display:none">
+						<!--
+							<tr>
+								<td>가수</td><td><input type='text' size="14"></td>
+								<td>제목</td><td><input type='text'></td>
+							</tr>
+						-->
+							<tr>
+								<td colspan="5" align="right">
+									<a data-toggle="collapse" data-target="#lyrics">음악 찾아보기</a>
+									<div id="lyrics" class="collapse">
+										<div class="div2">
+											<input type="text" id="musicSearchText" name="keyword" value="${keyword }" placeholder="검 색" 
+												onkeydown="if(event.keyCode == 13) { $('#musicSearchRes').html(''); searchMusic(); }">
+											<a href="javascript:$('#musicSearchRes').html(''); searchMusic();">
+												<img src=images/search.png width="5%" >
+											</a>
+										</div>
+										<div class="searchAll" style="height:300px;overflow:scroll;">
+											<a id="fancy" style="display:none"></a>
+											<table width="70%" align='center'>
+												<tbody id="musicSearchRes"></tbody>
+											</table>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
 						<tr>
-							<td>가수</td><td><input type='text' size="14"></td>
-							<td>제목</td><td><input type='text'></td>
+									
+		  		 <!-- END다정다정 -->		
+									<!-- <img src="images/efErase_icon.png" id="content_allign_center" width="42px"
+												onclick="contentalligncenter();">ㄴㄹㄴㅇ색&nbsp; &nbsp;	&nbsp; 
+									 -->
+									
+										
+				
+												
 						</tr>
-					-->
 						<tr>
-							<td colspan="5" align="right">
-								<a data-toggle="collapse" data-target="#lyrics">음악 찾아보기</a>
-								<div id="lyrics" class="collapse">
-								<div class="div2">
-									<input type="text" id="musicSearchText" name="keyword" value="${keyword }" placeholder="검 색" 
-										onkeydown="if(event.keyCode == 13) { $('#musicSearchRes').html(''); searchMusic(); }">
-									<a href="javascript:$('#musicSearchRes').html(''); searchMusic();">
-										<img src=images/search.png width="5%" >
-									</a>
-								</div>
-								<div class="searchAll" style="height:300px;overflow:scroll;">
-									<a id="fancy" style="display:none"></a>
-									<table width="70%" align='center'>
-										<tbody id="musicSearchRes"></tbody>
-									</table>
-								</div>
+							 <td colspan="5" align="center" height="30px"><div id="dansunline"></div></td>
+						</tr>
+								
+							
+						<tr>
+							<td class="uploadContent" colspan="5">
+								 <!-- <textarea id="textarea" rows="20" id="content" ></textarea> --> 
+								 <iframe id='editor' src="uploadHtml.do" style='width:100%;height:400px;'></iframe>
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="5">
+								<input type="radio" name="open" value="public" checked>&nbsp;전체공개&nbsp;
+								<input type="radio" name="open" value="onlyMe">&nbsp;나만보기&nbsp;
+								<input type="radio" name="open" value="neighbor">&nbsp;이웃공개
+							</td>
+						</tr>
+						<tr>
+							<td colspan="5" class="footerDiv">
+								<div>
+									<input type="hidden" name="place_name">
+									<input type="hidden" name="movie_title">
+									<input type="hidden" name="diary_title">
+									<input type="hidden" name="music_title">
+									<input type="hidden" name="music_info">
+									<div class="grad"  onclick="content_OK()">등 록</div>&nbsp;
+									<div class="grad" onclick="cancel();">취 소</div>
 								</div>
 							</td>
 						</tr>
 					</tbody>
-					<tr>
-								
-	   <!-- END다정다정 -->		
-								<!-- <img src="images/efErase_icon.png" id="content_allign_center" width="42px"
-											onclick="contentalligncenter();">ㄴㄹㄴㅇ색&nbsp; &nbsp;	&nbsp; 
-								 -->
-								
-									
-			
-											
-					</tr>
-					<tr>
-						 <td colspan="5" align="center" height="30px"><div id="dansunline"></div></td>
-					</tr>
-							
-						
-					<tr>
-						<td class="uploadContent" colspan="5">
-							 <!-- <textarea id="textarea" rows="20" id="content" ></textarea> --> 
-							 <iframe id='editor' src="uploadHtml.do" style='width:100%;height:400px;'></iframe>
-						</td>
-					</tr>
-					
-					<tr>
-						<td colspan="5">
-							<input type="radio" name="open" value="public" checked>&nbsp;전체공개&nbsp;
-							<input type="radio" name="open" value="onlyMe">&nbsp;나만보기&nbsp;
-							<input type="radio" name="open" value="neighbor">&nbsp;이웃공개
-						</td>
-					</tr>
-					<tr>
-						<td colspan="5" class="footerDiv">
-							<div>
-								<input type="hidden" name="place_name">
-								<input type="hidden" name="movie_title">
-								<input type="hidden" name="diary_title">
-								<input type="hidden" name="music_title">
-								<input type="hidden" name="music_info">
-								<div class="grad"  onclick="content_OK()">등 록</div>&nbsp;
-								<div class="grad" onclick="cancel();">취 소</div>
-							</div>
-						</td>
-					</tr>
 				</table>
 				
 				<!-- <input type="button" onclick="seeHTML();" value=" 소스보기 " /><br>-->
@@ -1119,6 +1182,9 @@
 				<br><br><br><br><br><br><br><br><br><br><br>
 			</div>
 		</section>
+		<div id="div_Loading" style="font-size:11pt; width:100%;text-align:center">
+			<img height='70px' src="images/InternetSlowdown_Day.gif">
+		</div>
 	</div>
 </form>
 </body>

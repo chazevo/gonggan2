@@ -331,6 +331,253 @@ public class HomeController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("myhome_book.do")
+	public ModelAndView myhome_book(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<Book> booklist = new ArrayList<Book>();
+		bookService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+
+		mv.addObject("booklistSize",booklist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_book");
+		
+		return mv;
+	}
+	
+	@RequestMapping("myhome_news.do")
+	public ModelAndView myhome_news(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<News> newslist = new ArrayList<News>();
+		newslist = newsService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+
+		mv.addObject("newslistSize",newslist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_news");
+		
+		return mv;
+	}
+	
+	@RequestMapping("myhome_music.do")
+	public ModelAndView myhome_music(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<Music> musiclist = new ArrayList<Music>();
+		musiclist = musicService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+
+		mv.addObject("musiclistSize", musiclist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_music");
+		
+		return mv;
+	}
+	
+	@RequestMapping("myhome_movie.do")
+	public ModelAndView myhome_movie(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<Movie> movielist = new ArrayList<Movie>();
+		movielist = movieService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+
+		mv.addObject("movielistSize", movielist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_movie");
+		
+		return mv;
+	}
+	
+	@RequestMapping("myhome_diary.do")
+	public ModelAndView myhome_diary(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<Diary> diarylist = new ArrayList<Diary>();
+		diarylist = diaryService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+		
+		System.out.println(diarylist.size());
+
+		mv.addObject("diarylistSize",diarylist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_diary");
+		
+		return mv;
+	}
+		
+	@RequestMapping("myhome_review.do")
+	public ModelAndView myhome_review(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<Review> reviewlist = new ArrayList<Review>();
+		reviewlist = reviewService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+
+		mv.addObject("reviewlistSize",reviewlist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_review");
+		
+		return mv;
+	}
+	
+	@RequestMapping("myhome_place.do")
+	public ModelAndView myhome_place(String writer_id,
+			ModelAndView mv, HttpSession session) {
+
+		Blog blog = new Blog();
+		Member member = new Member();
+		String neighYn = null;
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+
+		List<Place> placelist = new ArrayList<Place>();
+		placelist = placeService.selectAll_myhome(writer_id);
+		
+		if (writer_id != null) {
+			blog = blogService.selectBlog(writer_id);
+			member = memberService.selectMember(writer_id);
+		}
+		
+		if (session.getAttribute("loginUser") != null) {
+			neighYn = neighborService.neighYn(
+					((Member)session.getAttribute("loginUser")).getMember_id(), writer_id);
+			mAlarmList = memberService.alarmCheck(((Member)session.getAttribute("loginUser")).getMember_id());
+		}
+
+		mv.addObject("placelistSize", placelist.size());
+		
+		mv.addObject("blog", blog);
+		mv.addObject("member", member);
+		mv.addObject("neighYn", neighYn);
+		mv.addObject("mAlarmList", mAlarmList);
+		
+		mv.setViewName("myhome_place");
+		
+		return mv;
+	}
 
 	@RequestMapping("mypage.do")
 	public ModelAndView mypage(Locale locale, Model model,String writer_id , ModelAndView mv) {

@@ -88,7 +88,7 @@ window.onload = function() {
 					if (sort == "date") {
 							if (category == "all")
 								requestList(rownum);
-							if (category == "psearch")
+							else if (category == "psearch")
 								searchPost(rownum);
 							else if (category == "neighborlist")
 								requestNeighborPostList(rownum, loginUser);
@@ -347,8 +347,8 @@ window.onload = function() {
 							<td>
 								<div class="div2">
 									<input type="text" id="searchPost" placeholder="검색" size="12"
-										onkeydown="if (event.keyCode == 13) {  $('#select').val('date'); searchPost(rownum = 1); psearchRownum(); category = 'psearch'; }">
-									<a href="javascript: $('#select').val('date'); searchPost(rownum = 1); psearchRownum(); category = 'psearch';">
+										onkeydown="if (event.keyCode == 13) { category = 'psearch'; $('#select').val('date'); psearchRownum(); searchPost(rownum = 1); }">
+									<a href="javascript: category = 'psearch'; $('#select').val('date'); psearchRownum(); searchPost(rownum = 1); ">
 										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
 											width="10%">
 									</a>

@@ -76,7 +76,7 @@ function requestCategoryList(val, category) {
       var rownum2 = maxRownum;
    else rownum2 = rownum + 7;
 
-   alert(val + ", " + rownum2);
+   alert("requestCategoryList : " + val + ", " + rownum2); 
    
    $.ajax({
       url: "/gonggan/postlist.do",
@@ -87,6 +87,7 @@ function requestCategoryList(val, category) {
       },
       success: function(data) {
          callbackList(data);
+         rownum = rownum2 + 1;
       },
       error: function(data,status,error) {
          console.log("error : " + error);
@@ -102,8 +103,7 @@ function requestLikeList(val, category) {
       rownum2 = maxRownum;
    else rownum2 = rownum + 7;
 
-   if (category == "psearch"){
-      alert(rownum + ", " + rownum2);
+   if (category == "psearch") {
       $.ajax({
          url:"pcontentSearchLikelist.do",
          data: { rownum: rownum, rownum2: rownum2,
@@ -563,7 +563,6 @@ function postLikeCnt(postId) {
             console.log("error : " + error);
          }
    });
-   alert(gcnt);
    return gcnt;
 }
 
@@ -591,7 +590,6 @@ function rejectNeig(member_id, member_id2) {
       url: "/gonggan/nreject.do",
       data: {member_id: member_id, member_id2: member_id2},
       success: function(data) {
-         alert(data);
          $("#neighborReqListSize").text($("#neighborReqListSize").text() - 1);
          $(this).parent().remove();
       },
@@ -722,6 +720,7 @@ function searchPost(val) {
          },
          success: function(data) {
             callbackList(data);
+            rownum = rownum2 + 1;
          },
          error: function(data,status,error) {
             console.log("error : " + error);
@@ -762,7 +761,6 @@ function goSubmit() {
 }
 
 function openFancybox(url) {
-   alert(url);
    document.getElementById("fancy").href = url;
    $("#fancy").fancybox().trigger('click');
    

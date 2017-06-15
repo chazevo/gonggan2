@@ -140,13 +140,16 @@
 						left join review using(post_id)
 						left join place using(post_id)
 						where diary_content like '%'||#{keyword}||'%' OR
+							diary_title like '%'||#{keyword}||'%' OR
 							free_content like '%'||#{keyword}||'%' OR
 							book_content like '%'||#{keyword}||'%' OR
-							diary_content like '%'||#{keyword}||'%' OR
 							news_content like '%'||#{keyword}||'%' OR
 							movie_content like '%'||#{keyword}||'%' OR
+							movie_title like '%'||#{keyword}||'%' OR
 							place_content like '%'||#{keyword}||'%' OR
-							music_content like '%'||#{keyword}||'%' order by 6 desc) subquery)
+							place_name like '%'||#{keyword}||'%' OR
+							music_content like '%'||#{keyword}||'%' OR
+							music_title like '%'||#{keyword}||'%' order by 6 desc) subquery)
 				where r between #{rownum} and #{rownum2}
 	</select>
 
@@ -318,13 +321,16 @@
 							left join news using(post_id)
 							left join review using(post_id)
 							where diary_content like '%'||#{keyword}||'%' OR
+							diary_title like '%'||#{keyword}||'%' OR
 							free_content like '%'||#{keyword}||'%' OR
 							book_content like '%'||#{keyword}||'%' OR
-							diary_content like '%'||#{keyword}||'%' OR
 							news_content like '%'||#{keyword}||'%' OR
 							movie_content like '%'||#{keyword}||'%' OR
+							movie_title like '%'||#{keyword}||'%' OR
 							place_content like '%'||#{keyword}||'%' OR
-							music_content like '%'||#{keyword}||'%') subquery)
+							place_name like '%'||#{keyword}||'%' OR
+							music_content like '%'||#{keyword}||'%' OR
+							music_title like '%'||#{keyword}||'%') subquery)
 			where (r between to_number(#{rownum}) and to_number(#{rownum2}))
 	<!-- OR place_content like '%'||#{keyword}||'%' -->
 	
@@ -369,13 +375,16 @@
 										left join news using(post_id)
 										left join review using(post_id)
 										where diary_content like '%'||#{keyword}||'%' OR
+										diary_title like '%'||#{keyword}||'%' OR
 										free_content like '%'||#{keyword}||'%' OR
 										book_content like '%'||#{keyword}||'%' OR
-										diary_content like '%'||#{keyword}||'%' OR
 										news_content like '%'||#{keyword}||'%' OR
 										movie_content like '%'||#{keyword}||'%' OR
+										movie_title like '%'||#{keyword}||'%' OR
 										place_content like '%'||#{keyword}||'%' OR
-										music_content like '%'||#{keyword}||'%')
+										place_name like '%'||#{keyword}||'%' OR
+										music_content like '%'||#{keyword}||'%' OR
+										music_title like '%'||#{keyword}||'%')
 										)
 	</select>
 	

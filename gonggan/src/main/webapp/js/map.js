@@ -57,7 +57,6 @@ function mapImg(mapx, mapy) {
 			mapy:mapy},
 		success:function(data){
 			image = data;
-			alert(data);
 		}
 	});
 }

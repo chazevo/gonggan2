@@ -135,44 +135,10 @@
 				</c:if>
 			</div>
 		</td>
-
+	</tr>
+	<c:if test='${HideComment eq "Y" }'>
 	<tr>
-		<td id="good" colspan="3">
-			<c:if test="${ goodCnt ne '0' }">
-				<b><a href="goodList.do?postId=${postId }">좋아요 ${goodCnt }개</a></b>
-			</c:if>
-			<c:if test="${ goodCnt eq '0' }"> 
-			<b>좋아요 ${goodCnt }개</b>
-			</c:if>
-		</td>
-	</tr>
-	<tbody id="listbody">
-	<c:if test='${HideComment eq "N" }'>
-	<c:if test="${!empty commentList}">
-	<c:forEach items="${commentList}" var="i" begin="0">
-	<tr id="co${i.comment_num }">
-		<td colspan="3" class='commentArea'>
-			<b>
-				<a href="myhome.do?writer_id=${i.writer_id}"  target="_blank">
-					${i.writer_id }
-				</a>
-			</b> &nbsp;&nbsp;
-			${i.comment_content}&nbsp;
-			<span class="commentDate">
-				${i.comment_date} &nbsp;&nbsp; 
-			 	<c:if test="${sessionScope.loginUser.getMember_id() eq i.writer_id || (sessionScope.loginUser.getMember_id() eq writerId) }">
-				<a href="javascript:deleteComment(${i.comment_num });">
-					<img src="images/delete_sign_filled1600.png" width="2%">
-				</a>
-				</c:if>
-			</span>
-		</td>
-	</tr>
-	</c:forEach>
-	</c:if>
-	</c:if>
-	</tbody>
-	<tr><td colspan="3" class='commentArea'>
+		<td colspan="3">
 			<div class='dotdotdotDiv'
 				style="bottom:0;right:0;margin-bottom:15px;margin-right:15px;">
 				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
@@ -190,11 +156,88 @@
 				</c:if>
 				<c:if test="${sessionScope.loginUser.getMember_id() eq writerId}">
 				<a class="hover dotdotdot"
-					onclick="javascript:postdelete(${postId},'${sessionScope.loginUser.getMember_id()}');">
+					onclick="javascript:postdelete(${postId}, '${sessionScope.loginUser.getMember_id()}');">
 					게시글 삭제하기
 				</a>
 				</c:if>
-			</div></td></tr>
+			</div>
+		</td>
+	</tr>
+	</c:if>
+	<tr>
+		<td id="good" colspan="2">
+			<label class='checkbox-wrap'>
+				<input type='checkbox' id='like' onclick='like(this, "${sessionScope.loginUser.getMember_id()}", ${postId });'>
+				<i class='like-icon'></i>
+			</label>&nbsp;
+			<c:if test="${ goodCnt ne '0' }">
+				<b><a href="goodList.do?postId=${postId }">좋아요 ${goodCnt }개</a></b>
+			</c:if>
+			<c:if test="${ goodCnt eq '0' }"> 
+			<b>좋아요 ${goodCnt }개</b>
+			</c:if>
+		</td>
+		<td>
+			<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
+				<img width="15%" src='images/thesee_icon.png'>
+			</a>
+		</td>
+	</tr>
+	<tbody id="listbody">
+		<c:if test='${HideComment eq "N" }'>
+		<c:if test="${!empty commentList}">
+		<c:forEach items="${commentList}" var="i" begin="0">
+		<tr id="co${i.comment_num }">
+			<td colspan="3" class='commentArea'>
+				<b>
+					<a href="myhome.do?writer_id=${i.writer_id}"  target="_blank">
+						${i.writer_id }
+					</a>
+				</b> &nbsp;&nbsp;
+				${i.comment_content}&nbsp;
+				<span class="commentDate">
+					${i.comment_date} &nbsp;&nbsp; 
+				 	<c:if test="${sessionScope.loginUser.getMember_id() eq i.writer_id || (sessionScope.loginUser.getMember_id() eq writerId) }">
+					<a href="javascript:deleteComment(${i.comment_num });">
+						<img src="images/delete_sign_filled1600.png" width="2%">
+					</a>
+					</c:if>
+				</span>
+			</td>
+		</tr>
+		</c:forEach>
+		</c:if>
+		</c:if>
+	</tbody>
+	<c:if test='${HideComment eq "N" }'>
+	<tr>
+		<td colspan="3" class='commentArea'>
+			<div class='dotdotdotDiv'
+				style="bottom:0;right:0;margin-bottom:15px;margin-right:15px;">
+				<a class="hover dotdotdot" href="">부적절한 컨텐츠 신고</a>
+				<a class="hover dotdotdot" href="" >공유</a>
+				<c:if test='${!empty sessionScope.loginUser }'>
+				<a data-fancybox class="fb hover dotdotdot"
+					href="messageList.do?memberId1=${sessionScope.loginUser.getMember_id()}&memberId2=${param.writerId }">
+					쪽지 보내기
+				</a>
+				</c:if>
+				<c:if test='${empty sessionScope.loginUser }'>
+				<a class="hover dotdotdot" href="javascript:alert('로그인이 필요합니다.');">
+					쪽지 보내기
+				</a>
+				</c:if>
+				<c:if test="${sessionScope.loginUser.getMember_id() eq writerId}">
+				<a class="hover dotdotdot"
+					onclick="javascript:postdelete(${postId}, '${sessionScope.loginUser.getMember_id()}');">
+					게시글 삭제하기
+				</a>
+				</c:if>
+			</div>
+		</td>
+	</tr>
+	</c:if>
+	<c:if test='${HideComment eq "N" }'>
 	<tr id="comm" class='commentArea'>
 		<td>
 			<label class='checkbox-wrap'>
@@ -203,22 +246,20 @@
 			</label>&nbsp;
 		</td>
 		<td>
-			<c:if test='${HideComment eq "N" }'>
 			<input id='comment_content' type='text' placeholder='댓글 달기' style="width:100%"
 				onkeydown="if(event.keyCode==13) sendComment();">&nbsp;
-			</c:if>
 		</td>
 		<td>
-			<c:if test='${HideComment eq "N" }'>
 			<a href='javascript:sendComment();'>
 				<img  src='images/dettext_icon.png' width='45px' >
 			</a>
-			</c:if>
 			&nbsp;<a href='javascript:void(0);' onclick='dotdotdot($(this));'>
 				<img width="15%" src='images/thesee_icon.png'>
 			</a>
 		</td>
 	</tr>
+	</c:if>
+	
 </table>
 </div>
 </body>

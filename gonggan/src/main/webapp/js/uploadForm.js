@@ -131,7 +131,7 @@ function recieveNews(title, originallink, description, pubDate) {
 			+ "<td><a href='" + originallink + "' target='_blank' style='color:gray;text-decoration:none'>"
 			+ "<h3><b>" + title+"<b></h3></a></td></tr>"
 			+ "<tr><td style='padding-bottom:30px'>"
-			+ "<a href='" + originallink + "' target='_blank' style='color:gray;text-decoration:none;font-weight:lighter'>" + description + "</a></td>"
+			+ "<a href='" + originallink + "' target='_blank' style='color:gray;text-decoration:none;font-weight:lighter!important'>" + description + "</a></td>"
 			+ "</tr></table></div><p style='text-align:center'><br>내용을 입력해주세요.<br></p>";
 }
 

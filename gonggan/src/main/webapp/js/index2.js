@@ -72,12 +72,12 @@ function requestCategoryList(val, category) {
    
    var rownum2;
    
+   $(".searchPost").hide();
+   
    if (maxRownum - val < 8)
       var rownum2 = maxRownum;
    else rownum2 = rownum + 7;
 
-   alert("requestCategoryList : " + val + ", " + rownum2); 
-   
    $.ajax({
       url: "/gonggan/postlist.do",
       //url: "/gonggan/userpostlist.do",
@@ -192,7 +192,7 @@ function callbackList(data) {
    
    var category, postId, content, writerId, goodCnt, photoPath;
    var str;
-   
+
    for (var i in jsonArr.list) {
       
       photoPath = jsonArr.list[i].photoPath;
@@ -471,13 +471,14 @@ function callbacktrace(data) {
 
    while (document.getElementById("listbody_mytrace").rows.length > 0 )
       document.getElementById("listbody_mytrace").deleteRow(0);   
-   
+
    for (var j=0 ; j<7 ; j++){
       
       loginUser = jsonArr.list[j].loginUser;
       
       tr = document.createElement("tr");
       td = document.createElement("td");
+      td.colSpan = "2";
       //document.getElementById("listbody").innerHTML += "<tr><td colSpan='7'>"
       
       td.innerHTML = "<a data-fancybox data-src='pdetail.do?postId="+jsonArr.list[j].postId+"&writerId=" + jsonArr.list[j].postWriter +"'>"
@@ -649,6 +650,7 @@ function callbackNeighborList(data){
       var memberId = jsonArr.list[i].memberId;
       tr = document.createElement( 'tr' );
       td = document.createElement( 'td' );
+      td.colSpan = "2";
       var a = document.createElement( 'a' );
       var aText = document.createTextNode(memberId);
       a.href="myhome.do?writer_id="+jsonArr.list[i].memberId;

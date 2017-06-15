@@ -367,12 +367,11 @@
 					<img src="images/chat_icon.png" height="28px"  id="chat_icon">
 				</a>
 				<div class="blogOwnerClick hidden">
-					<div>
-						<a class="hover" href="javascript:reqNeig();">이웃 신청</a>
-						<hr><a class="hover" href="">프로필 보기</a>
-					</div>
-					<img src="images/idclick_icon.png" width="100%" height="100%">
-				</div>
+               <div>
+                  <hr><a class="hover" data-fancybox data-src='/gonggan/profile.do?&writer_id=${member.getMember_id()}'>프로필 보기</a>
+               </div>
+               <img src="images/idclick_icon.png" width="100%" height="100%">
+            </div>
 			</div>
 			<div class="collapse navbar-collapse" id="menu">
 				<c:if test='${blog.blog_open_yn eq "Y" || sessionScope.loginUser.getMember_id() eq param.writer_id}'>

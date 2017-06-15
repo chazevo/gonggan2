@@ -14,8 +14,7 @@
 	</insert>
 	
 	<select id="booklist_index2" resultMap="bookResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, BOOK_NUM, BOOK_CONTENT
-		FROM (SELECT * FROM BOOK ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+		SELECT * FROM BOOK ORDER BY POST_ID DESC
 	</select>
 	
 	

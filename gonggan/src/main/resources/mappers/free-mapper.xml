@@ -21,8 +21,7 @@
 	</select>
 	
 	<select id="freelist_index2" resultMap="freeResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, free_NUM, free_CONTENT
-		FROM (SELECT * FROM free ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+		SELECT * FROM free ORDER BY POST_ID DESC
 	</select>
 	
 	

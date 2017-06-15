@@ -27,9 +27,7 @@
 				where rownum between #{rownum} and #{rownum2}
 	</select>
 	<select id="movielist_index2" resultMap="movieResult">
-	SELECT * FROM
-	( SELECT ROWNUM AS RNUM, POST_ID, movie_title
-	FROM (SELECT * FROM MOVIE ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	SELECT * FROM MOVIE ORDER BY POST_ID DESC
 	</select>
 	
    <select id="movielist_myhome" parameterType="String" resultMap="movieResult">

@@ -24,10 +24,7 @@
 				where rownum between #{rownum} and #{rownum2}
 	</select>
 	<select id="diarylist_index2" resultMap="diaryResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM,
-		POST_ID, DIARY_NUM, DIARY_CONTENT, bg_image
-		FROM (SELECT * FROM DIARY ORDER BY POST_ID DESC)  )
-		<![CDATA[ WHERE RNUM<=8]]>
+		SELECT * FROM DIARY ORDER BY POST_ID DESC
 	</select>
 	
    <select id="diarylist_myhome" parameterType="String" resultMap="diaryResult">

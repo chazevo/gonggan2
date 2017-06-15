@@ -181,15 +181,6 @@ public class HomeController {
 		mv.addObject("plistSize", plist.size());
 		mv.addObject("nplistSize", loginUser != null ? nplist.size() : 0);
 		
-		mv.addObject("reviewlist", reviewlist);
-		mv.addObject("movielist", movielist);
-		mv.addObject("newslist", newslist);
-		mv.addObject("musiclist", musiclist);
-		mv.addObject("diarylist", diarylist);
-		mv.addObject("booklist", booklist);
-		mv.addObject("placelist", placelist);
-		mv.addObject("freelist", freelist);
-		
 		mv.addObject("reviewlistSize",reviewlist.size());
 		mv.addObject("movielistSize",movielist.size());
 		mv.addObject("newslistSize",newslist.size());
@@ -788,6 +779,16 @@ public class HomeController {
 		return "map";
 	}
   
+	@RequestMapping(value = "profile.do", method = RequestMethod.GET)
+	public ModelAndView profile(Locale locale, Model model,@RequestParam String writer_id,ModelAndView mv) {
+		logger.info("Welcome profile! ");
+		Member member = memberService.selectMember(writer_id);
+		List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
+		mv.addObject("member", member);
+		mv.addObject("neighborlist", neighborlist);
+		return mv;
+	}
+	
 	@RequestMapping(value="/neighborlist.do", produces={"application/json"})
 	@ResponseBody
 	public String neighborList(@RequestParam String loginUser){

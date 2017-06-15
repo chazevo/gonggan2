@@ -82,7 +82,6 @@ window.onload = function() {
 			if  ($(document).height() == $(window).scrollTop() + $(window).height()) {
 				
 				if(maxRownum >= rownum) {
-					alert("maxRownum : " + maxRownum + ", rownum : " + rownum);
 					$("#div_Loading").show();
 					
 					if (sort == "date") {
@@ -205,42 +204,44 @@ window.onload = function() {
 									</div>
 								</td>
 							</tr>
-							                     <tr>
-                        <th>
-                           <span id="postAlarm">내 포스트 알람_</span>
-                           <font color="#2D86C9"><b id="postAlarmCnt">${mAlarmListsize }</b></font>
-                        </th>
-                        <td><a href="">▶</a></td>
-                     </tr>
-                     <tbody id="listbody_neighbor"></tbody>
-                     <tbody id="listbody_mytrace"></tbody>
-                     <tbody id="listbody_newPost">
-                     <c:forEach  items="${mAlarmList}" var="i" begin="0">
-                     <c:if test='${!empty mAlarmList}'>
-                        <tr>
-                           <td>
-                               <c:if test='${i.type_cg eq "C"}' >
-                                 <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>댓글</a>을 남기셨습니다. |
-                                 <a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
-                              </c:if>
-                           </td>
-                           <td></td>
-                        </tr>
-                        <tr>
-                           <td>
-                               <c:if test='${i.type_cg eq "G"}' >
-                                 <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>좋아요</a>누르셨습니다. |
-                                 <a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
-                              </c:if>
-                           </td>
-                           <td></td>
-                        </tr>
-                       </c:if>
-                       <c:if test='${empty mAlarmList}'>
-                                       알람이 없습니다.
-                      </c:if>
-                        </c:forEach>
-                     </tbody>
+							<tr>
+								<th>
+									<span id="postAlarm">내 포스트 알람_</span>
+									<font color="#2D86C9">
+										<b id="postAlarmCnt">${mAlarmListsize }</b>
+									</font>
+								</th>
+								<td><a href="">▶</a></td>
+							</tr>
+							<tbody id="listbody_neighbor"></tbody>
+							<tbody id="listbody_mytrace"></tbody>
+							<tbody id="listbody_newPost">
+								<c:forEach  items="${mAlarmList}" var="i" begin="0">
+								<c:if test='${!empty mAlarmList}'>
+								<tr>
+									<td>
+										<c:if test='${i.type_cg eq "C"}' >
+										<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>댓글</a>을 남기셨습니다. |
+										<a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
+										</c:if>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>
+										<c:if test='${i.type_cg eq "G"}' >
+										<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>좋아요</a>누르셨습니다. |
+										<a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
+										</c:if>
+									</td>
+									<td></td>
+								</tr>
+								</c:if>
+								<c:if test='${empty mAlarmList}'>
+								알람이 없습니다.
+								</c:if>
+								</c:forEach>
+							</tbody>
 							<tr>
 								<td colspan="2" align="center"  class="title">
 									<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
@@ -286,39 +287,43 @@ window.onload = function() {
 				</tr>
 			</table>
 			<div class="myDiv" style="<c:if test='${empty sessionScope.loginUser}'>width:30%;</c:if>">
-				<c:if test="${empty (loginUser) }">
-				<form action = "login.do" method="post" id="login">
-					<table align="center">
-						<tr>
-							<td>아이디&nbsp;</td>
-							<td><input type="text" name="member_id" width="100%"></td>
-						</tr>
-						<tr>
-							<td>비밀번호&nbsp;</td>
-							<td>
-								<input type="password" name="member_pw" width="100%"
-									onkeydown="if (event.keyCode == 13) goSubmit();">
-							</td>
-						</tr>
-					</table>
-					<a href="javascript:goSubmit();">로그인</a><a href="join.do">회원가입</a>
-					<a href="findIdPwd.do">아이디 찾기</a>
-					<a href="findIdPwd.do">비밀번호 찾기</a>
-				</form>
-				
-				</c:if>
-				<c:if test="${!empty (loginUser) }">
-				<c:out value="${loginUser.getMember_id()}님"></c:out>
-				<a href="/gonggan/logOut.do">로그아웃</a>
-				<!-- <a href="/gonggan/update.do">정보수정</a> -->
-				<hr class="whiteHr">
-				<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">내 블로그 소식</a></b>
-				<a href='javascript:$("select").val("date"); plistcount = 0; maxRownum = plistSize; trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
-				<a href="javascript:$('select').val('date'); nplistcount = 0; maxRownum = nplistSize; neighborList(loginUser);" id="neighborList">이웃 블로그</a>   <!-- 이웃 블로그 목록, 이웃 새글 -->
-				<a href="uploadform.do?writer_id=${sessionScope.loginUser.getMember_id()}">포스트 쓰기</a>
-				<a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
-				<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
-				</c:if>
+				<div>
+					<div>
+						<c:if test="${empty (loginUser) }">
+						<form action = "login.do" method="post" id="login">
+							<table align="center">
+								<tr>
+									<td>아이디&nbsp;</td>
+									<td><input type="text" name="member_id" width="100%"></td>
+								</tr>
+								<tr>
+									<td>비밀번호&nbsp;</td>
+									<td>
+										<input type="password" name="member_pw" width="100%"
+											onkeydown="if (event.keyCode == 13) goSubmit();">
+									</td>
+								</tr>
+							</table>
+							<a href="javascript:goSubmit();">로그인</a><a href="join.do">회원가입</a>
+							<a href="findIdPwd.do">아이디 찾기</a>
+							<a href="findIdPwd.do">비밀번호 찾기</a>
+						</form>
+						
+						</c:if>
+						<c:if test="${!empty (loginUser) }">
+						<c:out value="${loginUser.getMember_id()}님"></c:out>
+						<a href="/gonggan/logOut.do">로그아웃</a>
+						<!-- <a href="/gonggan/update.do">정보수정</a> -->
+						<hr class="whiteHr">
+						<b><a href="/gonggan/mypage.do?writer_id=${sessionScope.loginUser.getMember_id()}">내 블로그 소식</a></b>
+						<a href='javascript:$("li a").css("backgroundColor", "transparent"); $("select").val("date"); plistcount = 0; maxRownum = plistSize; trace("${ sessionScope.loginUser.getMember_id()}");'>나의 흔적</a> <!-- 내가 쓴 댓글들  -->
+						<a href="javascript:$('li a').css('backgroundColor', 'transparent'); $('select').val('date'); nplistcount = 0; maxRownum = nplistSize; neighborList(loginUser);" id="neighborList">이웃 블로그</a>   <!-- 이웃 블로그 목록, 이웃 새글 -->
+						<a href="uploadform.do?writer_id=${sessionScope.loginUser.getMember_id()}">포스트 쓰기</a>
+						<a href="myhome.do?writer_id=${sessionScope.loginUser.getMember_id() }"><div class="goToMyBlog">내 블로그 </div></a>
+						<img src="images/KakaoTalk_Photo_2017-04-26-10-24-13.png" width="50px">
+						</c:if>
+					</div>
+				</div>
 			</div>
 		</div>
 		<section>
@@ -346,12 +351,12 @@ window.onload = function() {
 							</td>
 						</tr>
 					</table>
-				</div>
-				<div class="div3">
+					<div class="div3">
 					<select onchange="sorting();" id="select">
 						<option value="date">최신순</option>
 						<option value="like">좋아요</option>
 					</select>
+				</div>
 				</div>
 			</div>
 			<div class="blogHomeContentDiv" id="blogHomeContentDiv">

@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="reviewlist_index2" resultMap="reviewResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, REVIEW_NUM, REVIEW_CONTENT FROM (SELECT * FROM REVIEW ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
+		SELECT * FROM REVIEW ORDER BY POST_ID DESC	
 	</select>
 	
 	<select id="reviewlist_myhome" parameterType="review" resultMap="reviewResult">

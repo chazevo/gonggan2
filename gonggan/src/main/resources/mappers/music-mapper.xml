@@ -18,8 +18,7 @@
 				where rownum between #{rownum} and #{rownum2}
 	</select>
 	<select id="musiclist_index2" resultMap="musicResult">
-		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, MUSIC_NUM, music_title
-		FROM (SELECT * FROM MUSIC ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>	
+		SELECT * FROM MUSIC ORDER BY POST_ID DESC	
 	</select>
 	
    <select id="musiclist_myhome" parameterType="String" resultMap="musicResult">

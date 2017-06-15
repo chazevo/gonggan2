@@ -23,10 +23,7 @@
 				where rownum between #{rownum} and #{rownum2}
 	</select>
 	<select id="newslist_index2" resultMap="newsResult">
-		SELECT *
-		FROM ( SELECT ROWNUM AS RNUM, POST_ID, NEWS_NUM, TITLE
-		FROM (SELECT * FROM NEWS ORDER BY POST_ID DESC)  )
-		<![CDATA[ WHERE RNUM<=8]]>
+		SELECT * FROM NEWS ORDER BY POST_ID DESC
 	</select>
 	
    <select id="newslist_myhome" parameterType="String" resultMap="newsResult">

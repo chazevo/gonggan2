@@ -446,12 +446,15 @@ public class PostController {
 		return json.toJSONString();
 	}
 
-	@RequestMapping(value="/pcontentSearchLikelist.do", produces={"application/json"})
+	@RequestMapping(value="/psearchLikelist.do", produces={"application/json"})
 	@ResponseBody
 	public String selectSearchLikeList(@RequestParam int rownum,
-			@RequestParam int rownum2, @RequestParam String keyword){
+			@RequestParam int rownum2, @RequestParam String keyword,
+			@RequestParam int option) {
 
-		List<Post> plist  = postService.selectSearchLikeList(rownum, rownum2, keyword);
+		List<Post> plist;
+		
+		plist  = postService.selectSearchLikeList(rownum, rownum2, keyword, option);
 		
 		JSONObject json = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -460,22 +463,32 @@ public class PostController {
 			
 			JSONObject job = new JSONObject();
 			
-			job.put("postId", p.getPost_id() + "");
-			job.put("writerId", p.getWriter_id());
 			try {
+				job.put("postId", p.getPost_id() + "");
+				job.put("writerId", p.getWriter_id());
+				job.put("content", contentSort(p));
 				job.put("category", URLEncoder.encode(
 						p.getCategory(), "UTF-8"));
+				job.put("postId", p.getPost_id() + "");
+				job.put("sharYn", p.getShar_yn());
+				job.put("openYn", p.getOpen_yn());
+				job.put("writerId", p.getWriter_id());
+				job.put("bg", (p.getBg_image()==null ? "" : p.getBg_image()));
+				job.put("diary_title", URLEncoder.encode(
+						p.getDiary_title() == null ? "" : p.getDiary_title(), "UTF-8"));
+				job.put("music_title", URLEncoder.encode(
+						p.getMusic_title() == null ? "" : p.getMusic_title(), "UTF-8"));
+				job.put("movie_title", URLEncoder.encode(
+						p.getMovie_title() == null ? "" : p.getMovie_title(), "UTF-8"));
+				job.put("music_info", (p.getMusic_info()==null ? "" : p.getMusic_info()));
+				job.put("goodCnt", p.getGoodCnt() + "");
+				job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+				job.put("place_name", URLEncoder.encode(
+						p.getPlace_name() == null ? "" : p.getPlace_name(), "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			job.put("postId", p.getPost_id() + "");
-			job.put("sharYn", p.getShar_yn());
-			job.put("openYn", p.getOpen_yn());
-			job.put("writerId", p.getWriter_id());
-			job.put("goodCnt", p.getGoodCnt() + "");
-			job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
-
 			jarr.add(job);
 		}
 		json.put("list", jarr);

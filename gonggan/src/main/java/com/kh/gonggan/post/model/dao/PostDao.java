@@ -1,5 +1,6 @@
 package com.kh.gonggan.post.model.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +50,18 @@ public class PostDao {
 		return (List<Post>) sqlSession.selectList("postmapper.categoryplikelist", map);
 	}
 	
-	public List<Post> selectSearchLikeList(int rownum, int rownum2, String keyword) {
+	public List<Post> selectSearchLikeList(int rownum, int rownum2,
+			String keyword, int option) {
+		List<Post> plist = new ArrayList<Post>();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("rownum", rownum + "");
 		map.put("rownum2", rownum2 + "");
 		map.put("keyword", keyword);
-		return (List<Post>) sqlSession.selectList("postmapper.pcontentSearchLikelist", map);
+		if (option == 0)
+			plist = (List<Post>) sqlSession.selectList("postmapper.pcontentSearchLikelist", map);
+		else if (option == 1)
+			plist = (List<Post>) sqlSession.selectList("postmapper.pwriterSearchLikelist", map);
+		return plist;
 		
 	}
 	public List<Post> selectUserFree(String writer_id, int rownum, int rownum2) {
@@ -130,7 +137,14 @@ public class PostDao {
 	}
 	
 	public int postWriterSearchMaxRnum(String keyword) {
-		return (int) sqlSession.selectOne("postmapper.pwritersearchmax", keyword);
+		Object result = null;
+		int integerResult = -1;
+		
+		if ((result = sqlSession.selectOne("postmapper.pwritersearchmax", keyword)) == null)
+			integerResult = 0;
+		else integerResult = (Integer)result;
+		
+		return integerResult;
 	}
 	
 	public List<Post> postContentSearch(String keyword, int rownum, int rownum2) {

@@ -25,7 +25,7 @@ public interface PostService {
 	List<Post> selectLikeAll(int rownum, int rownum2);
 	List<Post> selectLikeNpost(int rownum, int rownum2, String writer_id);
 	List<Post> selectLikeCategoryPost(int rownum, int rownum2, String category);
-	List<Post> selectSearchLikeList(int rownum, int rownum2, String keyword);
+	List<Post> selectSearchLikeList(int rownum, int rownum2, String keyword, int option);
 	List<Post> selectAll_index2();
 	List<Post> selectAll_myhome(String writer_id);
 	List<Post> selectNeighborAll_index2(String member_id);

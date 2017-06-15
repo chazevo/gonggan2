@@ -157,6 +157,8 @@ public class HomeController {
 		List<Member> neighborReqList = null;
 		List<Comment> commentReqList = null;
 		
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+		
 		if (loginUser != null) {
 			
 			memberId = loginUser.getMember_id();
@@ -166,7 +168,11 @@ public class HomeController {
 			
 			nplist = postService.selectNeighborAll_index2(memberId);
 			
+			mAlarmList = memberService.alarmCheck(memberId);
+			
 			mv.addObject("neighborReqListSize", neighborReqList.size());
+			mv.addObject("mAlarmList", mAlarmList);
+			mv.addObject("mAlarmListsize", mAlarmList.size());
 		}
 
 		mv.setViewName("index2");

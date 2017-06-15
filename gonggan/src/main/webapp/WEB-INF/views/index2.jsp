@@ -205,52 +205,42 @@ window.onload = function() {
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<th>
-									<span id="postAlarm">내 포스트 알람_</span>
-									<font color="#2D86C9"><b id="postAlarmCnt">6</b></font>
-								</th>
-								<td><a href="">▶</a></td>
-							</tr>
-							<tbody id="listbody_neighbor"></tbody>
-							<tbody id="listbody_mytrace"></tbody>
-							<tbody id="listbody_newPost">
-								<tr>
-									<td>
-										<a href="">꼼지락이주부 감성 DIY 셀프인테리어</a> |
-										<a href=""><font color="#2D86C9">꼼지락이 주부</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">동갑내기 부부의 세계로 가는 자전거 여행</a> |
-										<a href=""><font color="#2D86C9">이대장</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">토리와 함께 추억쌓기 놀이</a> |
-										<a href=""><font color="#2D86C9">긍정의아이콘 토리 </font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">행복가득한 그루터기 발자취</a> |
-										<a href=""><font color="#2D86C9">그루터기</font></a>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>
-										<a href="">진격의 깐깐징어 깐깐징어 깐징어 우아우아.......</a> |
-										<a href=""><font color="#2D86C9">깐깐징어</font></a>
-									</td>
-									<td></td>
-								</tr>
-							</tbody>
+							                     <tr>
+                        <th>
+                           <span id="postAlarm">내 포스트 알람_</span>
+                           <font color="#2D86C9"><b id="postAlarmCnt">${mAlarmListsize }</b></font>
+                        </th>
+                        <td><a href="">▶</a></td>
+                     </tr>
+                     <tbody id="listbody_neighbor"></tbody>
+                     <tbody id="listbody_mytrace"></tbody>
+                     <tbody id="listbody_newPost">
+                     <c:forEach  items="${mAlarmList}" var="i" begin="0">
+                     <c:if test='${!empty mAlarmList}'>
+                        <tr>
+                           <td>
+                               <c:if test='${i.type_cg eq "C"}' >
+                                 <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>댓글</a>을 남기셨습니다. |
+                                 <a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
+                              </c:if>
+                           </td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>
+                               <c:if test='${i.type_cg eq "G"}' >
+                                 <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>좋아요</a>누르셨습니다. |
+                                 <a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
+                              </c:if>
+                           </td>
+                           <td></td>
+                        </tr>
+                       </c:if>
+                       <c:if test='${empty mAlarmList}'>
+                                       알람이 없습니다.
+                      </c:if>
+                        </c:forEach>
+                     </tbody>
 							<tr>
 								<td colspan="2" align="center"  class="title">
 									<img width="98%" height="2px" src="images/KakaoTalk_Photo_2017-04-26-10-46-42_84.png">
@@ -347,8 +337,8 @@ window.onload = function() {
 							<td>
 								<div class="div2">
 									<input type="text" id="searchPost" placeholder="검색" size="12"
-										onkeydown="if (event.keyCode == 13) { category = 'psearch'; $('#select').val('date'); psearchRownum(); searchPost(rownum = 1); }">
-									<a href="javascript: category = 'psearch'; $('#select').val('date'); psearchRownum(); searchPost(rownum = 1); ">
+										onkeydown="if (event.keyCode == 13) { category = 'psearch'; $('#select').val('date'); psearchRownum(); }">
+									<a href="javascript: category = 'psearch'; $('#select').val('date'); psearchRownum(); ">
 										<img src=images/KakaoTalk_Photo_2017-04-26-21-33-40_100.png
 											width="10%">
 									</a>

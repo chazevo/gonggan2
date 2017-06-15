@@ -41,8 +41,9 @@ public class PostSericeImpl implements PostService{
 	}
 
 	@Override
-	public List<Post> selectSearchLikeList(int rownum, int rownum2, String keyword) {
-		return  postDao.selectSearchLikeList(rownum, rownum2, keyword);	
+	public List<Post> selectSearchLikeList(int rownum, int rownum2,
+			String keyword, int option) {
+		return  postDao.selectSearchLikeList(rownum, rownum2, keyword, option);	
 	}
 	
 	@Override

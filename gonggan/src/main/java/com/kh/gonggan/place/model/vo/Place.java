@@ -4,14 +4,16 @@ public class Place {
 	private int post_id;
 	private int place_num;
 	private String place_content;
+	private String place_name;
 	
 	public Place(){}
 
-	public Place(int post_id, int place_num, String place_content) {
+	public Place(int post_id, int place_num, String place_content, String place_name) {
 		super();
 		this.post_id = post_id;
 		this.place_num = place_num;
 		this.place_content = place_content;
+		this.place_name = place_name;
 	}
 
 	public int getPost_id() {
@@ -38,10 +40,15 @@ public class Place {
 		this.place_content = place_content;
 	}
 
-	@Override
-	public String toString() {
-		return "Free [post_id=" + post_id + ", place_num=" + place_num + ", place_content=" + place_content + "]";
+	public String getPlace_name() {
+		return place_name;
 	}
+
+	public void setPlace_name(String place_name) {
+		this.place_name = place_name;
+	}
+
+	
 	
 }
 

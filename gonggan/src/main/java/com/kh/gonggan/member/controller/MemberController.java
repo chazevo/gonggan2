@@ -208,7 +208,7 @@ public class MemberController {
 		System.out.println("marger : " + marger);
 		String savePath = marger + "src/main/webapp/images/profileImages/";
 		System.out.println("savepath : " + savePath);
-		//savePath = "/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/";
+		savePath = "/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/images/profileImages/";
 
 		
 		if (file.isEmpty()) {
@@ -246,6 +246,9 @@ public class MemberController {
 					request.getParameter("profile"),
 					copy.getName()));
 		}
+		
+		HttpSession ss = request.getSession(false);
+		ss.setAttribute("loginUser", memberService.selectMember(member_id).getProfile_photo());
 		
 		mv.setViewName("redirect:mypage.do?writer_id=" + member_id);
 		

@@ -533,7 +533,7 @@ var loginUser = '${sessionScope.loginUser}';
 									<!-- Footer -->
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default"
-											onclick="deleteMem(); $('#layerpop2').modal('hide');">
+											onclick="deleteMem();">
 											OK
 										</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">

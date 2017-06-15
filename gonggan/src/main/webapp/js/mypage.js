@@ -228,7 +228,8 @@ function deleteMem() {
 				},
 				success: function(data) {
 					alert("탈퇴가 완료되었습니다");
-					location.href="home.do";
+					$('#layerpop2').modal('hide');
+					location.href="start.do";
 				},
 				error: function(data,status,error) {
 					console.log("error : " + error);

@@ -55,5 +55,9 @@ public class BlogServiceImpl implements BlogService {
 	public int blogSetting_background(Blog blog) {
 		return blogDao.blogSetting_background(blog);
 	}
+	public List<Member> selectMonVisitorList(String wirter_id) {
+
+		return blogDao.selectMonVisitorList(wirter_id);
+	}//한달 방문자 수
 	
 }

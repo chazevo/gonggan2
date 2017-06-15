@@ -10,9 +10,23 @@ var f_less30 = 0;
 var f_less50 = 0;
 var f_less60 = 0;
    
+/*function reqVisitor() {
+	$.ajax({
+		url : "/gonggan/selectMonNeiList.do",
+		data : {
+			writer_id : writer_id
+		},
+		success : function(data) {
+			callbackVisitorList(data);
+		},
+		error : function(data, status, error) {
+			console.log("error : " + error);
+		}
+	});
+}*/
 function reqVisitor() {
 	$.ajax({
-		url : "/gonggan/selectVisitorList.do",
+		url : "/gonggan/selectMonVisitorList.do",
 		data : {
 			writer_id : writer_id
 		},
@@ -339,6 +353,6 @@ function settingComplete() {
 				; // 기존 파일 삭제 
 		
 			$("#form").submit();
-		}
+A		}
 	}
 }

@@ -18,5 +18,6 @@ public interface BlogService {
 	int blogSetting(Blog blog);
 	int blogSetting_color(Blog blog);
 	int blogSetting_background(Blog blog);
+	List<Member> selectMonVisitorList(String wirter_id);
 
 }

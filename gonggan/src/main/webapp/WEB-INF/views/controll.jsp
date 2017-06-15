@@ -597,7 +597,7 @@ int today = cal.get(Calendar.DATE);
 							<c:set var="count" value="${count + 1}" />
 							<th>${count}</th>
 							<td>
-								<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${dlist[diarycount-1].title}</a>
+								<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>${dlist[diarycount-1].diary_title}</a>
 							</td>
 							<td>
 								<label class='checkbox-wrap'>
@@ -701,7 +701,7 @@ int today = cal.get(Calendar.DATE);
 								<th>${countcomment}</th>
 								<td>
 									<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id() }'>
-										${dlist[diarycount-1].title}</a>
+										${dlist[diarycount-1].diary_title}</a>
 								</td>
 								<td>
 									<img  src="images/chat_icon.png">

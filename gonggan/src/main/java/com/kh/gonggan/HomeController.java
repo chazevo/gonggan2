@@ -215,6 +215,7 @@ public class HomeController {
 		List<Place> placelist =  new ArrayList<Place>();
 		List<Free> freelist =  new ArrayList<Free>();
 		Blog blog = blogService.selectBlog(writer_id);
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
         
 		String category = "";
          
@@ -263,6 +264,10 @@ public class HomeController {
 				freelist.add(freeService.freeDetail(postId));
 			}
 		}
+		
+
+		mAlarmList = memberService.alarmCheck(writer_id);
+		
 		mv.addObject("likeInOrder", likeInOrder);
 		mv.addObject("commentInOrder", commentInOrder);
 		mv.addObject("musiclist", musiclist);
@@ -275,6 +280,7 @@ public class HomeController {
 		mv.addObject("freelist", freelist);
 		mv.addObject("blog", blog);
 		mv.addObject("commentAll",commentAll);
+		mv.addObject("mAlarmList", mAlarmList);
 		mv.setViewName("controll");
 		
 		return mv;
@@ -588,10 +594,13 @@ public class HomeController {
 		List<Comment> commentNeigList = commentService.commentNeigList(writer_id);
 		List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
 		List<Message> lastMessage = messageService.lastMessage(writer_id);
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
 		for (int i = 0; i< lastMessage.size(); i++) {
 			System.out.println(lastMessage.get(i));
 		}
 
+		mAlarmList = memberService.alarmCheck(writer_id);
+		
 		mv.addObject("mylist",mylist);
 		mv.addObject("writer_id", writer_id);
 		mv.addObject("neighborReqList", neighborReqList);
@@ -600,6 +609,7 @@ public class HomeController {
 		mv.addObject("commentNeigList", commentNeigList);
 		mv.addObject("neighborlist",neighborlist);
 		mv.addObject("lastMessage",lastMessage);
+		mv.addObject("mAlarmList", mAlarmList);
 		mv.setViewName("mypage");
    
 		return mv;
@@ -612,6 +622,7 @@ public class HomeController {
 
 		Blog blog = new Blog();
 		Member member = new Member();
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
 		
 		if (writer_id != null) {
 			blog = blogService.selectBlog(writer_id);
@@ -694,7 +705,8 @@ public class HomeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-      
+
+		mAlarmList = memberService.alarmCheck(writer_id);
 		
 		
 		mv.setViewName("uploadform");
@@ -702,6 +714,7 @@ public class HomeController {
 		mv.addObject("popKeyword", popKeyword);
 		mv.addObject("bestSellerList", bestSellerList);
 		mv.addObject("blog", blog);
+		mv.addObject("mAlarmList", mAlarmList);
 		mv.addObject("member", member);
       
 		return mv;

@@ -105,29 +105,48 @@ var loginUser = '${sessionScope.loginUser}';
 					<div id="dansun_line"></div>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					알림&nbsp;
-					<img src="images/idclick_new_icon.png" id="idclick_new_icon">
-				</td>
-			</tr>
-			<!-- <tr>
-				<td class="hover">
-					<font><a href="#"> 이대장 님이</a></font>
-					<a href="#">동갑내기 부부의 세계로 가는 자전거 여행| 게시글에 댓글을 남기셨습니다.</a>
-				</td>
-			</tr>
-			<tr>
-				<td class="hover">
-					<font><a href="#"> 긍정의아이콘|토리|</a></font>
-					<a href="#">님이 토리와 함께 추억쌓기 놀이 | 게시글에 좋아요를 누르셨습니다.</a>
-				</td>
-			</tr> -->
-			<tr>
-				<td class="hover">
-					${sessionScope.loginUser.getMember_id()}님의 알림이 없습니다.
-				</td>
-			</tr>
+				<tr>
+					<td>
+						알림&nbsp; <img src="images/idclick_new_icon.png" id="idclick_new_icon">
+					</td>
+				</tr>
+				<!-- <tr>
+							<td class="hover">
+ 								<font><a href="#"> 이대장 님이</a></font> <a href="#">동갑내기 부부의 세계로 가는 자전거 여행| 게시글에 댓글을 남기셨습니다.</a>
+							</td>
+						</tr>
+				<tr>
+				      <td class="hover">
+				            <font><a href="#"> 긍정의아이콘|토리|</a></font> <a href="#">이 토리와 함께 추억쌓기 놀이 | 게시글에 좋아요를 누르셨습니다.</a>
+				      </td>
+				</tr> -->
+         		<tr>
+               <td class="hover">
+               <c:if test='${!empty mAlarmList}'>
+                  <c:forEach  items="${mAlarmList}" var="i" begin="0">
+                     <tr>
+                        <td>
+                           <c:if test='${i.type_cg eq "C"}' >
+                              <font><a href="myhome.do?writer_id=${i.writer_id} ">${i.writer_id }</a>님이 </font>
+                              <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '><b>댓글</b></a>을 남기셨습니다.
+                           </c:if>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>
+                           <c:if test='${i.type_cg eq "G"}' >
+                              <font><a href="myhome.do?writer_id=${i.writer_id} ">${i.writer_id }</a>님이</font> 
+                              <a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '><b>좋아요</b></a>을 남기셨습니다.
+                           </c:if>
+                        </td>
+                        </tr>
+                  </c:forEach>
+                  </c:if>
+                                 <c:if test='${empty mAlarmList}'>
+                     알람이 없습니다.
+               </c:if>
+               </td>
+            </tr>
 		</table>
 	</div>
 </div>

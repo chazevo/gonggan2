@@ -413,7 +413,7 @@ public class MemberController {
 		
 			String msg = "실패";
 	
-			if (memberService.acceptNeigh(member_id, member_id2) > 0)
+			if (memberService.rejectNeigh(member_id, member_id2) > 0)
 				msg = "거절 성공";
 			return msg;
 		}//이웃 신청 수락/거절

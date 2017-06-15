@@ -7,10 +7,32 @@
 		<id property="place_num" column="place_num"/>
 		<result property="post_id" column="post_id"/>
 		<result property="place_content" column="place_content"/>
+		<result property="place_name" column="place_name"/>
 	</resultMap>
-
-		<insert id="pinsert" parameterType="Map">
-		insert into place values(#{post_id},nvl((select max(place_num) from place),0) + 1,#{content})
+	
+	<insert id="placeinsert" parameterType="Map">
+	insert into place values(#{post_id},nvl((select max(place_num) from place),0) + 1,
+	#{content}, #{place_name})
 	</insert>
 	
+	<select id="placelist" resultMap="placeResult" parameterType="Map">
+	
+	select rownum, subquery.* from (select * from place
+				order by 5 desc) subquery "
+				where rownum between #{rownum} and #{rownum2}
+	</select>
+	<select id="placelist_index2" resultMap="placeResult">
+		SELECT *
+		FROM ( SELECT ROWNUM AS RNUM, POST_ID, place_NUM, place_content, place_name
+		FROM (SELECT * FROM place ORDER BY POST_ID DESC)  )
+		<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+	
+   <select id="placelist_myhome" parameterType="String" resultMap="placeResult">
+	SELECT * FROM post right join place using (post_id) where writer_id = #{writer_id}
+   </select>
+	
+	<select id="placedetail" resultMap="placeResult" parameterType="int">
+	select * from place where post_id = #{postId}
+	</select>
 </mapper>

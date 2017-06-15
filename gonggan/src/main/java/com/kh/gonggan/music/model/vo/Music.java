@@ -4,6 +4,7 @@ public class Music {
 
 	private String videoId;
 	private String title;
+	private String music_title;
 	private String thumbnail_default;
 	private String thumbnail_high;
 	private int post_id;
@@ -24,12 +25,13 @@ public class Music {
 		this.thumbnail_high = thumbnail_high;
 	}
 
-	public Music(String videoId, String title, String thumbnail_default, String thumbnail_high,
+	public Music(String videoId, String title, String music_title, String thumbnail_default, String thumbnail_high,
 			int post_id, int music_num, String music_info,
 			String singer, String music_content) {
 		super();
 		this.videoId = videoId;
 		this.title = title;
+		this.music_title = music_title;
 		this.thumbnail_default = thumbnail_default;
 		this.thumbnail_high = thumbnail_high;
 		this.post_id = post_id;
@@ -41,7 +43,7 @@ public class Music {
 	
 	@Override
 	public String toString() {
-		return "Music [videoId=" + videoId + ", title=" + title
+		return "Music [videoId=" + videoId + ", music_title=" + music_title
 				+ ", thumbnail_default=" + thumbnail_default
 				+ ", thumbnail_high=" + thumbnail_high
 				+ ", post_id=" + post_id
@@ -96,13 +98,21 @@ public class Music {
 	public void setVideoId(String videoId) {
 		this.videoId = videoId;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getMusic_title() {
+		return music_title;
+	}
+
+	public void setMusic_title(String music_title) {
+		this.music_title = music_title;
 	}
 
 	public String getThumbnail_default() {

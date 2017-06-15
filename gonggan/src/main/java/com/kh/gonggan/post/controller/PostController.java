@@ -49,6 +49,7 @@ import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.diary.model.service.DiaryService;
 import com.kh.gonggan.diary.model.vo.Diary;
+import com.kh.gonggan.free.model.service.FreeService;
 import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.movie.model.service.MovieService;
 import com.kh.gonggan.movie.model.vo.Movie;
@@ -56,6 +57,7 @@ import com.kh.gonggan.music.model.service.MusicService;
 import com.kh.gonggan.music.model.vo.Music;
 import com.kh.gonggan.news.model.service.NewsService;
 import com.kh.gonggan.news.model.vo.News;
+import com.kh.gonggan.place.model.service.PlaceService;
 import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
 import com.kh.gonggan.post.model.vo.PostBestSeller;
@@ -92,6 +94,10 @@ public class PostController {
 	private ReviewService reviewService;
 	@Autowired
 	private BlogService blogService;
+	@Autowired
+	private PlaceService placeService;
+	@Autowired
+	private FreeService freeService;
 	
 	@RequestMapping("pdetail.do")
 		public ModelAndView postDetail(@RequestParam String postId, @RequestParam String writerId, ModelAndView mv) {
@@ -195,6 +201,11 @@ public class PostController {
 						postService.selectAll(rownum, rownum2)
 						: postService.selectUserAll(writer_id, rownum, rownum2));
 				break;
+			case "free":
+				plist = (writer_id == "" ?
+						postService.selectFree(rownum, rownum2)
+						: postService.selectUserFree(writer_id, rownum, rownum2));
+				break;
 			case "music":
 				plist = (writer_id == "" ?
 						postService.selectMusic(rownum, rownum2)
@@ -225,6 +236,11 @@ public class PostController {
 						postService.selectBook(rownum, rownum2)
 						: postService.selectUserBook(writer_id, rownum, rownum2));
 				break;
+			case "place":
+				plist = (writer_id == "" ?
+						postService.selectPlace(rownum, rownum2)
+						: postService.selectUserPlace(writer_id, rownum, rownum2));
+				break;
 			}
 			
 			JSONObject json = new JSONObject();
@@ -237,29 +253,36 @@ public class PostController {
 					
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(p.getPost_date());
-					
-					job.put("postId", p.getPost_id() + "");
-					job.put("writerId", p.getWriter_id());
+
 					try {
+						job.put("postId", p.getPost_id() + "");
+						job.put("writerId", p.getWriter_id());
 						job.put("content", contentSort(p));
 						job.put("category", URLEncoder.encode(
 								p.getCategory(), "UTF-8"));
+						job.put("postId", p.getPost_id() + "");
+						job.put("sharYn", p.getShar_yn());
+						job.put("openYn", p.getOpen_yn());
+						job.put("writerId", p.getWriter_id());
+						job.put("bg", (p.getBg_image()==null ? "" : p.getBg_image()));
+						job.put("diary_title", URLEncoder.encode(
+								p.getDiary_title() == null ? "" : p.getDiary_title(), "UTF-8"));
+						job.put("music_title", URLEncoder.encode(
+								p.getMusic_title() == null ? "" : p.getMusic_title(), "UTF-8"));
+						job.put("movie_title", URLEncoder.encode(
+								p.getMovie_title() == null ? "" : p.getMovie_title(), "UTF-8"));
+						job.put("music_info", (p.getMusic_info()==null ? "" : p.getMusic_info()));
+						job.put("goodCnt", p.getGoodCnt() + "");
+						job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
+						job.put("year", cal.get(Calendar.YEAR) + "");
+						job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
+						job.put("date", cal.get(Calendar.DATE) + "");
+						job.put("place_name", URLEncoder.encode(
+								p.getPlace_name() == null ? "" : p.getPlace_name(), "UTF-8"));
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					job.put("postId", p.getPost_id() + "");
-					job.put("sharYn", p.getShar_yn());
-					job.put("openYn", p.getOpen_yn());
-					job.put("writerId", p.getWriter_id());
-					if (p.getCategory().equals("diary"))
-					job.put("bg", (p.getBg_image()==null ? "" : p.getBg_image()));
-					job.put("goodCnt", p.getGoodCnt() + "");
-					job.put("photoPath", (p.getPhoto_path()==null ? "0" : p.getPhoto_path()));
-					job.put("year", cal.get(Calendar.YEAR) + "");
-					job.put("month", (cal.get(Calendar.MONTH) + 1) + "");
-					job.put("date", cal.get(Calendar.DATE) + "");
-		
 					jarr.add(job);
 				}
 				json.put("list", jarr);
@@ -282,6 +305,9 @@ public class PostController {
 		String content = null;
 		
 		switch(p.getCategory()) {
+		case "free":
+			content = p.getFree_content();
+			break;
 		case "music":
 			content = p.getMusic_content();
 			break;
@@ -300,11 +326,14 @@ public class PostController {
 		case "news":
 			content = p.getNews_content();
 			break;
+		case "place":
+			content = p.getPlace_content();
+			break;
 		}
 		
 		try {
 			content = URLEncoder.encode(
-					content, "UTF-8");
+					content + "", "UTF-8");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -517,6 +546,7 @@ public class PostController {
 		
 		switch (category) {
 		case "free":
+			content = freeService.freeDetail(postId).getFree_content();
 			break;
 		case "music":
 			content = musicService.musicDetail(postId).getMusic_content();
@@ -528,7 +558,7 @@ public class PostController {
 			content = movieService.movieDetail(postId).getMovie_content();
 			break;
 		case "diary":
-			content = diaryService.diaryDetail(postId).getTitle();
+			content = diaryService.diaryDetail(postId).getDiary_title();
 			break;
 		case "review":
 			content = reviewService.reviewDetail(postId).getReview_content();
@@ -536,9 +566,12 @@ public class PostController {
 		case "news":
 			content = newsService.newsDetail(postId).getNews_content();
 			break;
+		case "place":
+			content = placeService.placeDetail(postId).getPlace_content();
+			break;
 		}
 		
-		content = content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+		content = content.replaceAll("<(/)?([a-zA-Z0-9]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 		
 		if (content.length() > 100)
 			content = content.substring(0, 100) + "...";
@@ -911,10 +944,15 @@ public class PostController {
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
 	public ModelAndView upload(@RequestParam String loginUser,
 			@RequestParam String category,@RequestParam String content,
-			@RequestParam String open,@RequestParam String title, @RequestParam String bg,
-			ModelAndView mv) throws Exception{
+			@RequestParam String open,
+			@RequestParam String diary_title, @RequestParam String music_title,
+			@RequestParam String movie_title, @RequestParam String music_info,
+			@RequestParam String bg, @RequestParam String place_name,
+			@RequestParam String pimg, ModelAndView mv) throws Exception{
 		
-		int pinsert = postService.pinsert(loginUser,category,content,title,open, bg);
+		int pinsert = postService.pinsert(loginUser,category,content,
+				diary_title, music_title, movie_title, open,
+				bg, music_info, place_name, pimg);
 		
 		if (pinsert < 0) {
 			System.out.println("안됨");
@@ -942,6 +980,67 @@ public class PostController {
     
 		return msg;
  
+	}
+	
+	@RequestMapping(value="/uppostimg.do", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String uploadPostImg(MultipartHttpServletRequest request) {
+		
+		String msg = "실패";
+
+		MultipartFile multipartFile = request.getFile("file");
+		
+		long current = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		File  renameFile;
+		String originalFileName = multipartFile.getOriginalFilename();
+		String[] originalFileNameSplit;
+		
+		try {
+			
+			multipartFile.transferTo(renameFile = new File(
+					"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/uploadImages/"
+							+ "pimg" + sdf.format(new Date(current))
+							+ ("." + (originalFileNameSplit =
+							originalFileName.split("\\."))[originalFileNameSplit.length-1])));
+			
+			msg = renameFile.getName();
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return msg;
+	}
+	
+	@RequestMapping(value="/delpostimg.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String deletePostImage(@RequestParam String postImg) {
+		
+		String msg = "";
+		File existFile;
+		
+		File  renameFile;
+		
+		try {
+			
+			existFile = new File(
+					"/Users/jiseung/git/gonggan2/gonggan/src/main/webapp/uploadImages/"
+					+ postImg);
+			if(existFile.exists())
+				if(existFile.delete())
+	                System.out.println("파일삭제 성공");
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return msg;
 	}
 	
 	@RequestMapping(value="/updiarybg.do", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")

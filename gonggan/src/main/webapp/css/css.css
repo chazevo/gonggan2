@@ -173,17 +173,17 @@ table.categorySearch th a, table.categorySearch td a {
 	padding-right:50px;
 }
 
-.gradBg th div {
+.gradBg .searchAllTable th div {
 	display:table;
 	width:100%;
 }
-.gradBg th div a {
+.gradBg .searchAllTable th div a {
 	height:40px;
 	display:table-cell;
 	vertical-align:middle;
 }
 
-.gradBg th div hr {
+.gradBg .searchAllTable th div hr {
 	position:absolute;
 	margin-left:auto;
 	margin-right:auto;
@@ -1711,7 +1711,7 @@ input[disabled=true] {
 	position:absolute;
 }
 
-.mypage .fileInputBtn, #imgUploadDiv .fileInputBtn, #layerpop2 .fileInputBtn {
+.mypage .fileInputBtn, #layerpop2 .fileInputBtn, #layerpop3 .fileInputBtn {
 	width: 100%;
 	height: 100%;
 	border: 1px solid #97A1AD;

@@ -90,7 +90,8 @@ System.out.println(str);
 	var diarylistSize = ${diarylistSize};
 	var movielistSize = ${movielistSize};
 	var booklistSize = ${booklistSize};
-	var placelistSize = 0;
+	var placelistSize = ${placelistSize};
+	var freelistSize = ${freelistSize};
 
 	var initPosition;
 	var prevPosition;
@@ -269,6 +270,9 @@ System.out.println(str);
                         </td>
                         </tr>
                   </c:forEach>
+               </c:if>
+               <c:if test='${empty mAlarmList}'>
+                     알람이 없습니다.
                </c:if>
                </td>
             </tr>

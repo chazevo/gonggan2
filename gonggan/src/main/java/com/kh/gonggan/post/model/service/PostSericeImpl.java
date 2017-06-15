@@ -77,6 +77,11 @@ public class PostSericeImpl implements PostService{
 	}
 	
 	@Override
+	public List<Post> selectUserFree(String writer_id, int rownum, int rownum2) {
+		return  postDao.selectUserFree(writer_id, rownum, rownum2);
+	}
+
+	@Override
 	public List<Post> selectUserDiary(String writer_id, int rownum, int rownum2) {
 		return  postDao.selectUserDiary(writer_id, rownum, rownum2);
 	}
@@ -160,6 +165,16 @@ public class PostSericeImpl implements PostService{
 	public List<Post> selectBook(int rownum, int rownum2) {
 		return postDao.selectBook(rownum, rownum2);
 	}
+
+	@Override
+	public List<Post> selectPlace(int rownum, int rownum2) {
+		return postDao.selectPlace(rownum, rownum2);
+	}
+	
+	@Override
+	public List<Post> selectFree(int rownum, int rownum2) {
+		return postDao.selectFree(rownum, rownum2);
+	}
 	
 	@Override
 	public int maxRownum(String category) {
@@ -181,8 +196,11 @@ public class PostSericeImpl implements PostService{
 	}
 	
 	@Override
-	public int pinsert(String loginUser, String category,String content,String title,String open, String bg){
-		return postDao.pinsert(loginUser,category,content,title,open, bg);
+	public int pinsert(String loginUser, String category, String content,
+			String diary_title, String music_title, String movie_title,
+			String open, String bg, String music_info, String place_name, String pimg) {
+		return postDao.pinsert(loginUser,category,content,diary_title,music_title, movie_title,
+				open, bg, music_info, place_name, pimg);
 	}
 	
 	@Override

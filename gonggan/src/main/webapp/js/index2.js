@@ -234,26 +234,28 @@ function callbackList(data) {
       goodCnt = jsonArr.list[i].goodCnt;
       
       switch(category = jsonArr.list[i].category) {
-      case "default":
+      case "free":
          str = "";
          break;
       case "music":
-         str = "<img src='images/music_icon.png' width='20px'>";
+         str = "<img src='images/music_icon.png' width='15px'>&nbsp;"
+         		+ decodeURIComponent(jsonArr.list[i].music_title.replace(Ca, " "));
          break;
       case "book":
-          str = "<img src='images/Emoji_u1f4d5.svg.png' width='20px' style='opacity:0.5'>";
+          str = "<img src='images/11.png' width='22px'>&nbsp;";
          break;
       case "movie":
-          str = "<img src='images/video_icon.png' width='25px'>";
+          str = "<img src='images/video_icon.png' width='25px'>&nbsp;";
          break;
       case "review":
-          str = "<img src='images/review_icon.png' width='35px'>";
+          str = "<img src='images/review_icon.png' width='36px'>&nbsp;";
          break;
       case "news":
-          str = "<img src='images/news_icon.png' width='30px'>";
+          str = "<img src='images/news_icon.png' width='27px'>&nbsp;";
          break;
       case "place" :
-      str = "<img src='images/marker.png' width='25px'>";
+      str = "<img src='images/marker.png' width='12px'>&nbsp;"
+   		+ decodeURIComponent(jsonArr.list[i].place_name.replace(Ca, " "));
       }
       
       if (category != "diary") {
@@ -261,14 +263,18 @@ function callbackList(data) {
          td = document.createElement("td");
          td.colSpan = "2";
          td.style.textAlign = "left";
-         td.style.padding = "3px";
+         td.style.paddingTop = "5px";
+         td.style.paddingBottom = "5px";
+         td.style.paddingLeft = "10px";
          td.innerHTML = str;
+         td.style.fontSize = "80%";
          tr.appendChild(td);
          table.appendChild(tr);
       }
       
-      if (category == "diary" && jsonArr.list[i].bg != "") {
-    	  	table.style.backgroundImage = "url(images/diaryBackgroundImages/" + jsonArr.list[i].bg + ")";
+      if (category == "diary" && jsonArr.list[i].bg != "" ) {
+    	  	table.style.backgroundImage =
+    	  		"url(images/diaryBackgroundImages/" + jsonArr.list[i].bg + ")";
       }
       
       tr = document.createElement("tr");
@@ -278,19 +284,29 @@ function callbackList(data) {
       td.className = "blogHomeContent";
       td.style.height = "170px";
 
-      if (photoPath != imgVal) {
+      if (category != "music" && photoPath != imgVal) {
          td.style.backgroundImage = "url(uploadImages/" + photoPath + ")";
          td.style.backgroundSize = "100% 100%";
       }
       // overflow:hidden 하니까 안됨 
-      td.innerHTML = "<div style='height:100%;border:1px solid red;overflow:scroll'>"
-    	  + "<a style='display:block;border:1px solid blue;"
+      td.innerHTML = "<div style='width:100%;height:100%;overflow:scroll;"
+    	  + (jsonArr.list[i].music_info != "" ? "" : "padding:10px;") + "'>"
+    	  + "<div style='display:table; width:100%;height:100%'>"
+    	  + "<div style='display:table-cell; vertical-align: middle;'>"
+    	  + "<div style='position: relative; display: inline-block;width:100%;'>"
+    	  + "<a style='font-size:85%;text-align:center;"
     	  + (category == "diary" && jsonArr.list[i].bg != "" ? "color:white " : "")
-    	  	+ "' data-fancybox data-src='pdetail.do?"
-         + "postId=" + postId
-         + "&writerId=" + writerId + "'>"
-         + decodeURIComponent(content.replace(Ca, " "))
-         + "</a></div>";
+    	  	+ "' data-fancybox data-src='"
+    	  	+ (category == "music" ?
+    	  			"javascript:void(0);" :
+    	  				"pdetail.do?postId=" + postId + "&writerId=" + writerId)
+    	  	+ "'>"
+         + (category == "music" && jsonArr.list[i].music_info != "" ? 
+        		 "<iframe frameborder='0' width='100%' height='100%' "
+        		 + "src='https://www.youtube.com/embed/"
+        		 + jsonArr.list[i].music_info + "?showinfo=0&color=white'></iframe>"
+        		 : decodeURIComponent(content.replace(Ca, " ")))
+         + "</a></div></div></div></div>";
       
       addMark.setAttribute("onclick", 
             "openFancybox('/gonggan/pdetail.do?postId=" + postId
@@ -305,7 +321,9 @@ function callbackList(data) {
       
       childchildDiv.appendChild(addMark);
       childDiv.appendChild(childchildDiv);
-      td.appendChild(childDiv);
+      
+      if (jsonArr.list[i].music_info == "")
+    	  	td.appendChild(childDiv);
       
       tr.appendChild(td);
       table.appendChild(tr);
@@ -313,27 +331,28 @@ function callbackList(data) {
       tr = document.createElement("tr");
       tr.className = "trBottom";
       td = document.createElement("td");
-      td.innerHTML = "<a href='myhome.do?writer_id=" + writerId + "'>"
+      td.innerHTML = "<a style='font-size:85%' href='myhome.do?writer_id=" + writerId + "'>"
             + writerId + "</a>";
 
       if (category == "diary") {
-         td.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+         td.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
          td.childNodes[0].style.color = "white";
       }
       tr.appendChild(td);
       td = document.createElement("td");
       td.className = "rightAlign";
+      td.style.fontSize = "85%";
       td.innerHTML = "<label style='' class='checkbox-wrap'>"   
          + "<input type='checkbox' id='' "
          + (checkGood(loginUser, postId) ? "checked " : "")
          + "onclick='like($(this), loginUser, " + postId + ");'>"
          + "<i class='like-icon'></i></label>&nbsp;<span>"
          + (goodCnt == 0? goodCnt
-               : "<a data-fancybox data-src='goodList.do?postId=" + postId + "'>"
+               : "<a style='font-size:85%' data-fancybox data-src='goodList.do?postId=" + postId + "'>"
                + goodCnt + "</a></span>");
 
       if (category == "diary") {
-         td.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+         td.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
          td.childNodes[2].style.color = "white";
          if (goodCnt > 0)
             td.childNodes[2].childNodes[0].style.color = "white";

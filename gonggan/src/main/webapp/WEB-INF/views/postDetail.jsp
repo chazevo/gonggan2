@@ -127,6 +127,12 @@
 				<c:if test='${postDetail.getCategory() eq "review"}'>
 					${postDetail.getReview_content()}
 				</c:if>
+				<c:if test='${postDetail.getCategory() eq "place"}'>
+					${postDetail.getPlace_content()}
+				</c:if>
+				<c:if test='${postDetail.getCategory() eq "free"}'>
+					${postDetail.getFree_content()}
+				</c:if>
 			</div>
 		</td>
 

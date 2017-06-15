@@ -57,6 +57,13 @@ public class PostDao {
 		return (List<Post>) sqlSession.selectList("postmapper.pcontentSearchLikelist", map);
 		
 	}
+	public List<Post> selectUserFree(String writer_id, int rownum, int rownum2) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("writer_id", writer_id);
+		map.put("rownum", rownum + "");
+		map.put("rownum2", rownum2 + "");
+		return (List<Post>) sqlSession.selectList("postmapper.userfree", map);
+	}
 	
 	public List<Post> selectUserMusic(String writer_id, int rownum, int rownum2) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -215,6 +222,20 @@ public class PostDao {
 		map.put("rownum2", rownum2);
 		return (List<Post>) sqlSession.selectList("postmapper.booklist", map);
 	}
+
+	public List<Post> selectPlace(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.placelist", map);
+	}
+	
+	public List<Post> selectFree(int rownum, int rownum2) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("rownum", rownum);
+		map.put("rownum2", rownum2);
+		return (List<Post>) sqlSession.selectList("postmapper.freelist", map);
+	}
 	
 	public int maxRownum(String category) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -239,7 +260,9 @@ public class PostDao {
 	}
 	
 
-	public int pinsert(String loginUser, String category, String content,String title,String open, String bg) {
+	public int pinsert(String loginUser, String category, String content,
+			String diary_title, String music_title, String movie_title,
+			String open, String bg, String music_info, String place_name, String pimg) {
 		Map<String, String> map = new HashMap<String, String>();
 		int post_id = (int) sqlSession.selectOne("postmapper.postid");
 		int pinsert = 0;
@@ -247,9 +270,14 @@ public class PostDao {
 		map.put("loginUser", loginUser);
 		map.put("category",category);
 		map.put("content",content);
-		map.put("title", title);
+		map.put("diary_title", diary_title);
+		map.put("music_title", music_title);
+		map.put("movie_title", movie_title);
 		map.put("open", open);
 		map.put("bg", bg);
+		map.put("music_info", music_info);
+		map.put("place_name", place_name);
+		map.put("pimg", pimg);
 		
 		System.out.println(open);
 		
@@ -326,6 +354,7 @@ public class PostDao {
 		System.out.println(delete+"mmmm");
 		return delete;
 	}
+
 	
 }
 

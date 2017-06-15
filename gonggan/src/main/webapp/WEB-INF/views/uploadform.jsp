@@ -83,7 +83,7 @@
 		//document.getElementById("textarea").focus();
 		$("[data-toggle='tooltip']").tooltip();
 		
-		$("#imageOp_selected>a").hide();
+		$("#imageOp_selected>a:not(:first-child)").hide();
 		$("#loading").hide();
 		
 		colorchart();
@@ -141,17 +141,6 @@
 			else {
 				$("#weatherDiv").addClass("hidden");
 				$("#weatherDiv").hide();
-			}
-		});
-		
-		$("#imgUploadIcon").click(function() {
-			if ($("#imgUploadDiv").hasClass("hidden")) {
-				$("#imgUploadDiv").removeClass("hidden");
-				$("#imgUploadDiv").show();
-			}
-			else {
-				$("#imgUploadDiv").addClass("hidden");
-				$("#imgUploadDiv").hide();
 			}
 		});
 		
@@ -422,7 +411,7 @@
 						<td align="center">분류</td>
 						<td colspan="4">
 							<select name="category" id="category">
-								<option value="default" selected>자유</option>
+								<option value="free" selected>자유</option>
 								<option value="diary" >일기</option>
 								<option value="news">뉴스</option>
 								<option value="place">장소</option>
@@ -583,27 +572,7 @@
 						</tr>
 						<tr>
 							<td style="text-align:center">
-								<!-- <select onchange="imageChange();">
-									<option class="imageOp"  value="diary" selected>배경이미지 </option>
-									<option class="imageOp"  value="news">이미지 삽입</option>
-									</select>
-									<div id="content_backgound" ></div> -->
-								<img  src="images/photo-video-slr-camera-icon-512x512-pixel-12.png" id="imgUploadIcon" width="18px"
-									onclick="je_doc.execCommand('removeformat', 'false', 'null')">
-									<!--&nbsp; &nbsp;이미지-->
-								 <form action="imgupload.do" method="post" enctype="multipart/form-data" id="imgUpload"> 
-									<div id="imgUploadDiv" class="hidden">	
-										<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
-										<div class="fileInputDiv">
-											<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-											<input type="file" name="file" id="file" onchange="javascript:$('#filename').val($(this).val());">
-										</div>
-										<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
-									</div>
-								 </form> 
-							</td>
-						<td align="center">
-							<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');">
+								<a href="javascript:je_doc.execCommand('InsertHorizontalRule', 'null');">
 								<img src="images/minus-gross-horizontal-straight-line-symbol-icon.svg" width="25px" >
 							</a>&nbsp;
 							<a href="javascript:void(0);" onclick="$('#nrow').val('1'); $('#ncol').val('1');"
@@ -641,6 +610,136 @@
 												OK
 											</button>
 											<button type="button" class="btn btn-default" data-dismiss="modal">취소  </button>
+										</div>
+									</div>
+								</div>
+							</div>
+								
+							</td>
+						<td id="imageOp_selected">
+							<!-- <select onchange="imageChange();">
+									<option class="imageOp"  value="diary" selected>배경이미지 </option>
+									<option class="imageOp"  value="news">이미지 삽입</option>
+									</select>
+									<div id="content_backgound" ></div> -->
+								<a href='javascript:void(0);' data-target="#layerpop3" data-toggle="modal">
+									<img  src="images/photo-video-slr-camera-icon-512x512-pixel-12.png" width="20px">
+								</a>
+								 <div class="modal fade" id="layerpop3">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<!-- header -->
+											<div class="modal-header">
+												<!-- 닫기(x) 버튼 -->
+												<button type="button" class="close" data-dismiss="modal">×</button>
+												<!-- header title -->
+												<h4 class="modal-title">이미지 삽입 </h4>
+											</div>
+											<!-- body -->
+											<div class="modal-body text-center">
+												<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
+													style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
+												<div style="height:100px;position:relative">
+													<div id='imgpreview' style='width:40%;height:150px;position:absolute;left:0;right:0;margin:auto'></div>
+												</div>
+												<br>
+												이미지를 선택해주세요<br><br>
+												<form id='frm2' name="frm2" method="post" enctype="multipart/form-data">
+													<input type="text" id="filename" class="fileInputTextbox" readonly="readonly" disabled>
+													<div class="fileInputDiv">
+														<input type="button" value="첨 부 파 일" class="fileInputBtn" >
+														<input type="file" name="file" id="file"
+															onchange="javascript:$('#filename').val($(this).val()); preview('file');">
+													</div>
+												</form>
+												<br><br>
+												<input type="hidden" name="pimg">
+											<!-- Footer -->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default"
+													onclick="uploadPostImg(); $('#layerpop2').modal('hide');">
+													OK
+												</button>
+												<button type="button" class="btn btn-default" data-dismiss="modal"
+													onclick="refreshImgFilediv();">
+													취소
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<a href="javascript:void(0)"
+								data-target="#layerpop2" data-toggle="modal">
+								<img src="images/pickture_icon.png"
+									height="20px">
+							</a>&nbsp;
+							<a id="colorChoice2" href="javascript:void(0);">
+								<img  src="images/fill_color-512.png" width="25px;" >
+							</a>
+							<div id="colorchart2" class="hidden"></div>
+							<div class="modal fade" id="layerpop2">
+							<!--
+							$('#modal_id').modal({backdrop: 'static'});
+							modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
+							(닫기버튼을 눌러야만 닫힌다)
+							-->
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<!-- header -->
+										<div class="modal-header">
+											<!-- 닫기(x) 버튼 -->
+											<button type="button" class="close" data-dismiss="modal">×</button>
+											<!-- header title -->
+											<h4 class="modal-title">배경 이미지 삽입 </h4>
+										</div>
+										<!-- body -->
+										<div class="modal-body text-center">
+											<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
+												style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
+											<div style="height:150px;position:relative">
+												<div id='bgpreview' style='width:40%;height:150px;position:absolute;left:0;right:0;margin:auto'></div>
+											</div>
+											<br>
+											배경 이미지를 선택해주세요<br>
+											<form id='frm' name="frm" method="post" enctype="multipart/form-data">
+												<input type="text" id="filename2" class="fileInputTextbox" readonly="readonly" disabled>
+												<div class="fileInputDiv">
+													<input type="button" value="첨 부 파 일" class="fileInputBtn" >
+													<input type="file" name="file2" id="file2"
+														onchange="javascript:$('#filename2').val($(this).val()); uploadDiaryBg();">
+												</div>
+											</form>
+											<input type="hidden" name="bg">
+											<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
+		
+											<div>
+												<input type="radio" name="imgBB" value="auto" onchange="imgBBchange(this);" checked>
+												&nbsp;기본
+												<label class='radio-wrap'>
+													<input type='radio' name='imgBB'  value='cover'  onchange="imgBBchange(this);" >
+													<i class='cover-icon'></i>
+												</label>
+												<label class='radio-wrap'>
+													<input type='radio' name='imgBB'  value='contain'  onchange="imgBBchange(this);">
+													<i class='contain-icon'></i>
+												</label>
+											</div>
+										</div>
+										<!-- Footer -->
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												onclick="preview('file2');">
+												미리보기
+											</button>
+											<button type="button" class="btn btn-default"
+												onclick="diaryBg(); $('#layerpop2').modal('hide');">
+												OK
+											</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal"
+												onclick="refreshDiaryFilediv();">
+												취소
+											</button>
 										</div>
 									</div>
 								</div>
@@ -744,82 +843,7 @@
 							<a data-fancybox data-src='searchAll.do'><img src="images/580413-200.png" width="25px"></a>&nbsp;
 							<a data-fancybox data-src="map.do"><img src="images/marker.png" width="20px"></a>
 						</td>
-						<td id='imageOp_selected'>
-							<a href="javascript:void(0)"
-								data-target="#layerpop2" data-toggle="modal">
-								<img src="images/pickture_icon.png"
-									height="20px">
-							</a>&nbsp;
-							<a id="colorChoice2" href="javascript:void(0);">
-								<img  src="images/fill_color-512.png" width="25px;" >
-							</a>
-							<div id="colorchart2" class="hidden"></div>
-							<div class="modal fade" id="layerpop2">
-							<!--
-							$('#modal_id').modal({backdrop: 'static'});
-							modal창 밖을 클릭했을때 무조건 닫히는 현상을 방지
-							(닫기버튼을 눌러야만 닫힌다)
-							-->
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<!-- header -->
-										<div class="modal-header">
-											<!-- 닫기(x) 버튼 -->
-											<button type="button" class="close" data-dismiss="modal">×</button>
-											<!-- header title -->
-											<h4 class="modal-title">배경 이미지 삽입 </h4>
-										</div>
-										<!-- body -->
-										<div class="modal-body text-center">
-											<img id='loading' height='70px' src="images/InternetSlowdown_Day.gif"
-												style='position:absolute;margin:auto;left:0;right:0;top:0;bottom:0'>
-											<div style="height:150px;position:relative">
-												<div id='bgpreview' style='width:40%;height:150px;position:absolute;left:0;right:0;margin:auto'></div>
-											</div>
-											<br>
-											배경 이미지를 선택해주세요<br>
-											<form id='frm' name="frm" method="post" enctype="multipart/form-data">
-												<input type="text" id="filename2" class="fileInputTextbox" readonly="readonly" disabled>
-												<div class="fileInputDiv">
-													<input type="button" value="첨 부 파 일" class="fileInputBtn" >
-													<input type="file" name="file2" id="file2"
-														onchange="javascript:$('#filename2').val($(this).val()); uploadDiaryBg();">
-												</div>
-											</form>
-											<input type="hidden" name="bg">
-											<!--<a onclick="imagesInsertThis();">첨부</a>&nbsp; &nbsp;	&nbsp;-->
-		
-											<div>
-												<input type="radio" name="imgBB" value="auto" onchange="imgBBchange(this);" checked>
-												&nbsp;기본
-												<label class='radio-wrap'>
-													<input type='radio' name='imgBB'  value='cover'  onchange="imgBBchange(this);" >
-													<i class='cover-icon'></i>
-												</label>
-												<label class='radio-wrap'>
-													<input type='radio' name='imgBB'  value='contain'  onchange="imgBBchange(this);">
-													<i class='contain-icon'></i>
-												</label>
-											</div>
-										</div>
-										<!-- Footer -->
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												onclick="preview();">
-												미리보기
-											</button>
-											<button type="button" class="btn btn-default"
-												onclick="diaryBg(); $('#layerpop2').modal('hide');">
-												OK
-											</button>
-											<button type="button" class="btn btn-default" data-dismiss="modal"
-												onclick="refreshFilediv();">
-												취소
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
+						<td>
 						</td>
 						<td>
 							<input type="button" data-toggle="collapse" id="tagadddbtn" value="태그">
@@ -1027,7 +1051,6 @@
 								</div>
 								<div class="searchAll" style="height:300px;overflow:scroll;">
 									<a id="fancy" style="display:none"></a>
-									<>
 									<table width="70%" align='center'>
 										<tbody id="musicSearchRes"></tbody>
 									</table>
@@ -1069,7 +1092,11 @@
 					<tr>
 						<td colspan="5" class="footerDiv">
 							<div>
-								<input type="hidden" name="title">
+								<input type="hidden" name="place_name">
+								<input type="hidden" name="movie_title">
+								<input type="hidden" name="diary_title">
+								<input type="hidden" name="music_title">
+								<input type="hidden" name="music_info">
 								<div class="grad"  onclick="content_OK()">등 록</div>&nbsp;
 								<div class="grad" onclick="cancel();">취 소</div>
 							</div>

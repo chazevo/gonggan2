@@ -45,7 +45,8 @@ var reviewlistSize = ${reviewlistSize};
 var diarylistSize = ${diarylistSize};
 var movielistSize = ${movielistSize};
 var booklistSize = ${booklistSize};
-var placelistSize = 0;
+var placelistSize = ${placelistSize};
+var freelistSize = ${freelistSize};
 var psearchSize = 0;
 
 var initPosition;
@@ -317,7 +318,7 @@ window.onload = function() {
 				
 				</c:if>
 				<c:if test="${!empty (loginUser) }">
-				<c:out value="${loginUser.getMember_name()}님"></c:out>
+				<c:out value="${loginUser.getMember_id()}님"></c:out>
 				<a href="/gonggan/logOut.do">로그아웃</a>
 				<!-- <a href="/gonggan/update.do">정보수정</a> -->
 				<hr class="whiteHr">

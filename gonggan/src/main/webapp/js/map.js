@@ -1,10 +1,10 @@
-var image;
+var image, title;
 
 function selectSubmit() {
 	$("#form").submit();
 }
 
-function getAddr(adress, mapx, mapy) {
+function getAddr(adress, mapx, mapy, title_) {
 
 	myaddress = adress;
  
@@ -47,6 +47,7 @@ function getAddr(adress, mapx, mapy) {
 	});
 	
 	mapImg(mapx, mapy);
+	title = title_;
 }
 
 function mapImg(mapx, mapy) {
@@ -62,9 +63,9 @@ function mapImg(mapx, mapy) {
 }
 
 
-function selectMap(image) {
+function selectMap(image, title) {
 
-	parent.recieveMap(image);
+	parent.recieveMap(image, title);
 	
 	parent.$.fancybox.close();
 }

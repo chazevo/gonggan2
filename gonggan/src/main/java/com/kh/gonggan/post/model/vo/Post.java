@@ -15,6 +15,7 @@ public class Post {
 	private int movie_num;
 	private int news_num;
 	private int review_num;
+	private int place_num;
 	private String writer_id;
 	private String diary_content;
 	private String book_content;
@@ -22,6 +23,8 @@ public class Post {
 	private String music_content;
 	private String news_content;
 	private String review_content;
+	private String place_content;
+	private String free_content;
 	private String category;
 	private String shar_yn;
 	private String open_yn;
@@ -30,12 +33,21 @@ public class Post {
 	private Date post_date;
 	private int comment_cnt;
 	private String bg_image;
+	private String music_info;
+	private String music_title;
+	private String diary_title;
+	private String movie_title;
+	private String place_name;
 	
-	
-	public Post(int post_id, int music_num, int diary_num, int book_num, int movie_num, int news_num, int review_num,
+	public Post(){}
+
+	public Post(int post_id, int music_num, int diary_num, int book_num, int movie_num, int news_num, int review_num, int place_num,
 			String writer_id, String diary_content, String book_content, String movie_content, String music_content,
-			String news_content, String review_content, String category, String shar_yn, String open_yn, int goodCnt,
-			String photo_path, Date post_date, int comment_cnt, String bg_image) {
+			String news_content, String review_content, String place_content, String free_content,
+			String category, String shar_yn, String open_yn, int goodCnt,
+			String photo_path, Date post_date, int comment_cnt, String bg_image,
+			String music_info, String music_title, String diary_title, String movie_title,
+			String place_name) {
 		super();
 		this.post_id = post_id;
 		this.music_num = music_num;
@@ -44,6 +56,7 @@ public class Post {
 		this.movie_num = movie_num;
 		this.news_num = news_num;
 		this.review_num = review_num;
+		this.place_num = place_num;
 		this.writer_id = writer_id;
 		this.diary_content = diary_content;
 		this.book_content = book_content;
@@ -51,6 +64,8 @@ public class Post {
 		this.music_content = music_content;
 		this.news_content = news_content;
 		this.review_content = review_content;
+		this.place_content = place_content;
+		this.free_content = free_content;
 		this.category = category;
 		this.shar_yn = shar_yn;
 		this.open_yn = open_yn;
@@ -59,18 +74,15 @@ public class Post {
 		this.post_date = post_date;
 		this.comment_cnt = comment_cnt;
 		this.bg_image = bg_image;
+		this.music_info = music_info;
+		this.music_title = music_title;
+		this.diary_title = diary_title;
+		this.movie_title = movie_title;
+		this.place_name = place_name;
 	}
 
-	public int getComment_cnt() {
-		return comment_cnt;
-	}
-
-	public void setComment_cnt(int comment_cnt) {
-		this.comment_cnt = comment_cnt;
-	}
-
-	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num,
-			String writer_id, String diary_content, String book_content, String movie_content, String music_content, String news_content,
+	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num, int place_num,
+			String writer_id, String diary_content, String book_content, String movie_content, String music_content, String news_content, String place_content,
 			String review_content, String category, String shar_yn, String open_yn, int goodCnt, String photo_path,
 			Date post_date, int comment_cnt) {
 		super();
@@ -80,6 +92,7 @@ public class Post {
 		this.movie_num = movie_num;
 		this.news_num = news_num;
 		this.review_num = review_num;
+		this.place_num = place_num;
 		this.writer_id = writer_id;
 		this.diary_content = diary_content;
 		this.book_content = book_content;
@@ -87,6 +100,7 @@ public class Post {
 		this.music_content = music_content;
 		this.news_content = news_content;
 		this.review_content = review_content;
+		this.place_content = place_content;
 		this.category = category;
 		this.shar_yn = shar_yn;
 		this.open_yn = open_yn;
@@ -95,8 +109,6 @@ public class Post {
 		this.post_date = post_date;
 		this.comment_cnt = comment_cnt;
 	}
-
-	public Post(){}
 
 	public Post(int post_id, int music_num, int diary_num, int movie_num, int news_num, int review_num,
 			String writer_id, String diary_content, String book_content, String movie_content, String music_content, String news_content,
@@ -122,6 +134,14 @@ public class Post {
 		this.goodCnt = goodCnt;
 		this.photo_path = photo_path;
 		this.post_date = post_date;
+	}
+
+	public int getComment_cnt() {
+		return comment_cnt;
+	}
+
+	public void setComment_cnt(int comment_cnt) {
+		this.comment_cnt = comment_cnt;
 	}
 
 	public int getPost_id() {
@@ -180,6 +200,15 @@ public class Post {
 		this.writer_id = writer_id;
 	}
 
+	
+	public String getFree_content() {
+		return free_content;
+	}
+
+	public void setFree_content(String free_content) {
+		this.free_content = free_content;
+	}
+
 	public String getDiary_content() {
 		return diary_content;
 	}
@@ -226,6 +255,16 @@ public class Post {
 
 	public void setReview_content(String review_content) {
 		this.review_content = review_content;
+	}
+
+	
+	
+	public String getPlace_content() {
+		return place_content;
+	}
+
+	public void setPlace_content(String place_content) {
+		this.place_content = place_content;
 	}
 
 	public String getCategory() {
@@ -283,8 +322,15 @@ public class Post {
 	public void setBook_num(int book_num) {
 		this.book_num = book_num;
 	}
-
 	
+	public int getPlace_num() {
+		return place_num;
+	}
+
+	public void setPlace_num(int place_num) {
+		this.place_num = place_num;
+	}
+
 	public String getBg_image() {
 		return bg_image;
 	}
@@ -293,14 +339,44 @@ public class Post {
 		this.bg_image = bg_image;
 	}
 
-	@Override
-	public String toString() {
-		return "Post [post_id=" + post_id + ", music_num=" + music_num + ", diary_num=" + diary_num + ", movie_num="
-				+ movie_num + ", news_num=" + news_num + ", review_num=" + review_num + ", writer_id=" + writer_id
-				+ ", diary_content=" + diary_content + ", movie_content=" + movie_content + ", music_content="
-				+ music_content + ", news_content=" + news_content + ", review_content=" + review_content
-				+ ", category=" + category + ", shar_yn=" + shar_yn + ", open_yn=" + open_yn + ", goodCnt=" + goodCnt
-				+ ", photo_path=" + photo_path + ", post_date=" + post_date + "]";
+	public String getMusic_info() {
+		return music_info;
+	}
+
+	public void setMusic_info(String music_info) {
+		this.music_info = music_info;
+	}
+
+	public String getMusic_title() {
+		return music_title;
+	}
+
+	public void setMusic_title(String music_title) {
+		this.music_title = music_title;
+	}
+
+	public String getDiary_title() {
+		return diary_title;
+	}
+
+	public void setDiary_title(String diary_title) {
+		this.diary_title = diary_title;
+	}
+	
+	public String getMovie_title() {
+		return movie_title;
+	}
+
+	public void setMovie_title(String movie_title) {
+		this.movie_title = movie_title;
+	}
+
+	public String getPlace_name() {
+		return place_name;
+	}
+
+	public void setPlace_name(String place_name) {
+		this.place_name = place_name;
 	}
 	
 	

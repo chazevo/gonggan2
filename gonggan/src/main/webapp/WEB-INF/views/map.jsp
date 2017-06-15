@@ -41,13 +41,13 @@
 		<c:forEach items="${searchLocationList}" var="i" begin="0">
 		<tr>
 			<td>
-				<a href="javascript:getAddr('${i.address }', '${i.mapx }', '${i.mapy }');">
+				<a href="javascript:getAddr('${i.address }', '${i.mapx }', '${i.mapy }', '${i.title}');">
 				${i.title}</a>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<a href="javascript:getAddr('${i.address }', '${i.mapx }', '${i.mapy }');">
+				<a href="javascript:getAddr('${i.address }', '${i.mapx }', '${i.mapy }', '${i.title}');">
 					${i.address}</a>
 			</td>
 		</tr>
@@ -102,7 +102,7 @@
 	    var infowindow = new naver.maps.InfoWindow({
 	        content: '<button type="button" id="searchBtn" '
 	        + 'style="display:block;float:right;margin:10px" '
-	        + 'onclick="selectMap(image);">추 가 하 기</button>'
+	        + 'onclick="selectMap(image, title);">추 가 하 기</button>'
 	    });
 	});
 

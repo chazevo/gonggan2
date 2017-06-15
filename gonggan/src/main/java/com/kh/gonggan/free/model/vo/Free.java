@@ -2,15 +2,15 @@ package com.kh.gonggan.free.model.vo;
 
 public class Free {
 	private int post_id;
-	private int post_num;
+	private int free_num;
 	private String free_content;
 	
 	public Free(){}
 	
-	public Free(int post_id, int post_num, String free_content) {
+	public Free(int post_id, int free_num, String free_content) {
 		super();
 		this.post_id = post_id;
-		this.post_num = post_num;
+		this.free_num = free_num;
 		this.free_content = free_content;
 	}
 
@@ -22,12 +22,12 @@ public class Free {
 		this.post_id = post_id;
 	}
 
-	public int getPost_num() {
-		return post_num;
+	public int getFree_num() {
+		return free_num;
 	}
 
-	public void setPost_num(int post_num) {
-		this.post_num = post_num;
+	public void setFree_num(int free_num) {
+		this.free_num = free_num;
 	}
 
 	public String getFree_content() {
@@ -38,9 +38,5 @@ public class Free {
 		this.free_content = free_content;
 	}
 
-	@Override
-	public String toString() {
-		return "Free [post_id=" + post_id + ", post_num=" + post_num + ", free_content=" + free_content + "]";
-	}
 	
 }

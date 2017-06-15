@@ -5,6 +5,7 @@ public class Movie {
 	private int movie_num;
 	private String movie_info;
 	private String movie_content;
+	private String movie_title;
 	private String title;
 	private String link;
 	private String image;
@@ -16,7 +17,7 @@ public class Movie {
 	public Movie(){}
 
 	public Movie(int post_id, int movie_num, String movie_info, String movie_content,
-			String title, String link, String image,
+			String title, String movie_title, String link, String image,
 			String subtitle, String pubDate, String director, String actor) {
 		super();
 		this.post_id = post_id;
@@ -24,6 +25,7 @@ public class Movie {
 		this.movie_info = movie_info;
 		this.movie_content = movie_content;
 		this.title = title;
+		this.movie_title = movie_title;
 		this.link = link;
 		this.image = image;
 		this.subtitle = subtitle;
@@ -70,6 +72,14 @@ public class Movie {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getMovie_title() {
+		return movie_title;
+	}
+
+	public void setMovie_title(String movie_title) {
+		this.movie_title = movie_title;
 	}
 
 	public String getLink() {
@@ -118,13 +128,6 @@ public class Movie {
 
 	public void setActor(String actor) {
 		this.actor = actor;
-	}
-
-	@Override
-	public String toString() {
-		return "Movie [post_id=" + post_id + ", movie_num=" + movie_num + ", movie_info=" + movie_info + ", title="
-				+ title + ", link=" + link + ", image=" + image + ", subtitle=" + subtitle + ", pubDate=" + pubDate
-				+ ", director=" + director + ", actor=" + actor + "]";
 	}
 	
 	

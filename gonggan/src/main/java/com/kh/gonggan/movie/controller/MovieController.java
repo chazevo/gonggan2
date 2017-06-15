@@ -58,7 +58,7 @@ public class MovieController {
 		try {
 			
 			String text = URLEncoder.encode(keyword, "UTF-8");
-			String apiURL = "https://openapi.naver.com/v1/search/movie?query="+ text + "&display=2&start=6"; // json 결과
+			String apiURL = "https://openapi.naver.com/v1/search/movie?query="+ text/* + "&display=2&start=6"*/; // json 결과
 			// display 안먹는 이유?
 			//String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
 			

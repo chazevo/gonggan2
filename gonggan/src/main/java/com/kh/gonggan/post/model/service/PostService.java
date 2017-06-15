@@ -35,10 +35,15 @@ public interface PostService {
 	List<Post> selectReview(int rownum, int rownum2);
 	List<Post> selectNews(int rownum, int rownum2);
 	List<Post> selectBook(int rownum, int rownum2);
+	List<Post> selectPlace(int rownum, int rownum2);
+	List<Post> selectFree(int rownum, int rownum2);
 	List<Post> likeInOrder(String writer_id);
 	int maxRownum(String category);
 	List<Post> commentInOrder(String writer_id);
 	List<Post> selectUserNeighbor(String loginUser, int rownum, int rownum2);
-	int pinsert(String loginUser, String category,String content,String title,String open, String bg);
+	int pinsert(String loginUser, String category, String content,
+			String diary_title, String music_title, String movie_title,
+			String open, String bg, String music_info, String place_name, String pimg);
 	int postDelete(int post_id, String loginUser);
+	List<Post> selectUserFree(String writer_id, int rownum, int rownum2);
 }

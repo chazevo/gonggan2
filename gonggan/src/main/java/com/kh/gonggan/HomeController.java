@@ -48,6 +48,8 @@ import com.kh.gonggan.comment.model.service.CommentService;
 import com.kh.gonggan.comment.model.vo.Comment;
 import com.kh.gonggan.diary.model.service.DiaryService;
 import com.kh.gonggan.diary.model.vo.Diary;
+import com.kh.gonggan.free.model.service.FreeService;
+import com.kh.gonggan.free.model.vo.Free;
 import com.kh.gonggan.good.model.service.GoodService;
 import com.kh.gonggan.good.model.vo.Good;
 import com.kh.gonggan.member.model.service.MemberService;
@@ -62,6 +64,8 @@ import com.kh.gonggan.neighbor.model.service.NeighborService;
 import com.kh.gonggan.neighbor.model.vo.Neighbor;
 import com.kh.gonggan.news.model.service.NewsService;
 import com.kh.gonggan.news.model.vo.News;
+import com.kh.gonggan.place.model.service.PlaceService;
+import com.kh.gonggan.place.model.vo.Place;
 import com.kh.gonggan.post.model.service.PostService;
 import com.kh.gonggan.post.model.vo.Post;
 import com.kh.gonggan.post.model.vo.PostBestSeller;
@@ -103,6 +107,10 @@ public class HomeController {
 	private NewsService newsService;
 	@Autowired
 	private BookService bookService;
+	@Autowired
+	private PlaceService placeService;
+	@Autowired
+	private FreeService freeService;
    
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
    
@@ -143,6 +151,8 @@ public class HomeController {
 		List<News> newslist = newsService.selectAll_index2();
 		List<Review> reviewlist = reviewService.selectAll_index2();
 		List<Book> booklist = bookService.selectAll_index2();
+		List<Place> placelist = placeService.selectAll_index2();
+		List<Free> freelist = freeService.selectAll_index2();
 		
 		List<Member> neighborReqList = null;
 		List<Comment> commentReqList = null;
@@ -171,6 +181,8 @@ public class HomeController {
 		mv.addObject("musiclist", musiclist);
 		mv.addObject("diarylist", diarylist);
 		mv.addObject("booklist", booklist);
+		mv.addObject("placelist", placelist);
+		mv.addObject("freelist", freelist);
 		
 		mv.addObject("reviewlistSize",reviewlist.size());
 		mv.addObject("movielistSize",movielist.size());
@@ -178,6 +190,8 @@ public class HomeController {
 		mv.addObject("musiclistSize",musiclist.size());
 		mv.addObject("diarylistSize",diarylist.size());
 		mv.addObject("booklistSize",booklist.size());
+		mv.addObject("placelistSize",placelist.size());
+		mv.addObject("freelistSize",freelist.size());
 		
 		mv.addObject("neighborReqList", neighborReqList);
 		
@@ -201,6 +215,8 @@ public class HomeController {
 		List<Review> reviewlist =  new ArrayList<Review>();
 		List<Movie> movielist =  new ArrayList<Movie>();
 		List<News> newslist =  new ArrayList<News>();
+		List<Place> placelist =  new ArrayList<Place>();
+		List<Free> freelist =  new ArrayList<Free>();
 		Blog blog = blogService.selectBlog(writer_id);
         
 		String category = "";
@@ -221,6 +237,10 @@ public class HomeController {
 				movielist.add(movieService.movieDetail(postId));
 			} else if (category.equals("book")) {
 				booklist.add(bookService.bookDetail(postId));
+			} else if (category.equals("place")) {
+				placelist.add(placeService.placeDetail(postId));
+			} else if (category.equals("free")) {
+				freelist.add(freeService.freeDetail(postId));
 			}
 		}
         
@@ -240,6 +260,10 @@ public class HomeController {
 				movielist.add(movieService.movieDetail(postId));
 			} else if (category.equals("book")) {
 				booklist.add(bookService.bookDetail(postId));
+			} else if (category.equals("place")) {
+				placelist.add(placeService.placeDetail(postId));
+			} else if (category.equals("free")) {
+				freelist.add(freeService.freeDetail(postId));
 			}
 		}
 		mv.addObject("likeInOrder", likeInOrder);
@@ -250,6 +274,8 @@ public class HomeController {
 		mv.addObject("newslist", newslist);
 		mv.addObject("movielist", movielist);
 		mv.addObject("booklist", booklist);
+		mv.addObject("placelist", placelist);
+		mv.addObject("freelist", freelist);
 		mv.addObject("blog", blog);
 		mv.addObject("commentAll",commentAll);
 		mv.setViewName("controll");
@@ -273,6 +299,8 @@ public class HomeController {
 		List<News> newslist = newsService.selectAll_myhome(writer_id);
 		List<Review> reviewlist = reviewService.selectAll_myhome(writer_id);
 		List<Book> booklist = bookService.selectAll_myhome(writer_id);
+		List<Place> placelist = placeService.selectAll_myhome(writer_id);
+		List<Free> freelist = freeService.selectAll_myhome(writer_id);
 		
 		if (writer_id != null) {
 			blog = blogService.selectBlog(writer_id);
@@ -292,6 +320,8 @@ public class HomeController {
 		mv.addObject("musiclistSize",musiclist.size());
 		mv.addObject("diarylistSize",diarylist.size());
 		mv.addObject("booklistSize",booklist.size());
+		mv.addObject("placelistSize",booklist.size());
+		mv.addObject("freelistSize",freelist.size());
 		
 		mv.addObject("blog", blog);
 		mv.addObject("member", member);
@@ -534,6 +564,8 @@ public class HomeController {
 		List<Music> musiclist = musicService.selectAll_index2();
 		List<News> newslist = newsService.selectAll_index2();
 		List<Review> reviewlist = reviewService.selectAll_index2();
+		List<Place> placelist = placeService.selectAll_index2();
+		List<Free> freelist = freeService.selectAll_index2();
 		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
 
 		mv.setViewName("neighborPost");
@@ -544,6 +576,8 @@ public class HomeController {
 		mv.addObject("dlist", diarylist);
 		mv.addObject("plist",plist);
 		mv.addObject("movielist",movielist);
+		mv.addObject("placelist", placelist);
+		mv.addObject("freelist", freelist);
 		mv.addObject("plistSize", plist.size());
 		mv.addObject("neighborReqList", neighborReqList);
 		mv.addObject("neighborReqListSize", neighborReqList.size());

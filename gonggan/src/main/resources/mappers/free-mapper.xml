@@ -13,4 +13,26 @@
 		insert into free values(#{post_id},nvl((select max(free_num) from free), 0) + 1,#{content})
 	</insert>
 	
+	<select id="freelist" resultMap="freeResult" parameterType="Map">
+	
+	select rownum, subquery.* from (select * from free
+				order by 5 desc) subquery "
+				where rownum between #{rownum} and #{rownum2}
+	</select>
+	
+	<select id="freelist_index2" resultMap="freeResult">
+		SELECT * FROM ( SELECT ROWNUM AS RNUM, POST_ID, free_NUM, free_CONTENT
+		FROM (SELECT * FROM free ORDER BY POST_ID DESC)  )<![CDATA[ WHERE RNUM<=8]]>
+	</select>
+	
+	
+	<select id="freelist_myhome" parameterType="String" resultMap="freeResult">
+	select * from post right join free using (post_id) where writer_id = #{writer_id}
+	</select>
+	
+	<select id="freedetail" resultMap="freeResult" parameterType="int">
+	select * from free where post_id = #{postId}
+	</select>
+	
+	
 </mapper>

@@ -6,10 +6,13 @@ var temperature;
 var locked = 0 ;
 var prev_val;
 var diaryBgImg;
+var postImg;
+var music_info;
 
 //var form = $("#frm")[0];
 //var formData = new FormData(form);
 var formData = new FormData();
+var formData2 = new FormData();
 
 $(function() {
 	dateFunc();
@@ -50,7 +53,7 @@ function dateFunc() {
 
 function viewSearchTime() {
 	var nowTime = new Date().currTime(currTimeFormat);
-	$("#wmapDiv").next().html("<div style='font-size:90%;text-align:right'>"
+	$("#wmapDiv").next().html("<div style='font-size:80%;text-align:right'>"
 			+ nowTime + " 기준</div>");
 }
 
@@ -104,7 +107,7 @@ function uploadImg(){
 function recieveMovie(image, title, director , actor, pubDate) {
 	   document.getElementById('editor').contentWindow.document.body.innerHTML += 
 	      "<table align='center' width='80%'>" 
-	      + "<tr><td align='center'><h3><b>" + title + "</b><h3></td></tr>"
+	      + "<tr><td align='center'><h3><b id='title'>" + title + "</b><h3></td></tr>"
 	      + "<tr><td width='30%'align='center'>"
 	      + "<img src='" + image + "' width='50%'></td></tr>"
 	      + "<tr><td align='center' style='color:gray;'><b>감독</b> "+ director + "</td></tr>" 
@@ -115,7 +118,7 @@ function recieveMovie(image, title, director , actor, pubDate) {
 
 function recieveMusic(videoId, title, thumbnail) {
 	document.getElementById('editor').contentWindow.document.body.innerHTML += 
-		"<center><b><h4>" +title+"</h4></b></center>"
+		"<center><b><h4 id='title'>" +title+"</h4></b></center>"
 				+ "<table align='center' width='60%' style='border:1px solid #E6E6E6; color:gray;'>"
 				+ "<tr><td><img src='" + thumbnail + "' width='100%' height='280px'></td></tr>"
 				+ "<tr><td style='padding:20px'>" + title + "</td></tr></table>";
@@ -155,7 +158,7 @@ function recieveBook(image, title, author, publisher, pubdate, link) {
 			+ "<center>내용을 입력해주세요.</center>";
 }
 
-function recieveMap(image) {
+function recieveMap(image, title) {
 	je_doc.body.focus();
 	je_doc.execCommand('justifycenter', 'false', 'null');
 	je_doc.execCommand('InsertImage', 'false', '/gonggan/uploadImages/' + image);
@@ -163,7 +166,7 @@ function recieveMap(image) {
 			"<br><br><br><br><br><br><br>"
 			+ "<table width='80%' align='center'><tr><td>"
 			+ "<div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);"
-			+ " color:white; border-radius:20px;'><b>어떤곳?</b></div></td></tr>"
+			+ " color:white; border-radius:20px;'><b>어떤곳?<span id='title'>&nbsp;" + title + "</span></b></div></td></tr>"
 			+ "<tr><td style='padding-left:20px;'>내용을 입력해주세요.<br><br><br></td></tr>"
 			+ "<tr><td><div style='padding:5px 20px; background:linear-gradient(to right, #DEACC6, #91B2DF);"
 			+ " color:white; border-radius:20px;'><b>무슨 일로?</b></div><br></td></tr>"
@@ -224,7 +227,35 @@ function diaryBg() {
 	*/
 }
 
-function refreshFilediv() {
+function refreshImgFilediv() {
+	
+	if ($('#frm2 #filename').val() != "") {
+		
+		$("#frm2 .fileInputDiv").html("<input type='button' value='첨 부 파 일' class='fileInputBtn'>"
+				+ "<input type='file' id='file' name='file' accept='.gif,.jpeg,.jpg,.png'>");
+		$('#frm2 #filename').val("");
+		$('#imgpreview').css("background", "");
+		document.getElementById("file").onchange = function() {
+			$('#frm2 #filename').val($(this).val());
+		};
+		
+		$.ajax({
+			url: "delpostimg.do",
+			data: {postImg: postImg},
+			success: function(data) {
+				$("input[name=pimg]").val(postImg = data);
+				alert(data);
+			},
+			error: function(data,status,error){
+				console.log("error : " + error);
+			}
+		});
+	}
+	
+	$("#frm").submit();
+}
+
+function refreshDiaryFilediv() {
 	
 	if ($('#frm #filename').val() != "") {
 		
@@ -280,7 +311,7 @@ function run(){
 				prev_val = $(this).val();
 			}).change(function() {
 				$(this).blur() // Firefox fix as suggested by AgDude
-				if($(this).val() != 'default') {
+				if($(this).val() != 'free') {
 					if (je_doc.body.innerHTML != "")
 						changeForm();
 					else if (confirm('현재 작성 내역을 임시 저장하고 폼을 바꾸시겠습니까?'))
@@ -291,11 +322,9 @@ function run(){
 			});
 }
 
-function imagesInsertThis(){
-	je_doc = document.getElementById('editor').contentWindow.document;
-	je_doc.designMode = "on";
-	var image = $("#filename").val();
-	alert($("#filename").val());
+function imagesInsertThis(postImg) {
+	var image = "uploadImages/" + postImg;
+	je_doc.body.focus();
 	je_doc.execCommand('InsertImage', 'false', image);
 	
 }
@@ -483,6 +512,9 @@ function changeForm() {
 		$("#musicTbody").css("display", "table-row-group");
 		document.getElementById("dateTd2").innerHTML =
 			"<input type='checkbox' checked>&nbsp;유튜브 연결";
+		je_doc.body.innerHTML += "<div style='position:relative;height:100px'>"
+				+ "<div id='title' style='left:0;right:0margin:auto;position:absolute;color:#E6E6E6;width:90%;margin-bottom:50px;border:1px solid #E6E6E6;padding:25px;'>"
+				+ "제목을 입력해주세요</div></div>내용을 입력해주세요<br><br><br>";
 	}
 	else
 		$("#musicTbody").css("display", "none");
@@ -492,7 +524,7 @@ function changeForm() {
 		document.getElementById("dateTd2").innerHTML =
 			"<input type='text' name='toDate' id='toDate' size='15' onchange='javascript:changeDate()'>";
 		dateFunc();
-		$("#imageOp_selected>a").show();
+		$("#imageOp_selected>a:not(:first-child)").show();
 		je_doc.body.innerHTML += "<table style='border-collapse:collapse;width:100%;'>"
 				+ "<colgroup><col width='5%'/><col width='5%'/><col width='10%'/><col width='62%'/><col width='12%'/><col width='6%'/></colgroup>"
 				+ "<tr><td id='diarydateTd' style='font-family: \"Francois One\", sans-serif; font-size:400%; border-left:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-bottom:1px solid #E6E6E6; padding:5px;' rowspan='2'>"
@@ -516,7 +548,7 @@ function changeForm() {
 	else {
 		document.getElementById("dateTd").innerHTML = "";
 		document.getElementById("dateTd2").innerHTML = "";
-		$("#imageOp_selected>a").hide();
+		$("#imageOp_selected>a:not(:first-child)").hide();
 	}
 	
 	if (document.getElementById("category").value == "news") {
@@ -527,47 +559,50 @@ function changeForm() {
 
 	if (document.getElementById("category").value == "movie") {
 		$("#movieTbody").css("display", "table-row-group");
-		je_doc.body.innerHTML += "<div style='position:relative;display:table;'>"
+		je_doc.body.innerHTML += "<div style='position:relative;height:100px'>"
+			+ "<div id='title' style='left:0;right:0margin:auto;position:absolute;color:#E6E6E6;width:90%;margin-bottom:50px;border:1px solid #E6E6E6;padding:25px;text-align:center'>"
+			+ "GET OUT</div></div>"
+			+ "<div style='position:relative;display:table;'>"
 			+ "<img src='images/template/KakaoTalk_Photo_2017-06-12-09-43-40_56.jpeg' width='100%'>"
 			+ "<h1 style='display:block;position:absolute; top:0;bottom:0;right:0;left:0; margin:auto;width:120px;height:50px;'>"
-				+ "<b><span style='color:black'>GET</span>"
-				+ "<span style='color:white'>OUT</span></b></h1>"
-				+"</div><div style='text-align:center;height:100px;width:100%'>"
-				+ "흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기</div><br>"
-				+ "<hr style='border:1px solid #E6E6E6'>"
-				+ "<div style='position:relative;height:800px;'>"
-				+ "<div style='padding-bottom:20px;position:absolute;left:0;right:0;margin:auto;border:1px solid #E6E6E6;text-align:center;color:gray;width:70%'>"
-				+ "<img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg' width='100%' height='100%' style='margin-bottom:20px;'><br>"
-				+ "GETOUT 2017"
-				+ "</div></div>"
-				+ "<table style='position:relative'><tr><td style='height:130px;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
-				+ "<h1 style='text-align:center'><b><span style='color:black'>SYNO</span>"
-				+ "<span style='color:white'>PSIS</span></h1></td></tr>"
-				+ "<tr><td style='text-align:center'>ABOUT MOVIE <br>"
-				+ "공개 6일 만에 메인 예고편 조회수 1,000만 뷰 돌파! 개봉 요청 쇄도! <br>"
-				+ "관객들의 폭발적 반응이 개봉시킨 영화! <br>"
-				+ "영화 <겟 아웃>은 흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기로 북미 개봉 직후 박스오피스 1위를 차지한 바 있다."
-				+ " 무서운 흥행세를 발휘한 <겟 아웃>은 SNS를 통해 게재된 예고편을 통해서 국내 관객들에게도"
-				+ " 폭발적인 반응을 불러일으켰다. 국내 개봉이 확정되기도 전에 SNS에 게재된 해외 예고편은"
-				+ " 무려 370만 뷰의 조회수를 돌파한 것은 물론, 7만 개를 웃도는 댓글수를 기록하기도 했다. "
-				+ "예고편을 접한 국내 관객들은 예측불허의 전개에 호기심을 드러내면서도 "
-				+ "영화가 선사하는 미스터리한 분위기에 놀라움을 자아내기도 했다. 압도적 몰입감과 궁금증을 불러일으키는 "
-				+ "예고편은 곧 네티즌들의 국내 개봉을 요청하는 목소리로 이어졌다. "
-				+ "해외에서 시작된 뜨거운 흥행세와 해외 언론 매체들의 극찬 세례에 궁금증을 감추지 못한 네티즌들은 "
-				+ "배급사인 UPI코리아를 통해 국내 개봉을 요청하며 영화에 대한 높은 기대를 드러냈다. "
-				+ "UPI코리아는 “독보적인 장르의 <겟 아웃>을 어떻게 알려야 할지 고민이 많아 사실상 한국 개봉은 미정이었다."
-				+ " 하지만 국내 팬들의 열화와 같은 관심과 개봉 요청 쇄도로 개봉을 결정하게 되었다”며 "
-				+ "이례적인 개봉 결정의 이유를 밝혔다. 특히 관객들의 뜨거운 관심 속에 개봉을 확정 지은 <겟 아웃>은 "
-				+ "메인 예고편을 공개한지 6일 만에 누적 조회수 약 1,143만 뷰를 돌파, 상반기 최고 화제작으로 등극했다. "
-				+ "이렇듯 관객들의 폭발적 반응이 개봉시킨 영화 <겟 아웃>은 지금껏 본 적 없는 새로움과 신선한 충격으로 "
-				+ "관객들을 사로잡을 예정이다. <br></td></tr>"
-				+ "<tr><td style='height:130px;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
-				+ "<h1 style='text-align:center'><b><span style='color:black'>REV</span>"
-				+ "<span style='color:white'>IEW</span></h1></td></tr>"
-				+ "<tr><td style='text-align:center'>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>"
-				+ "2. 영화 처음 안드레가 납치되는 장면범인이 뒤에서 목을 졸라서 납치하는데 "
-				+ "로즈의 남동생이 식사시간에 주짓수를 말하고 헤드락을 걸려고 헀던 것과 일치하고 영화 ...<br>"
-				+ "</td></tr></table><br><br><br><br><br>";
+			+ "<b><span style='color:black'>GET</span>"
+			+ "<span style='color:white'>OUT</span></b></h1>"
+			+"</div><div style='text-align:center;height:100px;width:100%'>"
+			+ "흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기</div><br>"
+			+ "<hr style='border:1px solid #E6E6E6'>"
+			+ "<div style='position:relative;height:800px;'>"
+			+ "<div style='padding-bottom:20px;position:absolute;left:0;right:0;margin:auto;border:1px solid #E6E6E6;text-align:center;color:gray;width:70%'>"
+			+ "<img src='images/template/504455d3eeb43cd167dbc4c1f24b72ce.jpg' width='100%' height='100%' style='margin-bottom:20px;'><br>"
+			+ "GETOUT 2017"
+			+ "</div></div><br><br><br>"
+			+ "<table style='position:relative'><tr><td style='height:130px;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
+			+ "<h1 style='text-align:center'><b><span style='color:black'>SYNO</span>"
+			+ "<span style='color:white'>PSIS</span></h1></td></tr>"
+			+ "<tr><td style='text-align:center'>ABOUT MOVIE <br>"
+			+ "공개 6일 만에 메인 예고편 조회수 1,000만 뷰 돌파! 개봉 요청 쇄도! <br>"
+			+ "관객들의 폭발적 반응이 개봉시킨 영화! <br>"
+			+ "영화 <겟 아웃>은 흑인 남자가 백인 여자친구 집에 초대 받으면서 벌어지는 이야기로 북미 개봉 직후 박스오피스 1위를 차지한 바 있다."
+			+ " 무서운 흥행세를 발휘한 <겟 아웃>은 SNS를 통해 게재된 예고편을 통해서 국내 관객들에게도"
+			+ " 폭발적인 반응을 불러일으켰다. 국내 개봉이 확정되기도 전에 SNS에 게재된 해외 예고편은"
+			+ " 무려 370만 뷰의 조회수를 돌파한 것은 물론, 7만 개를 웃도는 댓글수를 기록하기도 했다. "
+			+ "예고편을 접한 국내 관객들은 예측불허의 전개에 호기심을 드러내면서도 "
+			+ "영화가 선사하는 미스터리한 분위기에 놀라움을 자아내기도 했다. 압도적 몰입감과 궁금증을 불러일으키는 "
+			+ "예고편은 곧 네티즌들의 국내 개봉을 요청하는 목소리로 이어졌다. "
+			+ "해외에서 시작된 뜨거운 흥행세와 해외 언론 매체들의 극찬 세례에 궁금증을 감추지 못한 네티즌들은 "
+			+ "배급사인 UPI코리아를 통해 국내 개봉을 요청하며 영화에 대한 높은 기대를 드러냈다. "
+			+ "UPI코리아는 “독보적인 장르의 <겟 아웃>을 어떻게 알려야 할지 고민이 많아 사실상 한국 개봉은 미정이었다."
+			+ " 하지만 국내 팬들의 열화와 같은 관심과 개봉 요청 쇄도로 개봉을 결정하게 되었다”며 "
+			+ "이례적인 개봉 결정의 이유를 밝혔다. 특히 관객들의 뜨거운 관심 속에 개봉을 확정 지은 <겟 아웃>은 "
+			+ "메인 예고편을 공개한지 6일 만에 누적 조회수 약 1,143만 뷰를 돌파, 상반기 최고 화제작으로 등극했다. "
+			+ "이렇듯 관객들의 폭발적 반응이 개봉시킨 영화 <겟 아웃>은 지금껏 본 적 없는 새로움과 신선한 충격으로 "
+			+ "관객들을 사로잡을 예정이다. <br></td></tr>"
+			+ "<tr><td style='height:130px;background:url(images/template/KakaoTalk_Photo_2017-06-12-09-43-41_47.jpeg);background-size:100% 100%'>"
+			+ "<h1 style='text-align:center'><b><span style='color:black'>REV</span>"
+			+ "<span style='color:white'>IEW</span></h1></td></tr>"
+			+ "<tr><td style='text-align:center'>1. 영화 처음 납치 장면 납치당하는 남자가 6개월간 실종된 안드레이다.<br>"
+			+ "2. 영화 처음 안드레가 납치되는 장면범인이 뒤에서 목을 졸라서 납치하는데 "
+			+ "로즈의 남동생이 식사시간에 주짓수를 말하고 헤드락을 걸려고 헀던 것과 일치하고 영화 ...<br>"
+			+ "</td></tr></table><br><br><br><br><br>";
 	}
 	else
 		$("#movieTbody").css("display", "none");
@@ -592,8 +627,33 @@ function changeForm() {
 	
 }
 
+function uploadPostImg() {
+	$('#layerpop3 #loading').show();
+	
+	formData2.append("file", $("#file")[0].files[0]);
+	
+	$.ajax({
+		url: "uppostimg.do",
+		data: formData2,
+		contentType: false,
+		processData: false,
+		method:"post",
+		/* 위에 세개 꼭 명시해줘야 함 */
+		success: function(data) {
+			alert(data);
+			$('#loading').hide();
+			imagesInsertThis(postImg = data);
+			$("input[name=pimg]").val(postImg);
+		},
+		error: function(data,status,error){
+			console.log("error : " + error);
+		}
+	});
+		 
+}
+
 function uploadDiaryBg() {
-	$('#loading').show();
+	$('#layerpop2 #loading').show();
 	
 	formData.append("file2", $("#file2")[0].files[0]);
 	
@@ -615,14 +675,19 @@ function uploadDiaryBg() {
 		 
 }
 
-function preview() {
-	var file = document.getElementById('file2').files[0];
+function preview(filename) {
+	var file = document.getElementById(filename).files[0];
 	var reader = new FileReader();
 	reader.readAsDataURL(file);
 	reader.onload = function() {
 		//var output = document.getElementById(outputId);
 		//output.src = reader.result;
-		$("#bgpreview").css('backgroundImage', 'url(' + reader.result + ')');
+		if (filename == 'file') {
+			$("#imgpreview").css('backgroundImage', 'url(' + reader.result + ')');
+			$("#imgpreview").css('backgroundSize', 'cover');
+		}
+		else if (filename == 'file2')
+			$("#bgpreview").css('backgroundImage', 'url(' + reader.result + ')');
 	}
 }
 
@@ -659,14 +724,39 @@ function content_OK() {
 	if (je_doc.body.innerHTML != "") {
 		if (confirm("포스트를 게시하시겠습니까? ") == true) {
 			
-			if($("select [name=category]").val()=="diary") {
-				$("input[name=title]").val(je_doc.getElementById("title").innerText);
+			if ($("select [name=category]").val()=="diary") {
+				$("input[name=bg]").val(diaryBgImg);
+				if (je_doc.getElementById("title").innerText == "") {
+					alert("제목을 입력해주세요");
+					return;
+				}
+				$("input[name=diary_title]").val(je_doc.getElementById("title").innerText);
 			}
+			else if ($("select [name=category]").val()=="music") {
+				if (je_doc.getElementById("title").innerText == "") {
+					alert("제목을 입력해주세요");
+					return;
+				}
+				$("input[name=music_info]").val(music_info);
+				$("input[name=music_title]").val(je_doc.getElementById("title").innerText);
+			}
+			else if ($("select [name=category]").val()=="movie") {
+				if(je_doc.getElementById("title").innerText == "") {
+					alert("제목을 입력해주세요");
+					return;
+				}
+				$("input[name=movie_title]").val(je_doc.getElementById("title").innerText);
+			}
+			else if ($("select [name=category]").val()=="place") {
+				if (je_doc.getElementById("title") != null)
+					$("input[name=place_name]").val(je_doc.getElementById("title").innerText);
+			}
+			
+			$("input[name=pimg").val(postImg);
 			
 			document.getElementById("form").onsubmit = "";
 			
 			$("#dhtmlText").val(je_doc.body.innerHTML);
-			$("input[name=bg]").val(diaryBgImg);
 			$('#form').submit();
 			
 		} else return;
@@ -778,11 +868,13 @@ function callbackMusicSearch(data) {
 	   
 	for (var i in jsonArr.list) {
 
-		   
-		title = decodeURIComponent((jsonArr.list[i].title).replace(Ca, " ")).replace(/\'/g,"&#39;");
+		//replace(/\'/g,"&#39;")
+		title = decodeURIComponent(jsonArr.list[i].title.replace(Ca, " "));
 		videoId = jsonArr.list[i].videoId;
 		thumbnail_default = jsonArr.list[i].thumbnail_default;
 		thumbnail_high = jsonArr.list[i].thumbnail_high;
+		
+		music_info = videoId;
 		
 		tr = document.createElement("tr");
 		td = document.createElement("td");
@@ -803,8 +895,6 @@ function callbackMusicSearch(data) {
 		tr.appendChild(td);
 		document.getElementById("musicSearchRes").appendChild(tr);
 
-		if (thumbnail_high == "")
-		
 		td = document.createElement("td");
 		a = document.createElement("a");
 		a.href = "javascript:recieveMusic('" + videoId +"', '" + title + "', '"
@@ -885,8 +975,8 @@ function callbackWlocationList(data) {
 	var lat, lon;
 	var icon;
 	
-	//for (var i in jsonArr.list) {
-	for (var i=7 ; i==7 ; i++) {
+	for (var i in jsonArr.list) {
+	//for (var i=7 ; i==7 ; i++) {
 		
 		icon = wstateIcon(requestWeatherStatus(lat = jsonArr.list[i].lat, lon = jsonArr.list[i].lon));
 		

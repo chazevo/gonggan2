@@ -957,15 +957,6 @@
 						</tr>
 					</tbody>
 					<tbody id="placeTbody" style="display:none">
-						<tr>
-							<td colspan="5" align="right">
-									<a data-toggle="collapse" data-target="#place">장소 찾아보기</a>
-									<div id="place" class="collapse text-center">
-										<h4>장소 검색 </h4>
-										장소&nbsp;<input type="text">
-									</div>
-								</td>
-						</tr>
 					</tbody>
 					<tbody id="movieTbody" style="display:none">
 						<tr>

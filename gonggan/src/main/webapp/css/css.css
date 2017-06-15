@@ -801,7 +801,7 @@ a.loginbox:hover {
 	color: #E6E6E6;
 }
 
-.contentDiv table tr .th {
+.th {
 	font-weight:normal;
 	text-align: right;
 	height: 50px;
@@ -813,7 +813,7 @@ a.loginbox:hover {
 	border-color: #E6E6E6;
 }
 
-.contentDiv table th a {
+.contentDiv table th a, .th a {
 	color: black;
 }
 	

@@ -44,6 +44,7 @@ public class Music {
 	@Override
 	public String toString() {
 		return "Music [videoId=" + videoId + ", music_title=" + music_title
+				+ ", title=" + title
 				+ ", thumbnail_default=" + thumbnail_default
 				+ ", thumbnail_high=" + thumbnail_high
 				+ ", post_id=" + post_id

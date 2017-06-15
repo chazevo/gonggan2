@@ -128,7 +128,9 @@ function joinIdCheck() {
 function joinEmailCheck() {
 	$.ajax({
 		url: "joinemailcheck.do",	
-		data: {	email: $("input[name='email']").val() },
+		data: {	email: $("input[name='email']").val(),
+			member_id:$("input[name='member_id']").val()
+		},
 		success: function(data) {
 			if (data == "실패") {
 				alert(data);
@@ -140,7 +142,7 @@ function joinEmailCheck() {
 			}
 			else if (data == "성공") {
 				$("#join").submit();
-				alert("완료");
+				alert("회원가입이 완료되었습니다.");
 			}
 		},
 		error: function(data,status,error){

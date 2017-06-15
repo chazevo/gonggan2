@@ -784,8 +784,14 @@ public class HomeController {
 		logger.info("Welcome profile! ");
 		Member member = memberService.selectMember(writer_id);
 		List<Member> neighborlist = neighborService.selectNeighborList(writer_id);
+	      
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(member.getMember_birth());
+
 		mv.addObject("member", member);
 		mv.addObject("neighborlist", neighborlist);
+		mv.addObject("age", (Calendar.getInstance().get(Calendar.YEAR) - cal.get(Calendar.YEAR))+"");
 		return mv;
 	}
 	

@@ -151,15 +151,26 @@ public class MemberController {
 	
 	@RequestMapping(value="/joinemailcheck.do", method=RequestMethod.GET, produces="text/plain;charset=UTF-8")
 	@ResponseBody
-	public String joinEmailCheck(@RequestParam String email){
+	public String joinEmailCheck(@RequestParam String email, @RequestParam String member_id) {
 	    
 		String result = "";
 		Member emailCheck = memberService.joinEmailCheck(email);
+		Member member = memberService.selectMember(member_id);
 		
-		if (emailCheck == null)
+		if (member == null) {
+			if (emailCheck == null)
+				result = "성공";
+			else if (emailCheck != null)
+				result = "실패";
+		}
+		else if (!member.getEmail().equals(email)) {
+			if (emailCheck == null)
+				result = "성공";
+			else if (emailCheck != null)
+				result = "실패";
+		}
+		else
 			result = "성공";
-		else if (emailCheck != null)
-			result = "실패";
 		
 		return  result;
 		
@@ -248,7 +259,7 @@ public class MemberController {
 		}
 		
 		HttpSession ss = request.getSession(false);
-		ss.setAttribute("loginUser", memberService.selectMember(member_id).getProfile_photo());
+		ss.setAttribute("loginUser", memberService.selectMember(member_id));
 		
 		mv.setViewName("redirect:mypage.do?writer_id=" + member_id);
 		

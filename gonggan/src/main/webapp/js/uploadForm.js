@@ -310,12 +310,12 @@ function run(){
 			function() {
 				prev_val = $(this).val();
 			}).change(function() {
-				$(this).blur() // Firefox fix as suggested by AgDude
+				$(this).blur(); // Firefox fix as suggested by AgDude
 				if($(this).val() != 'free') {
-					if (je_doc.body.innerHTML != "")
+					if (je_doc.body.innerText == "")
 						changeForm();
 					else if (confirm('현재 작성 내역을 임시 저장하고 폼을 바꾸시겠습니까?'))
-							changeForm();
+						changeForm();
 					else
 						$(this).val(prev_val);
 				}
@@ -801,12 +801,15 @@ function callbackMovieSearch(data) {
 		image = jsonArr.list[i].image;
 		
 		tr = document.createElement("tr");
+		tr.className = "hover";
 		td = document.createElement("td");
 		td.style.height = "150px";
 		td.style.paddingTop = "20px";
 		td.style.paddingBottom = "20px";
 		a = document.createElement("a");
 		a.href = "javascript:recieveMovie(\" "+ image +"\", \""+title+"\", \" "+director+"\",\" "+actor+"\",\" "+pubDate+"\");";
+		a.style.display = 'block';
+		a.style.height = "100%";
 		a.innerHTML = "<img src='" + image + "' height='100%' width='100%'>";
 		td.appendChild(a);
 		tr.appendChild(td);
@@ -827,6 +830,13 @@ function callbackMovieSearch(data) {
 		//jsonArr.list.pubDate;
 	}
 
+	$(".hover").hover(function(){
+		//$(this).css("backgroundColor", "gray");
+		if ($(".hover").hasClass("grayTd"))
+			$(this).removeClass("grayTd");
+		else
+			$(this).addClass("grayTd");
+	});
 }
 
 
@@ -877,6 +887,7 @@ function callbackMusicSearch(data) {
 		music_info = videoId;
 		
 		tr = document.createElement("tr");
+		tr.className = "hover";
 		td = document.createElement("td");
 		td.style.paddingRight = '20px';
 		a = document.createElement("a");
@@ -916,6 +927,13 @@ function callbackMusicSearch(data) {
 		//jsonArr.list.originallink;
 		//jsonArr.list.pubDate;
 	}
+	$(".hover").hover(function(){
+		//$(this).css("backgroundColor", "gray");
+		if ($(".hover").hasClass("grayTd"))
+			$(this).removeClass("grayTd");
+		else
+			$(this).addClass("grayTd");
+	});
 }
 
 function openFancybox(url) {

@@ -16,42 +16,64 @@
 	var writer_id = '${param.writer_id }';
 </script>
 </head>
-<body  style="width:500px;">
-<div style="overflow:auto;width:100%;height:500px;">
+<body  style="width:450px;">
+<div style="overflow:auto;width:100%;height:600px;">
 	<table width="100%" >
 		<tr>
 			<td class="text-center">
-				<img src="images/profileImages/${member.getProfile_photo() }" width="100%" height="25%">
+				<c:if test="${empty member.getProfile_photo() }">
+				<c:if test='${member.getMember_gender()eq "F"}'>
+				<img src="images/profileImages/women.png" width="100%" height="250px;">
+				</c:if>
+				<c:if test='${member.getMember_gender()eq "M"}'>
+				<img src="images/profileImages/men.png" width="100%" height="250px;">
+				</c:if>
+				</c:if>
+				<c:if test="${!empty member.getProfile_photo() }">
+				<img src="images/profileImages/${member.getProfile_photo() }" width="100%" height="40%">
+				</c:if>
 			</td>
 		</tr>
 		<tr>
 			<td style="padding-left:20px;">
 				<b>
 					<h1 style="display:inline-block">${param.writer_id },</h1>
-					<h4 style="display:inline-block">${member.getMember_birth() }</h4>
+					<h4 style="display:inline-block">${age}</h4>
 				</b>
 			</td>
 		</tr>
 		<tr>
-			<td class="text-center">
-				<div style="color:gray">${member.getProfile() }</div>
+			<td style="color:blue; padding-left:20px;">
+				${member.getEmail() }
+			</td>
+		</tr> 
+		<tr>
+			<td class="text-center" style="padding-top:10px;">
+				<center>
+					<div style="color:gray; width:90%;">${member.getProfile() }</div>
+				</center>
 			</td>
 		</tr>
 		<tr>
-			<td style="color:blue; padding-left:5px;">
-            ${member.getEmail() }
-         </td>
-      </tr>   
-<%--       <tr>
-         <td class="text-center">
-            <c:if test="${!empty neighborlist }">"src/main/webapp/WEB-INF/views/profile.jsp"
-               <c:forEach items=5 var="i" begin="0">
-                  <img src="images/profileImages/${i.profile_photo }" width="50px" height="50px" style="border-radius:30px;">
-               </c:forEach>
-            </c:if>
-         </td>
-      </tr> --%>
-
+			<td style="padding-top:30px;padding-left:20px;">
+				<h4>Friends</h4>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding-left:20px;">
+				<c:if test="${!empty neighborlist }">
+				<c:forEach items="${neighborlist }" var="i" begin="0">
+				<c:if test='${empty i.profile_photo }'>
+				<img src="images/default.png" height="40px" class="img-circle">&nbsp;
+				</c:if>
+				<c:if test='${!empty i.profile_photo }'>
+				<img src="images/profileImages/${i.profile_photo }" width="50px" height="50px" style="border-radius:30px;">
+				<%-- <img src="images/profileImages/${sessionScope.loginUser.getProfile_photo()}" height="40px" class="img-circle">&nbsp; --%>
+				</c:if>&nbsp;
+				</c:forEach>
+				</c:if>
+			</td>
+		</tr> 
       <%-- <tr>
          <td class="text-center">
             <div class="div2"  style="margin:auto;">
@@ -108,8 +130,8 @@
          <c:set var="index" value='${index+1 }'></c:set>
          </c:forEach>
       </c:if> --%>
-   </tbody>
-   </table>
+		</tbody>
+	</table>
 </div>
 </body>
 </html>

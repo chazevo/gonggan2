@@ -263,7 +263,7 @@ int today = cal.get(Calendar.DATE);
 					<legend>블로그 배너 관리</legend>
 					<div class="header-content bannerEditOuter">
 						<div class="bannerEdit text-center"
-							style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color=${blog.background_color };</c:if>">
+							style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});background-size:cover;</c:if><c:if test='${! empty blog.background_color}'>background-color=${blog.background_color };</c:if>">
 							<!-- <h2>당신만의 공간에서 당신의 글을 만들어보세요.</h2> -->
 							<input id="blogTitle" type="text" value="${blog.title }" style="color:${blog.color}" disabled>
 							<hr class="whiteHr">

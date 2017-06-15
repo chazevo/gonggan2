@@ -73,7 +73,7 @@
 	<insert id="minsert" parameterType="member">
    insert into member values( #{member_id},
    #{member_pw},#{member_name},#{email},#{profile},
-   #{member_gender},#{member_birth},#{member_phone},null,null,null)
+   #{member_gender},#{member_birth},#{member_phone},null,null,null, null)
    </insert>
 	
 	<update id="mupdate" parameterType="member">

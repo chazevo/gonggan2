@@ -32,6 +32,7 @@
 <script type="text/javascript" src="js/index2.js"></script>
 <script type="text/javascript">
 
+var loginUser = '${sessionScope.loginUser}';
 	window.onload = function() {
 		$("#loginUser").click(function() {
 			if ($("#loginUserDetail").hasClass("hidden")) {
@@ -265,7 +266,11 @@
 						 		<tr>
 						 			<td><b>내 정보 수정</b></td>
 						 			<td class="relative">
-						 				내 정보 <a href="javascript:deleteMem();" class="deleteMem">탈퇴하기</a>
+						 				내 정보
+						 				<a href="" class="deleteMem"
+						 					data-target="#layerpop2" data-toggle="modal">
+						 					탈퇴하기
+						 				</a>
 						 			</td>
 						 		</tr>
 						 		<tr>
@@ -501,6 +506,43 @@
 			</table>
 		</div>
 	</section>
+	<div class="modal fade" id="layerpop2">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<!-- header -->
+									<div class="modal-header">
+										<!-- 닫기(x) 버튼 -->
+										<button type="button" class="close" data-dismiss="modal">×</button>
+										<!-- header title -->
+										<h4 class="modal-title">'공간' 과 이별하기</h4>
+									</div>
+									<!-- body -->
+									<div class="modal-body text-center">
+										<br>비밀번호를 입력해주세요<br><br>
+										<div style="position:relative;width:100%;height:50px">
+											<div class='div2' style="position:absolute;left:0;right:0;margin:auto;width:30%">
+												<input type="text" id="deleteMemberPwd" placeholder="비밀번호">
+											</div>
+										</div>
+										<div style="position:relative;width:100%;height:50px">
+											<div class='div2' style="position:absolute;left:0;right:0;margin:auto;width:30%">
+												<input type="text" id="deleteMemberPwd2" placeholder="비밀번호 확인">
+											</div><br><br>
+											</div>
+										</div>
+									<!-- Footer -->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											onclick="deleteMem(); $('#layerpop2').modal('hide');">
+											OK
+										</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">
+											취소
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
 </div>
 </body>
 </html>

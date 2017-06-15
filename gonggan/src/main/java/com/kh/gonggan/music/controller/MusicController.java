@@ -255,10 +255,16 @@ public class MusicController {
 			System.out.println("\n-------------------------------------------------------------\n");
 			 */
 		
-			searchMusicList.add(new Music(rId.getVideoId(), 
-					singleVideo.getSnippet().getTitle(),
-					thumbnail_default.getUrl(), 
-					(thumbnail_high != null ? thumbnail_high.getUrl() : "")));
+			try {
+				searchMusicList.add(new Music(rId.getVideoId(), 
+						URLEncoder.encode(
+								singleVideo.getSnippet().getTitle(), "UTF-8"),
+						thumbnail_default.getUrl(), 
+						(thumbnail_high != null ? thumbnail_high.getUrl() : "")));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 		

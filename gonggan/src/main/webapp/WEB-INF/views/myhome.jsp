@@ -284,12 +284,14 @@ System.out.println(str);
 		<!--<div class="container-fluid">--><div>
 		<!-- container-fluid : 화면 너비가 resize 되더라도 화면에 가득 참  -->
 			<div class="header-content"
-				style="<c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color:${blog.background_color };</c:if>">
+				style="<c:if test="${empty blog.getTitle() }">background-color:#e6e6e6;</c:if><c:if test='${!empty blog.getBackground()}'>background:url(backgroundImages/${blog.getBackground()});</c:if><c:if test='${! empty blog.background_color}'>background-color:${blog.background_color };</c:if>">
 				<div class="header-content-inner">
 					<h2>
 						<a href="myhome.do?writer_id=${param.writer_id} "
 							style="color:${blog.getColor() }">
-							<!--당신만의 공간에서 당신의 글을 만들어보세요.-->
+							<c:if test="${empty blog.getTitle() }">
+							당신만의 공간에서 당신의 글을 만들어보세요.
+							</c:if>
 							${blog.getTitle() }
 						</a>
 					</h2>
@@ -335,7 +337,9 @@ System.out.println(str);
 							</c:if>
 						</c:if>
 						<hr>
-						<a class="hover" href="">프로필 보기</a>
+						<a class="hover" data-fancybox data-src='/gonggan/profile.do?&writer_id=${param.writer_id}'>
+							프로필 보기
+						</a>
 					</div>
 					<img src="images/idclick_icon.png" width="100%" height="100%">
 				</div>

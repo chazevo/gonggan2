@@ -1134,6 +1134,10 @@ pre {
 	display:block;
 }
 
+.idView .blogOwnerClick div a:visited {
+	color: black;
+}
+
 .blogOwnerClick>img {
 	position:absolute;
 	left:0;
@@ -1394,6 +1398,15 @@ hr {
 	width: 200px;
 }
 
+.modal .div2 {
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: 1px solid #E6E6E6;
+	border-radius:20px;
+	width: 30%;
+}
+
 .blogHomeHeader .table1st .div2 {
 	padding-left: 15px;
 	padding-top: 5px;
@@ -1440,7 +1453,7 @@ hr {
 	color: #E6E6E6;
 }
 
-.searchPost input[type=text], .table1st input[type=text] {
+.searchPost input[type=text], .table1st input[type=text], .modal .div2 input[type=text] {
 	border-width: 0px;
 	color: #E6E6E6;
 }
@@ -1540,7 +1553,7 @@ hr {
 	background-color: white;
 }
 
-.td>div {
+.td>div:not(.modal) {
 	height:100%;
 	overflow:scroll;
 }

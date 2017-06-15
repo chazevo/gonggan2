@@ -1356,7 +1356,7 @@ function show(star) {
 		stateMsg = "";
 	}
    
-	e.innerHTML = stateMsg;
+	e.innerHTML = stateMsg;		
    
 }
 
@@ -1383,9 +1383,31 @@ function lock(star) {
 function mark(star) {
 	lock(star);
 	alert("선택2"+star);
+
+	var stateMsg;
 	
 	for(var i=1; i<=star; i++)
 		je_doc.body.innerHTML += "<img src='images/star1.png' width='50px;'>";
+	
+	switch(star){
+	case 1 :
+		stateMsg = "괜히봤어요.";
+		break;
+	case 2 :
+		stateMsg = "기대하진 말아요";
+		break;
+	case 3 :
+		stateMsg = "무난했어요";
+		break;
+	case 4 :
+		stateMsg = "기대해도 좋아요!";
+		break;
+	case 5 : 
+		stateMsg = "너무 멋져요!";
+		break;
+	default :
+		stateMsg = "";
+	}
 	
 	je_doc.body.innerHTML += stateMsg;
 }

@@ -570,9 +570,9 @@ function postLikeCnt(postId) {
 
 function acceptNeig(member_id, member_id2) {
    
-   $(this).parent().remove();
+   //$(this).parent().remove();
    
-   /*
+   
    $.ajax({
       url: "/gonggan/naccept.do",
       data: {member_id: member_id, member_id2: member_id2},
@@ -584,7 +584,7 @@ function acceptNeig(member_id, member_id2) {
       error: function(data,status,error){
          console.log("error : " + error);
       }
-   });*/
+   });
 }
 
 function rejectNeig(member_id, member_id2) {

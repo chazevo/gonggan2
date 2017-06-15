@@ -579,13 +579,31 @@ function rejectNeig(loginUser,writer_id) {
 			url: "/gonggan/nreject.do",
 			data: {member_id: loginUser,member_id2: writer_id},
 			success: function(data) {
-				alert("이웃 취소");
+				reqRejectNeig(data);
 			},
 			error: function(data,status,error) {
 				console.log("error : " + error);
 			}
 		});
 	} else return;
+}
+
+function reqRejectNeig(data) {
+
+	var obj = $(".blogOwnerClick>div").children("a:nth-child(1)");
+
+	if (data=="N") {
+		if (obj.text() == "이웃 신청") {
+			likeNeigh(loginUser,writer_id);
+			obj.text("신청 취소");
+		}
+	}
+	else if (data == "Y") {
+		if (obj.text() == "신청 취소") {
+			rejectNeig(loginUser,writer_id);
+			obj.text("이웃 신청");
+		}
+	}
 }
 
 

@@ -576,7 +576,7 @@ function likeNeigh(loginUser,writer_id) {
 function rejectNeig(loginUser,writer_id) {
 	if (confirm("정말 이웃신청을 삭제하시겠습니까? ") == true) {
 		$.ajax({
-			url: "/gonggan/nreject.do",
+			url: "/gonggan/neigdelete.do",
 			data: {member_id: loginUser,member_id2: writer_id},
 			success: function(data) {
 				reqRejectNeig(data);
@@ -588,22 +588,6 @@ function rejectNeig(loginUser,writer_id) {
 	} else return;
 }
 
-function reqRejectNeig(data) {
 
-	var obj = $(".blogOwnerClick>div").children("a:nth-child(1)");
-
-	if (data=="N") {
-		if (obj.text() == "이웃 신청") {
-			likeNeigh(loginUser,writer_id);
-			obj.text("신청 취소");
-		}
-	}
-	else if (data == "Y") {
-		if (obj.text() == "신청 취소") {
-			rejectNeig(loginUser,writer_id);
-			obj.text("이웃 신청");
-		}
-	}
-}
 
 

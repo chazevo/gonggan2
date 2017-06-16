@@ -551,12 +551,12 @@ var loginUser = '${sessionScope.loginUser}';
 										<br>비밀번호를 입력해주세요<br><br>
 										<div style="position:relative;width:100%;height:50px">
 											<div class='div2' style="position:absolute;left:0;right:0;margin:auto;width:30%">
-												<input type="text" id="deleteMemberPwd" placeholder="비밀번호">
+												<input type="password" id="deleteMemberPwd" placeholder="비밀번호">
 											</div>
 										</div>
 										<div style="position:relative;width:100%;height:50px">
 											<div class='div2' style="position:absolute;left:0;right:0;margin:auto;width:30%">
-												<input type="text" id="deleteMemberPwd2" placeholder="비밀번호 확인">
+												<input type="password" id="deleteMemberPwd2" placeholder="비밀번호 확인">
 											</div><br><br>
 											</div>
 										</div>

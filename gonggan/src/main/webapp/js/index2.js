@@ -14,6 +14,22 @@ var musiccount;
 var newscount;
 var bookcount;
 
+function checkAlarm() {
+	if (loginUser != "")
+		$.ajax({
+			url: "/gonggan/checkalarm.do",
+			data: {loginUser : loginUser
+			},
+			success: function(data) {
+				if (data > 0)
+					alert("모든 알람 확인 완료!");
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+		});
+}
+
 function requestList(val) {
    var rownum2;
    plistcount++;

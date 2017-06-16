@@ -264,6 +264,18 @@ a>div:hover {
 	background-color: #1A1D2F;
 }
 
+#indexBg .blogHomeContentDiv table {
+	background-color:white;
+}
+
+#indexBg .blogHomeContentDiv {
+	color:black;
+}
+
+#indexBg .blogHomeContentDiv a {
+	color:black;
+}
+
 #middleDiv {
 	background-color: #1A1D2F;
 	position:absolute;
@@ -629,6 +641,7 @@ a.loginbox:hover {
 
 #idclick_table {
    height:100%;
+   width:100%
    margin:5px;
    /*
    border: 1px solid blue;
@@ -731,6 +744,7 @@ a.loginbox:hover {
 	min-height:75px;
 	border:1px solid transparent;
 	background: rgba(255, 255, 255, 0);
+	width:100%;
 }
 
 .navbarCenter {
@@ -791,6 +805,12 @@ a.loginbox:hover {
 	padding-left:20px ;
 	padding-right:20px ;
 }
+
+
+.contentDiv img {
+	max-width: 500px;
+}
+
 
 .contentDiv>table th {
 	color: #E6E6E6;
@@ -1129,7 +1149,7 @@ pre {
 	text-decoration:none;
 }
 
-.idView .blogOwnerClick div a:link {
+.idView .blogOwnerClick div a {
 	color: black;
 	display:block;
 }
@@ -1708,6 +1728,11 @@ hr {
 .postDetail a{
 	color:black;
 }
+
+.postDetail img {
+	max-width: 500px;
+}
+
 .postDetail #userId img{
 	margin-right:10px;
 	border: 1px solid gray;
@@ -1889,11 +1914,6 @@ legend {
    background-size: 100% 100% !important;
 }
 
-.nPosthr {
-	border-top:2px solid #9C9C9C !important;
-	border-bottom:2px solid #F6F6F6 !important; 
-}
-
 .radio-wrap { 
 	cursor: pointer;
 	margin-left: 20px;
@@ -2055,6 +2075,10 @@ legend {
 		display: block !important;
 		margin:auto!important;
 		left:0;
+	}
+	
+	#div_Loading {
+	margin:20px;
 	}
 	
 	.blogHomeContentDiv>div, div #div div {

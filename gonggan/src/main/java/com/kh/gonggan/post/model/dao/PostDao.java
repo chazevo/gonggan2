@@ -320,7 +320,7 @@ public class PostDao {
 			else if("place".equals(category)){
 				sqlSession.insert("placemapper.pinsert",map);
 			}
-			else if("default".equals(category)){
+			else if("free".equals(category)){
 	           
 				System.out.println(""+category);
 				sqlSession.insert("freemapper.finsert",map);
@@ -350,7 +350,7 @@ public class PostDao {
 			else if("place".equals(category)){
 				sqlSession.insert("placemapper.pinsert",map);
 			}
-			else if("default".equals(category)){
+			else if("free".equals(category)){
 	           
 				System.out.println(""+category);
 				sqlSession.insert("freemapper.finsert",map);

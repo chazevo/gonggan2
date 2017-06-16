@@ -134,7 +134,57 @@ public class HomeController {
       
 		return mv;
 	}
-   
+	
+	@RequestMapping(value = "home_music.do", method = RequestMethod.GET)
+	public ModelAndView home_music(Locale locale, ModelAndView mv) {
+		mv.addObject("musicMaxRownum", postService.maxRownum("music"));
+		mv.setViewName("home_music");
+	      
+		return mv;
+	}
+
+	@RequestMapping(value = "home_movie.do", method = RequestMethod.GET)
+	public ModelAndView home_movie(Locale locale, ModelAndView mv) {
+		mv.addObject("movieMaxRownum", postService.maxRownum("music"));
+		mv.setViewName("home_movie");
+	      
+		return mv;
+	}
+	@RequestMapping(value = "home_place.do", method = RequestMethod.GET)
+	public ModelAndView home_place(Locale locale, ModelAndView mv) {
+		mv.addObject("placeMaxRownum", postService.maxRownum("place"));
+		mv.setViewName("home_place");
+	      
+		return mv;
+	}
+	@RequestMapping(value = "home_review.do", method = RequestMethod.GET)
+	public ModelAndView home_review(Locale locale, ModelAndView mv) {
+		mv.addObject("reviewMaxRownum", postService.maxRownum("review"));
+		mv.setViewName("home_review");
+	      
+		return mv;
+	}
+	@RequestMapping(value = "home_diary.do", method = RequestMethod.GET)
+	public ModelAndView home_diary(Locale locale, ModelAndView mv) {
+		mv.addObject("diaryMaxRownum", postService.maxRownum("diary"));
+		mv.setViewName("home_diary");
+	      
+		return mv;
+	}
+	@RequestMapping(value = "home_news.do", method = RequestMethod.GET)
+	public ModelAndView home_news(Locale locale, ModelAndView mv) {
+		mv.addObject("newsMaxRownum", postService.maxRownum("news"));
+		mv.setViewName("home_news");
+	      
+		return mv;
+	}
+	@RequestMapping(value = "home_book.do", method = RequestMethod.GET)
+	public ModelAndView home_book(Locale locale, ModelAndView mv) {
+		mv.addObject("bookMaxRownum", postService.maxRownum("book"));
+		mv.setViewName("home_book");
+	      
+		return mv;
+	}
 	@RequestMapping(value = "index2.do", method = RequestMethod.GET)
 	public ModelAndView index2(ModelAndView mv, HttpSession session) {
 		
@@ -829,31 +879,22 @@ public class HomeController {
 		System.out.println("neighborBlogPost.do");
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		System.out.println("loginUser : " + loginUser);
-		List<Member> neighborReqList = memberService.checkNeig(loginUser.getMember_id());
-                
-		List<Post> plist = postService.selectAll_index2();  
-		List<Movie> movielist = movieService.selectAll_index2();
-		List<Diary> diarylist = diaryService.selectAll_index2();
-		List<Music> musiclist = musicService.selectAll_index2();
-		List<News> newslist = newsService.selectAll_index2();
-		List<Review> reviewlist = reviewService.selectAll_index2();
-		List<Place> placelist = placeService.selectAll_index2();
-		List<Free> freelist = freeService.selectAll_index2();
-		List<Comment> commentReqList = commentService.checkCommentAlram(loginUser.getMember_id());
+
+		String memberId;
+		
+		List<Alarm> mAlarmList =new ArrayList<Alarm>();
+		List<Post> nplist = null;
+		
+		if (loginUser != null) {
+			memberId = loginUser.getMember_id();
+			nplist = postService.selectNeighborAll_index2(memberId);
+			mAlarmList = memberService.alarmCheck(memberId);
+		}
+		
+		mv.addObject("nplistSize", nplist.size());
+		mv.addObject("mAlarmList", mAlarmList);
 
 		mv.setViewName("neighborPost");
-       
-		mv.addObject("reviewlist", reviewlist);
-		mv.addObject("newslist", newslist);
-		mv.addObject("musiclist", musiclist);
-		mv.addObject("dlist", diarylist);
-		mv.addObject("plist",plist);
-		mv.addObject("movielist",movielist);
-		mv.addObject("placelist", placelist);
-		mv.addObject("freelist", freelist);
-		mv.addObject("plistSize", plist.size());
-		mv.addObject("neighborReqList", neighborReqList);
-		mv.addObject("neighborReqListSize", neighborReqList.size());
        
 		return mv;
 	}

@@ -117,6 +117,7 @@ int today = cal.get(Calendar.DATE);
 				$("#loginUserDetail").addClass("hidden");
 				$("#loginUserDetail").hide();
 			}
+			checkAlarm();
 		});
       
 		$("#todayNeighborCnt").click(function() {

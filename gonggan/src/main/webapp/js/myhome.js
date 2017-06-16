@@ -47,19 +47,36 @@ function callbacktrace(data) {
 	}
 
 }*/
+
+function checkAlarm() {
+	if (loginUser != "")
+		$.ajax({
+			url: "/gonggan/checkalarm.do",
+			data: {loginUser : loginUser
+			},
+			success: function(data) {
+				if (data > 0)
+					alert("모든 알람 확인 완료!");
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+		});
+}
+
 function visit() {
 	if (loginUser != writer_id)
 		$.ajax({
-		      url: "/gonggan/bvisit.do",
-		      data: {blog_id : blog_id,
-		    	  visitor_id : loginUser},
-		      success: function(data) {
+			url: "/gonggan/bvisit.do",
+			data: {blog_id : blog_id,
+				visitor_id : loginUser},
+				success: function(data) {
 		    	  
-		      },
-		      error: function(data,status,error){
-		         console.log("error : " + error);
-		      }
-		   });
+				},
+				error: function(data,status,error){
+					console.log("error : " + error);
+				}
+		});
 }
 
 function requestCalList(year, month) {
@@ -579,7 +596,7 @@ function likeNeigh(loginUser,writer_id) {
 function rejectNeig(loginUser,writer_id) {
 	if (confirm("정말 이웃신청을 삭제하시겠습니까? ") == true) {
 		$.ajax({
-			url: "/gonggan/nreject.do",
+			url: "/gonggan/neigdelete.do",
 			data: {member_id: loginUser,member_id2: writer_id},
 			success: function(data) {
 				reqRejectNeig(data);

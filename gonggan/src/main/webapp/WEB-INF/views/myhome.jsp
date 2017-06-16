@@ -155,6 +155,7 @@ System.out.println(str);
 				$("#loginUserDetail").addClass("hidden");
 				$("#loginUserDetail").hide();
 			}
+			checkAlarm();
 		});
 		
 		$("#div_Loading").hide();

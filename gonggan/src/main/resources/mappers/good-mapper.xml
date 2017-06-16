@@ -9,6 +9,13 @@
 		<result property="member_id" column="member_id" />
 		<result property="good_check" column="good_check" />
 	</resultMap>
+	
+	<update id="acheck" parameterType="String">
+	update good set good_check = 'Y'
+	where post_id in (select post_id from post where writer_id = #{loginUser})
+	</update>
+	
+	
 	<select id="alarmnum" parameterType="int" resultType="int">
 	select seq_alarm.nextval from dual
 	</select>

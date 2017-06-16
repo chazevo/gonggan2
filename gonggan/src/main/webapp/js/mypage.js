@@ -1,5 +1,19 @@
 var profilePhotoDeleteYn;
-
+function checkAlarm() {
+	if (loginUser != "")
+		$.ajax({
+			url: "/gonggan/checkalarm.do",
+			data: {loginUser : loginUser
+			},
+			success: function(data) {
+				if (data > 0)
+					alert("모든 알람 확인 완료!");
+			},
+			error: function(data,status,error) {
+				console.log("error : " + error);
+			}
+		});
+}
 function cancel(member_id, member_id2, obj) {
 	
 	if (obj.children(".neighborYN").text() == '취소')

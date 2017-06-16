@@ -99,6 +99,7 @@ session.setAttribute("writer_id", request.getParameter("writer_id"));
 				$("#loginUserDetail").addClass("hidden");
 				$("#loginUserDetail").hide();
 			}
+			checkAlarm();
 		});
 		
 		$("#div_Loading").hide();

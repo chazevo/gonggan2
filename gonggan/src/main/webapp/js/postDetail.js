@@ -193,9 +193,9 @@ function postdelete(postId,loginUser) {
 				loginUser:loginUser
 			},
 			success: function(data) {
-				//alert("삭제 되었습니다.");
+				alert("삭제 되었습니다.");
+				parent.location.reload(true);
 				parent.$.fancybox.close();
-				
 			},
 			error: function(data,status,error){
 				console.log("error : " + error);

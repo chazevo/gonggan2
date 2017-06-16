@@ -42,6 +42,7 @@ var loginUser = '${sessionScope.loginUser}';
 				$("#loginUserDetail").addClass("hidden");
 				$("#loginUserDetail").hide();
 			}
+			checkAlarm();
 		});
 		
 		$(".profilefb").fancybox();
@@ -363,12 +364,22 @@ var loginUser = '${sessionScope.loginUser}';
 									<td width="15%">
 										<font>
 											<c:if test="${sessionScope.loginUser.getMember_id() eq i.sender}">
+											<c:if test="${sessionScope.loginUser.getMember_id() ne i.receiver}">
 											<c:set var="opposite" value="${i.receiver}" />
 											<a href="myhome.do?writer_id=${i.receiver}">${i.receiver}</a>
 											</c:if>
+											</c:if>
 											<c:if test="${sessionScope.loginUser.getMember_id() eq i.receiver}">
+											<c:if test="${sessionScope.loginUser.getMember_id() ne i.sender}">
 											<a href="myhome.do?writer_id=${i.sender}">${i.sender}</a>
 											<c:set var="opposite" value="${i.sender}" />
+											</c:if>
+											</c:if>
+											<c:if test="${sessionScope.loginUser.getMember_id() eq i.receiver}">
+											<c:if test="${sessionScope.loginUser.getMember_id() eq i.sender}">
+											<a href="myhome.do?writer_id=${i.sender}">${i.sender}</a>
+											<c:set var="opposite" value="${i.sender}" />
+											</c:if>
 											</c:if>
 										</font>
 									</td>

@@ -55,7 +55,8 @@ var prevPosition;
 window.onload = function() {
 
 	$("#searchNeiDiv").hide();
-   
+	//checkAlarm();
+	
 	//trace(loginUser);
 	
 	maxRownum = plistSize;
@@ -216,7 +217,7 @@ window.onload = function() {
 							<tbody id="listbody_neighbor"></tbody>
 							<tbody id="listbody_mytrace"></tbody>
 							<tbody id="listbody_newPost">
-								<c:forEach  items="${mAlarmList}" var="i" begin="0">
+								<c:forEach  items="${mAlarmList}" var="i" begin="0" end="3">
 								<c:if test='${!empty mAlarmList}'>
 								<tr>
 									<td>
@@ -230,7 +231,7 @@ window.onload = function() {
 								<tr>
 									<td>
 										<c:if test='${i.type_cg eq "G"}' >
-										<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>좋아요</a>누르셨습니다. |
+										<a data-fancybox data-src='pdetail.do?postId=${i.post_id }&writerId=${sessionScope.loginUser.getMember_id()} '>좋아요</a> 를 누르셨습니다. |
 										<a href="myhome.do?writer_id=${i.writer_id}"><font color="#2D86C9">${i.writer_id }</font></a>
 										</c:if>
 									</td>

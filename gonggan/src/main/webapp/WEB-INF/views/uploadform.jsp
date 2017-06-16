@@ -196,6 +196,7 @@
 				$("#loginUserDetail").addClass("hidden");
 				$("#loginUserDetail").hide();
 			}
+			checkAlarm();
 		});
 		
 		$("#blogOwnerClick").click(function() {
@@ -1090,7 +1091,7 @@
 					</tbody>
 					<tbody id="reviewTbody" style="display:none">
 						<tr>
-							<td>제품</td><td><input type="text"></td>
+							<td></td>
 							<td>별점</td>
 							<td>
 								<span>
@@ -1158,7 +1159,7 @@
 						
 						<tr>
 							<td colspan="5">
-								<input type="radio" name="open" value="public" checked>&nbsp;전체공개&nbsp;
+								&nbsp;<input type="radio" name="open" value="public" checked>&nbsp;전체공개&nbsp;
 								<input type="radio" name="open" value="onlyMe">&nbsp;나만보기&nbsp;
 								<input type="radio" name="open" value="neighbor">&nbsp;이웃공개
 							</td>

@@ -39,15 +39,17 @@ function getAddr(adress, mapx, mapy, title_) {
 			if (infowindow.getMap()) infowindow.close();
 			else infowindow.open(map, marker);
 	    });
+
+		mapImg(mapx, mapy);
+		title = title_;
 		
 	    // 마크 클릭시 인포윈도우 오픈
 		var infowindow = new naver.maps.InfoWindow({
-			content: '<button type="button" id="searchBtn" style="display:block;float:right;" onclick="selectMap(image);">추 가 하 기</button>'
+			content: '<button type="button" id="searchBtn" style="display:block;float:right;" onclick="selectMap(\'' + image + '\', \'' + title + '\');">추 가 하 기</button>'
+			// 왜 이미지는 저렇게 삽입 되는데 타이틀은 안될까 
 		});
-	});
+	});	
 	
-	mapImg(mapx, mapy);
-	title = title_;
 }
 
 function mapImg(mapx, mapy) {
@@ -63,7 +65,6 @@ function mapImg(mapx, mapy) {
 
 
 function selectMap(image, title) {
-
 	parent.recieveMap(image, title);
 	
 	parent.$.fancybox.close();

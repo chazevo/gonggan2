@@ -1,44 +1,29 @@
-var rownum = 1;
+
 var Ca = /\+/g;
 
-function checkAlarm() {
-	if (loginUser != "")
-		$.ajax({
-			url: "/gonggan/checkalarm.do",
-			data: {loginUser : loginUser
-			},
-			success: function(data) {
-				if (data > 0)
-					alert("모든 알람 확인 완료!");
-			},
-			error: function(data,status,error) {
-				console.log("error : " + error);
-			}
-		});
-}
-
-function requestNeighborPostList(val, loginUser) {
-
-	var rownum2;
-	
-	if (maxRownum - val < 8)
-		rownum2 = maxRownum;
-	else rownum2 = rownum + 7;
+function requestCategoryList(val, category) {
    
-	$.ajax({
-		url: "/gonggan/postNeighborlist.do",
-		//url: "/gonggan/userpostlist.do",
-		data: { loginUser : loginUser,
-			rownum: rownum, rownum2: rownum2
-		},
-		success: function(data) {
-			callbackList(data);
-			rownum = rownum2 + 1;
-		},
-		error: function(data,status,error){
-			console.log("error : " + error);
-		}
-	});
+   var rownum2;
+   
+   if (maxRownum - val < 8)
+      rownum2 = maxRownum;
+   else rownum2 = rownum + 7;
+
+   $.ajax({
+      url: "/gonggan/postlist.do",
+      //url: "/gonggan/userpostlist.do",
+      data: { writer_id : "",
+         rownum: val, rownum2: rownum2,
+         category: category
+      },
+      success: function(data) {
+         callbackList(data);
+         rownum = rownum2 + 1;
+      },
+      error: function(data,status,error) {
+         console.log("error : " + error);
+      }
+   });
 }
 
 
@@ -236,7 +221,7 @@ function callbackList(data) {
    }); 
    
    if (rownum >= maxRownum) {
-      $("#div_Loading").html("더이상 포스트가 존재하지 않습니다.");
+      $("#div_Loading").html("<span style='color:white'>더이상 포스트가 존재하지 않습니다.");
       $("#div_Loading").show();
       return;
    }
@@ -264,30 +249,6 @@ function reqPostDetail(postId, category) {
    
    return content;
 }
-
-function checkGood(loginUser, postId){
-   
-   var isChecked;
-   
-   $.ajax({
-      async:false,
-      url: "/gonggan/checkGood.do",
-      data: {loginUser:loginUser,
-         postId:postId },
-      success: function(data) {
-         if (data == "good")
-            isChecked = true;
-         else if (data == "nogood")
-            isChecked = false;
-      },
-      error: function(data,status,error){
-         console.log("error : " + error);
-      }
-   });
-   return isChecked;
-}
-
-
 function like(obj, loginUser, postId){
    
    var target = obj.parent().next();
@@ -362,8 +323,27 @@ function postLikeCnt(postId) {
    });
    return gcnt;
 }
-
-
+function checkGood(loginUser, postId){
+	   
+	   var isChecked;
+	   
+	   $.ajax({
+	      async:false,
+	      url: "/gonggan/checkGood.do",
+	      data: {loginUser:loginUser,
+	         postId:postId },
+	      success: function(data) {
+	         if (data == "good")
+	            isChecked = true;
+	         else if (data == "nogood")
+	            isChecked = false;
+	      },
+	      error: function(data,status,error){
+	         console.log("error : " + error);
+	      }
+	   });
+	   return isChecked;
+	}
 function openFancybox(url) {
    document.getElementById("fancy").href = url;
    $("#fancy").fancybox().trigger('click');

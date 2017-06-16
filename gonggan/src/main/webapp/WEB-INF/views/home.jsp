@@ -152,25 +152,25 @@
 				<!-- navbar-collapse 제거-> 메뉴 사라짐  -->
 					<ul class="nav navbar-nav navbar-right ">
 						<li>
-						<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'diary');">일기</a>
+						<a href="home_diary.do">일기</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'place');">장소</a>
+							<a href="home_place.do">장소</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'review');">리뷰</a>
+							<a href="home_review.do">리뷰</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'music');">음악</a>
+							<a href="home_music.do">음악</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'movie');">영화</a>
+							<a href="home_movie.do">영화</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'news');">뉴스</a>
+							<a href="home_news.do">뉴스</a>
 						</li>
 						<li>
-							<a href="javascript:rownum=1; requestCategoryList(rownum = 1, category = 'book');">책</a>
+							<a href="home_book.do">책</a>
 						</li>
 					</ul>
 				</div>

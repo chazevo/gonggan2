@@ -15,7 +15,7 @@
 	</resultMap>
 	
 	<update id="acheck" parameterType="String">
-	update comments set commenet_check = 'Y'
+	update comments set comment_check = 'Y'
 	where post_id in (select post_id from post where writer_id = #{loginUser})
 	</update>
 
